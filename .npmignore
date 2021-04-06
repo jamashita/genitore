@@ -1,0 +1,12 @@
+.github/
+.idea/
+.editorconfig
+.eslintignore
+.eslintrc
+.lintstagedrc.json
+.releaserc.json
+commitlint.config.js
+jest.config.cjs
+lerna.json
+tsconfig.json
+**/*.spec.ts
