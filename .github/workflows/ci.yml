@@ -1,0 +1,29 @@
+name: 'CI'
+on:
+  pull_request_target:
+    branches:
+      - 'main'
+      - 'develop'
+      - 'release'
+    types:
+      - 'assigned'
+      - 'opened'
+      - 'synchronize'
+      - 'reopened'
+jobs:
+  ci:
+    runs-on: 'ubuntu-latest'
+    timeout-minutes: 15
+    steps:
+      - name: 'Check out repository'
+        uses: 'actions/checkout@v2'
+      - name: 'Use Node.js 15.0'
+        uses: 'actions/setup-node@v2'
+        with:
+          node-version: '15.0'
+      - name: 'Set up'
+        run: |
+          yarn install --frozen-lockfile
+          yarn setup
+      - name: 'Test'
+        run: 'yarn test'
