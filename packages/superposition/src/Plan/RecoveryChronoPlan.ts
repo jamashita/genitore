@@ -1,4 +1,4 @@
-import { RecoveryPlan } from '../../../plan/src/Interface/RecoveryPlan';
+import { RecoveryPlan } from '@jamashita/genitore-plan';
 import { Chrono } from '../Chrono/Interface/Chrono';
 
 export class RecoveryChronoPlan<A, D extends Error> implements RecoveryPlan<D, 'RecoveryChronoPlan'> {

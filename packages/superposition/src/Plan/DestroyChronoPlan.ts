@@ -1,4 +1,4 @@
-import { DestroyPlan } from '../../../plan/src/Interface/DestroyPlan';
+import { DestroyPlan } from '@jamashita/genitore-plan';
 import { Chrono } from '../Chrono/Interface/Chrono';
 
 export class DestroyChronoPlan<A, D extends Error> implements DestroyPlan<'DestroyChronoPlan'> {

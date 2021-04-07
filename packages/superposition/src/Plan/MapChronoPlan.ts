@@ -1,4 +1,4 @@
-import { MapPlan } from '../../../plan/src/Interface/MapPlan';
+import { MapPlan } from '@jamashita/genitore-plan';
 import { Chrono } from '../Chrono/Interface/Chrono';
 import { Detoxicated } from '../Interface/Detoxicated';
 

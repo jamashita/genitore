@@ -1,5 +1,5 @@
 import { Kind, SyncAsync, UnaryFunction } from '@jamashita/anden-type';
-import { RecoveryPlan } from '../../../plan/src/Interface/RecoveryPlan';
+import { RecoveryPlan } from '@jamashita/genitore-plan';
 import { Chrono } from '../Chrono/Interface/Chrono';
 import { Detoxicated } from '../Interface/Detoxicated';
 import { containsError, isSuperposition, ISuperposition } from '../Interface/ISuperposition';
