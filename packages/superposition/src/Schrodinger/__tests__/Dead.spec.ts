@@ -1,6 +1,6 @@
 import { MockRuntimeError } from '@jamashita/anden-error';
-import { Equalable } from '@jamashita/anden-type';
 import { MockValueObject } from '@jamashita/anden-object';
+import { Equalable } from '@jamashita/anden-type';
 import sinon, { SinonSpy } from 'sinon';
 import { Alive } from '../Alive';
 import { Contradiction } from '../Contradiction';

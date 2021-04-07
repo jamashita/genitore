@@ -1,6 +1,5 @@
-import { isEqualable, Consumer } from '@jamashita/anden-type';
 import { Objet, ValueObject } from '@jamashita/anden-object';
-
+import { Consumer, isEqualable } from '@jamashita/anden-type';
 import { Detoxicated } from '../Interface/Detoxicated';
 import { Contradiction } from './Contradiction';
 import { Dead } from './Dead';

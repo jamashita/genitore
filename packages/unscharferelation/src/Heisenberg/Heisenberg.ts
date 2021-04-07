@@ -1,5 +1,4 @@
-import { Nominative, Consumer } from '@jamashita/anden-type';
-
+import { Consumer, Nominative } from '@jamashita/anden-type';
 import { Matter } from '../Interface/Matter';
 import { Absent } from './Absent';
 import { Lost } from './Lost';
