@@ -2,8 +2,6 @@ import { MockRuntimeError } from '@jamashita/anden-error';
 import { MockValueObject } from '@jamashita/anden-object';
 import sinon, { SinonSpy } from 'sinon';
 import { Plan } from '../../../plan/src/Interface/Plan';
-import { UnscharferelationError } from '../../../unscharferelation/src/Error/UnscharferelationError';
-import { Heisenberg } from '../../../unscharferelation/src/Heisenberg/Heisenberg';
 import { Chrono } from '../Chrono/Interface/Chrono';
 import { SuperpositionError } from '../Error/SuperpositionError';
 import { Detoxicated } from '../Interface/Detoxicated';
@@ -2970,86 +2968,6 @@ describe('SuperpositionInternal', () => {
       });
 
       expect(spy.called).toBe(true);
-    });
-  });
-
-  describe('toUnscharferelation', () => {
-    it('will transform to Present Unscharferelation if Superposition is Alive', async () => {
-      expect.assertions(2);
-
-      const value: number = 2;
-
-      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
-        (chrono: Chrono<number, MockRuntimeError>) => {
-          chrono.accept(value);
-        },
-        [MockRuntimeError]
-      );
-
-      const heisenberg: Heisenberg<number> = await superposition.toUnscharferelation().terminate();
-
-      expect(heisenberg.isPresent()).toBe(true);
-      expect(heisenberg.get()).toBe(value);
-    });
-
-    it('will transform to Absent Unscharferelation if the value is undefined or null', async () => {
-      expect.assertions(2);
-
-      const value: undefined = undefined;
-
-      const superposition: SuperpositionInternal<undefined, MockRuntimeError> = SuperpositionInternal.of<undefined, MockRuntimeError>(
-        (chrono: Chrono<undefined, MockRuntimeError>) => {
-          chrono.accept(value);
-        },
-        [MockRuntimeError]
-      );
-
-      const heisenberg: Heisenberg<undefined> = await superposition.toUnscharferelation().terminate();
-
-      expect(heisenberg.isAbsent()).toBe(true);
-      expect(() => {
-        heisenberg.get();
-      }).toThrow(UnscharferelationError);
-    });
-
-    it('will transform to Absent Unscharferelation if Superposition is Dead', async () => {
-      expect.assertions(2);
-
-      const error: MockRuntimeError = new MockRuntimeError();
-
-      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
-        (chrono: Chrono<number, MockRuntimeError>) => {
-          chrono.decline(error);
-        },
-        [MockRuntimeError]
-      );
-
-      const heisenberg: Heisenberg<number> = await superposition.toUnscharferelation().terminate();
-
-      expect(heisenberg.isAbsent()).toBe(true);
-      expect(() => {
-        heisenberg.get();
-      }).toThrow(UnscharferelationError);
-    });
-
-    it('will transform to Lost Unscharferelation if Superposition is Contradiction', async () => {
-      expect.assertions(2);
-
-      const error: MockRuntimeError = new MockRuntimeError();
-
-      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
-        (chrono: Chrono<number, MockRuntimeError>) => {
-          chrono.throw(error);
-        },
-        [MockRuntimeError]
-      );
-
-      const heisenberg: Heisenberg<number> = await superposition.toUnscharferelation().terminate();
-
-      expect(heisenberg.isLost()).toBe(true);
-      expect(() => {
-        heisenberg.get();
-      }).toThrow(error);
     });
   });
 });

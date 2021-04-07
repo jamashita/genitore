@@ -1,7 +1,6 @@
 import { MockRuntimeError } from '@jamashita/anden-error';
 import { MockValueObject } from '@jamashita/anden-object';
 import sinon, { SinonSpy } from 'sinon';
-import { Schrodinger } from '../../../superposition/src/Schrodinger/Schrodinger';
 import { Epoque } from '../Epoque/Interface/Epoque';
 import { UnscharferelationError } from '../Error/UnscharferelationError';
 import { Absent } from '../Heisenberg/Absent';
@@ -865,68 +864,6 @@ describe('Unscharferelation', () => {
       });
 
       expect(spy.called).toBe(true);
-    });
-  });
-
-  describe('toSuperposition', () => {
-    it('Present: will transform to Alive', async () => {
-      expect.assertions(2);
-
-      const value: number = -201;
-
-      const unscharferelation: Unscharferelation<number> = Unscharferelation.present<number>(value);
-
-      const schrodinger: Schrodinger<number, UnscharferelationError> = await unscharferelation.toSuperposition().terminate();
-
-      expect(schrodinger.isAlive()).toBe(true);
-      expect(schrodinger.get()).toBe(value);
-    });
-
-    it('Present: if the value is Error, will transform to Dead', async () => {
-      expect.assertions(2);
-
-      const value: MockRuntimeError = new MockRuntimeError();
-
-      const unscharferelation: Unscharferelation<MockRuntimeError> = Unscharferelation.present<MockRuntimeError>(value);
-
-      const schrodinger: Schrodinger<MockRuntimeError, UnscharferelationError> = await unscharferelation.toSuperposition().terminate();
-
-      expect(schrodinger.isDead()).toBe(true);
-      expect(() => {
-        schrodinger.get();
-      }).toThrow(UnscharferelationError);
-    });
-
-    it('Absent: will transform to Dead', async () => {
-      expect.assertions(2);
-
-      const unscharferelation: Unscharferelation<number> = Unscharferelation.absent<number>();
-
-      const schrodinger: Schrodinger<number, UnscharferelationError> = await unscharferelation.toSuperposition().terminate();
-
-      expect(schrodinger.isDead()).toBe(true);
-      expect(() => {
-        schrodinger.get();
-      }).toThrow(UnscharferelationError);
-    });
-
-    it('Lost: will transform to Contradiction', async () => {
-      expect.assertions(2);
-
-      const error: MockRuntimeError = new MockRuntimeError();
-
-      const unscharferelation: Unscharferelation<number> = Unscharferelation.of<number>(
-        (epoque: Epoque<number>) => {
-          epoque.throw(error);
-        }
-      );
-
-      const schrodinger: Schrodinger<number, UnscharferelationError> = await unscharferelation.toSuperposition().terminate();
-
-      expect(schrodinger.isContradiction()).toBe(true);
-      expect(() => {
-        schrodinger.get();
-      }).toThrow(error);
     });
   });
 });

@@ -1016,22 +1016,4 @@ describe('Superposition', () => {
       expect(spy.called).toBe(true);
     });
   });
-
-  describe('toUnscharferelation', () => {
-    it('delegates inner Superposition', () => {
-      expect.assertions(1);
-
-      const mock: MockSuperposition<number, MockRuntimeError> = new MockSuperposition<number, MockRuntimeError>();
-
-      const spy: SinonSpy = sinon.spy();
-
-      mock.toUnscharferelation = spy;
-
-      const superposition: Superposition<number, MockRuntimeError> = Superposition.ofSuperposition<number, MockRuntimeError>(mock);
-
-      superposition.toUnscharferelation();
-
-      expect(spy.called).toBe(true);
-    });
-  });
 });

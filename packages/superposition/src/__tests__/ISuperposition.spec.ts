@@ -8,7 +8,7 @@ import { SuperpositionInternal } from '../SuperpositionInternal';
 describe('ISuperposition', () => {
   describe('isSuperposition', () => {
     it('returns true if ISuperposition methods the given object have', () => {
-      expect.assertions(28);
+      expect.assertions(27);
 
       const superposition1: Superposition<number, MockRuntimeError> = Superposition.alive<number, MockRuntimeError>(4);
       const superposition2: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
@@ -313,49 +313,6 @@ describe('ISuperposition', () => {
           }
         })
       ).toBe(false);
-      expect(
-        isSuperposition<number, MockRuntimeError>({
-          get() {
-            // NOOP
-          },
-          getErrors() {
-            // NOOP
-          },
-          terminate() {
-            // NOOP
-          },
-          filter() {
-            // NOOP
-          },
-          map() {
-            // NOOP
-          },
-          recover() {
-            // NOOP
-          },
-          transform() {
-            // NOOP
-          },
-          ifAlive() {
-            // NOOP
-          },
-          ifDead() {
-            // NOOP
-          },
-          ifContradiction() {
-            // NOOP
-          },
-          pass() {
-            // NOOP
-          },
-          peek() {
-            // NOOP
-          },
-          toUnscharferelation() {
-            // NOOP
-          }
-        })
-      ).toBe(true);
       expect(isSuperposition<number, MockRuntimeError>(superposition1)).toBe(true);
       expect(isSuperposition<number, MockRuntimeError>(superposition2)).toBe(true);
     });
