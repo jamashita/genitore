@@ -1,15 +1,16 @@
 import { Objet } from '@jamashita/anden-object';
 import { Consumer, Peek, Predicate, Reject, Resolve, SyncAsync, UnaryFunction } from '@jamashita/anden-type';
-import { DestroyPassPlan } from '../../plan/src/DestroyPassPlan';
-import { DestroySpoilPlan } from '../../plan/src/DestroySpoilPlan';
-import { DestroyPlan } from '../../plan/src/Interface/DestroyPlan';
-import { MapPlan } from '../../plan/src/Interface/MapPlan';
-import { Plan } from '../../plan/src/Interface/Plan';
-import { RecoveryPlan } from '../../plan/src/Interface/RecoveryPlan';
-import { MapPassPlan } from '../../plan/src/MapPassPlan';
-import { MapSpoilPlan } from '../../plan/src/MapSpoilPlan';
-import { RecoveryPassPlan } from '../../plan/src/RecoveryPassPlan';
-import { RecoverySpoilPlan } from '../../plan/src/RecoverySpoilPlan';
+import {
+  DestroyPassPlan,
+  DestroyPlan,
+  DestroySpoilPlan,
+  MapPassPlan,
+  MapPlan,
+  MapSpoilPlan,
+  Plan,
+  RecoveryPlan,
+  RecoverySpoilPlan
+} from '@jamashita/genitore-plan';
 import { Chrono } from './Chrono/Interface/Chrono';
 import { SuperpositionError } from './Error/SuperpositionError';
 import { DeadConstructor } from './Interface/DeadConstructor';
