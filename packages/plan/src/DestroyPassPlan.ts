@@ -1,4 +1,4 @@
-import { Consumer } from '@jamashita/publikum-type';
+import { Consumer } from '@jamashita/anden-type';
 import { DestroyPlan } from './Interface/DestroyPlan';
 
 export class DestroyPassPlan implements DestroyPlan<'DestroyPassPlan'> {

@@ -1,4 +1,4 @@
-import { Noun } from '@jamashita/publikum-interface';
+import { Noun } from '@jamashita/anden-type';
 import { DeadConstructor } from '../../Interface/DeadConstructor';
 import { Detoxicated } from '../../Interface/Detoxicated';
 

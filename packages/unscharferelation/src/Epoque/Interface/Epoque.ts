@@ -1,4 +1,4 @@
-import { Noun } from '@jamashita/publikum-interface';
+import { Noun } from '@jamashita/anden-type';
 import { Matter } from '../../Interface/Matter';
 
 export interface Epoque<M, N extends string = string> extends Noun<N> {

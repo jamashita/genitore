@@ -1,4 +1,4 @@
-import { Kind, Supplier, Suspicious, SyncAsync } from '@jamashita/publikum-type';
+import { Kind, Supplier, Suspicious, SyncAsync } from '@jamashita/anden-type';
 import { RecoveryPlan } from '../../../plan/src/Interface/RecoveryPlan';
 import { Epoque } from '../Epoque/Interface/Epoque';
 import { isUnscharferelation, IUnscharferelation } from '../Interface/IUnscharferelation';

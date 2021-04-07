@@ -1,5 +1,5 @@
-import { Nominative } from '@jamashita/publikum-interface';
-import { Consumer, Kind, Peek, Predicate, SyncAsync, UnaryFunction } from '@jamashita/publikum-type';
+import { Nominative, Consumer, Kind, Peek, Predicate, SyncAsync, UnaryFunction } from '@jamashita/anden-type';
+
 import { IUnscharferelation } from '../../../unscharferelation/src/Interface/IUnscharferelation';
 import { SuperpositionError } from '../Error/SuperpositionError';
 import { Schrodinger } from '../Schrodinger/Schrodinger';

@@ -1,5 +1,5 @@
-import { MockRuntimeError } from '@jamashita/publikum-error';
-import { Resolve } from '@jamashita/publikum-type';
+import { MockRuntimeError } from '@jamashita/anden-error';
+import { Resolve } from '@jamashita/anden-type';
 import sinon, { SinonSpy } from 'sinon';
 import { Epoque } from '../../Epoque/Interface/Epoque';
 import { MockEpoque } from '../../Epoque/Mock/MockEpoque';
@@ -123,7 +123,7 @@ describe('PresentPlan', () => {
           new MockEpoque<number>(
             (n: number) => {
               spy2();
-              expect(n).toBe(value - 6);
+              expect(n).toBe(value);
 
               resolve();
             },

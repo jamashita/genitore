@@ -1,4 +1,4 @@
-import { RuntimeError } from '@jamashita/publikum-error';
+import { RuntimeError } from '@jamashita/anden-error';
 
 export class UnscharferelationError extends RuntimeError<'UnscharferelationError'> {
   public readonly noun: 'UnscharferelationError' = 'UnscharferelationError';

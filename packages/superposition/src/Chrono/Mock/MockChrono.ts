@@ -1,4 +1,4 @@
-import { Consumer } from '@jamashita/publikum-type';
+import { Consumer } from '@jamashita/anden-type';
 import { DeadConstructor } from '../../Interface/DeadConstructor';
 import { Detoxicated } from '../../Interface/Detoxicated';
 import { Chrono } from '../Interface/Chrono';

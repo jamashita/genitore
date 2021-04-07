@@ -1,6 +1,6 @@
-import { isEqualable } from '@jamashita/publikum-interface';
-import { Objet, ValueObject } from '@jamashita/publikum-object';
-import { Consumer } from '@jamashita/publikum-type';
+import { isEqualable, Consumer } from '@jamashita/anden-type';
+import { Objet, ValueObject } from '@jamashita/anden-object';
+
 import { Alive } from './Alive';
 import { Dead } from './Dead';
 import { Schrodinger } from './Schrodinger';

@@ -1,5 +1,5 @@
-import { MockRuntimeError } from '@jamashita/publikum-error';
-import { Resolve } from '@jamashita/publikum-type';
+import { MockRuntimeError } from '@jamashita/anden-error';
+import { Resolve } from '@jamashita/anden-type';
 import sinon, { SinonSpy } from 'sinon';
 import { Epoque } from '../../Epoque/Interface/Epoque';
 import { MockEpoque } from '../../Epoque/Mock/MockEpoque';
@@ -115,9 +115,7 @@ describe('AbsentPlan', () => {
           () => {
             spy1();
 
-            return Unscharferelation.of<number>((e: Epoque<number>) => {
-              return e.accept(value - 6);
-            });
+            return Unscharferelation.present<number>(value - 6);
           },
           new MockEpoque<number>(
             (n: number) => {

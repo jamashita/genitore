@@ -1,4 +1,4 @@
-import { Objet } from '@jamashita/publikum-object';
+import { Objet } from '@jamashita/anden-object';
 import {
   Consumer,
   Kind,
@@ -8,7 +8,7 @@ import {
   Suspicious,
   SyncAsync,
   UnaryFunction
-} from '@jamashita/publikum-type';
+} from '@jamashita/anden-type';
 import { Superposition } from '../../superposition/src/Superposition';
 import { Epoque } from './Epoque/Interface/Epoque';
 import { UnscharferelationError } from './Error/UnscharferelationError';

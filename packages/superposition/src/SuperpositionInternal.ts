@@ -1,5 +1,5 @@
-import { Objet } from '@jamashita/publikum-object';
-import { Consumer, Kind, Peek, Predicate, Reject, Resolve, SyncAsync, UnaryFunction } from '@jamashita/publikum-type';
+import { Objet } from '@jamashita/anden-object';
+import { Consumer, Kind, Peek, Predicate, Reject, Resolve, SyncAsync, UnaryFunction } from '@jamashita/anden-type';
 import { DestroyPassPlan } from '../../plan/src/DestroyPassPlan';
 import { DestroySpoilPlan } from '../../plan/src/DestroySpoilPlan';
 import { DestroyPlan } from '../../plan/src/Interface/DestroyPlan';

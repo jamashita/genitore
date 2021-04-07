@@ -1,4 +1,4 @@
-import { Consumer } from '@jamashita/publikum-type';
+import { Consumer } from '@jamashita/anden-type';
 import { Plan } from './Interface/Plan';
 
 export class PassThroughPlan<M, R> implements Plan<M, R, 'PassThroughPlan'> {

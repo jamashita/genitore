@@ -1,5 +1,5 @@
-import { ValueObject } from '@jamashita/publikum-object';
-import { Consumer } from '@jamashita/publikum-type';
+import { ValueObject } from '@jamashita/anden-object';
+import { Consumer } from '@jamashita/anden-type';
 import { UnscharferelationError } from '../Error/UnscharferelationError';
 import { Heisenberg } from './Heisenberg';
 import { Lost } from './Lost';

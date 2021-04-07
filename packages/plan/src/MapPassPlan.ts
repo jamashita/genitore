@@ -1,4 +1,4 @@
-import { Consumer } from '@jamashita/publikum-type';
+import { Consumer } from '@jamashita/anden-type';
 import { MapPlan } from './Interface/MapPlan';
 
 export class MapPassPlan<M> implements MapPlan<M, 'MapPassPlan'> {

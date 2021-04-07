@@ -1,4 +1,4 @@
-import { ValueObject } from '@jamashita/publikum-object';
+import { ValueObject } from '@jamashita/anden-object';
 import { SuperpositionError } from '../Error/SuperpositionError';
 import { Alive } from './Alive';
 import { Contradiction } from './Contradiction';

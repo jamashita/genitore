@@ -1,4 +1,4 @@
-import { Consumer } from '@jamashita/publikum-type';
+import { Consumer } from '@jamashita/anden-type';
 import { Matter } from '../../Interface/Matter';
 import { Epoque } from '../Interface/Epoque';
 

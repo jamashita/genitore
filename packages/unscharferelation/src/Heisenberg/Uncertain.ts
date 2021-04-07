@@ -1,4 +1,4 @@
-import { ValueObject } from '@jamashita/publikum-object';
+import { ValueObject } from '@jamashita/anden-object';
 import { UnscharferelationError } from '../Error/UnscharferelationError';
 import { Absent } from './Absent';
 import { Heisenberg } from './Heisenberg';

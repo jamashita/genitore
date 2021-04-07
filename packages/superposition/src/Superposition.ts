@@ -1,4 +1,4 @@
-import { Objet } from '@jamashita/publikum-object';
+import { Objet } from '@jamashita/anden-object';
 import {
   Consumer,
   Kind,
@@ -8,7 +8,7 @@ import {
   Supplier,
   SyncAsync,
   UnaryFunction
-} from '@jamashita/publikum-type';
+} from '@jamashita/anden-type';
 import { Unscharferelation } from '../../unscharferelation/src/Unscharferelation';
 import { Chrono } from './Chrono/Interface/Chrono';
 import { SuperpositionError } from './Error/SuperpositionError';

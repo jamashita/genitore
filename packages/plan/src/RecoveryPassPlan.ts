@@ -1,4 +1,4 @@
-import { Consumer } from '@jamashita/publikum-type';
+import { Consumer } from '@jamashita/anden-type';
 import { RecoveryPlan } from './Interface/RecoveryPlan';
 
 export class RecoveryPassPlan<R> implements RecoveryPlan<R, 'RecoveryPassPlan'> {

@@ -1,5 +1,4 @@
-import { Nominative } from '@jamashita/publikum-interface';
-import {
+import { Nominative,
   Consumer,
   Kind,
   Peek,
@@ -7,8 +6,8 @@ import {
   Supplier,
   Suspicious,
   SyncAsync,
-  UnaryFunction
-} from '@jamashita/publikum-type';
+  UnaryFunction } from '@jamashita/anden-type';
+
 import { ISuperposition } from '../../../superposition/src/Interface/ISuperposition';
 import { UnscharferelationError } from '../Error/UnscharferelationError';
 import { Heisenberg } from '../Heisenberg/Heisenberg';

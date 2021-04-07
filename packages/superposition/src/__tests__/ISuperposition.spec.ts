@@ -1,4 +1,4 @@
-import { MockRuntimeError } from '@jamashita/publikum-error';
+import { MockRuntimeError } from '@jamashita/anden-error';
 import { Chrono } from '../Chrono/Interface/Chrono';
 import { DeadConstructor } from '../Interface/DeadConstructor';
 import { containsError, isSuperposition } from '../Interface/ISuperposition';

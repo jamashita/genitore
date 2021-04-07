@@ -1,4 +1,4 @@
-import { Kind, Suspicious, SyncAsync, UnaryFunction } from '@jamashita/publikum-type';
+import { Kind, Suspicious, SyncAsync, UnaryFunction } from '@jamashita/anden-type';
 import { MapPlan } from '../../../plan/src/Interface/MapPlan';
 import { Epoque } from '../Epoque/Interface/Epoque';
 import { isUnscharferelation, IUnscharferelation } from '../Interface/IUnscharferelation';

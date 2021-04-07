@@ -1,4 +1,4 @@
-import { MockRuntimeError } from '@jamashita/publikum-error';
+import { MockRuntimeError } from '@jamashita/anden-error';
 import sinon, { SinonSpy } from 'sinon';
 import { MockChrono } from '../../Chrono/Mock/MockChrono';
 import { DeadConstructor } from '../../Interface/DeadConstructor';

@@ -1,5 +1,5 @@
-import { UnimplementedError } from '@jamashita/publikum-error';
-import { ValueObject } from '@jamashita/publikum-object';
+import { UnimplementedError } from '@jamashita/anden-error';
+import { ValueObject } from '@jamashita/anden-object';
 import { ISuperposition } from '../../../superposition/src/Interface/ISuperposition';
 import { UnscharferelationError } from '../Error/UnscharferelationError';
 import { Heisenberg } from '../Heisenberg/Heisenberg';

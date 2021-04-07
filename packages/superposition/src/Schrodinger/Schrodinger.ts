@@ -1,5 +1,5 @@
-import { Nominative } from '@jamashita/publikum-interface';
-import { Consumer } from '@jamashita/publikum-type';
+import { Nominative, Consumer } from '@jamashita/anden-type';
+
 import { Detoxicated } from '../Interface/Detoxicated';
 import { Alive } from './Alive';
 import { Contradiction } from './Contradiction';

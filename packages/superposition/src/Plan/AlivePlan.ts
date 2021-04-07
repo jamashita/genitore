@@ -1,4 +1,4 @@
-import { Kind, SyncAsync, UnaryFunction } from '@jamashita/publikum-type';
+import { Kind, SyncAsync, UnaryFunction } from '@jamashita/anden-type';
 import { MapPlan } from '../../../plan/src/Interface/MapPlan';
 import { Chrono } from '../Chrono/Interface/Chrono';
 import { Detoxicated } from '../Interface/Detoxicated';

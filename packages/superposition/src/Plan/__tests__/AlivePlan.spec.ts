@@ -1,5 +1,5 @@
-import { MockRuntimeError } from '@jamashita/publikum-error';
-import { Resolve } from '@jamashita/publikum-type';
+import { MockRuntimeError } from '@jamashita/anden-error';
+import { Resolve } from '@jamashita/anden-type';
 import sinon, { SinonSpy } from 'sinon';
 import { Chrono } from '../../Chrono/Interface/Chrono';
 import { MockChrono } from '../../Chrono/Mock/MockChrono';

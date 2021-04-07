@@ -1,6 +1,6 @@
-import { MockRuntimeError } from '@jamashita/publikum-error';
-import { Equalable } from '@jamashita/publikum-interface';
-import { MockValueObject } from '@jamashita/publikum-object';
+import { MockRuntimeError } from '@jamashita/anden-error';
+import { Equalable } from '@jamashita/anden-type';
+import { MockValueObject } from '@jamashita/anden-object';
 import sinon, { SinonSpy } from 'sinon';
 import { Alive } from '../Alive';
 import { Contradiction } from '../Contradiction';

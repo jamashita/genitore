@@ -1,4 +1,4 @@
-import { MockValueObject } from '@jamashita/publikum-object';
+import { MockValueObject } from '@jamashita/anden-object';
 import sinon, { SinonSpy } from 'sinon';
 import { UnscharferelationError } from '../../Error/UnscharferelationError';
 import { Absent } from '../Absent';

@@ -1,5 +1,5 @@
-import { MockRuntimeError } from '@jamashita/publikum-error';
-import { MockValueObject } from '@jamashita/publikum-object';
+import { MockRuntimeError } from '@jamashita/anden-error';
+import { MockValueObject } from '@jamashita/anden-object';
 import sinon, { SinonSpy } from 'sinon';
 import { Plan } from '../../../plan/src/Interface/Plan';
 import { UnscharferelationError } from '../../../unscharferelation/src/Error/UnscharferelationError';
