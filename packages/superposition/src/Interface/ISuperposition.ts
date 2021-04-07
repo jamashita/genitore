@@ -1,6 +1,4 @@
-import { Nominative, Consumer, Kind, Peek, Predicate, SyncAsync, UnaryFunction } from '@jamashita/anden-type';
-
-import { IUnscharferelation } from '../../../unscharferelation/src/Interface/IUnscharferelation';
+import { Consumer, Kind, Nominative, Peek, Predicate, SyncAsync, UnaryFunction } from '@jamashita/anden-type';
 import { SuperpositionError } from '../Error/SuperpositionError';
 import { Schrodinger } from '../Schrodinger/Schrodinger';
 import { DeadConstructor } from './DeadConstructor';
@@ -40,8 +38,6 @@ export interface ISuperposition<A, D extends Error, N extends string = string> e
   pass(accepted: Consumer<Detoxicated<A>>, declined: Consumer<D>, thrown: Consumer<unknown>): this;
 
   peek(peek: Peek): this;
-
-  toUnscharferelation(): IUnscharferelation<A>;
 }
 
 export const isSuperposition = <A, D extends Error>(value: unknown): value is ISuperposition<A, D> => {
@@ -82,9 +78,6 @@ export const isSuperposition = <A, D extends Error>(value: unknown): value is IS
     return false;
   }
   if (!Kind.isFunction(value.peek)) {
-    return false;
-  }
-  if (!Kind.isFunction(value.toUnscharferelation)) {
     return false;
   }
 

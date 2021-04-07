@@ -1,15 +1,5 @@
 import { Objet } from '@jamashita/anden-object';
-import {
-  Consumer,
-  Kind,
-  Nullable,
-  Peek,
-  Predicate,
-  Supplier,
-  SyncAsync,
-  UnaryFunction
-} from '@jamashita/anden-type';
-import { Unscharferelation } from '../../unscharferelation/src/Unscharferelation';
+import { Consumer, Kind, Nullable, Peek, Predicate, Supplier, SyncAsync, UnaryFunction } from '@jamashita/anden-type';
 import { Chrono } from './Chrono/Interface/Chrono';
 import { SuperpositionError } from './Error/SuperpositionError';
 import { DeadConstructor } from './Interface/DeadConstructor';
@@ -265,9 +255,5 @@ export class Superposition<A, D extends Error> extends Objet<'Superposition'> im
     this.internal.peek(peek);
 
     return this;
-  }
-
-  public toUnscharferelation(): Unscharferelation<A> {
-    return Unscharferelation.ofUnscharferelation<A>(this.internal.toUnscharferelation());
   }
 }

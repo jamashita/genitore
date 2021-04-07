@@ -1,5 +1,5 @@
 import { Objet } from '@jamashita/anden-object';
-import { Consumer, Kind, Peek, Predicate, Reject, Resolve, SyncAsync, UnaryFunction } from '@jamashita/anden-type';
+import { Consumer, Peek, Predicate, Reject, Resolve, SyncAsync, UnaryFunction } from '@jamashita/anden-type';
 import { DestroyPassPlan } from '../../plan/src/DestroyPassPlan';
 import { DestroySpoilPlan } from '../../plan/src/DestroySpoilPlan';
 import { DestroyPlan } from '../../plan/src/Interface/DestroyPlan';
@@ -10,9 +10,6 @@ import { MapPassPlan } from '../../plan/src/MapPassPlan';
 import { MapSpoilPlan } from '../../plan/src/MapSpoilPlan';
 import { RecoveryPassPlan } from '../../plan/src/RecoveryPassPlan';
 import { RecoverySpoilPlan } from '../../plan/src/RecoverySpoilPlan';
-import { Epoque } from '../../unscharferelation/src/Epoque/Interface/Epoque';
-import { Matter } from '../../unscharferelation/src/Interface/Matter';
-import { UnscharferelationInternal } from '../../unscharferelation/src/UnscharferelationInternal';
 import { Chrono } from './Chrono/Interface/Chrono';
 import { SuperpositionError } from './Error/SuperpositionError';
 import { DeadConstructor } from './Interface/DeadConstructor';
@@ -182,26 +179,6 @@ export class SuperpositionInternal<A, D extends Error> extends Objet<'Superposit
     this.handle(MapPassPlan.of<Detoxicated<A>>(peek), RecoveryPassPlan.of<D>(peek), DestroyPassPlan.of(peek));
 
     return this;
-  }
-
-  public toUnscharferelation(): UnscharferelationInternal<A> {
-    return UnscharferelationInternal.of<A>((epoque: Epoque<A>) => {
-      this.pass(
-        (v: Detoxicated<A>) => {
-          if (Kind.isUndefined(v) || Kind.isNull(v)) {
-            return epoque.decline();
-          }
-
-          return epoque.accept((v as unknown) as Matter<A>);
-        },
-        () => {
-          return epoque.decline();
-        },
-        (e: unknown) => {
-          return epoque.throw(e);
-        }
-      );
-    });
   }
 
   public accept(value: Detoxicated<A>): void {

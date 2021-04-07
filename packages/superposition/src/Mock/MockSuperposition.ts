@@ -1,6 +1,5 @@
 import { UnimplementedError } from '@jamashita/anden-error';
 import { ValueObject } from '@jamashita/anden-object';
-import { IUnscharferelation } from '../../../unscharferelation/src/Interface/IUnscharferelation';
 import { SuperpositionError } from '../Error/SuperpositionError';
 import { DeadConstructor } from '../Interface/DeadConstructor';
 import { Detoxicated } from '../Interface/Detoxicated';
@@ -67,10 +66,6 @@ export class MockSuperposition<A, D extends Error> extends ValueObject<'MockSupe
   }
 
   public transform<B = A, E extends Error = D>(): ISuperposition<B, E> {
-    throw new UnimplementedError();
-  }
-
-  public toUnscharferelation(): IUnscharferelation<A> {
     throw new UnimplementedError();
   }
 }

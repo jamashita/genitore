@@ -20,9 +20,6 @@ import { MapPassPlan } from '../../plan/src/MapPassPlan';
 import { MapSpoilPlan } from '../../plan/src/MapSpoilPlan';
 import { RecoveryPassPlan } from '../../plan/src/RecoveryPassPlan';
 import { RecoverySpoilPlan } from '../../plan/src/RecoverySpoilPlan';
-import { Chrono } from '../../superposition/src/Chrono/Interface/Chrono';
-import { Detoxicated } from '../../superposition/src/Interface/Detoxicated';
-import { SuperpositionInternal } from '../../superposition/src/SuperpositionInternal';
 import { Epoque } from './Epoque/Interface/Epoque';
 import { UnscharferelationError } from './Error/UnscharferelationError';
 import { Absent } from './Heisenberg/Absent';
@@ -163,26 +160,6 @@ export class UnscharferelationInternal<P> extends Objet<'UnscharferelationIntern
     this.handle(MapPassPlan.of<Matter<P>>(peek), RecoveryPassPlan.of<void>(peek), DestroyPassPlan.of(peek));
 
     return this;
-  }
-
-  public toSuperposition(): SuperpositionInternal<P, UnscharferelationError> {
-    return SuperpositionInternal.of<P, UnscharferelationError>((chrono: Chrono<P, UnscharferelationError>) => {
-      this.pass(
-        (value: Matter<P>) => {
-          if (value instanceof Error) {
-            return chrono.decline(new UnscharferelationError('ABSENT'));
-          }
-
-          return chrono.accept((value as unknown) as Detoxicated<P>);
-        },
-        () => {
-          return chrono.decline(new UnscharferelationError('ABSENT'));
-        },
-        (e: unknown) => {
-          return chrono.throw(e);
-        }
-      );
-    }, [UnscharferelationError]);
   }
 
   public accept(value: Matter<P>): void {

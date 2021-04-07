@@ -1,15 +1,14 @@
-import { Nominative,
+import {
   Consumer,
   Kind,
+  Nominative,
   Peek,
   Predicate,
   Supplier,
   Suspicious,
   SyncAsync,
-  UnaryFunction } from '@jamashita/anden-type';
-
-import { ISuperposition } from '../../../superposition/src/Interface/ISuperposition';
-import { UnscharferelationError } from '../Error/UnscharferelationError';
+  UnaryFunction
+} from '@jamashita/anden-type';
 import { Heisenberg } from '../Heisenberg/Heisenberg';
 import { Matter } from './Matter';
 
@@ -33,8 +32,6 @@ export interface IUnscharferelation<P, N extends string = string> extends Nomina
   pass(accepted: Consumer<Matter<P>>, declined: Consumer<void>, thrown: Consumer<unknown>): this;
 
   peek(peek: Peek): this;
-
-  toSuperposition(): ISuperposition<P, UnscharferelationError>;
 }
 
 export const isUnscharferelation = <P>(value: unknown): value is IUnscharferelation<P> => {
@@ -69,9 +66,6 @@ export const isUnscharferelation = <P>(value: unknown): value is IUnscharferelat
     return false;
   }
   if (!Kind.isFunction(value.peek)) {
-    return false;
-  }
-  if (!Kind.isFunction(value.toSuperposition)) {
     return false;
   }
 
