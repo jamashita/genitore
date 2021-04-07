@@ -20,7 +20,7 @@
     "setup": "lerna bootstrap && lerna link",
     "test": "jest test",
     "update": "yarn setup && yarn update:upgrade && yarn update:install",
-    "update:install": "yarn install && yarn upgrade",
+    "update:install": "yarn install && yarn upgrade && yarn audit fix --force",
     "update:upgrade": "ncu --packageManager yarn --deep --upgrade --timeout 600000"
   },
   "devDependencies": {
