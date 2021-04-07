@@ -36,5 +36,8 @@
   "engineStrict": true,
   "publishConfig": {
     "access": "public"
+  },
+  "devDependencies": {
+    "sinon": "10.0.0"
   }
 }
