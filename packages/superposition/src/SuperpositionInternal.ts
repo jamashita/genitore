@@ -8,6 +8,7 @@ import {
   MapPlan,
   MapSpoilPlan,
   Plan,
+  RecoveryPassPlan,
   RecoveryPlan,
   RecoverySpoilPlan
 } from '@jamashita/genitore-plan';

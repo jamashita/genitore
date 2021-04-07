@@ -312,7 +312,7 @@ describe('ISuperposition', () => {
             // NOOP
           }
         })
-      ).toBe(false);
+      ).toBe(true);
       expect(isSuperposition<number, MockRuntimeError>(superposition1)).toBe(true);
       expect(isSuperposition<number, MockRuntimeError>(superposition2)).toBe(true);
     });
