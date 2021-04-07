@@ -123,7 +123,7 @@ describe('PresentPlan', () => {
           new MockEpoque<number>(
             (n: number) => {
               spy2();
-              expect(n).toBe(value);
+              expect(n).toBe(value - 6);
 
               resolve();
             },
