@@ -1,6 +1,6 @@
 {
   "name": "@jamashita/genitore-plan",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "private": false,
   "repository": {
     "type": "git",
@@ -27,7 +27,7 @@
   "dependencies": {
     "@jamashita/anden-error": "1.5.0",
     "@jamashita/anden-object": "1.6.0",
-    "@jamashita/anden-type": "1.5.0"
+    "@jamashita/anden-type": "1.8.0"
   },
   "devDependencies": {
     "sinon": "10.0.1"
