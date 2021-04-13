@@ -1,3 +1,10 @@
+# [@jamashita/genitore-unscharferelation-v1.2.0](https://github.com/jamashita/genitore/compare/@jamashita/genitore-unscharferelation-v1.1.0...@jamashita/genitore-unscharferelation-v1.2.0) (2021-04-13)
+
+
+### Features
+
+* 🎸 update ([7cb004c](https://github.com/jamashita/genitore/commit/7cb004c658752344b4563453a14fb6942cbaeb22))
+
 # [@jamashita/genitore-unscharferelation-v1.1.0](https://github.com/jamashita/genitore/compare/@jamashita/genitore-unscharferelation-v1.0.0...@jamashita/genitore-unscharferelation-v1.1.0) (2021-04-10)
 
 
