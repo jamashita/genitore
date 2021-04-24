@@ -12,6 +12,9 @@
   "references": [
     {
       "path": "../plan/tsconfig.build.json"
+    },
+    {
+      "path": "../superposition/tsconfig.build.json"
     }
   ]
 }

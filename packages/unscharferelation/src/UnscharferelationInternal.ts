@@ -22,6 +22,7 @@ import {
   RecoveryPlan,
   RecoverySpoilPlan
 } from '@jamashita/genitore-plan';
+import { Chrono, Detoxicated, SuperpositionInternal } from '@jamashita/genitore-superposition';
 import { Epoque } from './Epoque/Interface/Epoque';
 import { UnscharferelationError } from './Error/UnscharferelationError';
 import { Absent } from './Heisenberg/Absent';
@@ -162,6 +163,26 @@ export class UnscharferelationInternal<P> extends Objet<'UnscharferelationIntern
     this.handle(MapPassPlan.of<Matter<P>>(peek), RecoveryPassPlan.of<void>(peek), DestroyPassPlan.of(peek));
 
     return this;
+  }
+
+  public toSuperposition(): SuperpositionInternal<P, UnscharferelationError> {
+    return SuperpositionInternal.of<P, UnscharferelationError>((chrono: Chrono<P, UnscharferelationError>) => {
+      this.pass(
+        (value: Matter<P>) => {
+          if (value instanceof Error) {
+            return chrono.decline(new UnscharferelationError('ABSENT'));
+          }
+
+          return chrono.accept((value as unknown) as Detoxicated<P>);
+        },
+        () => {
+          return chrono.decline(new UnscharferelationError('ABSENT'));
+        },
+        (e: unknown) => {
+          return chrono.throw(e);
+        }
+      );
+    }, [UnscharferelationError]);
   }
 
   public accept(value: Matter<P>): void {

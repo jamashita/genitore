@@ -6,7 +6,7 @@ import { UnscharferelationInternal } from '../UnscharferelationInternal';
 describe('IUnscharferelation', () => {
   describe('isUnscharferelation', () => {
     it('returns true if IUnscharferelation methods the given object have', () => {
-      expect.assertions(25);
+      expect.assertions(26);
 
       const unscharferelation1: Unscharferelation<number> = Unscharferelation.present<number>(4);
       const unscharferelation2: UnscharferelationInternal<number> = UnscharferelationInternal.of<number>(
@@ -229,6 +229,43 @@ describe('IUnscharferelation', () => {
             // NOOP
           },
           peek() {
+            // NOOP
+          }
+        })
+      ).toBe(false);
+      expect(
+        isUnscharferelation<number>({
+          get() {
+            // NOOP
+          },
+          terminate() {
+            // NOOP
+          },
+          filter() {
+            // NOOP
+          },
+          map() {
+            // NOOP
+          },
+          recover() {
+            // NOOP
+          },
+          ifPresent() {
+            // NOOP
+          },
+          ifAbsent() {
+            // NOOP
+          },
+          ifLost() {
+            // NOOP
+          },
+          pass() {
+            // NOOP
+          },
+          peek() {
+            // NOOP
+          },
+          toSuperposition() {
             // NOOP
           }
         })
