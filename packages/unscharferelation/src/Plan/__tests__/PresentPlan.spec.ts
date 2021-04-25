@@ -102,7 +102,7 @@ describe('PresentPlan', () => {
       expect(spy4.called).toBe(false);
     });
 
-    it.skip('invokes first callback when Present Unscharfeleration given', async () => {
+    it('invokes first callback when Present Unscharfeleration given', async () => {
       expect.assertions(6);
 
       const value: number = 10;
