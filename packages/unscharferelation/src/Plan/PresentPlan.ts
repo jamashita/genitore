@@ -28,6 +28,9 @@ export class PresentPlan<P, Q> implements MapPlan<Matter<P>, 'PresentPlan'> {
     try {
       const mapped: SyncAsync<IUnscharferelation<Q> | Suspicious<Matter<Q>>> = this.mapper(value);
 
+      if (isUnscharferelation<Q>(mapped)) {
+        return this.forUnscharferelation(mapped);
+      }
       if (Kind.isPromiseLike<IUnscharferelation<Q> | Suspicious<Matter<Q>>>(mapped)) {
         return mapped.then<unknown, unknown>(
           (v: IUnscharferelation<Q> | Suspicious<Matter<Q>>) => {
@@ -41,10 +44,6 @@ export class PresentPlan<P, Q> implements MapPlan<Matter<P>, 'PresentPlan'> {
             return this.epoque.throw(e);
           }
         );
-      }
-
-      if (isUnscharferelation<Q>(mapped)) {
-        return this.forUnscharferelation(mapped);
       }
 
       return this.sync(mapped);
