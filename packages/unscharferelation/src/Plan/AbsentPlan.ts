@@ -28,6 +28,9 @@ export class AbsentPlan<P> implements RecoveryPlan<void, 'AbsentPlan'> {
     try {
       const mapped: SyncAsync<IUnscharferelation<P> | Suspicious<Matter<P>>> = this.mapper();
 
+      if (isUnscharferelation<P>(mapped)) {
+        return this.forUnscharferelation(mapped);
+      }
       if (Kind.isPromiseLike<IUnscharferelation<P> | Suspicious<Matter<P>>>(mapped)) {
         return mapped.then<unknown, unknown>(
           (v: IUnscharferelation<P> | Suspicious<Matter<P>>) => {
@@ -41,10 +44,6 @@ export class AbsentPlan<P> implements RecoveryPlan<void, 'AbsentPlan'> {
             return this.epoque.throw(e);
           }
         );
-      }
-
-      if (isUnscharferelation<P>(mapped)) {
-        return this.forUnscharferelation(mapped);
       }
 
       return this.sync(mapped);

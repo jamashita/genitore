@@ -1,5 +1,7 @@
 import { UnimplementedError } from '@jamashita/anden-error';
 import { ValueObject } from '@jamashita/anden-object';
+import { ISuperposition } from '@jamashita/genitore-superposition';
+import { UnscharferelationError } from '@jamashita/genitore-unscharferelation';
 import { Heisenberg } from '../Heisenberg/Heisenberg';
 import { IUnscharferelation } from '../Interface/IUnscharferelation';
 import { Matter } from '../Interface/Matter';
@@ -56,6 +58,10 @@ export class MockUnscharferelation<P> extends ValueObject<'MockUnscharferelation
   }
 
   public serialize(): string {
+    throw new UnimplementedError();
+  }
+
+  public toSuperposition(): ISuperposition<P, UnscharferelationError> {
     throw new UnimplementedError();
   }
 }

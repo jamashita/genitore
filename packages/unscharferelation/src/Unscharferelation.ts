@@ -1,5 +1,6 @@
 import { Objet } from '@jamashita/anden-object';
 import { Consumer, Kind, Peek, Predicate, Supplier, Suspicious, SyncAsync, UnaryFunction } from '@jamashita/anden-type';
+import { Superposition } from '@jamashita/genitore-superposition';
 import { Epoque } from './Epoque/Interface/Epoque';
 import { UnscharferelationError } from './Error/UnscharferelationError';
 import { Heisenberg } from './Heisenberg/Heisenberg';
@@ -212,5 +213,9 @@ export class Unscharferelation<P> extends Objet<'Unscharferelation'> implements 
     this.internal.peek(peek);
 
     return this;
+  }
+
+  public toSuperposition(): Superposition<P, UnscharferelationError> {
+    return Superposition.ofSuperposition<P, UnscharferelationError>(this.internal.toSuperposition());
   }
 }
