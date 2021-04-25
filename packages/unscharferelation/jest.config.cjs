@@ -15,7 +15,7 @@ module.exports = {
     '^.+\\.tsx?$': 'ts-jest'
   },
   moduleNameMapper: {
-    '^@jamashita/genitore-(.*)$': '<rootDir>/node_modules/@jamashita/genitore-$1/src/index'
+    '^@jamashita/genitore-(.*)$': '<rootDir>/../$1/src/index'
   },
   moduleFileExtensions: [
     'js',
