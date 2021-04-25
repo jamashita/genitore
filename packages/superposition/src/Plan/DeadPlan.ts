@@ -28,6 +28,9 @@ export class DeadPlan<B, D extends Error, E extends Error> implements RecoveryPl
     try {
       const mapped: SyncAsync<Detoxicated<B> | ISuperposition<B, E>> = this.mapper(value);
 
+      if (isSuperposition<B, E>(mapped)) {
+        return this.forSuperposition(mapped);
+      }
       if (Kind.isPromiseLike<Detoxicated<B> | ISuperposition<B, E>>(mapped)) {
         return mapped.then<unknown, unknown>(
           (v: Detoxicated<B> | ISuperposition<B, E>) => {
@@ -39,21 +42,6 @@ export class DeadPlan<B, D extends Error, E extends Error> implements RecoveryPl
           },
           (e: unknown) => {
             return this.forError(e);
-          }
-        );
-      }
-      if (isSuperposition<B, E>(mapped)) {
-        this.chrono.catch([...mapped.getErrors()]);
-
-        return mapped.pass(
-          (v: Detoxicated<B>) => {
-            return this.chrono.accept(v);
-          },
-          (e: E) => {
-            return this.chrono.decline(e);
-          },
-          (c: unknown) => {
-            return this.chrono.throw(c);
           }
         );
       }
