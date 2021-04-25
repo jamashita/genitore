@@ -1,4 +1,4 @@
-import { Consumer } from '@jamashita/anden-type';
+import { Consumer, Whatever } from '@jamashita/anden-type';
 import { DestroyPlan } from './Interface/DestroyPlan';
 
 export class DestroyPassPlan implements DestroyPlan<'DestroyPassPlan'> {
@@ -13,7 +13,7 @@ export class DestroyPassPlan implements DestroyPlan<'DestroyPassPlan'> {
     this.destroy = destroy;
   }
 
-  public onDestroy(cause: unknown): unknown {
+  public onDestroy(cause: unknown): Whatever {
     return this.destroy(cause);
   }
 }
