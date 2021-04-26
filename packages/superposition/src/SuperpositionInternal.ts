@@ -1,5 +1,4 @@
-import { Objet } from '@jamashita/anden-object';
-import { Consumer, Peek, Predicate, Reject, Resolve, SyncAsync, UnaryFunction } from '@jamashita/anden-type';
+import { Consumer, Peek, Reject, Resolve, UnaryFunction } from '@jamashita/anden-type';
 import {
   DestroyPassPlan,
   DestroyPlan,
@@ -13,7 +12,7 @@ import {
   RecoverySpoilPlan
 } from '@jamashita/genitore-plan';
 import { Chrono } from './Chrono/Interface/Chrono';
-import { SuperpositionError } from './Error/SuperpositionError';
+import { Bdb } from './Interface/Bdb';
 import { DeadConstructor } from './Interface/DeadConstructor';
 import { Detoxicated } from './Interface/Detoxicated';
 import { ISuperposition } from './Interface/ISuperposition';
@@ -29,8 +28,7 @@ import { Dead } from './Schrodinger/Dead';
 import { Schrodinger } from './Schrodinger/Schrodinger';
 import { Still } from './Schrodinger/Still';
 
-export class SuperpositionInternal<A, D extends Error> extends Objet<'SuperpositionInternal'>
-  implements ISuperposition<A, D, 'SuperpositionInternal'>, Chrono<A, D> {
+export class SuperpositionInternal<A, D extends Error> implements ISuperposition<A, D, 'SuperpositionInternal'>, Chrono<A, D> {
   public readonly noun: 'SuperpositionInternal' = 'SuperpositionInternal';
   private schrodinger: Schrodinger<A, D>;
   private readonly plans: Set<Plan<Detoxicated<A>, D>>;
@@ -41,26 +39,18 @@ export class SuperpositionInternal<A, D extends Error> extends Objet<'Superposit
   }
 
   protected constructor(func: UnaryFunction<Chrono<A, D>, unknown>, errors: Iterable<DeadConstructor<D>>) {
-    super();
     this.schrodinger = Still.of<A, D>();
     this.plans = new Set<Plan<A, D>>();
     this.errors = new Set<DeadConstructor<D>>(errors);
     func(this);
   }
 
-  public equals(other: unknown): boolean {
-    if (this === other) {
-      return true;
-    }
-    if (!(other instanceof SuperpositionInternal)) {
-      return false;
-    }
-
-    return this.schrodinger.equals(other.schrodinger);
-  }
-
   public serialize(): string {
     return this.schrodinger.toString();
+  }
+
+  public toString(): string {
+    return this.serialize();
   }
 
   public get(): Promise<Detoxicated<A>> {
@@ -91,30 +81,8 @@ export class SuperpositionInternal<A, D extends Error> extends Objet<'Superposit
     });
   }
 
-  public filter(predicate: Predicate<A>): SuperpositionInternal<A, D | SuperpositionError> {
-    return SuperpositionInternal.of<A, D | SuperpositionError>(
-      (chrono: Chrono<A, D | SuperpositionError>) => {
-        this.pass(
-          (value: Detoxicated<A>) => {
-            if (predicate(value)) {
-              return chrono.accept(value);
-            }
-
-            return chrono.decline(new SuperpositionError('DEAD'));
-          },
-          (value: D) => {
-            return chrono.decline(value);
-          },
-          (e: unknown) => {
-            return chrono.throw(e);
-          }
-        );
-      }, [...this.errors, SuperpositionError]
-    );
-  }
-
   public map<B = A, E extends Error = D>(
-    mapper: UnaryFunction<Detoxicated<A>, SyncAsync<Detoxicated<B> | SuperpositionInternal<B, E>>>,
+    mapper: UnaryFunction<Detoxicated<A>, PromiseLike<ISuperposition<B, E>> | ISuperposition<B, E> | PromiseLike<Bdb<B>> | Bdb<B>>,
     ...errors: ReadonlyArray<DeadConstructor<E>>
   ): SuperpositionInternal<B, D | E> {
     return SuperpositionInternal.of<B, D | E>((chrono: Chrono<B, D | E>) => {
@@ -127,7 +95,7 @@ export class SuperpositionInternal<A, D extends Error> extends Objet<'Superposit
   }
 
   public recover<B = A, E extends Error = D>(
-    mapper: UnaryFunction<D, SyncAsync<Detoxicated<B> | SuperpositionInternal<B, E>>>,
+    mapper: UnaryFunction<D, PromiseLike<ISuperposition<B, E>> | ISuperposition<B, E> | PromiseLike<Bdb<B>> | Bdb<B>>,
     ...errors: ReadonlyArray<DeadConstructor<E>>
   ): SuperpositionInternal<A | B, E> {
     return SuperpositionInternal.of<A | B, E>((chrono: Chrono<A | B, E>) => {
@@ -140,8 +108,8 @@ export class SuperpositionInternal<A, D extends Error> extends Objet<'Superposit
   }
 
   public transform<B = A, E extends Error = D>(
-    alive: UnaryFunction<Detoxicated<A>, SyncAsync<Detoxicated<B> | SuperpositionInternal<B, E>>>,
-    dead: UnaryFunction<D, SyncAsync<Detoxicated<B> | SuperpositionInternal<B, E>>>,
+    alive: UnaryFunction<Detoxicated<A>, PromiseLike<ISuperposition<B, E>> | ISuperposition<B, E> | PromiseLike<Bdb<B>> | Bdb<B>>,
+    dead: UnaryFunction<D, PromiseLike<ISuperposition<B, E>> | ISuperposition<B, E> | PromiseLike<Bdb<B>> | Bdb<B>>,
     ...errors: ReadonlyArray<DeadConstructor<E>>
   ): SuperpositionInternal<B, E> {
     return SuperpositionInternal.of<B, E>((chrono: Chrono<B, E>) => {

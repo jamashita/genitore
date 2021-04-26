@@ -1,6 +1,6 @@
 {
   "name": "@jamashita/genitore-superposition",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "private": false,
   "repository": {
     "type": "git",
@@ -18,12 +18,12 @@
   ],
   "scripts": {
     "build": "yarn clean && concurrently \"npm:build:*\"",
-    "test": "jest test",
     "build:cjs": "tsc -b tsconfig.cjs.json",
     "build:esm": "tsc -b tsconfig.esm.json",
     "clean": "concurrently \"npm:clean:*\"",
     "clean:coverage": "rimraf coverage",
-    "clean:dist": "rimraf dist"
+    "clean:dist": "rimraf dist",
+    "test": "jest test"
   },
   "dependencies": {
     "@jamashita/anden-error": "1.5.0",

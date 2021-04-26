@@ -2,6 +2,7 @@ import { Objet, ValueObject } from '@jamashita/anden-object';
 import { Consumer, isEqualable } from '@jamashita/anden-type';
 import { Absent } from './Absent';
 import { Heisenberg } from './Heisenberg';
+import { HeisenbergType } from './HeisenbergType';
 import { Present } from './Present';
 
 export class Lost<P> extends ValueObject<'Lost'> implements Heisenberg<P, 'Lost'> {
@@ -23,6 +24,10 @@ export class Lost<P> extends ValueObject<'Lost'> implements Heisenberg<P, 'Lost'
 
   public get(): never {
     throw this.cause;
+  }
+
+  public status(): HeisenbergType {
+    return 'Lost';
   }
 
   public isPresent(): this is Present<P> {

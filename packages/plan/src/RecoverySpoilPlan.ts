@@ -1,4 +1,3 @@
-import { Whatever } from '@jamashita/anden-type';
 import { RecoveryPlan } from './Interface/RecoveryPlan';
 
 export class RecoverySpoilPlan<R> implements RecoveryPlan<R, 'RecoverySpoilPlan'> {
@@ -14,7 +13,7 @@ export class RecoverySpoilPlan<R> implements RecoveryPlan<R, 'RecoverySpoilPlan'
     // NOOP
   }
 
-  public onRecover(): Whatever {
-    return;
+  public onRecover(): void {
+    // NOOP
   }
 }

@@ -1,4 +1,3 @@
-import { Whatever } from '@jamashita/anden-type';
 import { MapPlan } from './Interface/MapPlan';
 
 export class MapSpoilPlan<M> implements MapPlan<M, 'MapSpoilPlan'> {
@@ -14,7 +13,7 @@ export class MapSpoilPlan<M> implements MapPlan<M, 'MapSpoilPlan'> {
     // NOOP
   }
 
-  public onMap(): Whatever {
-    return;
+  public onMap(): void {
+    // NOOP
   }
 }

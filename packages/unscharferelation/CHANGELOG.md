@@ -1,3 +1,20 @@
+# [@jamashita/genitore-unscharferelation-v1.3.0](https://github.com/jamashita/genitore/compare/@jamashita/genitore-unscharferelation-v1.2.0...@jamashita/genitore-unscharferelation-v1.3.0) (2021-04-26)
+
+
+### Bug Fixes
+
+* 🐛 export internal ([ded2d88](https://github.com/jamashita/genitore/commit/ded2d88ebea2579ec5dc224a9495e640f0528a1b))
+* 🐛 ignore: ininite error ([a4e6970](https://github.com/jamashita/genitore/commit/a4e697020723c506b204ddcc6a7506d6d8ac0ee8))
+* 🐛 method ordering ([e0b57ed](https://github.com/jamashita/genitore/commit/e0b57ed5a1a2e53b09e861ed30da360efb34dea1))
+* 🐛 test added ([518efc0](https://github.com/jamashita/genitore/commit/518efc0165e55c1ce0c657043036ce1c71adde4b))
+
+
+### Features
+
+* 🎸 skpi removed ([7932e2f](https://github.com/jamashita/genitore/commit/7932e2f74e617f6cfd3c057e48ad417ab98b92fb))
+* 🎸 Unshcarferelation can be Superposition ([927e8a4](https://github.com/jamashita/genitore/commit/927e8a475f072006c7db83755d325a721c42cb3b))
+* 🎸 update ([1149b1e](https://github.com/jamashita/genitore/commit/1149b1e7804c75743474e8de73e8fc9bc625d07e))
+
 # [@jamashita/genitore-unscharferelation-v1.2.0](https://github.com/jamashita/genitore/compare/@jamashita/genitore-unscharferelation-v1.1.0...@jamashita/genitore-unscharferelation-v1.2.0) (2021-04-13)
 
 

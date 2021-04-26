@@ -1,31 +1,29 @@
-import { Consumer, Kind, Nominative, Peek, Predicate, SyncAsync, UnaryFunction } from '@jamashita/anden-type';
-import { SuperpositionError } from '../Error/SuperpositionError';
+import { Consumer, Kind, Noun, Peek, Serializable, UnaryFunction } from '@jamashita/anden-type';
 import { Schrodinger } from '../Schrodinger/Schrodinger';
+import { Bdb } from './Bdb';
 import { DeadConstructor } from './DeadConstructor';
 import { Detoxicated } from './Detoxicated';
 
-export interface ISuperposition<A, D extends Error, N extends string = string> extends Nominative<N> {
+export interface ISuperposition<A, D extends Error, N extends string = string> extends Serializable, Noun<N> {
   get(): Promise<Detoxicated<A>>;
 
   getErrors(): Set<DeadConstructor<D>>;
 
   terminate(): Promise<Schrodinger<A, D>>;
 
-  filter(predicate: Predicate<A>): ISuperposition<A, D | SuperpositionError>;
-
   map<B = A, E extends Error = D>(
-    mapper: UnaryFunction<Detoxicated<A>, SyncAsync<Detoxicated<B> | ISuperposition<B, E>>>,
+    mapper: UnaryFunction<Detoxicated<A>, PromiseLike<ISuperposition<B, E>> | ISuperposition<B, E> | PromiseLike<Bdb<B>> | Bdb<B>>,
     ...errors: ReadonlyArray<DeadConstructor<E>>
   ): ISuperposition<B, D | E>;
 
   recover<B = A, E extends Error = D>(
-    mapper: UnaryFunction<D, SyncAsync<Detoxicated<B> | ISuperposition<B, E>>>,
+    mapper: UnaryFunction<D, PromiseLike<ISuperposition<B, E>> | ISuperposition<B, E> | PromiseLike<Bdb<B>> | Bdb<B>>,
     ...errors: ReadonlyArray<DeadConstructor<E>>
   ): ISuperposition<A | B, E>;
 
   transform<B = A, E extends Error = D>(
-    alive: UnaryFunction<Detoxicated<A>, SyncAsync<Detoxicated<B> | ISuperposition<B, E>>>,
-    dead: UnaryFunction<D, SyncAsync<Detoxicated<B> | ISuperposition<B, E>>>,
+    alive: UnaryFunction<Detoxicated<A>, PromiseLike<ISuperposition<B, E>> | ISuperposition<B, E> | PromiseLike<Bdb<B>> | Bdb<B>>,
+    dead: UnaryFunction<D, PromiseLike<ISuperposition<B, E>> | ISuperposition<B, E> | PromiseLike<Bdb<B>> | Bdb<B>>,
     ...errors: ReadonlyArray<DeadConstructor<E>>
   ): ISuperposition<B, E>;
 
@@ -51,9 +49,6 @@ export const isSuperposition = <A, D extends Error>(value: unknown): value is IS
     return false;
   }
   if (!Kind.isFunction(value.terminate)) {
-    return false;
-  }
-  if (!Kind.isFunction(value.filter)) {
     return false;
   }
   if (!Kind.isFunction(value.map)) {

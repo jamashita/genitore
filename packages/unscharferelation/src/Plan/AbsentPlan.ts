@@ -1,23 +1,24 @@
-import { Kind, Supplier, Suspicious, SyncAsync } from '@jamashita/anden-type';
+import { Kind, Supplier } from '@jamashita/anden-type';
 import { RecoveryPlan } from '../../../plan/src/Interface/RecoveryPlan';
 import { Epoque } from '../Epoque/Interface/Epoque';
 import { isUnscharferelation, IUnscharferelation } from '../Interface/IUnscharferelation';
 import { Matter } from '../Interface/Matter';
+import { Ymy } from '../Interface/Ymy';
 
 export class AbsentPlan<P> implements RecoveryPlan<void, 'AbsentPlan'> {
   public readonly noun: 'AbsentPlan' = 'AbsentPlan';
-  private readonly mapper: Supplier<SyncAsync<IUnscharferelation<P> | Suspicious<Matter<P>>>>;
+  private readonly mapper: Supplier<PromiseLike<IUnscharferelation<P>> | IUnscharferelation<P> | PromiseLike<Ymy<P>> | Ymy<P>>;
   private readonly epoque: Epoque<P>;
 
   public static of<PT>(
-    mapper: Supplier<SyncAsync<IUnscharferelation<PT> | Suspicious<Matter<PT>>>>,
+    mapper: Supplier<PromiseLike<IUnscharferelation<PT>> | IUnscharferelation<PT> | PromiseLike<Ymy<PT>> | Ymy<PT>>,
     epoque: Epoque<PT>
   ): AbsentPlan<PT> {
     return new AbsentPlan<PT>(mapper, epoque);
   }
 
   protected constructor(
-    mapper: Supplier<SyncAsync<IUnscharferelation<P> | Suspicious<Matter<P>>>>,
+    mapper: Supplier<PromiseLike<IUnscharferelation<P>> | IUnscharferelation<P> | PromiseLike<Ymy<P>> | Ymy<P>>,
     epoque: Epoque<P>
   ) {
     this.mapper = mapper;
@@ -26,14 +27,11 @@ export class AbsentPlan<P> implements RecoveryPlan<void, 'AbsentPlan'> {
 
   public onRecover(): unknown {
     try {
-      const mapped: SyncAsync<IUnscharferelation<P> | Suspicious<Matter<P>>> = this.mapper();
+      const mapped: PromiseLike<IUnscharferelation<P>> | IUnscharferelation<P> | PromiseLike<Ymy<P>> | Ymy<P> = this.mapper();
 
-      if (isUnscharferelation<P>(mapped)) {
-        return this.forUnscharferelation(mapped);
-      }
-      if (Kind.isPromiseLike<IUnscharferelation<P> | Suspicious<Matter<P>>>(mapped)) {
+      if (Kind.isPromiseLike<IUnscharferelation<P> | Ymy<P>>(mapped)) {
         return mapped.then<unknown, unknown>(
-          (v: IUnscharferelation<P> | Suspicious<Matter<P>>) => {
+          (v: IUnscharferelation<P> | Ymy<P>) => {
             if (isUnscharferelation<P>(v)) {
               return this.forUnscharferelation(v);
             }
@@ -44,6 +42,9 @@ export class AbsentPlan<P> implements RecoveryPlan<void, 'AbsentPlan'> {
             return this.epoque.throw(e);
           }
         );
+      }
+      if (isUnscharferelation<P>(mapped)) {
+        return this.forUnscharferelation(mapped);
       }
 
       return this.sync(mapped);
@@ -67,7 +68,7 @@ export class AbsentPlan<P> implements RecoveryPlan<void, 'AbsentPlan'> {
     );
   }
 
-  private sync(v: Suspicious<Matter<P>>): unknown {
+  private sync(v: Ymy<P>): unknown {
     if (Kind.isUndefined(v) || Kind.isNull(v)) {
       return this.epoque.decline();
     }

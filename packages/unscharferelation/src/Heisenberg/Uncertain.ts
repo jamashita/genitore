@@ -2,6 +2,7 @@ import { ValueObject } from '@jamashita/anden-object';
 import { UnscharferelationError } from '../Error/UnscharferelationError';
 import { Absent } from './Absent';
 import { Heisenberg } from './Heisenberg';
+import { HeisenbergType } from './HeisenbergType';
 import { Lost } from './Lost';
 import { Present } from './Present';
 
@@ -24,6 +25,10 @@ export class Uncertain<P> extends ValueObject<'Uncertain'> implements Heisenberg
 
   public get(): never {
     throw new UnscharferelationError('UNCERTAIN');
+  }
+
+  public status(): HeisenbergType {
+    return 'Uncertain';
   }
 
   public isPresent(): this is Present<P> {
