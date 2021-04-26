@@ -20,33 +20,30 @@ describe('AlivePlan', () => {
       const spy4: SinonSpy = sinon.spy();
 
       await new Promise<void>((resolve: Resolve<void>) => {
-        const plan: AlivePlan<number, number, MockRuntimeError> = AlivePlan.of<number, number, MockRuntimeError>(
+        const plan: AlivePlan<number, number, MockRuntimeError> = AlivePlan.of<number, number, MockRuntimeError>((n: number) => {
+          spy1();
+          expect(n).toBe(value);
+
+          return n - 1;
+        }, new MockChrono<number, MockRuntimeError>(
           (n: number) => {
-            spy1();
-            expect(n).toBe(value);
+            spy2();
+            expect(n).toBe(value - 1);
 
-            return n - 1;
+            resolve();
           },
-          new MockChrono<number, MockRuntimeError>(
-            (n: number) => {
-              spy2();
-              expect(n).toBe(value - 1);
+          () => {
+            spy3();
 
-              resolve();
-            },
-            () => {
-              spy3();
+            resolve();
+          },
+          () => {
+            spy4();
 
-              resolve();
-            },
-            () => {
-              spy4();
-
-              resolve();
-            },
-            new Set<DeadConstructor<MockRuntimeError>>()
-          )
-        );
+            resolve();
+          },
+          new Set<DeadConstructor<MockRuntimeError>>()
+        ));
 
         plan.onMap(value);
       });
@@ -68,33 +65,30 @@ describe('AlivePlan', () => {
       const spy4: SinonSpy = sinon.spy();
 
       await new Promise<void>((resolve: Resolve<void>) => {
-        const plan: AlivePlan<number, number, MockRuntimeError> = AlivePlan.of<number, number, MockRuntimeError>(
+        const plan: AlivePlan<number, number, MockRuntimeError> = AlivePlan.of<number, number, MockRuntimeError>((n: number) => {
+          spy1();
+          expect(n).toBe(value);
+
+          return Promise.resolve<number>(n - 2);
+        }, new MockChrono<number, MockRuntimeError>(
           (n: number) => {
-            spy1();
-            expect(n).toBe(value);
+            spy2();
+            expect(n).toBe(value - 2);
 
-            return Promise.resolve<number>(n - 2);
+            resolve();
           },
-          new MockChrono<number, MockRuntimeError>(
-            (n: number) => {
-              spy2();
-              expect(n).toBe(value - 2);
+          () => {
+            spy3();
 
-              resolve();
-            },
-            () => {
-              spy3();
+            resolve();
+          },
+          () => {
+            spy4();
 
-              resolve();
-            },
-            () => {
-              spy4();
-
-              resolve();
-            },
-            new Set<DeadConstructor<MockRuntimeError>>()
-          )
-        );
+            resolve();
+          },
+          new Set<DeadConstructor<MockRuntimeError>>()
+        ));
 
         plan.onMap(value);
       });
@@ -116,33 +110,30 @@ describe('AlivePlan', () => {
       const spy4: SinonSpy = sinon.spy();
 
       await new Promise<void>((resolve: Resolve<void>) => {
-        const plan: AlivePlan<number, number, MockRuntimeError> = AlivePlan.of<number, number, MockRuntimeError>(
+        const plan: AlivePlan<number, number, MockRuntimeError> = AlivePlan.of<number, number, MockRuntimeError>((n: number) => {
+          spy1();
+          expect(n).toBe(value);
+
+          return Superposition.alive<number, MockRuntimeError>(n - 3);
+        }, new MockChrono<number, MockRuntimeError>(
           (n: number) => {
-            spy1();
-            expect(n).toBe(value);
+            spy2();
+            expect(n).toBe(value - 3);
 
-            return Superposition.alive<number, MockRuntimeError>(n - 3);
+            resolve();
           },
-          new MockChrono<number, MockRuntimeError>(
-            (n: number) => {
-              spy2();
-              expect(n).toBe(value - 3);
+          () => {
+            spy3();
 
-              resolve();
-            },
-            () => {
-              spy3();
+            resolve();
+          },
+          () => {
+            spy4();
 
-              resolve();
-            },
-            () => {
-              spy4();
-
-              resolve();
-            },
-            new Set<DeadConstructor<MockRuntimeError>>()
-          )
-        );
+            resolve();
+          },
+          new Set<DeadConstructor<MockRuntimeError>>()
+        ));
 
         plan.onMap(value);
       });
@@ -164,33 +155,30 @@ describe('AlivePlan', () => {
       const spy4: SinonSpy = sinon.spy();
 
       await new Promise<void>((resolve: Resolve<void>) => {
-        const plan: AlivePlan<number, number, MockRuntimeError> = AlivePlan.of<number, number, MockRuntimeError>(
+        const plan: AlivePlan<number, number, MockRuntimeError> = AlivePlan.of<number, number, MockRuntimeError>((n: number) => {
+          spy1();
+          expect(n).toBe(value);
+
+          return Promise.resolve<Superposition<number, MockRuntimeError>>(Superposition.alive<number, MockRuntimeError>(n - 3));
+        }, new MockChrono<number, MockRuntimeError>(
           (n: number) => {
-            spy1();
-            expect(n).toBe(value);
+            spy2();
+            expect(n).toBe(value - 3);
 
-            return Promise.resolve<Superposition<number, MockRuntimeError>>(Superposition.alive<number, MockRuntimeError>(n - 3));
+            resolve();
           },
-          new MockChrono<number, MockRuntimeError>(
-            (n: number) => {
-              spy2();
-              expect(n).toBe(value - 3);
+          () => {
+            spy3();
 
-              resolve();
-            },
-            () => {
-              spy3();
+            resolve();
+          },
+          () => {
+            spy4();
 
-              resolve();
-            },
-            () => {
-              spy4();
-
-              resolve();
-            },
-            new Set<DeadConstructor<MockRuntimeError>>()
-          )
-        );
+            resolve();
+          },
+          new Set<DeadConstructor<MockRuntimeError>>()
+        ));
 
         plan.onMap(value);
       });
@@ -213,33 +201,30 @@ describe('AlivePlan', () => {
       const spy4: SinonSpy = sinon.spy();
 
       await new Promise<void>((resolve: Resolve<void>) => {
-        const plan: AlivePlan<number, number, MockRuntimeError> = AlivePlan.of<number, number, MockRuntimeError>(
-          (n: number) => {
-            spy1();
-            expect(n).toBe(value);
+        const plan: AlivePlan<number, number, MockRuntimeError> = AlivePlan.of<number, number, MockRuntimeError>((n: number) => {
+          spy1();
+          expect(n).toBe(value);
 
-            throw error;
+          throw error;
+        }, new MockChrono<number, MockRuntimeError>(
+          () => {
+            spy2();
+
+            resolve();
           },
-          new MockChrono<number, MockRuntimeError>(
-            () => {
-              spy2();
+          (e: MockRuntimeError) => {
+            spy3();
+            expect(e).toBe(error);
 
-              resolve();
-            },
-            (e: MockRuntimeError) => {
-              spy3();
-              expect(e).toBe(error);
+            resolve();
+          },
+          () => {
+            spy4();
 
-              resolve();
-            },
-            () => {
-              spy4();
-
-              resolve();
-            },
-            new Set<DeadConstructor<MockRuntimeError>>([MockRuntimeError])
-          )
-        );
+            resolve();
+          },
+          new Set<DeadConstructor<MockRuntimeError>>([MockRuntimeError])
+        ));
 
         plan.onMap(value);
       });
@@ -262,33 +247,30 @@ describe('AlivePlan', () => {
       const spy4: SinonSpy = sinon.spy();
 
       await new Promise<void>((resolve: Resolve<void>) => {
-        const plan: AlivePlan<number, number, MockRuntimeError> = AlivePlan.of<number, number, MockRuntimeError>(
-          (n: number) => {
-            spy1();
-            expect(n).toBe(value);
+        const plan: AlivePlan<number, number, MockRuntimeError> = AlivePlan.of<number, number, MockRuntimeError>((n: number) => {
+          spy1();
+          expect(n).toBe(value);
 
-            return Promise.reject<number>(error);
+          return Promise.reject<number>(error);
+        }, new MockChrono<number, MockRuntimeError>(
+          () => {
+            spy2();
+
+            resolve();
           },
-          new MockChrono<number, MockRuntimeError>(
-            () => {
-              spy2();
+          (e: MockRuntimeError) => {
+            spy3();
+            expect(e).toBe(error);
 
-              resolve();
-            },
-            (e: MockRuntimeError) => {
-              spy3();
-              expect(e).toBe(error);
+            resolve();
+          },
+          () => {
+            spy4();
 
-              resolve();
-            },
-            () => {
-              spy4();
-
-              resolve();
-            },
-            new Set<DeadConstructor<MockRuntimeError>>([MockRuntimeError])
-          )
-        );
+            resolve();
+          },
+          new Set<DeadConstructor<MockRuntimeError>>([MockRuntimeError])
+        ));
 
         plan.onMap(value);
       });
@@ -311,33 +293,30 @@ describe('AlivePlan', () => {
       const spy4: SinonSpy = sinon.spy();
 
       await new Promise<void>((resolve: Resolve<void>) => {
-        const plan: AlivePlan<number, number, MockRuntimeError> = AlivePlan.of<number, number, MockRuntimeError>(
-          (n: number) => {
-            spy1();
-            expect(n).toBe(value);
+        const plan: AlivePlan<number, number, MockRuntimeError> = AlivePlan.of<number, number, MockRuntimeError>((n: number) => {
+          spy1();
+          expect(n).toBe(value);
 
-            return Superposition.dead<number, MockRuntimeError>(error, MockRuntimeError);
+          return Superposition.dead<number, MockRuntimeError>(error, MockRuntimeError);
+        }, new MockChrono<number, MockRuntimeError>(
+          () => {
+            spy2();
+
+            resolve();
           },
-          new MockChrono<number, MockRuntimeError>(
-            () => {
-              spy2();
+          (e: MockRuntimeError) => {
+            spy3();
+            expect(e).toBe(error);
 
-              resolve();
-            },
-            (e: MockRuntimeError) => {
-              spy3();
-              expect(e).toBe(error);
+            resolve();
+          },
+          () => {
+            spy4();
 
-              resolve();
-            },
-            () => {
-              spy4();
-
-              resolve();
-            },
-            new Set<DeadConstructor<MockRuntimeError>>([MockRuntimeError])
-          )
-        );
+            resolve();
+          },
+          new Set<DeadConstructor<MockRuntimeError>>([MockRuntimeError])
+        ));
 
         plan.onMap(value);
       });
@@ -360,33 +339,30 @@ describe('AlivePlan', () => {
       const spy4: SinonSpy = sinon.spy();
 
       await new Promise<void>((resolve: Resolve<void>) => {
-        const plan: AlivePlan<number, number, MockRuntimeError> = AlivePlan.of<number, number, MockRuntimeError>(
-          (n: number) => {
-            spy1();
-            expect(n).toBe(value);
+        const plan: AlivePlan<number, number, MockRuntimeError> = AlivePlan.of<number, number, MockRuntimeError>((n: number) => {
+          spy1();
+          expect(n).toBe(value);
 
-            return Promise.resolve<Superposition<number, MockRuntimeError>>(Superposition.dead<number, MockRuntimeError>(error, MockRuntimeError));
+          return Promise.resolve<Superposition<number, MockRuntimeError>>(Superposition.dead<number, MockRuntimeError>(error, MockRuntimeError));
+        }, new MockChrono<number, MockRuntimeError>(
+          () => {
+            spy2();
+
+            resolve();
           },
-          new MockChrono<number, MockRuntimeError>(
-            () => {
-              spy2();
+          (e: MockRuntimeError) => {
+            spy3();
+            expect(e).toBe(error);
 
-              resolve();
-            },
-            (e: MockRuntimeError) => {
-              spy3();
-              expect(e).toBe(error);
+            resolve();
+          },
+          () => {
+            spy4();
 
-              resolve();
-            },
-            () => {
-              spy4();
-
-              resolve();
-            },
-            new Set<DeadConstructor<MockRuntimeError>>([MockRuntimeError])
-          )
-        );
+            resolve();
+          },
+          new Set<DeadConstructor<MockRuntimeError>>([MockRuntimeError])
+        ));
 
         plan.onMap(value);
       });
@@ -409,33 +385,30 @@ describe('AlivePlan', () => {
       const spy4: SinonSpy = sinon.spy();
 
       await new Promise<void>((resolve: Resolve<void>) => {
-        const plan: AlivePlan<number, number, MockRuntimeError> = AlivePlan.of<number, number, MockRuntimeError>(
-          (n: number) => {
-            spy1();
-            expect(n).toBe(value);
+        const plan: AlivePlan<number, number, MockRuntimeError> = AlivePlan.of<number, number, MockRuntimeError>((n: number) => {
+          spy1();
+          expect(n).toBe(value);
 
-            throw error;
+          throw error;
+        }, new MockChrono<number, MockRuntimeError>(
+          () => {
+            spy2();
+
+            resolve();
           },
-          new MockChrono<number, MockRuntimeError>(
-            () => {
-              spy2();
+          () => {
+            spy3();
 
-              resolve();
-            },
-            () => {
-              spy3();
+            resolve();
+          },
+          (e: unknown) => {
+            spy4();
+            expect(e).toBe(error);
 
-              resolve();
-            },
-            (e: unknown) => {
-              spy4();
-              expect(e).toBe(error);
-
-              resolve();
-            },
-            new Set<DeadConstructor<MockRuntimeError>>()
-          )
-        );
+            resolve();
+          },
+          new Set<DeadConstructor<MockRuntimeError>>()
+        ));
 
         plan.onMap(value);
       });
@@ -458,33 +431,30 @@ describe('AlivePlan', () => {
       const spy4: SinonSpy = sinon.spy();
 
       await new Promise<void>((resolve: Resolve<void>) => {
-        const plan: AlivePlan<number, number, MockRuntimeError> = AlivePlan.of<number, number, MockRuntimeError>(
-          (n: number) => {
-            spy1();
-            expect(n).toBe(value);
+        const plan: AlivePlan<number, number, MockRuntimeError> = AlivePlan.of<number, number, MockRuntimeError>((n: number) => {
+          spy1();
+          expect(n).toBe(value);
 
-            return Promise.reject<number>(error);
+          return Promise.reject<number>(error);
+        }, new MockChrono<number, MockRuntimeError>(
+          () => {
+            spy2();
+
+            resolve();
           },
-          new MockChrono<number, MockRuntimeError>(
-            () => {
-              spy2();
+          () => {
+            spy3();
 
-              resolve();
-            },
-            () => {
-              spy3();
+            resolve();
+          },
+          (e: unknown) => {
+            spy4();
+            expect(e).toBe(error);
 
-              resolve();
-            },
-            (e: unknown) => {
-              spy4();
-              expect(e).toBe(error);
-
-              resolve();
-            },
-            new Set<DeadConstructor<MockRuntimeError>>()
-          )
-        );
+            resolve();
+          },
+          new Set<DeadConstructor<MockRuntimeError>>()
+        ));
 
         plan.onMap(value);
       });
@@ -506,29 +476,26 @@ describe('AlivePlan', () => {
       const spy3: SinonSpy = sinon.spy();
       const spy4: SinonSpy = sinon.spy();
 
-      const plan: AlivePlan<number, number, MockRuntimeError> = AlivePlan.of<number, number, MockRuntimeError>(
-        (n: number) => {
-          spy1();
-          expect(n).toBe(value);
+      const plan: AlivePlan<number, number, MockRuntimeError> = AlivePlan.of<number, number, MockRuntimeError>((n: number) => {
+        spy1();
+        expect(n).toBe(value);
 
-          return Superposition.of<number, MockRuntimeError>((c: Chrono<number, MockRuntimeError>) => {
-            return c.throw(error);
-          });
+        return Superposition.of<number, MockRuntimeError>((c: Chrono<number, MockRuntimeError>) => {
+          return c.throw(error);
+        });
+      }, new MockChrono<number, MockRuntimeError>(
+        () => {
+          spy2();
         },
-        new MockChrono<number, MockRuntimeError>(
-          () => {
-            spy2();
-          },
-          () => {
-            spy3();
-          },
-          (e: unknown) => {
-            spy4();
-            expect(e).toBe(error);
-          },
-          new Set<DeadConstructor<MockRuntimeError>>()
-        )
-      );
+        () => {
+          spy3();
+        },
+        (e: unknown) => {
+          spy4();
+          expect(e).toBe(error);
+        },
+        new Set<DeadConstructor<MockRuntimeError>>()
+      ));
 
       plan.onMap(value);
 
@@ -550,35 +517,32 @@ describe('AlivePlan', () => {
       const spy4: SinonSpy = sinon.spy();
 
       await new Promise<void>((resolve: Resolve<void>) => {
-        const plan: AlivePlan<number, number, MockRuntimeError> = AlivePlan.of<number, number, MockRuntimeError>(
-          (n: number) => {
-            spy1();
-            expect(n).toBe(value);
+        const plan: AlivePlan<number, number, MockRuntimeError> = AlivePlan.of<number, number, MockRuntimeError>((n: number) => {
+          spy1();
+          expect(n).toBe(value);
 
-            return Promise.resolve<Superposition<number, MockRuntimeError>>(Superposition.of<number, MockRuntimeError>((c: Chrono<number, MockRuntimeError>) => {
-              return c.throw(error);
-            }));
+          return Promise.resolve<Superposition<number, MockRuntimeError>>(Superposition.of<number, MockRuntimeError>((c: Chrono<number, MockRuntimeError>) => {
+            return c.throw(error);
+          }));
+        }, new MockChrono<number, MockRuntimeError>(
+          () => {
+            spy2();
+
+            resolve();
           },
-          new MockChrono<number, MockRuntimeError>(
-            () => {
-              spy2();
+          () => {
+            spy3();
 
-              resolve();
-            },
-            () => {
-              spy3();
+            resolve();
+          },
+          (e: unknown) => {
+            spy4();
+            expect(e).toBe(error);
 
-              resolve();
-            },
-            (e: unknown) => {
-              spy4();
-              expect(e).toBe(error);
-
-              resolve();
-            },
-            new Set<DeadConstructor<MockRuntimeError>>()
-          )
-        );
+            resolve();
+          },
+          new Set<DeadConstructor<MockRuntimeError>>()
+        ));
 
         plan.onMap(value);
       });

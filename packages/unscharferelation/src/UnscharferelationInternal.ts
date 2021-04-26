@@ -76,7 +76,7 @@ export class UnscharferelationInternal<P> implements IUnscharferelation<P, 'Unsc
     });
   }
 
-  public map<Q = P>(mapper: UnaryFunction<Matter<P>, PromiseLike<IUnscharferelation<Q>> | IUnscharferelation<Q> | PromiseLike<Ymy<Q>> | Ymy<Q>>): IUnscharferelation<Q> {
+  public map<Q = P>(mapper: UnaryFunction<Matter<P>, PromiseLike<IUnscharferelation<Q>> | IUnscharferelation<Q> | PromiseLike<Ymy<Q>> | Ymy<Q>>): UnscharferelationInternal<Q> {
     return UnscharferelationInternal.of<Q>((epoque: Epoque<Q>) => {
       return this.handle(
         PresentPlan.of<P, Q>(mapper, epoque),
@@ -86,7 +86,7 @@ export class UnscharferelationInternal<P> implements IUnscharferelation<P, 'Unsc
     });
   }
 
-  public recover<Q = P>(mapper: Supplier<PromiseLike<IUnscharferelation<Q>> | IUnscharferelation<Q> | PromiseLike<Ymy<Q>> | Ymy<Q>>): IUnscharferelation<P | Q> {
+  public recover<Q = P>(mapper: Supplier<PromiseLike<IUnscharferelation<Q>> | IUnscharferelation<Q> | PromiseLike<Ymy<Q>> | Ymy<Q>>): UnscharferelationInternal<P | Q> {
     return UnscharferelationInternal.of<P | Q>((epoque: Epoque<P | Q>) => {
       return this.handle(
         MapEpoquePlan.of<P | Q>(epoque),
