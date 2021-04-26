@@ -194,7 +194,17 @@ export class SuperpositionInternal<A, D extends Error> implements ISuperposition
   }
 
   private settled(): boolean {
-    return this.schrodinger.isAlive() || this.schrodinger.isDead() || this.schrodinger.isContradiction();
+    switch (this.schrodinger.status()) {
+      case 'Alive':
+      case 'Contradiction':
+      case 'Dead': {
+        return true;
+      }
+      case 'Still':
+      default: {
+        return false;
+      }
+    }
   }
 
   private handle(map: MapPlan<Detoxicated<A>>, recover: RecoveryPlan<D>, destroy: DestroyPlan): unknown {

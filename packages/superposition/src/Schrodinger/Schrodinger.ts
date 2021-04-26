@@ -1,13 +1,14 @@
-import { Consumer, Nominative } from '@jamashita/anden-type';
+import { Consumer, Noun, Serializable } from '@jamashita/anden-type';
 import { Detoxicated } from '../Interface/Detoxicated';
 import { Alive } from './Alive';
 import { Contradiction } from './Contradiction';
 import { Dead } from './Dead';
+import { SchrodingerType } from './SchrodingerType';
 
-type SchrodingerType = 'Alive' | 'Contradiction' | 'Dead' | 'Still';
-
-export interface Schrodinger<A, D extends Error, N extends SchrodingerType = SchrodingerType> extends Nominative<N> {
+export interface Schrodinger<A, D extends Error, N extends SchrodingerType = SchrodingerType> extends Serializable, Noun<N> {
   get(): Detoxicated<A>;
+
+  status(): SchrodingerType;
 
   isAlive(): this is Alive<A, D>;
 

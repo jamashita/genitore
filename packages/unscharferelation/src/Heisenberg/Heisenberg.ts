@@ -1,11 +1,11 @@
-import { Consumer, Nominative } from '@jamashita/anden-type';
+import { Consumer, Noun, Serializable } from '@jamashita/anden-type';
 import { Matter } from '../Interface/Matter';
 import { Absent } from './Absent';
 import { HeisenbergType } from './HeisenbergType';
 import { Lost } from './Lost';
 import { Present } from './Present';
 
-export interface Heisenberg<P, N extends HeisenbergType = HeisenbergType> extends Nominative {
+export interface Heisenberg<P, N extends HeisenbergType = HeisenbergType> extends Serializable, Noun<N> {
   readonly noun: N;
 
   get(): Matter<P>;
