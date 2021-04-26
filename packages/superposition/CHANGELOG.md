@@ -1,3 +1,17 @@
+# [@jamashita/genitore-superposition-v1.3.0](https://github.com/jamashita/genitore/compare/@jamashita/genitore-superposition-v1.2.0...@jamashita/genitore-superposition-v1.3.0) (2021-04-26)
+
+
+### Bug Fixes
+
+* 🐛 export internal ([ded2d88](https://github.com/jamashita/genitore/commit/ded2d88ebea2579ec5dc224a9495e640f0528a1b))
+* 🐛 method ordering ([e0b57ed](https://github.com/jamashita/genitore/commit/e0b57ed5a1a2e53b09e861ed30da360efb34dea1))
+* 🐛 test added ([518efc0](https://github.com/jamashita/genitore/commit/518efc0165e55c1ce0c657043036ce1c71adde4b))
+
+
+### Features
+
+* 🎸 update ([1149b1e](https://github.com/jamashita/genitore/commit/1149b1e7804c75743474e8de73e8fc9bc625d07e))
+
 # [@jamashita/genitore-superposition-v1.2.0](https://github.com/jamashita/genitore/compare/@jamashita/genitore-superposition-v1.1.0...@jamashita/genitore-superposition-v1.2.0) (2021-04-13)
 
 
