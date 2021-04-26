@@ -1,5 +1,5 @@
-import { Noun } from '@jamashita/anden-type';
+import { Noun, Whatever } from '@jamashita/anden-type';
 
 export interface DestroyPlan<N extends string = string> extends Noun<N> {
-  onDestroy(cause: unknown): unknown;
+  onDestroy(cause: unknown): Whatever;
 }
