@@ -1,5 +1,4 @@
 import { MockRuntimeError } from '@jamashita/anden-error';
-import { MockValueObject } from '@jamashita/anden-object';
 import { Schrodinger } from '@jamashita/genitore-superposition';
 import sinon, { SinonSpy } from 'sinon';
 import { Epoque } from '../Epoque/Interface/Epoque';
@@ -614,39 +613,6 @@ describe('Unscharferelation', () => {
     });
   });
 
-  describe('equals', () => {
-    it('returns true if the same instance given', () => {
-      expect.assertions(1);
-
-      const unscharferelation: Unscharferelation<number> = Unscharferelation.present<number>(-1);
-
-
-      expect(unscharferelation.equals(unscharferelation)).toBe(true);
-    });
-
-    it('returns false if the class instance given', () => {
-      expect.assertions(1);
-
-      const unscharferelation: Unscharferelation<number> = Unscharferelation.present<number>(-1);
-
-      expect(unscharferelation.equals(new MockValueObject('mock'))).toBe(false);
-    });
-
-
-    it('returns true if their retaining Heisenbergs are the same', () => {
-      expect.assertions(3);
-
-      const unscharferelation1: Unscharferelation<number> = Unscharferelation.present<number>(-1);
-      const unscharferelation2: Unscharferelation<number> = Unscharferelation.present<number>(-1);
-      const unscharferelation3: Unscharferelation<number> = Unscharferelation.present<number>(0);
-      const unscharferelation4: Unscharferelation<number> = Unscharferelation.absent<number>();
-
-      expect(unscharferelation1.equals(unscharferelation2)).toBe(true);
-      expect(unscharferelation1.equals(unscharferelation3)).toBe(false);
-      expect(unscharferelation1.equals(unscharferelation4)).toBe(false);
-    });
-  });
-
   describe('toString', () => {
     it('returns its retaining Heisenberg string', () => {
       expect.assertions(3);
@@ -696,26 +662,6 @@ describe('Unscharferelation', () => {
       const unscharferelation: Unscharferelation<number> = Unscharferelation.ofUnscharferelation<number>(mock);
 
       await unscharferelation.terminate();
-
-      expect(spy.called).toBe(true);
-    });
-  });
-
-  describe('filter', () => {
-    it('delegates inner Unscharferelation', () => {
-      expect.assertions(1);
-
-      const mock: MockUnscharferelation<number> = new MockUnscharferelation<number>();
-
-      const spy: SinonSpy = sinon.spy();
-
-      mock.filter = spy;
-
-      const unscharferelation: Unscharferelation<number> = Unscharferelation.ofUnscharferelation<number>(mock);
-
-      unscharferelation.filter(() => {
-        return true;
-      });
 
       expect(spy.called).toBe(true);
     });

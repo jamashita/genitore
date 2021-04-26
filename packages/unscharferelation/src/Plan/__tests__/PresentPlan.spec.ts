@@ -113,8 +113,6 @@ describe('PresentPlan', () => {
       const spy4: SinonSpy = sinon.spy();
 
       await new Promise<void>((resolve: Resolve<void>) => {
-        // TODO
-        // @ts-expect-error
         const plan: PresentPlan<number, number> = PresentPlan.of<number, number>(
           (n: number) => {
             spy1();

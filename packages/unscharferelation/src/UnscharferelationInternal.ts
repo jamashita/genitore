@@ -1,4 +1,4 @@
-import { Consumer, Peek, Reject, Resolve, Supplier, Suspicious, SyncAsync, UnaryFunction } from '@jamashita/anden-type';
+import { Consumer, Peek, Reject, Resolve, Supplier, UnaryFunction } from '@jamashita/anden-type';
 import {
   DestroyPassPlan,
   DestroyPlan,
@@ -21,6 +21,7 @@ import { Present } from './Heisenberg/Present';
 import { Uncertain } from './Heisenberg/Uncertain';
 import { IUnscharferelation } from './Interface/IUnscharferelation';
 import { Matter } from './Interface/Matter';
+import { Ymy } from './Interface/Ymy';
 import { AbsentPlan } from './Plan/AbsentPlan';
 import { CombinedEpoquePlan } from './Plan/CombinedEpoquePlan';
 import { DestroyEpoquePlan } from './Plan/DestroyEpoquePlan';
@@ -75,7 +76,7 @@ export class UnscharferelationInternal<P> implements IUnscharferelation<P, 'Unsc
     });
   }
 
-  public map<Q = P>(mapper: UnaryFunction<Matter<P>, SyncAsync<Suspicious<Matter<Q>> | UnscharferelationInternal<Q>>>): UnscharferelationInternal<Q> {
+  public map<Q = P>(mapper: UnaryFunction<Matter<P>, PromiseLike<IUnscharferelation<Q>> | IUnscharferelation<Q> | PromiseLike<Ymy<Q>> | Ymy<Q>>): IUnscharferelation<Q> {
     return UnscharferelationInternal.of<Q>((epoque: Epoque<Q>) => {
       return this.handle(
         PresentPlan.of<P, Q>(mapper, epoque),
@@ -85,7 +86,7 @@ export class UnscharferelationInternal<P> implements IUnscharferelation<P, 'Unsc
     });
   }
 
-  public recover<Q = P>(mapper: Supplier<SyncAsync<Suspicious<Matter<Q>> | UnscharferelationInternal<Q>>>): UnscharferelationInternal<P | Q> {
+  public recover<Q = P>(mapper: Supplier<PromiseLike<IUnscharferelation<Q>> | IUnscharferelation<Q> | PromiseLike<Ymy<Q>> | Ymy<Q>>): IUnscharferelation<P | Q> {
     return UnscharferelationInternal.of<P | Q>((epoque: Epoque<P | Q>) => {
       return this.handle(
         MapEpoquePlan.of<P | Q>(epoque),
