@@ -7,18 +7,18 @@ import { containsError, isSuperposition, ISuperposition } from '../Interface/ISu
 
 export class AlivePlan<A, B, E extends Error> implements MapPlan<Detoxicated<A>, 'AlivePlan'> {
   public readonly noun: 'AlivePlan' = 'AlivePlan';
-  private readonly mapper: UnaryFunction<Detoxicated<A>, PromiseLike<ISuperposition<B, E>> | ISuperposition<B, E> | PromiseLike<Bdb<B>> | Bdb<B>>;
+  private readonly mapper: UnaryFunction<Detoxicated<A>, Bdb<B> | ISuperposition<B, E> | PromiseLike<Bdb<B>> | PromiseLike<ISuperposition<B, E>>>;
   private readonly chrono: Chrono<B, E>;
 
   public static of<AT, BT, ET extends Error>(
-    mapper: UnaryFunction<Detoxicated<AT>, PromiseLike<ISuperposition<BT, ET>> | ISuperposition<BT, ET> | PromiseLike<Bdb<BT>> | Bdb<BT>>,
+    mapper: UnaryFunction<Detoxicated<AT>, Bdb<BT> | ISuperposition<BT, ET> | PromiseLike<Bdb<BT>> | PromiseLike<ISuperposition<BT, ET>>>,
     chrono: Chrono<BT, ET>
   ): AlivePlan<AT, BT, ET> {
     return new AlivePlan<AT, BT, ET>(mapper, chrono);
   }
 
   protected constructor(
-    mapper: UnaryFunction<Detoxicated<A>, PromiseLike<ISuperposition<B, E>> | ISuperposition<B, E> | PromiseLike<Bdb<B>> | Bdb<B>>,
+    mapper: UnaryFunction<Detoxicated<A>, Bdb<B> | ISuperposition<B, E> | PromiseLike<Bdb<B>> | PromiseLike<ISuperposition<B, E>>>,
     chrono: Chrono<B, E>
   ) {
     this.mapper = mapper;
@@ -27,7 +27,7 @@ export class AlivePlan<A, B, E extends Error> implements MapPlan<Detoxicated<A>,
 
   public onMap(value: Detoxicated<A>): unknown {
     try {
-      const mapped: PromiseLike<ISuperposition<B, E>> | ISuperposition<B, E> | PromiseLike<Bdb<B>> | Bdb<B> = this.mapper(value);
+      const mapped: Bdb<B> | ISuperposition<B, E> | PromiseLike<Bdb<B>> | PromiseLike<ISuperposition<B, E>> = this.mapper(value);
 
       if (Kind.isPromiseLike<Bdb<B> | ISuperposition<B, E>>(mapped)) {
         return mapped.then<unknown, unknown>(

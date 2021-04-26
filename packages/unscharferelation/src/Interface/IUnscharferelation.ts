@@ -1,8 +1,8 @@
 import { Consumer, Kind, Noun, Peek, Serializable, Supplier, UnaryFunction } from '@jamashita/anden-type';
 import { ISuperposition } from '@jamashita/genitore-superposition';
-import { Ymy } from '@jamashita/genitore-unscharferelation';
 import { UnscharferelationError } from '../Error/UnscharferelationError';
 import { Heisenberg } from '../Heisenberg/Heisenberg';
+import { Ymy } from './Ymy';
 import { Matter } from './Matter';
 
 export interface IUnscharferelation<P, N extends string = string> extends Serializable, Noun<N> {
@@ -10,9 +10,9 @@ export interface IUnscharferelation<P, N extends string = string> extends Serial
 
   terminate(): Promise<Heisenberg<P>>;
 
-  map<Q = P>(mapper: UnaryFunction<Matter<P>, PromiseLike<IUnscharferelation<Q>> | IUnscharferelation<Q> | PromiseLike<Ymy<Q>> | Ymy<Q>>): IUnscharferelation<Q>;
+  map<Q = P>(mapper: UnaryFunction<Matter<P>, IUnscharferelation<Q> | PromiseLike<IUnscharferelation<Q>> | PromiseLike<Ymy<Q>> | Ymy<Q>>): IUnscharferelation<Q>;
 
-  recover<Q = P>(mapper: Supplier<PromiseLike<IUnscharferelation<Q>> | IUnscharferelation<Q> | PromiseLike<Ymy<Q>> | Ymy<Q>>): IUnscharferelation<P | Q>;
+  recover<Q = P>(mapper: Supplier<IUnscharferelation<Q> | PromiseLike<IUnscharferelation<Q>> | PromiseLike<Ymy<Q>> | Ymy<Q>>): IUnscharferelation<P | Q>;
 
   ifPresent(consumer: Consumer<Matter<P>>): this;
 

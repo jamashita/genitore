@@ -1,10 +1,11 @@
-import { Objet, ValueObject } from '@jamashita/anden-object';
-import { Consumer, isEqualable } from '@jamashita/anden-type';
+import { Objet } from '@jamashita/anden-object';
+import { Consumer } from '@jamashita/anden-type';
 import { Alive } from './Alive';
 import { Dead } from './Dead';
 import { Schrodinger } from './Schrodinger';
+import { SchrodingerType } from './SchrodingerType';
 
-export class Contradiction<A, D extends Error> extends ValueObject<'Contradiction'> implements Schrodinger<A, D, 'Contradiction'> {
+export class Contradiction<A, D extends Error> implements Schrodinger<A, D, 'Contradiction'> {
   public readonly noun: 'Contradiction' = 'Contradiction';
   private readonly cause: unknown;
 
@@ -13,7 +14,6 @@ export class Contradiction<A, D extends Error> extends ValueObject<'Contradictio
   }
 
   protected constructor(cause: unknown) {
-    super();
     this.cause = cause;
   }
 
@@ -21,8 +21,16 @@ export class Contradiction<A, D extends Error> extends ValueObject<'Contradictio
     return `Contradiction: ${Objet.identify(this.cause)}`;
   }
 
+  public toString(): string {
+    return this.serialize();
+  }
+
   public get(): never {
     throw this.cause;
+  }
+
+  public status(): SchrodingerType {
+    return 'Contradiction';
   }
 
   public isAlive(): this is Alive<A, D> {
@@ -47,23 +55,6 @@ export class Contradiction<A, D extends Error> extends ValueObject<'Contradictio
 
   public ifContradiction(consumer: Consumer<unknown>): void {
     consumer(this.cause);
-  }
-
-  public equals(other: unknown): boolean {
-    if (this === other) {
-      return true;
-    }
-    if (!(other instanceof Contradiction)) {
-      return false;
-    }
-    if (this.cause === other.cause) {
-      return true;
-    }
-    if (isEqualable(this.cause)) {
-      return this.cause.equals(other.cause);
-    }
-
-    return false;
   }
 
   public getCause(): unknown {

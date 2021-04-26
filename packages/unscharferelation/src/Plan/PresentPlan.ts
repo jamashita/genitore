@@ -8,18 +8,18 @@ import { Ymy } from '../Interface/Ymy';
 export class PresentPlan<P, Q> implements MapPlan<Matter<P>, 'PresentPlan'> {
   public readonly noun: 'PresentPlan' = 'PresentPlan';
   // private readonly mapper: UnaryFunction<Matter<P>, SyncAsync<IUnscharferelation<Q> | Suspicious<Matter<Q>>>>;
-  private readonly mapper: UnaryFunction<Matter<P>, PromiseLike<IUnscharferelation<Q>> | IUnscharferelation<Q> | PromiseLike<Ymy<Q>> | Ymy<Q>>;
+  private readonly mapper: UnaryFunction<Matter<P>, IUnscharferelation<Q> | PromiseLike<IUnscharferelation<Q>> | PromiseLike<Ymy<Q>> | Ymy<Q>>;
   private readonly epoque: Epoque<Q>;
 
   public static of<PT, QT>(
-    mapper: UnaryFunction<Matter<PT>, PromiseLike<IUnscharferelation<QT>> | IUnscharferelation<QT> | PromiseLike<Ymy<QT>> | Ymy<QT>>,
+    mapper: UnaryFunction<Matter<PT>, IUnscharferelation<QT> | PromiseLike<IUnscharferelation<QT>> | PromiseLike<Ymy<QT>> | Ymy<QT>>,
     epoque: Epoque<QT>
   ): PresentPlan<PT, QT> {
     return new PresentPlan<PT, QT>(mapper, epoque);
   }
 
   protected constructor(
-    mapper: UnaryFunction<Matter<P>, PromiseLike<IUnscharferelation<Q>> | IUnscharferelation<Q> | PromiseLike<Ymy<Q>> | Ymy<Q>>,
+    mapper: UnaryFunction<Matter<P>, IUnscharferelation<Q> | PromiseLike<IUnscharferelation<Q>> | PromiseLike<Ymy<Q>> | Ymy<Q>>,
     epoque: Epoque<Q>
   ) {
     this.mapper = mapper;
@@ -28,7 +28,7 @@ export class PresentPlan<P, Q> implements MapPlan<Matter<P>, 'PresentPlan'> {
 
   public onMap(value: Matter<P>): unknown {
     try {
-      const mapped: PromiseLike<IUnscharferelation<Q>> | IUnscharferelation<Q> | PromiseLike<Ymy<Q>> | Ymy<Q> = this.mapper(value);
+      const mapped: IUnscharferelation<Q> | PromiseLike<IUnscharferelation<Q>> | PromiseLike<Ymy<Q>> | Ymy<Q> = this.mapper(value);
 
       if (Kind.isPromiseLike<IUnscharferelation<Q> | Ymy<Q>>(mapped)) {
         return mapped.then<unknown, unknown>(

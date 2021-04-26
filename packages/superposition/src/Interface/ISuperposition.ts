@@ -12,18 +12,18 @@ export interface ISuperposition<A, D extends Error, N extends string = string> e
   terminate(): Promise<Schrodinger<A, D>>;
 
   map<B = A, E extends Error = D>(
-    mapper: UnaryFunction<Detoxicated<A>, PromiseLike<ISuperposition<B, E>> | ISuperposition<B, E> | PromiseLike<Bdb<B>> | Bdb<B>>,
+    mapper: UnaryFunction<Detoxicated<A>, Bdb<B> | ISuperposition<B, E> | PromiseLike<Bdb<B>> | PromiseLike<ISuperposition<B, E>>>,
     ...errors: ReadonlyArray<DeadConstructor<E>>
   ): ISuperposition<B, D | E>;
 
   recover<B = A, E extends Error = D>(
-    mapper: UnaryFunction<D, PromiseLike<ISuperposition<B, E>> | ISuperposition<B, E> | PromiseLike<Bdb<B>> | Bdb<B>>,
+    mapper: UnaryFunction<D, Bdb<B> | ISuperposition<B, E> | PromiseLike<Bdb<B>> | PromiseLike<ISuperposition<B, E>>>,
     ...errors: ReadonlyArray<DeadConstructor<E>>
   ): ISuperposition<A | B, E>;
 
   transform<B = A, E extends Error = D>(
-    alive: UnaryFunction<Detoxicated<A>, PromiseLike<ISuperposition<B, E>> | ISuperposition<B, E> | PromiseLike<Bdb<B>> | Bdb<B>>,
-    dead: UnaryFunction<D, PromiseLike<ISuperposition<B, E>> | ISuperposition<B, E> | PromiseLike<Bdb<B>> | Bdb<B>>,
+    alive: UnaryFunction<Detoxicated<A>, Bdb<B> | ISuperposition<B, E> | PromiseLike<Bdb<B>> | PromiseLike<ISuperposition<B, E>>>,
+    dead: UnaryFunction<D, Bdb<B> | ISuperposition<B, E> | PromiseLike<Bdb<B>> | PromiseLike<ISuperposition<B, E>>>,
     ...errors: ReadonlyArray<DeadConstructor<E>>
   ): ISuperposition<B, E>;
 

@@ -1,11 +1,11 @@
-import { Objet, ValueObject } from '@jamashita/anden-object';
-import { Consumer, isEqualable } from '@jamashita/anden-type';
+import { Objet } from '@jamashita/anden-object';
+import { Consumer } from '@jamashita/anden-type';
 import { Absent } from './Absent';
 import { Heisenberg } from './Heisenberg';
 import { HeisenbergType } from './HeisenbergType';
 import { Present } from './Present';
 
-export class Lost<P> extends ValueObject<'Lost'> implements Heisenberg<P, 'Lost'> {
+export class Lost<P> implements Heisenberg<P, 'Lost'> {
   public readonly noun: 'Lost' = 'Lost';
   private readonly cause: unknown;
 
@@ -14,12 +14,15 @@ export class Lost<P> extends ValueObject<'Lost'> implements Heisenberg<P, 'Lost'
   }
 
   private constructor(cause: unknown) {
-    super();
     this.cause = cause;
   }
 
   public serialize(): string {
     return `Lost: ${Objet.identify(this.cause)}`;
+  }
+
+  public toString(): string {
+    return this.serialize();
   }
 
   public get(): never {
@@ -52,23 +55,6 @@ export class Lost<P> extends ValueObject<'Lost'> implements Heisenberg<P, 'Lost'
 
   public ifLost(consumer: Consumer<unknown>): void {
     consumer(this.cause);
-  }
-
-  public equals(other: unknown): boolean {
-    if (this === other) {
-      return true;
-    }
-    if (!(other instanceof Lost)) {
-      return false;
-    }
-    if (this.cause === other.cause) {
-      return true;
-    }
-    if (isEqualable(this.cause)) {
-      return this.cause.equals(other.cause);
-    }
-
-    return false;
   }
 
   public getCause(): unknown {

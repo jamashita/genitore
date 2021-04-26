@@ -341,7 +341,7 @@ describe('Unscharferelation', () => {
         // eslint-disable-next-line no-await-in-loop
         const h: Heisenberg<number> = await u.terminate();
 
-        expect(h.equals(heisenbergs[i])).toBe(true);
+        expect(h.get()).toBe(i - 1);
       }
     });
 
@@ -362,12 +362,20 @@ describe('Unscharferelation', () => {
         // eslint-disable-next-line no-await-in-loop
         const h: Heisenberg<number> = await u.terminate();
 
-        expect(h.equals(heisenbergs[i])).toBe(true);
+        expect(() => {
+          h.get();
+        }).toThrow(UnscharferelationError);
       }
     });
 
     it('returns Lost Heisenbergs', async () => {
       expect.assertions(4);
+
+      const losts: Array<unknown> = [
+        null,
+        undefined,
+        NaN
+      ];
 
       const unscharferelation1: Unscharferelation<number> = Unscharferelation.of<number>((epoque: Epoque<number>) => {
         epoque.throw(null);
@@ -389,7 +397,9 @@ describe('Unscharferelation', () => {
         // eslint-disable-next-line no-await-in-loop
         const h: Heisenberg<number> = await u.terminate();
 
-        expect(h.equals(heisenbergs[i])).toBe(true);
+        if (h.isLost()) {
+          expect(h.getCause()).toBe(losts[i]);
+        }
       }
     });
 
@@ -412,7 +422,24 @@ describe('Unscharferelation', () => {
         // eslint-disable-next-line no-await-in-loop
         const h: Heisenberg<number> = await u.terminate();
 
-        expect(h.equals(heisenbergs[i])).toBe(true);
+        switch (i) {
+          case 0: {
+            if (h.isLost()) {
+              expect(h.getCause()).toBeNull();
+            }
+            continue;
+          }
+          case 1: {
+            expect(() => {
+              h.get();
+            }).toThrow(UnscharferelationError);
+            continue;
+          }
+          case 2:
+          default: {
+            expect(h.get()).toBe(1);
+          }
+        }
       }
     });
   });

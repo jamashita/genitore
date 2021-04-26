@@ -1,4 +1,3 @@
-import { ValueObject } from '@jamashita/anden-object';
 import { Consumer } from '@jamashita/anden-type';
 import { UnscharferelationError } from '../Error/UnscharferelationError';
 import { Heisenberg } from './Heisenberg';
@@ -6,7 +5,7 @@ import { HeisenbergType } from './HeisenbergType';
 import { Lost } from './Lost';
 import { Present } from './Present';
 
-export class Absent<P> extends ValueObject<'Absent'> implements Heisenberg<P, 'Absent'> {
+export class Absent<P> implements Heisenberg<P, 'Absent'> {
   public readonly noun: 'Absent' = 'Absent';
 
   private static readonly INSTANCE: Absent<unknown> = new Absent<unknown>();
@@ -16,11 +15,15 @@ export class Absent<P> extends ValueObject<'Absent'> implements Heisenberg<P, 'A
   }
 
   private constructor() {
-    super();
+    // NOOP
   }
 
   public serialize(): string {
     return 'Absent';
+  }
+
+  public toString(): string {
+    return this.serialize();
   }
 
   public status(): HeisenbergType {
@@ -53,13 +56,5 @@ export class Absent<P> extends ValueObject<'Absent'> implements Heisenberg<P, 'A
 
   public ifLost(): void {
     // NOOP
-  }
-
-  public equals(other: unknown): boolean {
-    if (this === other) {
-      return true;
-    }
-
-    return false;
   }
 }
