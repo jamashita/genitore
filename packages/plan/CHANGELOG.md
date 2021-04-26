@@ -1,3 +1,10 @@
+# [@jamashita/genitore-plan-v1.2.2](https://github.com/jamashita/genitore/compare/@jamashita/genitore-plan-v1.2.1...@jamashita/genitore-plan-v1.2.2) (2021-04-26)
+
+
+### Bug Fixes
+
+* 🐛 returned void ([b91a78e](https://github.com/jamashita/genitore/commit/b91a78e519664bee1c349c7c9ed73acefe4eec63))
+
 # [@jamashita/genitore-plan-v1.2.1](https://github.com/jamashita/genitore/compare/@jamashita/genitore-plan-v1.2.0...@jamashita/genitore-plan-v1.2.1) (2021-04-26)
 
 
