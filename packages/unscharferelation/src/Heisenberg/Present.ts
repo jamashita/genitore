@@ -1,12 +1,12 @@
-import { Objet, ValueObject } from '@jamashita/anden-object';
-import { Consumer, isEqualable } from '@jamashita/anden-type';
+import { Objet } from '@jamashita/anden-object';
+import { Consumer } from '@jamashita/anden-type';
 import { Matter } from '../Interface/Matter';
 import { Absent } from './Absent';
 import { Heisenberg } from './Heisenberg';
 import { HeisenbergType } from './HeisenbergType';
 import { Lost } from './Lost';
 
-export class Present<P> extends ValueObject<'Present'> implements Heisenberg<P, 'Present'> {
+export class Present<P> implements Heisenberg<P, 'Present'> {
   public readonly noun: 'Present' = 'Present';
   private readonly value: Matter<P>;
 
@@ -15,12 +15,15 @@ export class Present<P> extends ValueObject<'Present'> implements Heisenberg<P, 
   }
 
   private constructor(value: Matter<P>) {
-    super();
     this.value = value;
   }
 
   public serialize(): string {
     return `Present: ${Objet.identify(this.value)}`;
+  }
+
+  public toString(): string {
+    return this.serialize();
   }
 
   public get(): Matter<P> {
@@ -53,22 +56,5 @@ export class Present<P> extends ValueObject<'Present'> implements Heisenberg<P, 
 
   public ifLost(): void {
     // NOOP
-  }
-
-  public equals(other: unknown): boolean {
-    if (this === other) {
-      return true;
-    }
-    if (!(other instanceof Present)) {
-      return false;
-    }
-    if (this.value === other.value) {
-      return true;
-    }
-    if (isEqualable(this.value)) {
-      return this.value.equals(other.value);
-    }
-
-    return false;
   }
 }

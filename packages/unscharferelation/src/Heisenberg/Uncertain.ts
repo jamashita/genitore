@@ -1,4 +1,3 @@
-import { ValueObject } from '@jamashita/anden-object';
 import { UnscharferelationError } from '../Error/UnscharferelationError';
 import { Absent } from './Absent';
 import { Heisenberg } from './Heisenberg';
@@ -6,7 +5,7 @@ import { HeisenbergType } from './HeisenbergType';
 import { Lost } from './Lost';
 import { Present } from './Present';
 
-export class Uncertain<P> extends ValueObject<'Uncertain'> implements Heisenberg<P, 'Uncertain'> {
+export class Uncertain<P> implements Heisenberg<P, 'Uncertain'> {
   public readonly noun: 'Uncertain' = 'Uncertain';
 
   private static readonly INSTANCE: Uncertain<unknown> = new Uncertain<unknown>();
@@ -16,11 +15,15 @@ export class Uncertain<P> extends ValueObject<'Uncertain'> implements Heisenberg
   }
 
   private constructor() {
-    super();
+    // NOOP
   }
 
   public serialize(): string {
     return 'Uncertain';
+  }
+
+  public toString(): string {
+    return this.serialize();
   }
 
   public get(): never {
@@ -53,13 +56,5 @@ export class Uncertain<P> extends ValueObject<'Uncertain'> implements Heisenberg
 
   public ifLost(): void {
     // NOOP
-  }
-
-  public equals(other: unknown): boolean {
-    if (this === other) {
-      return true;
-    }
-
-    return false;
   }
 }

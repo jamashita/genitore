@@ -1,11 +1,12 @@
-import { Objet, ValueObject } from '@jamashita/anden-object';
-import { Consumer, isEqualable } from '@jamashita/anden-type';
+import { Objet } from '@jamashita/anden-object';
+import { Consumer } from '@jamashita/anden-type';
 import { Detoxicated } from '../Interface/Detoxicated';
 import { Contradiction } from './Contradiction';
 import { Dead } from './Dead';
 import { Schrodinger } from './Schrodinger';
+import { SchrodingerType } from './SchrodingerType';
 
-export class Alive<A, D extends Error> extends ValueObject<'Alive'> implements Schrodinger<A, D, 'Alive'> {
+export class Alive<A, D extends Error> implements Schrodinger<A, D, 'Alive'> {
   public readonly noun: 'Alive' = 'Alive';
   private readonly value: Detoxicated<A>;
 
@@ -14,7 +15,6 @@ export class Alive<A, D extends Error> extends ValueObject<'Alive'> implements S
   }
 
   protected constructor(value: Detoxicated<A>) {
-    super();
     this.value = value;
   }
 
@@ -22,8 +22,16 @@ export class Alive<A, D extends Error> extends ValueObject<'Alive'> implements S
     return `Alive: ${Objet.identify(this.value)}`;
   }
 
+  public toString(): string {
+    return this.serialize();
+  }
+
   public get(): Detoxicated<A> {
     return this.value;
+  }
+
+  public status(): SchrodingerType {
+    return 'Alive';
   }
 
   public isAlive(): this is Alive<A, D> {
@@ -48,22 +56,5 @@ export class Alive<A, D extends Error> extends ValueObject<'Alive'> implements S
 
   public ifContradiction(): void {
     // NOOP
-  }
-
-  public equals(other: unknown): boolean {
-    if (this === other) {
-      return true;
-    }
-    if (!(other instanceof Alive)) {
-      return false;
-    }
-    if (this.value === other.value) {
-      return true;
-    }
-    if (isEqualable(this.value)) {
-      return this.value.equals(other.value);
-    }
-
-    return false;
   }
 }

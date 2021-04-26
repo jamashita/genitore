@@ -7,18 +7,18 @@ import { Ymy } from '../Interface/Ymy';
 
 export class AbsentPlan<P> implements RecoveryPlan<void, 'AbsentPlan'> {
   public readonly noun: 'AbsentPlan' = 'AbsentPlan';
-  private readonly mapper: Supplier<PromiseLike<IUnscharferelation<P>> | IUnscharferelation<P> | PromiseLike<Ymy<P>> | Ymy<P>>;
+  private readonly mapper: Supplier<IUnscharferelation<P> | PromiseLike<IUnscharferelation<P>> | PromiseLike<Ymy<P>> | Ymy<P>>;
   private readonly epoque: Epoque<P>;
 
   public static of<PT>(
-    mapper: Supplier<PromiseLike<IUnscharferelation<PT>> | IUnscharferelation<PT> | PromiseLike<Ymy<PT>> | Ymy<PT>>,
+    mapper: Supplier<IUnscharferelation<PT> | PromiseLike<IUnscharferelation<PT>> | PromiseLike<Ymy<PT>> | Ymy<PT>>,
     epoque: Epoque<PT>
   ): AbsentPlan<PT> {
     return new AbsentPlan<PT>(mapper, epoque);
   }
 
   protected constructor(
-    mapper: Supplier<PromiseLike<IUnscharferelation<P>> | IUnscharferelation<P> | PromiseLike<Ymy<P>> | Ymy<P>>,
+    mapper: Supplier<IUnscharferelation<P> | PromiseLike<IUnscharferelation<P>> | PromiseLike<Ymy<P>> | Ymy<P>>,
     epoque: Epoque<P>
   ) {
     this.mapper = mapper;
@@ -27,7 +27,7 @@ export class AbsentPlan<P> implements RecoveryPlan<void, 'AbsentPlan'> {
 
   public onRecover(): unknown {
     try {
-      const mapped: PromiseLike<IUnscharferelation<P>> | IUnscharferelation<P> | PromiseLike<Ymy<P>> | Ymy<P> = this.mapper();
+      const mapped: IUnscharferelation<P> | PromiseLike<IUnscharferelation<P>> | PromiseLike<Ymy<P>> | Ymy<P> = this.mapper();
 
       if (Kind.isPromiseLike<IUnscharferelation<P> | Ymy<P>>(mapped)) {
         return mapped.then<unknown, unknown>(

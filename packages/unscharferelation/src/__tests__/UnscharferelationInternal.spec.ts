@@ -190,7 +190,7 @@ describe('UnscharferelationInternal', () => {
       const heisenberg2: Heisenberg<number> = await unscharferelation.terminate();
 
       expect(spy.callCount).toBe(0);
-      expect(heisenberg1.equals(heisenberg2)).toBe(true);
+      expect(heisenberg1).toBe(heisenberg2);
     });
 
     it('invokes all maps', async () => {

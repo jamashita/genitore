@@ -190,22 +190,22 @@ export class Superposition<A, D extends Error> implements ISuperposition<A, D, '
   }
 
   public map<B = A, E extends Error = D>(
-    mapper: UnaryFunction<Detoxicated<A>, PromiseLike<ISuperposition<B, E>> | ISuperposition<B, E> | PromiseLike<Bdb<B>> | Bdb<B>>,
+    mapper: UnaryFunction<Detoxicated<A>, Bdb<B> | ISuperposition<B, E> | PromiseLike<Bdb<B>> | PromiseLike<ISuperposition<B, E>>>,
     ...errors: ReadonlyArray<DeadConstructor<E>>
   ): Superposition<B, D | E> {
     return Superposition.ofSuperposition<B, D | E>(this.internal.map<B, D | E>(mapper, ...this.internal.getErrors(), ...errors));
   }
 
   public recover<B = A, E extends Error = D>(
-    mapper: UnaryFunction<D, PromiseLike<ISuperposition<B, E>> | ISuperposition<B, E> | PromiseLike<Bdb<B>> | Bdb<B>>,
+    mapper: UnaryFunction<D, Bdb<B> | ISuperposition<B, E> | PromiseLike<Bdb<B>> | PromiseLike<ISuperposition<B, E>>>,
     ...errors: ReadonlyArray<DeadConstructor<E>>
   ): Superposition<A | B, E> {
     return Superposition.ofSuperposition<A | B, E>(this.internal.recover<A | B, E>(mapper, ...errors));
   }
 
   public transform<B = A, E extends Error = D>(
-    alive: UnaryFunction<Detoxicated<A>, PromiseLike<ISuperposition<B, E>> | ISuperposition<B, E> | PromiseLike<Bdb<B>> | Bdb<B>>,
-    dead: UnaryFunction<D, PromiseLike<ISuperposition<B, E>> | ISuperposition<B, E> | PromiseLike<Bdb<B>> | Bdb<B>>,
+    alive: UnaryFunction<Detoxicated<A>, Bdb<B> | ISuperposition<B, E> | PromiseLike<Bdb<B>> | PromiseLike<ISuperposition<B, E>>>,
+    dead: UnaryFunction<D, Bdb<B> | ISuperposition<B, E> | PromiseLike<Bdb<B>> | PromiseLike<ISuperposition<B, E>>>,
     ...errors: ReadonlyArray<DeadConstructor<E>>
   ): Superposition<B, E> {
     return Superposition.ofSuperposition<B, E>(this.internal.transform<B, E>(alive, dead, ...errors));
