@@ -449,7 +449,7 @@ describe('Superposition', () => {
         switch (i) {
           case 0: {
             if (s.isContradiction()) {
-              expect(s.getCause()).toBe(null);
+              expect(s.getCause()).toBeNull();
             }
             continue;
           }

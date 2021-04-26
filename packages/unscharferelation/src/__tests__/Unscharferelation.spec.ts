@@ -425,7 +425,7 @@ describe('Unscharferelation', () => {
         switch (i) {
           case 0: {
             if (h.isLost()) {
-              expect(h.getCause()).toBe(null);
+              expect(h.getCause()).toBeNull();
             }
             continue;
           }

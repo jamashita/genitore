@@ -165,11 +165,11 @@ export class Unscharferelation<P> implements IUnscharferelation<P, 'Unscharferel
     return this.internal.terminate();
   }
 
-  public map<Q = P>(mapper: UnaryFunction<Matter<P>, PromiseLike<IUnscharferelation<Q>> | IUnscharferelation<Q> | PromiseLike<Ymy<Q>> | Ymy<Q>>): IUnscharferelation<Q> {
+  public map<Q = P>(mapper: UnaryFunction<Matter<P>, IUnscharferelation<Q> | PromiseLike<IUnscharferelation<Q>> | PromiseLike<Ymy<Q>> | Ymy<Q>>): IUnscharferelation<Q> {
     return Unscharferelation.ofUnscharferelation<Q>(this.internal.map<Q>(mapper));
   }
 
-  public recover<Q = P>(mapper: Supplier<PromiseLike<IUnscharferelation<Q>> | IUnscharferelation<Q> | PromiseLike<Ymy<Q>> | Ymy<Q>>): IUnscharferelation<P | Q> {
+  public recover<Q = P>(mapper: Supplier<IUnscharferelation<Q> | PromiseLike<IUnscharferelation<Q>> | PromiseLike<Ymy<Q>> | Ymy<Q>>): IUnscharferelation<P | Q> {
     return Unscharferelation.ofUnscharferelation<P | Q>(this.internal.recover<Q>(mapper));
   }
 
