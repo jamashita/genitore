@@ -114,7 +114,7 @@ describe('PresentPlan', () => {
 
       await new Promise<void>((resolve: Resolve<void>) => {
         // TODO
-        // @ts-ignore
+        // @ts-expect-error
         const plan: PresentPlan<number, number> = PresentPlan.of<number, number>(
           (n: number) => {
             spy1();
