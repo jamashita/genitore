@@ -1,9 +1,9 @@
 import {
   Consumer,
   Kind,
-  Nominative,
+  Noun,
   Peek,
-  Predicate,
+  Serializable,
   Supplier,
   Suspicious,
   SyncAsync,
@@ -14,12 +14,10 @@ import { UnscharferelationError } from '../Error/UnscharferelationError';
 import { Heisenberg } from '../Heisenberg/Heisenberg';
 import { Matter } from './Matter';
 
-export interface IUnscharferelation<P, N extends string = string> extends Nominative<N> {
+export interface IUnscharferelation<P, N extends string = string> extends Serializable, Noun<N> {
   get(): Promise<Matter<P>>;
 
   terminate(): Promise<Heisenberg<P>>;
-
-  filter(predicate: Predicate<P>): IUnscharferelation<P>;
 
   map<Q = P>(mapper: UnaryFunction<Matter<P>, SyncAsync<IUnscharferelation<Q> | Suspicious<Matter<Q>>>>): IUnscharferelation<Q>;
 
@@ -46,9 +44,6 @@ export const isUnscharferelation = <P>(value: unknown): value is IUnscharferelat
     return false;
   }
   if (!Kind.isFunction(value.terminate)) {
-    return false;
-  }
-  if (!Kind.isFunction(value.filter)) {
     return false;
   }
   if (!Kind.isFunction(value.map)) {
