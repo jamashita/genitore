@@ -1,4 +1,4 @@
-import { Consumer } from '@jamashita/anden-type';
+import { Consumer, Whatever } from '@jamashita/anden-type';
 import { RecoveryPlan } from './Interface/RecoveryPlan';
 
 export class RecoveryPassPlan<R> implements RecoveryPlan<R, 'RecoveryPassPlan'> {
@@ -13,7 +13,7 @@ export class RecoveryPassPlan<R> implements RecoveryPlan<R, 'RecoveryPassPlan'> 
     this.recover = recover;
   }
 
-  public onRecover(value: R): unknown {
+  public onRecover(value: R): Whatever {
     return this.recover(value);
   }
 }

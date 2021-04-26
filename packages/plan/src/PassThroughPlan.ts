@@ -1,4 +1,4 @@
-import { Consumer } from '@jamashita/anden-type';
+import { Consumer, Whatever } from '@jamashita/anden-type';
 import { Plan } from './Interface/Plan';
 
 export class PassThroughPlan<M, R> implements Plan<M, R, 'PassThroughPlan'> {
@@ -17,15 +17,15 @@ export class PassThroughPlan<M, R> implements Plan<M, R, 'PassThroughPlan'> {
     this.destroy = destroy;
   }
 
-  public onMap(value: M): unknown {
+  public onMap(value: M): Whatever {
     return this.map(value);
   }
 
-  public onRecover(value: R): unknown {
+  public onRecover(value: R): Whatever {
     return this.recover(value);
   }
 
-  public onDestroy(cause: unknown): unknown {
+  public onDestroy(cause: unknown): Whatever {
     return this.destroy(cause);
   }
 }

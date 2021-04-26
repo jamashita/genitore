@@ -1,3 +1,4 @@
+import { Whatever } from '@jamashita/anden-type';
 import { DestroyPlan } from './Interface/DestroyPlan';
 
 export class DestroySpoilPlan implements DestroyPlan<'DestroySpoilPlan'> {
@@ -13,7 +14,7 @@ export class DestroySpoilPlan implements DestroyPlan<'DestroySpoilPlan'> {
     // NOOP
   }
 
-  public onDestroy(cause: unknown): unknown {
-    return cause;
+  public onDestroy(): Whatever {
+    return;
   }
 }
