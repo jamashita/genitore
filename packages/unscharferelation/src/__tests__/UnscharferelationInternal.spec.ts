@@ -1,5 +1,4 @@
 import { MockRuntimeError } from '@jamashita/anden-error';
-import { MockValueObject } from '@jamashita/anden-object';
 import { Plan } from '@jamashita/genitore-plan';
 import { Schrodinger } from '@jamashita/genitore-superposition';
 import sinon, { SinonSpy } from 'sinon';
@@ -10,67 +9,6 @@ import { Matter } from '../Interface/Matter';
 import { UnscharferelationInternal } from '../UnscharferelationInternal';
 
 describe('UnscharferelationInternal', () => {
-  describe('equals', () => {
-    it('returns true if the same instance given', () => {
-      expect.assertions(1);
-
-      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of<number>(
-        (epoque: Epoque<number>) => {
-          epoque.accept(-1);
-        }
-      );
-
-      expect(unscharferelation.equals(unscharferelation)).toBe(true);
-    });
-
-    it('returns false if the different class instance given', () => {
-      expect.assertions(1);
-
-      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of<number>(
-        (epoque: Epoque<number>) => {
-          epoque.accept(-1);
-        }
-      );
-
-      expect(unscharferelation.equals(new MockValueObject('mock'))).toBe(false);
-    });
-
-    it('returns true if their retaining Heisenbergs are the same', () => {
-      expect.assertions(4);
-
-      const unscharferelation1: UnscharferelationInternal<number> = UnscharferelationInternal.of<number>(
-        (epoque: Epoque<number>) => {
-          epoque.accept(-1);
-        }
-      );
-      const unscharferelation2: UnscharferelationInternal<number> = UnscharferelationInternal.of<number>(
-        (epoque: Epoque<number>) => {
-          epoque.accept(-1);
-        }
-      );
-      const unscharferelation3: UnscharferelationInternal<number> = UnscharferelationInternal.of<number>(
-        (epoque: Epoque<number>) => {
-          epoque.accept(0);
-        }
-      );
-      const unscharferelation4: UnscharferelationInternal<number> = UnscharferelationInternal.of<number>(
-        (epoque: Epoque<number>) => {
-          epoque.decline();
-        }
-      );
-      const unscharferelation5: UnscharferelationInternal<number> = UnscharferelationInternal.of<number>(
-        (epoque: Epoque<number>) => {
-          epoque.throw(null);
-        }
-      );
-
-      expect(unscharferelation1.equals(unscharferelation2)).toBe(true);
-      expect(unscharferelation1.equals(unscharferelation3)).toBe(false);
-      expect(unscharferelation1.equals(unscharferelation4)).toBe(false);
-      expect(unscharferelation1.equals(unscharferelation5)).toBe(false);
-    });
-  });
-
   describe('toString', () => {
     it('returns its retaining Heisenberg string', () => {
       expect.assertions(3);
@@ -357,106 +295,6 @@ describe('UnscharferelationInternal', () => {
       expect(lost.isLost()).toBe(true);
       expect(() => {
         lost.get();
-      }).toThrow(error);
-    });
-  });
-
-  describe('filter', () => {
-    it('does nothing when Unscharferelation is Present and predicate returned true', async () => {
-      expect.assertions(2);
-
-      const value: number = -201;
-
-      const unscharferelation1: UnscharferelationInternal<number> = UnscharferelationInternal.of<number>(
-        (epoque: Epoque<number>) => {
-          epoque.accept(value);
-        }
-      );
-      const unscharferelation2: UnscharferelationInternal<number> = unscharferelation1.filter(() => {
-        return true;
-      });
-
-      const heisenberg: Heisenberg<number> = await unscharferelation2.terminate();
-
-      expect(heisenberg.isPresent()).toBe(true);
-      expect(heisenberg.get()).toBe(value);
-    });
-
-    it('becomes Absent Unscharferelation when Heisenberg is Present and predicate returned false', async () => {
-      expect.assertions(2);
-
-      const value: number = -201;
-
-      const unscharferelation1: UnscharferelationInternal<number> = UnscharferelationInternal.of<number>(
-        (epoque: Epoque<number>) => {
-          epoque.accept(value);
-        }
-      );
-      const unscharferelation2: UnscharferelationInternal<number> = unscharferelation1.filter(() => {
-        return false;
-      });
-
-      const heisenberg: Heisenberg<number> = await unscharferelation2.terminate();
-
-      expect(heisenberg.isAbsent()).toBe(true);
-      expect(() => {
-        heisenberg.get();
-      }).toThrow(UnscharferelationError);
-    });
-
-    it('returns its copy and predicate will not be invoked when Heisenberg is Absent', async () => {
-      expect.assertions(4);
-
-      const unscharferelation1: UnscharferelationInternal<number> = UnscharferelationInternal.of<number>(
-        (epoque: Epoque<number>) => {
-          epoque.decline();
-        }
-      );
-      const unscharferelation2: UnscharferelationInternal<number> = unscharferelation1.filter(() => {
-        return true;
-      });
-      const unscharferelation3: UnscharferelationInternal<number> = unscharferelation1.filter(() => {
-        return false;
-      });
-      const heisenberg1: Heisenberg<number> = await unscharferelation2.terminate();
-      const heisenberg2: Heisenberg<number> = await unscharferelation3.terminate();
-
-      expect(heisenberg1.isAbsent()).toBe(true);
-      expect(() => {
-        heisenberg1.get();
-      }).toThrow(UnscharferelationError);
-      expect(heisenberg2.isAbsent()).toBe(true);
-      expect(() => {
-        heisenberg2.get();
-      }).toThrow(UnscharferelationError);
-    });
-
-    it('returns its copy and predicate will not be invoked when Heisenberg is Lost', async () => {
-      expect.assertions(4);
-
-      const error: MockRuntimeError = new MockRuntimeError();
-
-      const unscharferelation1: UnscharferelationInternal<number> = UnscharferelationInternal.of<number>(
-        (epoque: Epoque<number>) => {
-          epoque.throw(error);
-        }
-      );
-      const unscharferelation2: UnscharferelationInternal<number> = unscharferelation1.filter(() => {
-        return true;
-      });
-      const unscharferelation3: UnscharferelationInternal<number> = unscharferelation1.filter(() => {
-        return false;
-      });
-      const heisenberg1: Heisenberg<number> = await unscharferelation2.terminate();
-      const heisenberg2: Heisenberg<number> = await unscharferelation3.terminate();
-
-      expect(heisenberg1.isLost()).toBe(true);
-      expect(() => {
-        heisenberg1.get();
-      }).toThrow(error);
-      expect(heisenberg2.isLost()).toBe(true);
-      expect(() => {
-        heisenberg2.get();
       }).toThrow(error);
     });
   });

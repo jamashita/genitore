@@ -1,4 +1,3 @@
-import { Whatever } from '@jamashita/anden-type';
 import { DestroyPlan } from './Interface/DestroyPlan';
 
 export class DestroySpoilPlan implements DestroyPlan<'DestroySpoilPlan'> {
@@ -14,7 +13,7 @@ export class DestroySpoilPlan implements DestroyPlan<'DestroySpoilPlan'> {
     // NOOP
   }
 
-  public onDestroy(): Whatever {
-    return;
+  public onDestroy(): void {
+    // NOOP
   }
 }

@@ -111,8 +111,6 @@ describe('AbsentPlan', () => {
       const spy4: SinonSpy = sinon.spy();
 
       await new Promise<void>((resolve: Resolve<void>) => {
-        // TODO
-        // @ts-ignore
         const plan: AbsentPlan<number> = AbsentPlan.of<number>(
           () => {
             spy1();

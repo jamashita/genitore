@@ -3,6 +3,7 @@ import { Consumer, isEqualable } from '@jamashita/anden-type';
 import { Matter } from '../Interface/Matter';
 import { Absent } from './Absent';
 import { Heisenberg } from './Heisenberg';
+import { HeisenbergType } from './HeisenbergType';
 import { Lost } from './Lost';
 
 export class Present<P> extends ValueObject<'Present'> implements Heisenberg<P, 'Present'> {
@@ -24,6 +25,10 @@ export class Present<P> extends ValueObject<'Present'> implements Heisenberg<P, 
 
   public get(): Matter<P> {
     return this.value;
+  }
+
+  public status(): HeisenbergType {
+    return 'Present';
   }
 
   public isPresent(): this is Present<P> {

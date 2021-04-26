@@ -1,5 +1,4 @@
-import { Objet } from '@jamashita/anden-object';
-import { Consumer, Kind, Peek, Predicate, Supplier, Suspicious, SyncAsync, UnaryFunction } from '@jamashita/anden-type';
+import { Consumer, Kind, Peek, Supplier, Suspicious, SyncAsync, UnaryFunction } from '@jamashita/anden-type';
 import { Superposition } from '@jamashita/genitore-superposition';
 import { Epoque } from './Epoque/Interface/Epoque';
 import { UnscharferelationError } from './Error/UnscharferelationError';
@@ -7,9 +6,10 @@ import { Heisenberg } from './Heisenberg/Heisenberg';
 import { IUnscharferelation } from './Interface/IUnscharferelation';
 import { Matter } from './Interface/Matter';
 import { Nihil } from './Interface/Nihil';
+import { Ymy } from './Interface/Ymy';
 import { UnscharferelationInternal } from './UnscharferelationInternal';
 
-export class Unscharferelation<P> extends Objet<'Unscharferelation'> implements IUnscharferelation<P, 'Unscharferelation'> {
+export class Unscharferelation<P> implements IUnscharferelation<P, 'Unscharferelation'> {
   public readonly noun: 'Unscharferelation' = 'Unscharferelation';
   private readonly internal: IUnscharferelation<P>;
 
@@ -146,23 +146,15 @@ export class Unscharferelation<P> extends Objet<'Unscharferelation'> implements 
   }
 
   protected constructor(internal: IUnscharferelation<P>) {
-    super();
     this.internal = internal;
-  }
-
-  public equals(other: unknown): boolean {
-    if (this === other) {
-      return true;
-    }
-    if (!(other instanceof Unscharferelation)) {
-      return false;
-    }
-
-    return this.internal.equals(other.internal);
   }
 
   public serialize(): string {
     return this.internal.toString();
+  }
+
+  public toString(): string {
+    return this.serialize();
   }
 
   public get(): Promise<Matter<P>> {
@@ -173,15 +165,11 @@ export class Unscharferelation<P> extends Objet<'Unscharferelation'> implements 
     return this.internal.terminate();
   }
 
-  public filter(predicate: Predicate<P>): Unscharferelation<P> {
-    return Unscharferelation.ofUnscharferelation<P>(this.internal.filter(predicate));
-  }
-
-  public map<Q = P>(mapper: UnaryFunction<Matter<P>, SyncAsync<Suspicious<Matter<Q>> | Unscharferelation<Q>>>): Unscharferelation<Q> {
+  public map<Q = P>(mapper: UnaryFunction<Matter<P>, PromiseLike<IUnscharferelation<Q>> | IUnscharferelation<Q> | PromiseLike<Ymy<Q>> | Ymy<Q>>): IUnscharferelation<Q> {
     return Unscharferelation.ofUnscharferelation<Q>(this.internal.map<Q>(mapper));
   }
 
-  public recover<Q = P>(mapper: Supplier<SyncAsync<Suspicious<Matter<Q>> | Unscharferelation<Q>>>): Unscharferelation<P | Q> {
+  public recover<Q = P>(mapper: Supplier<PromiseLike<IUnscharferelation<Q>> | IUnscharferelation<Q> | PromiseLike<Ymy<Q>> | Ymy<Q>>): IUnscharferelation<P | Q> {
     return Unscharferelation.ofUnscharferelation<P | Q>(this.internal.recover<Q>(mapper));
   }
 

@@ -1,7 +1,7 @@
-import { Objet } from '@jamashita/anden-object';
-import { Consumer, Kind, Nullable, Peek, Predicate, Supplier, SyncAsync, UnaryFunction } from '@jamashita/anden-type';
+import { Consumer, Kind, Nullable, Peek, Supplier, SyncAsync, UnaryFunction } from '@jamashita/anden-type';
 import { Chrono } from './Chrono/Interface/Chrono';
 import { SuperpositionError } from './Error/SuperpositionError';
+import { Bdb } from './Interface/Bdb';
 import { DeadConstructor } from './Interface/DeadConstructor';
 import { Detoxicated } from './Interface/Detoxicated';
 import { containsError, ISuperposition } from './Interface/ISuperposition';
@@ -9,7 +9,7 @@ import { Dead } from './Schrodinger/Dead';
 import { Schrodinger } from './Schrodinger/Schrodinger';
 import { SuperpositionInternal } from './SuperpositionInternal';
 
-export class Superposition<A, D extends Error> extends Objet<'Superposition'> implements ISuperposition<A, D, 'Superposition'> {
+export class Superposition<A, D extends Error> implements ISuperposition<A, D, 'Superposition'> {
   public readonly noun: 'Superposition' = 'Superposition';
   private readonly internal: ISuperposition<A, D>;
 
@@ -166,23 +166,15 @@ export class Superposition<A, D extends Error> extends Objet<'Superposition'> im
   }
 
   protected constructor(internal: ISuperposition<A, D>) {
-    super();
     this.internal = internal;
-  }
-
-  public equals(other: unknown): boolean {
-    if (this === other) {
-      return true;
-    }
-    if (!(other instanceof Superposition)) {
-      return false;
-    }
-
-    return this.internal.equals(other.internal);
   }
 
   public serialize(): string {
     return this.internal.toString();
+  }
+
+  public toString(): string {
+    return this.serialize();
   }
 
   public get(): Promise<Detoxicated<A>> {
@@ -197,27 +189,23 @@ export class Superposition<A, D extends Error> extends Objet<'Superposition'> im
     return this.internal.terminate();
   }
 
-  public filter(predicate: Predicate<A>): Superposition<A, D | SuperpositionError> {
-    return Superposition.ofSuperposition<A, D | SuperpositionError>(this.internal.filter(predicate));
-  }
-
   public map<B = A, E extends Error = D>(
-    mapper: UnaryFunction<Detoxicated<A>, SyncAsync<Detoxicated<B> | Superposition<B, E>>>,
+    mapper: UnaryFunction<Detoxicated<A>, PromiseLike<ISuperposition<B, E>> | ISuperposition<B, E> | PromiseLike<Bdb<B>> | Bdb<B>>,
     ...errors: ReadonlyArray<DeadConstructor<E>>
   ): Superposition<B, D | E> {
     return Superposition.ofSuperposition<B, D | E>(this.internal.map<B, D | E>(mapper, ...this.internal.getErrors(), ...errors));
   }
 
   public recover<B = A, E extends Error = D>(
-    mapper: UnaryFunction<D, SyncAsync<Detoxicated<B> | Superposition<B, E>>>,
+    mapper: UnaryFunction<D, PromiseLike<ISuperposition<B, E>> | ISuperposition<B, E> | PromiseLike<Bdb<B>> | Bdb<B>>,
     ...errors: ReadonlyArray<DeadConstructor<E>>
   ): Superposition<A | B, E> {
     return Superposition.ofSuperposition<A | B, E>(this.internal.recover<A | B, E>(mapper, ...errors));
   }
 
   public transform<B = A, E extends Error = D>(
-    alive: UnaryFunction<Detoxicated<A>, SyncAsync<Detoxicated<B> | Superposition<B, E>>>,
-    dead: UnaryFunction<D, SyncAsync<Detoxicated<B> | Superposition<B, E>>>,
+    alive: UnaryFunction<Detoxicated<A>, PromiseLike<ISuperposition<B, E>> | ISuperposition<B, E> | PromiseLike<Bdb<B>> | Bdb<B>>,
+    dead: UnaryFunction<D, PromiseLike<ISuperposition<B, E>> | ISuperposition<B, E> | PromiseLike<Bdb<B>> | Bdb<B>>,
     ...errors: ReadonlyArray<DeadConstructor<E>>
   ): Superposition<B, E> {
     return Superposition.ofSuperposition<B, E>(this.internal.transform<B, E>(alive, dead, ...errors));
