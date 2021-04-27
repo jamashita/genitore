@@ -62,7 +62,7 @@ export class Unscharferelation<P> implements IUnscharferelation<P, 'Unscharferel
     return Promise.all<Heisenberg<PT>>(promises);
   }
 
-  public static maybe<PT>(value: Suspicious<Matter<PT>> | PromiseLike<Suspicious<Matter<PT>>>): Unscharferelation<PT> {
+  public static maybe<PT>(value: PromiseLike<Suspicious<Matter<PT>>> | Suspicious<Matter<PT>>): Unscharferelation<PT> {
     return Unscharferelation.of<PT>((epoque: Epoque<PT>) => {
       if (Kind.isUndefined(value) || Kind.isNull(value)) {
         return epoque.decline();
@@ -102,7 +102,7 @@ export class Unscharferelation<P> implements IUnscharferelation<P, 'Unscharferel
     });
   }
 
-  public static present<PT>(value: PromiseLike<Matter<PT>> | Matter<PT>): Unscharferelation<PT> {
+  public static present<PT>(value: Matter<PT> | PromiseLike<Matter<PT>>): Unscharferelation<PT> {
     return Unscharferelation.of<PT>((epoque: Epoque<PT>) => {
       if (Kind.isUndefined(value) || Kind.isNull(value)) {
         return epoque.throw(new UnscharferelationError('IMPOSSIBLE'));
@@ -122,7 +122,7 @@ export class Unscharferelation<P> implements IUnscharferelation<P, 'Unscharferel
     });
   }
 
-  public static absent<PT>(value: PromiseLike<Nihil> | Nihil): Unscharferelation<PT> {
+  public static absent<PT>(value: Nihil | PromiseLike<Nihil>): Unscharferelation<PT> {
     return Unscharferelation.of<PT>((epoque: Epoque<PT>) => {
       if (Kind.isUndefined(value) || Kind.isNull(value)) {
         return epoque.decline();
