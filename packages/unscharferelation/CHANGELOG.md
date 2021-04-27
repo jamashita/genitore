@@ -1,3 +1,10 @@
+# [@jamashita/genitore-unscharferelation-v1.4.1](https://github.com/jamashita/genitore/compare/@jamashita/genitore-unscharferelation-v1.4.0...@jamashita/genitore-unscharferelation-v1.4.1) (2021-04-26)
+
+
+### Bug Fixes
+
+* 🐛 mondad copletelyt reverted ([313862b](https://github.com/jamashita/genitore/commit/313862b1f13f0cd7ea01c934c31d59e2201258cd))
+
 # [@jamashita/genitore-unscharferelation-v1.4.0](https://github.com/jamashita/genitore/compare/@jamashita/genitore-unscharferelation-v1.3.0...@jamashita/genitore-unscharferelation-v1.4.0) (2021-04-26)
 
 

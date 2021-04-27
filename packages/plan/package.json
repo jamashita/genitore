@@ -26,9 +26,9 @@
     "clean:dist": "rimraf dist"
   },
   "dependencies": {
-    "@jamashita/anden-error": "1.5.0",
-    "@jamashita/anden-object": "1.6.0",
-    "@jamashita/anden-type": "1.8.0"
+    "@jamashita/anden-error": "1.6.0",
+    "@jamashita/anden-object": "1.7.0",
+    "@jamashita/anden-type": "1.9.0"
   },
   "devDependencies": {
     "sinon": "10.0.1"
