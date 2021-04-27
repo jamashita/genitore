@@ -1,5 +1,5 @@
 import { Consumer, Kind, Peek, Supplier, Suspicious, UnaryFunction } from '@jamashita/anden-type';
-import { Superposition } from '@jamashita/genitore-superposition';
+import { Chrono, Detoxicated, SuperpositionInternal } from '@jamashita/genitore-superposition';
 import { Epoque } from './Epoque/Interface/Epoque';
 import { UnscharferelationError } from './Error/UnscharferelationError';
 import { Heisenberg } from './Heisenberg/Heisenberg';
@@ -208,7 +208,23 @@ export class Unscharferelation<P> implements IUnscharferelation<P, 'Unscharferel
     return this;
   }
 
-  public toSuperposition(): Superposition<P, UnscharferelationError> {
-    return Superposition.ofSuperposition<P, UnscharferelationError>(this.internal.toSuperposition());
+  public toSuperposition(): SuperpositionInternal<P, UnscharferelationError> {
+    return SuperpositionInternal.of<P, UnscharferelationError>((chrono: Chrono<P, UnscharferelationError>) => {
+      this.pass(
+        (value: Matter<P>) => {
+          if (value instanceof Error) {
+            return chrono.decline(new UnscharferelationError('ABSENT'));
+          }
+
+          return chrono.accept((value as unknown) as Detoxicated<P>);
+        },
+        () => {
+          return chrono.decline(new UnscharferelationError('ABSENT'));
+        },
+        (e: unknown) => {
+          return chrono.throw(e);
+        }
+      );
+    }, [UnscharferelationError]);
   }
 }

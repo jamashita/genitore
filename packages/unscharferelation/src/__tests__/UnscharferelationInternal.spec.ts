@@ -1,6 +1,5 @@
 import { MockRuntimeError } from '@jamashita/anden-error';
 import { Plan } from '@jamashita/genitore-plan';
-import { Schrodinger } from '@jamashita/genitore-superposition';
 import sinon, { SinonSpy } from 'sinon';
 import { Epoque } from '../Epoque/Interface/Epoque';
 import { UnscharferelationError } from '../Error/UnscharferelationError';
@@ -1939,80 +1938,6 @@ describe('UnscharferelationInternal', () => {
       });
 
       expect(spy.called).toBe(true);
-    });
-  });
-
-  describe('toSuperposition', () => {
-    it('will transform to Alive Superposition if Unscharferelation is Present', async () => {
-      expect.assertions(2);
-
-      const value: number = -201;
-
-      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of<number>(
-        (epoque: Epoque<number>) => {
-          epoque.accept(value);
-        }
-      );
-
-      const schrodinger: Schrodinger<number, UnscharferelationError> = await unscharferelation.toSuperposition().terminate();
-
-      expect(schrodinger.isAlive()).toBe(true);
-      expect(schrodinger.get()).toBe(value);
-    });
-
-    it('will transform to Dead Superposition if the value is error', async () => {
-      expect.assertions(2);
-
-      const value: MockRuntimeError = new MockRuntimeError();
-
-      const unscharferelation: UnscharferelationInternal<MockRuntimeError> = UnscharferelationInternal.of<MockRuntimeError>(
-        (epoque: Epoque<MockRuntimeError>) => {
-          epoque.accept(value);
-        }
-      );
-
-      const schrodinger: Schrodinger<MockRuntimeError, UnscharferelationError> = await unscharferelation.toSuperposition().terminate();
-
-      expect(schrodinger.isDead()).toBe(true);
-      expect(() => {
-        schrodinger.get();
-      }).toThrow(UnscharferelationError);
-    });
-
-    it('will transform to Dead Superposition if Unscharferelation is Absent', async () => {
-      expect.assertions(2);
-
-      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of<number>(
-        (epoque: Epoque<number>) => {
-          epoque.decline();
-        }
-      );
-
-      const schrodinger: Schrodinger<number, UnscharferelationError> = await unscharferelation.toSuperposition().terminate();
-
-      expect(schrodinger.isDead()).toBe(true);
-      expect(() => {
-        schrodinger.get();
-      }).toThrow(UnscharferelationError);
-    });
-
-    it('will transform to Contradiction Superposition if Unscharferelation is Lost', async () => {
-      expect.assertions(2);
-
-      const error: MockRuntimeError = new MockRuntimeError();
-
-      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of<number>(
-        (epoque: Epoque<number>) => {
-          epoque.throw(error);
-        }
-      );
-
-      const schrodinger: Schrodinger<number, UnscharferelationError> = await unscharferelation.toSuperposition().terminate();
-
-      expect(schrodinger.isContradiction()).toBe(true);
-      expect(() => {
-        schrodinger.get();
-      }).toThrow(error);
     });
   });
 });
