@@ -1,3 +1,11 @@
+# [@jamashita/genitore-superposition-v1.5.0](https://github.com/jamashita/genitore/compare/@jamashita/genitore-superposition-v1.4.1...@jamashita/genitore-superposition-v1.5.0) (2021-04-27)
+
+
+### Features
+
+* 🎸 removed SyncAsync ([338c090](https://github.com/jamashita/genitore/commit/338c090e417ff22d0b3fd02299ab4ec0eb3c0fe9))
+* 🎸 update ([a880e55](https://github.com/jamashita/genitore/commit/a880e55ed6c17a53a65d028e79e4476534849f0a))
+
 # [@jamashita/genitore-superposition-v1.4.1](https://github.com/jamashita/genitore/compare/@jamashita/genitore-superposition-v1.4.0...@jamashita/genitore-superposition-v1.4.1) (2021-04-26)
 
 
