@@ -7,7 +7,6 @@ import { Ymy } from '../Interface/Ymy';
 
 export class PresentPlan<P, Q> implements MapPlan<Matter<P>, 'PresentPlan'> {
   public readonly noun: 'PresentPlan' = 'PresentPlan';
-  // private readonly mapper: UnaryFunction<Matter<P>, SyncAsync<IUnscharferelation<Q> | Suspicious<Matter<Q>>>>;
   private readonly mapper: UnaryFunction<Matter<P>, IUnscharferelation<Q> | PromiseLike<IUnscharferelation<Q>> | PromiseLike<Ymy<Q>> | Ymy<Q>>;
   private readonly epoque: Epoque<Q>;
 

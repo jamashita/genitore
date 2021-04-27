@@ -1,4 +1,4 @@
-import { Consumer, Kind, Peek, Supplier, Suspicious, SyncAsync, UnaryFunction } from '@jamashita/anden-type';
+import { Consumer, Kind, Peek, Supplier, Suspicious, UnaryFunction } from '@jamashita/anden-type';
 import { Superposition } from '@jamashita/genitore-superposition';
 import { Epoque } from './Epoque/Interface/Epoque';
 import { UnscharferelationError } from './Error/UnscharferelationError';
@@ -62,8 +62,11 @@ export class Unscharferelation<P> implements IUnscharferelation<P, 'Unscharferel
     return Promise.all<Heisenberg<PT>>(promises);
   }
 
-  public static maybe<PT>(value: SyncAsync<Suspicious<Matter<PT>>>): Unscharferelation<PT> {
+  public static maybe<PT>(value: Suspicious<Matter<PT>> | PromiseLike<Suspicious<Matter<PT>>>): Unscharferelation<PT> {
     return Unscharferelation.of<PT>((epoque: Epoque<PT>) => {
+      if (Kind.isUndefined(value) || Kind.isNull(value)) {
+        return epoque.decline();
+      }
       if (Kind.isPromiseLike<Suspicious<Matter<PT>>>(value)) {
         return value.then<unknown, unknown>(
           (v: Suspicious<Matter<PT>>) => {
@@ -77,10 +80,6 @@ export class Unscharferelation<P> implements IUnscharferelation<P, 'Unscharferel
             return epoque.throw(new UnscharferelationError('REJECTED'));
           }
         );
-      }
-
-      if (Kind.isUndefined(value) || Kind.isNull(value)) {
-        return epoque.decline();
       }
 
       return epoque.accept(value);
@@ -103,8 +102,11 @@ export class Unscharferelation<P> implements IUnscharferelation<P, 'Unscharferel
     });
   }
 
-  public static present<PT>(value: SyncAsync<Matter<PT>>): Unscharferelation<PT> {
+  public static present<PT>(value: PromiseLike<Matter<PT>> | Matter<PT>): Unscharferelation<PT> {
     return Unscharferelation.of<PT>((epoque: Epoque<PT>) => {
+      if (Kind.isUndefined(value) || Kind.isNull(value)) {
+        return epoque.throw(new UnscharferelationError('IMPOSSIBLE'));
+      }
       if (Kind.isPromiseLike<Matter<PT>>(value)) {
         return value.then<unknown, unknown>(
           (v: Matter<PT>) => {
@@ -120,8 +122,11 @@ export class Unscharferelation<P> implements IUnscharferelation<P, 'Unscharferel
     });
   }
 
-  public static absent<PT>(value: SyncAsync<Nihil>): Unscharferelation<PT> {
+  public static absent<PT>(value: PromiseLike<Nihil> | Nihil): Unscharferelation<PT> {
     return Unscharferelation.of<PT>((epoque: Epoque<PT>) => {
+      if (Kind.isUndefined(value) || Kind.isNull(value)) {
+        return epoque.decline();
+      }
       if (Kind.isPromiseLike<Nihil>(value)) {
         return value.then<unknown, unknown>(
           () => {
@@ -133,7 +138,7 @@ export class Unscharferelation<P> implements IUnscharferelation<P, 'Unscharferel
         );
       }
 
-      return epoque.decline();
+      return epoque.throw(new UnscharferelationError('IMPOSSIBLE'));
     });
   }
 
