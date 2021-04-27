@@ -26,6 +26,7 @@ export class Dead<A, D extends Error> implements Schrodinger<A, D, 'Dead'> {
   }
 
   public get(): never {
+    // eslint-disable-next-line @typescript-eslint/no-throw-literal
     throw this.error;
   }
 
