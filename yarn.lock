@@ -503,6 +503,13 @@
     "@jamashita/anden-type" "^1.5.0"
     object-hash "2.1.1"
 
+"@jamashita/anden-type@1.5.0":
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/@jamashita/anden-type/-/anden-type-1.5.0.tgz#49a9f335fd4e7340635fd1b56c81c2c4e8514199"
+  integrity sha512-TFdGWWA3ovpKMZwyhCok+RjOqoAVh84QBugzN1sa7pkolej2GKpX46ryJTT0hYvG7DH4oL1neFEuNYsGrT4DNg==
+  dependencies:
+    reflect-metadata "0.1.13"
+
 "@jamashita/anden-type@1.8.0", "@jamashita/anden-type@^1.5.0":
   version "1.8.0"
   resolved "https://registry.yarnpkg.com/@jamashita/anden-type/-/anden-type-1.8.0.tgz#4948a76810c1b54ed36acd2a6ab21b08626638d9"
@@ -524,6 +531,34 @@
     eslint-plugin-node "11.1.0"
     eslint-plugin-react "7.23.2"
     eslint-plugin-react-hooks "4.2.0"
+
+"@jamashita/genitore-plan@1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@jamashita/genitore-plan/-/genitore-plan-1.1.0.tgz#8e44633fbca8e9a346336dcf827b350f289dc359"
+  integrity sha512-Xial1vLRy96ZcY5/FhC683H9o5on8Ext+y7VOff/Hdqolv7brwpyYXvUtPrEuCmvCuQpMV78w0ZarJVm+ycnVg==
+  dependencies:
+    "@jamashita/anden-error" "1.5.0"
+    "@jamashita/anden-object" "1.6.0"
+    "@jamashita/anden-type" "1.5.0"
+
+"@jamashita/genitore-plan@1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@jamashita/genitore-plan/-/genitore-plan-1.2.0.tgz#e5d8447b050fcc28dfd9c376726fad4da47b8d78"
+  integrity sha512-T3OwmUDwSNuBxNBbtLla176mktPN7m6/5co3DOH1903W+fynxQfAWYgh2xRdT7a/V2MI2UEA8jIt5WoYrIsmhw==
+  dependencies:
+    "@jamashita/anden-error" "1.5.0"
+    "@jamashita/anden-object" "1.6.0"
+    "@jamashita/anden-type" "1.8.0"
+
+"@jamashita/genitore-superposition@1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@jamashita/genitore-superposition/-/genitore-superposition-1.2.0.tgz#7a0c8b325bfa934224d438a8fa61ecd7e8660c26"
+  integrity sha512-259jEqgaljHEaGliFv2MnZfx5tm2XlsEP09yx3AmRsFVCcIC3gTMV5zGlYy2kzHzux6ZE8lPIQEt6hsZ33e8IQ==
+  dependencies:
+    "@jamashita/anden-error" "1.5.0"
+    "@jamashita/anden-object" "1.6.0"
+    "@jamashita/anden-type" "1.8.0"
+    "@jamashita/genitore-plan" "1.1.0"
 
 "@jest/console@^26.6.2":
   version "26.6.2"
