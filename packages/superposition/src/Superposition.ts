@@ -1,4 +1,4 @@
-import { Consumer, Kind, Nullable, Peek, Supplier, SyncAsync, UnaryFunction } from '@jamashita/anden-type';
+import { Consumer, Kind, Nullable, Peek, Supplier, UnaryFunction } from '@jamashita/anden-type';
 import { Chrono } from './Chrono/Interface/Chrono';
 import { SuperpositionError } from './Error/SuperpositionError';
 import { Bdb } from './Interface/Bdb';
@@ -66,10 +66,10 @@ export class Superposition<A, D extends Error> implements ISuperposition<A, D, '
     return Promise.all<Schrodinger<AT, DT>>(promises);
   }
 
-  public static playground<AT, DT extends Error>(supplier: Supplier<SyncAsync<Detoxicated<AT>>>, ...errors: ReadonlyArray<DeadConstructor<DT>>): Superposition<AT, DT> {
+  public static playground<AT, DT extends Error>(supplier: Supplier<PromiseLike<Detoxicated<AT>> | Detoxicated<AT>>, ...errors: ReadonlyArray<DeadConstructor<DT>>): Superposition<AT, DT> {
     return Superposition.of<AT, DT>((chrono: Chrono<AT, DT>) => {
       try {
-        const value: SyncAsync<Detoxicated<AT>> = supplier();
+        const value: PromiseLike<Detoxicated<AT>> | Detoxicated<AT> = supplier();
 
         if (Kind.isPromiseLike<Detoxicated<AT>>(value)) {
           return value.then<unknown, unknown>(
@@ -116,7 +116,7 @@ export class Superposition<A, D extends Error> implements ISuperposition<A, D, '
     }, ...errors);
   }
 
-  public static alive<AT, DT extends Error>(value: SyncAsync<Detoxicated<AT>>, ...errors: ReadonlyArray<DeadConstructor<DT>>): Superposition<AT, DT> {
+  public static alive<AT, DT extends Error>(value: PromiseLike<Detoxicated<AT>> | Detoxicated<AT>, ...errors: ReadonlyArray<DeadConstructor<DT>>): Superposition<AT, DT> {
     return Superposition.of<AT, DT>((chrono: Chrono<AT, DT>) => {
       if (Kind.isPromiseLike<Detoxicated<AT>>(value)) {
         return value.then<unknown, unknown>(
