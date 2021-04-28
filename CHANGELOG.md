@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/jamashita/genitore/compare/v1.0.0...v1.1.0) (2021-04-28)
+
+
+### Features
+
+* 🎸 plan added ([a4851cc](https://github.com/jamashita/genitore/commit/a4851cc1a03aa501d0dd6c09dd5db39551afd3fe))
+
 # 1.0.0 (2021-04-28)
 
 
