@@ -1,7 +1,7 @@
-import { DestroyPlan } from '../../../plan/src/Interface/DestroyPlan';
-import { MapPlan } from '../../../plan/src/Interface/MapPlan';
-import { Plan } from '../../../plan/src/Interface/Plan';
-import { RecoveryPlan } from '../../../plan/src/Interface/RecoveryPlan';
+import { DestroyPlan } from '../../Plan/Interface/DestroyPlan';
+import { MapPlan } from '../../Plan/Interface/MapPlan';
+import { Plan } from '../../Plan/Interface/Plan';
+import { RecoveryPlan } from '../../Plan/Interface/RecoveryPlan';
 import { Matter } from '../Interface/Matter';
 
 export class CombinedEpoquePlan<P> implements Plan<Matter<P>, void, 'CombinedEpoquePlan'> {

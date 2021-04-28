@@ -1,5 +1,5 @@
 import { Kind, Supplier, Suspicious } from '@jamashita/anden-type';
-import { RecoveryPlan } from '../../../plan/src/Interface/RecoveryPlan';
+import { RecoveryPlan } from '../../Plan/Interface/RecoveryPlan';
 import { Epoque } from '../Epoque/Interface/Epoque';
 import { isUnscharferelation, IUnscharferelation, UReturnType } from '../Interface/IUnscharferelation';
 import { Matter } from '../Interface/Matter';

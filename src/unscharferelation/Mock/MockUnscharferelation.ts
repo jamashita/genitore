@@ -1,6 +1,6 @@
 import { UnimplementedError } from '@jamashita/anden-error';
 import { ValueObject } from '@jamashita/anden-object';
-import { ISuperposition } from '@jamashita/genitore-superposition';
+import { ISuperposition } from '../../Superposition/Interface/ISuperposition';
 import { UnscharferelationError } from '../Error/UnscharferelationError';
 import { Heisenberg } from '../Heisenberg/Heisenberg';
 import { IUnscharferelation } from '../Interface/IUnscharferelation';
@@ -18,10 +18,6 @@ export class MockUnscharferelation<P> extends ValueObject<'MockUnscharferelation
   }
 
   public terminate(): Promise<Heisenberg<P>> {
-    throw new UnimplementedError();
-  }
-
-  public filter(): IUnscharferelation<P> {
     throw new UnimplementedError();
   }
 
@@ -58,6 +54,10 @@ export class MockUnscharferelation<P> extends ValueObject<'MockUnscharferelation
   }
 
   public serialize(): string {
+    throw new UnimplementedError();
+  }
+
+  public filter(): IUnscharferelation<P> {
     throw new UnimplementedError();
   }
 

@@ -1,5 +1,5 @@
 import { Kind, UnaryFunction } from '@jamashita/anden-type';
-import { MapPlan } from '@jamashita/genitore-plan';
+import { MapPlan } from '../../Plan/Interface/MapPlan';
 import { Chrono } from '../Chrono/Interface/Chrono';
 import { Detoxicated } from '../Interface/Detoxicated';
 import { containsError, isSuperposition, ISuperposition, SReturnType } from '../Interface/ISuperposition';

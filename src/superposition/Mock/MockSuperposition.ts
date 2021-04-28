@@ -13,10 +13,6 @@ export class MockSuperposition<A, D extends Error> extends ValueObject<'MockSupe
     super();
   }
 
-  public equals(): boolean {
-    throw new UnimplementedError();
-  }
-
   public serialize(): string {
     throw new UnimplementedError();
   }
@@ -45,10 +41,6 @@ export class MockSuperposition<A, D extends Error> extends ValueObject<'MockSupe
     throw new UnimplementedError();
   }
 
-  public filter(): ISuperposition<A, D | SuperpositionError> {
-    throw new UnimplementedError();
-  }
-
   public map<B = A, E extends Error = D>(): ISuperposition<B, D | E> {
     throw new UnimplementedError();
   }
@@ -66,6 +58,14 @@ export class MockSuperposition<A, D extends Error> extends ValueObject<'MockSupe
   }
 
   public transform<B = A, E extends Error = D>(): ISuperposition<B, E> {
+    throw new UnimplementedError();
+  }
+
+  public equals(): boolean {
+    throw new UnimplementedError();
+  }
+
+  public filter(): ISuperposition<A, D | SuperpositionError> {
     throw new UnimplementedError();
   }
 }

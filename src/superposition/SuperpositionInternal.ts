@@ -1,16 +1,14 @@
 import { Consumer, Peek, Reject, Resolve, UnaryFunction } from '@jamashita/anden-type';
-import {
-  DestroyPassPlan,
-  DestroyPlan,
-  DestroySpoilPlan,
-  MapPassPlan,
-  MapPlan,
-  MapSpoilPlan,
-  Plan,
-  RecoveryPassPlan,
-  RecoveryPlan,
-  RecoverySpoilPlan
-} from '@jamashita/genitore-plan';
+import { DestroyPassPlan } from '../Plan/DestroyPassPlan';
+import { DestroySpoilPlan } from '../Plan/DestroySpoilPlan';
+import { DestroyPlan } from '../Plan/Interface/DestroyPlan';
+import { MapPlan } from '../Plan/Interface/MapPlan';
+import { Plan } from '../Plan/Interface/Plan';
+import { RecoveryPlan } from '../Plan/Interface/RecoveryPlan';
+import { MapPassPlan } from '../Plan/MapPassPlan';
+import { MapSpoilPlan } from '../Plan/MapSpoilPlan';
+import { RecoveryPassPlan } from '../Plan/RecoveryPassPlan';
+import { RecoverySpoilPlan } from '../Plan/RecoverySpoilPlan';
 import { Chrono } from './Chrono/Interface/Chrono';
 import { DeadConstructor } from './Interface/DeadConstructor';
 import { Detoxicated } from './Interface/Detoxicated';
