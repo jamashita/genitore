@@ -1,10 +1,6 @@
 import { MockRuntimeError } from '@jamashita/anden-error';
-import { MockValueObject } from '@jamashita/anden-object';
 import sinon, { SinonSpy } from 'sinon';
 import { SuperpositionError } from '../../Error/SuperpositionError';
-import { Alive } from '../Alive';
-import { Contradiction } from '../Contradiction';
-import { Dead } from '../Dead';
 import { Schrodinger } from '../Schrodinger';
 import { Still } from '../Still';
 
@@ -96,40 +92,6 @@ describe('Still', () => {
       });
 
       expect(spy.called).toBe(false);
-    });
-  });
-
-  describe('equals', () => {
-    it('returns true if the same instance given', () => {
-      expect.assertions(1);
-
-      const schrodinger: Schrodinger<number, MockRuntimeError> = Still.of<number, MockRuntimeError>();
-
-      expect(schrodinger.equals(schrodinger)).toBe(true);
-    });
-
-    it('returns false if different class instance given', () => {
-      expect.assertions(1);
-
-      const schrodinger: Schrodinger<number, MockRuntimeError> = Still.of<number, MockRuntimeError>();
-
-      expect(schrodinger.equals(new MockValueObject('mock'))).toBe(false);
-    });
-
-    it('returns true if Still given', () => {
-      expect.assertions(4);
-
-      const alive: Alive<number, MockRuntimeError> = Alive.of<number, MockRuntimeError>(2);
-      const dead: Dead<number, MockRuntimeError> = Dead.of<number, MockRuntimeError>(new MockRuntimeError());
-      const contradiction: Contradiction<number, MockRuntimeError> = Contradiction.of<number, MockRuntimeError>(null);
-      const still: Still<number, MockRuntimeError> = Still.of<number, MockRuntimeError>();
-
-      const schrodinger: Schrodinger<number, MockRuntimeError> = Still.of<number, MockRuntimeError>();
-
-      expect(schrodinger.equals(alive)).toBe(false);
-      expect(schrodinger.equals(dead)).toBe(false);
-      expect(schrodinger.equals(contradiction)).toBe(false);
-      expect(schrodinger.equals(still)).toBe(true);
     });
   });
 

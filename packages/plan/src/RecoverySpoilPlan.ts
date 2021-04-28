@@ -13,7 +13,7 @@ export class RecoverySpoilPlan<R> implements RecoveryPlan<R, 'RecoverySpoilPlan'
     // NOOP
   }
 
-  public onRecover(value: R): unknown {
-    return value;
+  public onRecover(): void {
+    // NOOP
   }
 }

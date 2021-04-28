@@ -1,4 +1,3 @@
-import { MockValueObject } from '@jamashita/anden-object';
 import sinon, { SinonSpy } from 'sinon';
 import { UnscharferelationError } from '../../Error/UnscharferelationError';
 import { Absent } from '../Absent';
@@ -98,24 +97,6 @@ describe('Absent', () => {
       });
 
       expect(spy.called).toBe(false);
-    });
-  });
-
-  describe('equals', () => {
-    it('returns true if the same instance given', () => {
-      expect.assertions(1);
-
-      const heisenberg: Heisenberg<number> = Absent.of<number>();
-
-      expect(heisenberg.equals(heisenberg)).toBe(true);
-    });
-
-    it('returns false if the different class instance given', () => {
-      expect.assertions(1);
-
-      const heisenberg: Heisenberg<number> = Absent.of<number>();
-
-      expect(heisenberg.equals(new MockValueObject('mock'))).toBe(false);
     });
   });
 

@@ -1,11 +1,11 @@
-import { ValueObject } from '@jamashita/anden-object';
 import { SuperpositionError } from '../Error/SuperpositionError';
 import { Alive } from './Alive';
 import { Contradiction } from './Contradiction';
 import { Dead } from './Dead';
 import { Schrodinger } from './Schrodinger';
+import { SchrodingerType } from './SchrodingerType';
 
-export class Still<A, D extends Error> extends ValueObject<'Still'> implements Schrodinger<A, D, 'Still'> {
+export class Still<A, D extends Error> implements Schrodinger<A, D, 'Still'> {
   public readonly noun: 'Still' = 'Still';
 
   private static readonly INSTANCE: Still<unknown, Error> = new Still<unknown, Error>();
@@ -15,15 +15,23 @@ export class Still<A, D extends Error> extends ValueObject<'Still'> implements S
   }
 
   protected constructor() {
-    super();
+    // NOOP
   }
 
   public serialize(): string {
     return 'Still';
   }
 
+  public toString(): string {
+    return this.serialize();
+  }
+
   public get(): never {
     throw new SuperpositionError('STILL');
+  }
+
+  public status(): SchrodingerType {
+    return 'Still';
   }
 
   public isAlive(): this is Alive<A, D> {
@@ -48,13 +56,5 @@ export class Still<A, D extends Error> extends ValueObject<'Still'> implements S
 
   public ifContradiction(): void {
     // NOOP
-  }
-
-  public equals(other: unknown): boolean {
-    if (this === other) {
-      return true;
-    }
-
-    return false;
   }
 }

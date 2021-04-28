@@ -13,7 +13,7 @@ export class MapSpoilPlan<M> implements MapPlan<M, 'MapSpoilPlan'> {
     // NOOP
   }
 
-  public onMap(value: M): unknown {
-    return value;
+  public onMap(): void {
+    // NOOP
   }
 }

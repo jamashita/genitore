@@ -6,7 +6,7 @@ import { UnscharferelationInternal } from '../UnscharferelationInternal';
 describe('IUnscharferelation', () => {
   describe('isUnscharferelation', () => {
     it('returns true if IUnscharferelation methods the given object have', () => {
-      expect.assertions(25);
+      expect.assertions(24);
 
       const unscharferelation1: Unscharferelation<number> = Unscharferelation.present<number>(4);
       const unscharferelation2: UnscharferelationInternal<number> = UnscharferelationInternal.of<number>(
@@ -53,22 +53,6 @@ describe('IUnscharferelation', () => {
           terminate() {
             // NOOP
           },
-          filter() {
-            // NOOP
-          }
-        })
-      ).toBe(false);
-      expect(
-        isUnscharferelation<number>({
-          get() {
-            // NOOP
-          },
-          terminate() {
-            // NOOP
-          },
-          filter() {
-            // NOOP
-          },
           map() {
             // NOOP
           }
@@ -80,9 +64,6 @@ describe('IUnscharferelation', () => {
             // NOOP
           },
           terminate() {
-            // NOOP
-          },
-          filter() {
             // NOOP
           },
           map() {
@@ -99,9 +80,6 @@ describe('IUnscharferelation', () => {
             // NOOP
           },
           terminate() {
-            // NOOP
-          },
-          filter() {
             // NOOP
           },
           map() {
@@ -121,9 +99,6 @@ describe('IUnscharferelation', () => {
             // NOOP
           },
           terminate() {
-            // NOOP
-          },
-          filter() {
             // NOOP
           },
           map() {
@@ -146,9 +121,6 @@ describe('IUnscharferelation', () => {
             // NOOP
           },
           terminate() {
-            // NOOP
-          },
-          filter() {
             // NOOP
           },
           map() {
@@ -174,9 +146,6 @@ describe('IUnscharferelation', () => {
             // NOOP
           },
           terminate() {
-            // NOOP
-          },
-          filter() {
             // NOOP
           },
           map() {
@@ -205,9 +174,6 @@ describe('IUnscharferelation', () => {
             // NOOP
           },
           terminate() {
-            // NOOP
-          },
-          filter() {
             // NOOP
           },
           map() {

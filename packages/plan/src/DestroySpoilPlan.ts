@@ -13,7 +13,7 @@ export class DestroySpoilPlan implements DestroyPlan<'DestroySpoilPlan'> {
     // NOOP
   }
 
-  public onDestroy(cause: unknown): unknown {
-    return cause;
+  public onDestroy(): void {
+    // NOOP
   }
 }

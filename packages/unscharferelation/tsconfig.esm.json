@@ -7,6 +7,9 @@
   "references": [
     {
       "path": "../plan/tsconfig.esm.json"
+    },
+    {
+      "path": "../superposition/tsconfig.esm.json"
     }
   ]
 }

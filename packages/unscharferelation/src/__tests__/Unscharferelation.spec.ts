@@ -1,5 +1,5 @@
 import { MockRuntimeError } from '@jamashita/anden-error';
-import { MockValueObject } from '@jamashita/anden-object';
+import { Schrodinger } from '@jamashita/genitore-superposition';
 import sinon, { SinonSpy } from 'sinon';
 import { Epoque } from '../Epoque/Interface/Epoque';
 import { UnscharferelationError } from '../Error/UnscharferelationError';
@@ -341,7 +341,7 @@ describe('Unscharferelation', () => {
         // eslint-disable-next-line no-await-in-loop
         const h: Heisenberg<number> = await u.terminate();
 
-        expect(h.equals(heisenbergs[i])).toBe(true);
+        expect(h.get()).toBe(i - 1);
       }
     });
 
@@ -362,12 +362,20 @@ describe('Unscharferelation', () => {
         // eslint-disable-next-line no-await-in-loop
         const h: Heisenberg<number> = await u.terminate();
 
-        expect(h.equals(heisenbergs[i])).toBe(true);
+        expect(() => {
+          h.get();
+        }).toThrow(UnscharferelationError);
       }
     });
 
     it('returns Lost Heisenbergs', async () => {
       expect.assertions(4);
+
+      const losts: Array<unknown> = [
+        null,
+        undefined,
+        NaN
+      ];
 
       const unscharferelation1: Unscharferelation<number> = Unscharferelation.of<number>((epoque: Epoque<number>) => {
         epoque.throw(null);
@@ -389,7 +397,9 @@ describe('Unscharferelation', () => {
         // eslint-disable-next-line no-await-in-loop
         const h: Heisenberg<number> = await u.terminate();
 
-        expect(h.equals(heisenbergs[i])).toBe(true);
+        if (h.isLost()) {
+          expect(h.getCause()).toBe(losts[i]);
+        }
       }
     });
 
@@ -412,7 +422,24 @@ describe('Unscharferelation', () => {
         // eslint-disable-next-line no-await-in-loop
         const h: Heisenberg<number> = await u.terminate();
 
-        expect(h.equals(heisenbergs[i])).toBe(true);
+        switch (i) {
+          case 0: {
+            if (h.isLost()) {
+              expect(h.getCause()).toBeNull();
+            }
+            continue;
+          }
+          case 1: {
+            expect(() => {
+              h.get();
+            }).toThrow(UnscharferelationError);
+            continue;
+          }
+          case 2:
+          default: {
+            expect(h.get()).toBe(1);
+          }
+        }
       }
     });
   });
@@ -613,39 +640,6 @@ describe('Unscharferelation', () => {
     });
   });
 
-  describe('equals', () => {
-    it('returns true if the same instance given', () => {
-      expect.assertions(1);
-
-      const unscharferelation: Unscharferelation<number> = Unscharferelation.present<number>(-1);
-
-
-      expect(unscharferelation.equals(unscharferelation)).toBe(true);
-    });
-
-    it('returns false if the class instance given', () => {
-      expect.assertions(1);
-
-      const unscharferelation: Unscharferelation<number> = Unscharferelation.present<number>(-1);
-
-      expect(unscharferelation.equals(new MockValueObject('mock'))).toBe(false);
-    });
-
-
-    it('returns true if their retaining Heisenbergs are the same', () => {
-      expect.assertions(3);
-
-      const unscharferelation1: Unscharferelation<number> = Unscharferelation.present<number>(-1);
-      const unscharferelation2: Unscharferelation<number> = Unscharferelation.present<number>(-1);
-      const unscharferelation3: Unscharferelation<number> = Unscharferelation.present<number>(0);
-      const unscharferelation4: Unscharferelation<number> = Unscharferelation.absent<number>();
-
-      expect(unscharferelation1.equals(unscharferelation2)).toBe(true);
-      expect(unscharferelation1.equals(unscharferelation3)).toBe(false);
-      expect(unscharferelation1.equals(unscharferelation4)).toBe(false);
-    });
-  });
-
   describe('toString', () => {
     it('returns its retaining Heisenberg string', () => {
       expect.assertions(3);
@@ -695,26 +689,6 @@ describe('Unscharferelation', () => {
       const unscharferelation: Unscharferelation<number> = Unscharferelation.ofUnscharferelation<number>(mock);
 
       await unscharferelation.terminate();
-
-      expect(spy.called).toBe(true);
-    });
-  });
-
-  describe('filter', () => {
-    it('delegates inner Unscharferelation', () => {
-      expect.assertions(1);
-
-      const mock: MockUnscharferelation<number> = new MockUnscharferelation<number>();
-
-      const spy: SinonSpy = sinon.spy();
-
-      mock.filter = spy;
-
-      const unscharferelation: Unscharferelation<number> = Unscharferelation.ofUnscharferelation<number>(mock);
-
-      unscharferelation.filter(() => {
-        return true;
-      });
 
       expect(spy.called).toBe(true);
     });
@@ -864,6 +838,80 @@ describe('Unscharferelation', () => {
       });
 
       expect(spy.called).toBe(true);
+    });
+  });
+
+  describe('toSuperposition', () => {
+    it('will transform to Alive Superposition if Unscharferelation is Present', async () => {
+      expect.assertions(2);
+
+      const value: number = -201;
+
+      const unscharferelation: Unscharferelation<number> = Unscharferelation.of<number>(
+        (epoque: Epoque<number>) => {
+          epoque.accept(value);
+        }
+      );
+
+      const schrodinger: Schrodinger<number, UnscharferelationError> = await unscharferelation.toSuperposition().terminate();
+
+      expect(schrodinger.isAlive()).toBe(true);
+      expect(schrodinger.get()).toBe(value);
+    });
+
+    it('will transform to Dead Superposition if the value is error', async () => {
+      expect.assertions(2);
+
+      const value: MockRuntimeError = new MockRuntimeError();
+
+      const unscharferelation: Unscharferelation<MockRuntimeError> = Unscharferelation.of<MockRuntimeError>(
+        (epoque: Epoque<MockRuntimeError>) => {
+          epoque.accept(value);
+        }
+      );
+
+      const schrodinger: Schrodinger<MockRuntimeError, UnscharferelationError> = await unscharferelation.toSuperposition().terminate();
+
+      expect(schrodinger.isDead()).toBe(true);
+      expect(() => {
+        schrodinger.get();
+      }).toThrow(UnscharferelationError);
+    });
+
+    it('will transform to Dead Superposition if Unscharferelation is Absent', async () => {
+      expect.assertions(2);
+
+      const unscharferelation: Unscharferelation<number> = Unscharferelation.of<number>(
+        (epoque: Epoque<number>) => {
+          epoque.decline();
+        }
+      );
+
+      const schrodinger: Schrodinger<number, UnscharferelationError> = await unscharferelation.toSuperposition().terminate();
+
+      expect(schrodinger.isDead()).toBe(true);
+      expect(() => {
+        schrodinger.get();
+      }).toThrow(UnscharferelationError);
+    });
+
+    it('will transform to Contradiction Superposition if Unscharferelation is Lost', async () => {
+      expect.assertions(2);
+
+      const error: MockRuntimeError = new MockRuntimeError();
+
+      const unscharferelation: Unscharferelation<number> = Unscharferelation.of<number>(
+        (epoque: Epoque<number>) => {
+          epoque.throw(error);
+        }
+      );
+
+      const schrodinger: Schrodinger<number, UnscharferelationError> = await unscharferelation.toSuperposition().terminate();
+
+      expect(schrodinger.isContradiction()).toBe(true);
+      expect(() => {
+        schrodinger.get();
+      }).toThrow(error);
     });
   });
 });

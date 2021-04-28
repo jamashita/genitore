@@ -1,4 +1,4 @@
-import { Consumer } from '@jamashita/anden-type';
+import { Consumer, Whatever } from '@jamashita/anden-type';
 import { MapPlan } from './Interface/MapPlan';
 
 export class MapPassPlan<M> implements MapPlan<M, 'MapPassPlan'> {
@@ -13,7 +13,7 @@ export class MapPassPlan<M> implements MapPlan<M, 'MapPassPlan'> {
     this.map = map;
   }
 
-  public onMap(value: M): unknown {
+  public onMap(value: M): Whatever {
     return this.map(value);
   }
 }

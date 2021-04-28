@@ -1,15 +1,4 @@
-import { Objet } from '@jamashita/anden-object';
-import {
-  Consumer,
-  Peek,
-  Predicate,
-  Reject,
-  Resolve,
-  Supplier,
-  Suspicious,
-  SyncAsync,
-  UnaryFunction
-} from '@jamashita/anden-type';
+import { Consumer, Peek, Reject, Resolve, Supplier, UnaryFunction } from '@jamashita/anden-type';
 import {
   DestroyPassPlan,
   DestroyPlan,
@@ -29,7 +18,7 @@ import { Heisenberg } from './Heisenberg/Heisenberg';
 import { Lost } from './Heisenberg/Lost';
 import { Present } from './Heisenberg/Present';
 import { Uncertain } from './Heisenberg/Uncertain';
-import { IUnscharferelation } from './Interface/IUnscharferelation';
+import { IUnscharferelation, UReturnType } from './Interface/IUnscharferelation';
 import { Matter } from './Interface/Matter';
 import { AbsentPlan } from './Plan/AbsentPlan';
 import { CombinedEpoquePlan } from './Plan/CombinedEpoquePlan';
@@ -38,8 +27,7 @@ import { MapEpoquePlan } from './Plan/MapEpoquePlan';
 import { PresentPlan } from './Plan/PresentPlan';
 import { RecoveryEpoquePlan } from './Plan/RecoveryEpoquePlan';
 
-export class UnscharferelationInternal<P> extends Objet<'UnscharferelationInternal'>
-  implements IUnscharferelation<P, 'UnscharferelationInternal'>, Epoque<P, 'UnscharferelationInternal'> {
+export class UnscharferelationInternal<P> implements IUnscharferelation<P, 'UnscharferelationInternal'>, Epoque<P, 'UnscharferelationInternal'> {
   public readonly noun: 'UnscharferelationInternal' = 'UnscharferelationInternal';
   private heisenberg: Heisenberg<P>;
   private readonly plans: Set<Plan<Matter<P>, void>>;
@@ -49,25 +37,17 @@ export class UnscharferelationInternal<P> extends Objet<'UnscharferelationIntern
   }
 
   protected constructor(func: UnaryFunction<Epoque<P>, unknown>) {
-    super();
     this.heisenberg = Uncertain.of<P>();
-    this.plans = new Set<Plan<P, void>>();
+    this.plans = new Set<Plan<Matter<P>, void>>();
     func(this);
-  }
-
-  public equals(other: unknown): boolean {
-    if (this === other) {
-      return true;
-    }
-    if (!(other instanceof UnscharferelationInternal)) {
-      return false;
-    }
-
-    return this.heisenberg.equals(other.heisenberg);
   }
 
   public serialize(): string {
     return this.heisenberg.toString();
+  }
+
+  public toString(): string {
+    return this.serialize();
   }
 
   public get(): Promise<Matter<P>> {
@@ -94,27 +74,7 @@ export class UnscharferelationInternal<P> extends Objet<'UnscharferelationIntern
     });
   }
 
-  public filter(predicate: Predicate<P>): UnscharferelationInternal<P> {
-    return UnscharferelationInternal.of<P>((epoque: Epoque<P>) => {
-      this.pass(
-        (value: Matter<P>) => {
-          if (predicate(value)) {
-            return epoque.accept(value);
-          }
-
-          return epoque.decline();
-        },
-        () => {
-          return epoque.decline();
-        },
-        (e: unknown) => {
-          return epoque.throw(e);
-        }
-      );
-    });
-  }
-
-  public map<Q = P>(mapper: UnaryFunction<Matter<P>, SyncAsync<Suspicious<Matter<Q>> | UnscharferelationInternal<Q>>>): UnscharferelationInternal<Q> {
+  public map<Q = P>(mapper: UnaryFunction<Matter<P>, UReturnType<Q>>): UnscharferelationInternal<Q> {
     return UnscharferelationInternal.of<Q>((epoque: Epoque<Q>) => {
       return this.handle(
         PresentPlan.of<P, Q>(mapper, epoque),
@@ -124,7 +84,7 @@ export class UnscharferelationInternal<P> extends Objet<'UnscharferelationIntern
     });
   }
 
-  public recover<Q = P>(mapper: Supplier<SyncAsync<Suspicious<Matter<Q>> | UnscharferelationInternal<Q>>>): UnscharferelationInternal<P | Q> {
+  public recover<Q = P>(mapper: Supplier<UReturnType<Q>>): UnscharferelationInternal<P | Q> {
     return UnscharferelationInternal.of<P | Q>((epoque: Epoque<P | Q>) => {
       return this.handle(
         MapEpoquePlan.of<P | Q>(epoque),
@@ -135,25 +95,41 @@ export class UnscharferelationInternal<P> extends Objet<'UnscharferelationIntern
   }
 
   public ifPresent(consumer: Consumer<Matter<P>>): this {
-    this.handle(MapPassPlan.of<Matter<P>>(consumer), RecoverySpoilPlan.of<void>(), DestroySpoilPlan.of());
+    this.handle(
+      MapPassPlan.of<Matter<P>>(consumer),
+      RecoverySpoilPlan.of<void>(),
+      DestroySpoilPlan.of()
+    );
 
     return this;
   }
 
   public ifAbsent(consumer: Consumer<void>): this {
-    this.handle(MapSpoilPlan.of<Matter<P>>(), RecoveryPassPlan.of<void>(consumer), DestroySpoilPlan.of());
+    this.handle(
+      MapSpoilPlan.of<Matter<P>>(),
+      RecoveryPassPlan.of<void>(consumer),
+      DestroySpoilPlan.of()
+    );
 
     return this;
   }
 
   public ifLost(consumer: Consumer<unknown>): this {
-    this.handle(MapSpoilPlan.of<Matter<P>>(), RecoverySpoilPlan.of<void>(), DestroyPassPlan.of(consumer));
+    this.handle(
+      MapSpoilPlan.of<Matter<P>>(),
+      RecoverySpoilPlan.of<void>(),
+      DestroyPassPlan.of(consumer)
+    );
 
     return this;
   }
 
   public pass(accepted: Consumer<Matter<P>>, declined: Consumer<void>, thrown: Consumer<unknown>): this {
-    this.handle(MapPassPlan.of<Matter<P>>(accepted), RecoveryPassPlan.of<void>(declined), DestroyPassPlan.of(thrown));
+    this.handle(
+      MapPassPlan.of<Matter<P>>(accepted),
+      RecoveryPassPlan.of<void>(declined),
+      DestroyPassPlan.of(thrown)
+    );
 
     return this;
   }
@@ -201,7 +177,17 @@ export class UnscharferelationInternal<P> extends Objet<'UnscharferelationIntern
   }
 
   private settled(): boolean {
-    return this.heisenberg.isPresent() || this.heisenberg.isAbsent() || this.heisenberg.isLost();
+    switch (this.heisenberg.status()) {
+      case 'Absent':
+      case 'Lost':
+      case 'Present': {
+        return true;
+      }
+      case 'Uncertain':
+      default: {
+        return false;
+      }
+    }
   }
 
   private handle(map: MapPlan<Matter<P>>, recover: RecoveryPlan<void>, destroy: DestroyPlan): unknown {

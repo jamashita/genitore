@@ -487,7 +487,7 @@ describe('AbsentPlan', () => {
               resolve();
             }
           )
-);
+        );
 
         plan.onRecover();
       });

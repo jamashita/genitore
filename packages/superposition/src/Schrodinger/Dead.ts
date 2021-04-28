@@ -1,10 +1,11 @@
-import { Objet, ValueObject } from '@jamashita/anden-object';
-import { Consumer, isEqualable } from '@jamashita/anden-type';
+import { Objet } from '@jamashita/anden-object';
+import { Consumer } from '@jamashita/anden-type';
 import { Alive } from './Alive';
 import { Contradiction } from './Contradiction';
 import { Schrodinger } from './Schrodinger';
+import { SchrodingerType } from './SchrodingerType';
 
-export class Dead<A, D extends Error> extends ValueObject<'Dead'> implements Schrodinger<A, D, 'Dead'> {
+export class Dead<A, D extends Error> implements Schrodinger<A, D, 'Dead'> {
   public readonly noun: 'Dead' = 'Dead';
   private readonly error: D;
 
@@ -13,7 +14,6 @@ export class Dead<A, D extends Error> extends ValueObject<'Dead'> implements Sch
   }
 
   protected constructor(error: D) {
-    super();
     this.error = error;
   }
 
@@ -21,9 +21,17 @@ export class Dead<A, D extends Error> extends ValueObject<'Dead'> implements Sch
     return `Dead: ${Objet.identify(this.error)}`;
   }
 
+  public toString(): string {
+    return this.serialize();
+  }
+
   public get(): never {
     // eslint-disable-next-line @typescript-eslint/no-throw-literal
     throw this.error;
+  }
+
+  public status(): SchrodingerType {
+    return 'Dead';
   }
 
   public isAlive(): this is Alive<A, D> {
@@ -48,23 +56,6 @@ export class Dead<A, D extends Error> extends ValueObject<'Dead'> implements Sch
 
   public ifContradiction(): void {
     // NOOP
-  }
-
-  public equals(other: unknown): boolean {
-    if (this === other) {
-      return true;
-    }
-    if (!(other instanceof Dead)) {
-      return false;
-    }
-    if (this.error === other.error) {
-      return true;
-    }
-    if (isEqualable(this.error)) {
-      return this.error.equals(other.error);
-    }
-
-    return false;
   }
 
   public getError(): D {
