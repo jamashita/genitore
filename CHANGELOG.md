@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/jamashita/genitore/compare/v1.2.0...v1.2.1) (2021-04-28)
+
+
+### Bug Fixes
+
+* 🐛 fauc ([e63455e](https://github.com/jamashita/genitore/commit/e63455e66c7365b780ca8734f737a1c0774d493e))
+
 # [1.2.0](https://github.com/jamashita/genitore/compare/v1.1.0...v1.2.0) (2021-04-28)
 
 
