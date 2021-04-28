@@ -3,22 +3,22 @@ import { MapPlan } from '@jamashita/genitore-plan';
 import { Chrono } from '../Chrono/Interface/Chrono';
 import { Bdb } from '../Interface/Bdb';
 import { Detoxicated } from '../Interface/Detoxicated';
-import { containsError, isSuperposition, ISuperposition } from '../Interface/ISuperposition';
+import { containsError, isSuperposition, ISuperposition, SReturnType } from '../Interface/ISuperposition';
 
 export class AlivePlan<A, B, E extends Error> implements MapPlan<Detoxicated<A>, 'AlivePlan'> {
   public readonly noun: 'AlivePlan' = 'AlivePlan';
-  private readonly mapper: UnaryFunction<Detoxicated<A>, Bdb<B> | ISuperposition<B, E> | PromiseLike<Bdb<B>> | PromiseLike<ISuperposition<B, E>>>;
+  private readonly mapper: UnaryFunction<Detoxicated<A>, SReturnType<B, E>>;
   private readonly chrono: Chrono<B, E>;
 
   public static of<AT, BT, ET extends Error>(
-    mapper: UnaryFunction<Detoxicated<AT>, Bdb<BT> | ISuperposition<BT, ET> | PromiseLike<Bdb<BT>> | PromiseLike<ISuperposition<BT, ET>>>,
+    mapper: UnaryFunction<Detoxicated<AT>, SReturnType<BT, ET>>,
     chrono: Chrono<BT, ET>
   ): AlivePlan<AT, BT, ET> {
     return new AlivePlan<AT, BT, ET>(mapper, chrono);
   }
 
   protected constructor(
-    mapper: UnaryFunction<Detoxicated<A>, Bdb<B> | ISuperposition<B, E> | PromiseLike<Bdb<B>> | PromiseLike<ISuperposition<B, E>>>,
+    mapper: UnaryFunction<Detoxicated<A>, SReturnType<B, E>>,
     chrono: Chrono<B, E>
   ) {
     this.mapper = mapper;
@@ -27,8 +27,11 @@ export class AlivePlan<A, B, E extends Error> implements MapPlan<Detoxicated<A>,
 
   public onMap(value: Detoxicated<A>): unknown {
     try {
-      const mapped: Bdb<B> | ISuperposition<B, E> | PromiseLike<Bdb<B>> | PromiseLike<ISuperposition<B, E>> = this.mapper(value);
+      const mapped: SReturnType<B, E> = this.mapper(value);
 
+      if (isSuperposition<B, E>(mapped)) {
+        return this.forSuperposition(mapped);
+      }
       if (Kind.isPromiseLike<Bdb<B> | ISuperposition<B, E>>(mapped)) {
         return mapped.then<unknown, unknown>(
           (v: Bdb<B> | ISuperposition<B, E>) => {
@@ -36,18 +39,15 @@ export class AlivePlan<A, B, E extends Error> implements MapPlan<Detoxicated<A>,
               return this.forSuperposition(v);
             }
 
-            return this.sync(v);
+            return this.forOther(v);
           },
           (e: unknown) => {
             return this.forError(e);
           }
         );
       }
-      if (isSuperposition<B, E>(mapped)) {
-        return this.forSuperposition(mapped);
-      }
 
-      return this.sync(mapped);
+      return this.forOther(mapped);
     }
     catch (err: unknown) {
       return this.forError(err);
@@ -70,7 +70,7 @@ export class AlivePlan<A, B, E extends Error> implements MapPlan<Detoxicated<A>,
     );
   }
 
-  private sync(v: Bdb<B>): unknown {
+  private forOther(v: Bdb<B>): unknown {
     if (v instanceof Error) {
       return this.forError(v);
     }

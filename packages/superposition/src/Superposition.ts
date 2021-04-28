@@ -1,10 +1,9 @@
 import { Consumer, Kind, Nullable, Peek, Supplier, UnaryFunction } from '@jamashita/anden-type';
 import { Chrono } from './Chrono/Interface/Chrono';
 import { SuperpositionError } from './Error/SuperpositionError';
-import { Bdb } from './Interface/Bdb';
 import { DeadConstructor } from './Interface/DeadConstructor';
 import { Detoxicated } from './Interface/Detoxicated';
-import { containsError, ISuperposition } from './Interface/ISuperposition';
+import { containsError, ISuperposition, SReturnType } from './Interface/ISuperposition';
 import { Dead } from './Schrodinger/Dead';
 import { Schrodinger } from './Schrodinger/Schrodinger';
 import { SuperpositionInternal } from './SuperpositionInternal';
@@ -190,23 +189,23 @@ export class Superposition<A, D extends Error> implements ISuperposition<A, D, '
   }
 
   public map<B = A, E extends Error = D>(
-    mapper: UnaryFunction<Detoxicated<A>, Bdb<B> | ISuperposition<B, E> | PromiseLike<Bdb<B>> | PromiseLike<ISuperposition<B, E>>>,
-    ...errors: ReadonlyArray<DeadConstructor<E>>
+    mapper: UnaryFunction<Detoxicated<A>, SReturnType<B, E>>,
+    ...errors: Array<DeadConstructor<E>>
   ): Superposition<B, D | E> {
     return Superposition.ofSuperposition<B, D | E>(this.internal.map<B, D | E>(mapper, ...this.internal.getErrors(), ...errors));
   }
 
   public recover<B = A, E extends Error = D>(
-    mapper: UnaryFunction<D, Bdb<B> | ISuperposition<B, E> | PromiseLike<Bdb<B>> | PromiseLike<ISuperposition<B, E>>>,
-    ...errors: ReadonlyArray<DeadConstructor<E>>
+    mapper: UnaryFunction<D, SReturnType<B, E>>,
+    ...errors: Array<DeadConstructor<E>>
   ): Superposition<A | B, E> {
     return Superposition.ofSuperposition<A | B, E>(this.internal.recover<A | B, E>(mapper, ...errors));
   }
 
   public transform<B = A, E extends Error = D>(
-    alive: UnaryFunction<Detoxicated<A>, Bdb<B> | ISuperposition<B, E> | PromiseLike<Bdb<B>> | PromiseLike<ISuperposition<B, E>>>,
-    dead: UnaryFunction<D, Bdb<B> | ISuperposition<B, E> | PromiseLike<Bdb<B>> | PromiseLike<ISuperposition<B, E>>>,
-    ...errors: ReadonlyArray<DeadConstructor<E>>
+    alive: UnaryFunction<Detoxicated<A>, SReturnType<B, E>>,
+    dead: UnaryFunction<D, SReturnType<B, E>>,
+    ...errors: Array<DeadConstructor<E>>
   ): Superposition<B, E> {
     return Superposition.ofSuperposition<B, E>(this.internal.transform<B, E>(alive, dead, ...errors));
   }
