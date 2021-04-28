@@ -3,7 +3,7 @@ module.exports = {
   bail: true,
   forceExit: true,
   roots: [
-    'packages'
+    'src'
   ],
   testRegex: '/__tests__/.+\\.spec\\.tsx?$',
   testPathIgnorePatterns: [
@@ -17,9 +17,6 @@ module.exports = {
   ],
   transform: {
     '^.+\\.tsx?$': 'ts-jest'
-  },
-  moduleNameMapper: {
-    '^@jamashita/genitore-(.*)$': '<rootDir>/packages/$1/src/index'
   },
   moduleFileExtensions: [
     'js',
