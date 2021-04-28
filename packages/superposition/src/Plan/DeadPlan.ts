@@ -31,9 +31,9 @@ export class DeadPlan<B, D extends Error, E extends Error> implements RecoveryPl
       if (isSuperposition<B, E>(mapped)) {
         return this.forSuperposition(mapped);
       }
-      if (Kind.isPromiseLike<Bdb<B> | ISuperposition<B, E>>(mapped)) {
+      if (Kind.isPromiseLike<Detoxicated<B> | ISuperposition<B, E>>(mapped)) {
         return mapped.then<unknown, unknown>(
-          (v: Bdb<B> | ISuperposition<B, E>) => {
+          (v: Detoxicated<B> | ISuperposition<B, E>) => {
             if (isSuperposition<B, E>(v)) {
               return this.forSuperposition(v);
             }
@@ -70,7 +70,7 @@ export class DeadPlan<B, D extends Error, E extends Error> implements RecoveryPl
     );
   }
 
-  private forOther(v: Bdb<B>): unknown {
+  private forOther(v: Detoxicated<B>): unknown {
     if (v instanceof Error) {
       return this.forError(v);
     }
