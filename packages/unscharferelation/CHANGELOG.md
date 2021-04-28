@@ -1,3 +1,10 @@
+# [@jamashita/genitore-unscharferelation-v1.8.0](https://github.com/jamashita/genitore/compare/@jamashita/genitore-unscharferelation-v1.7.0...@jamashita/genitore-unscharferelation-v1.8.0) (2021-04-28)
+
+
+### Features
+
+* 🎸 import path modifieid ([7b6aeb0](https://github.com/jamashita/genitore/commit/7b6aeb0a792a2e373385b91ce7860c4e6f81863b))
+
 # [@jamashita/genitore-unscharferelation-v1.7.0](https://github.com/jamashita/genitore/compare/@jamashita/genitore-unscharferelation-v1.6.0...@jamashita/genitore-unscharferelation-v1.7.0) (2021-04-28)
 
 
