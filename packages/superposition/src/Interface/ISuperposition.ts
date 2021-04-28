@@ -1,8 +1,9 @@
-import { Consumer, Kind, Noun, Peek, Serializable, UnaryFunction } from '@jamashita/anden-type';
+import { Consumer, Kind, Noun, Peek, Serializable, SyncAsync, UnaryFunction } from '@jamashita/anden-type';
 import { Schrodinger } from '../Schrodinger/Schrodinger';
-import { Bdb } from './Bdb';
 import { DeadConstructor } from './DeadConstructor';
 import { Detoxicated } from './Detoxicated';
+
+export type SReturnType<B, E extends Error> = SyncAsync<ISuperposition<B, E>> | Detoxicated<B>;
 
 export interface ISuperposition<A, D extends Error, N extends string = string> extends Serializable, Noun<N> {
   get(): Promise<Detoxicated<A>>;
@@ -12,19 +13,19 @@ export interface ISuperposition<A, D extends Error, N extends string = string> e
   terminate(): Promise<Schrodinger<A, D>>;
 
   map<B = A, E extends Error = D>(
-    mapper: UnaryFunction<Detoxicated<A>, Bdb<B> | ISuperposition<B, E> | PromiseLike<Bdb<B>> | PromiseLike<ISuperposition<B, E>>>,
-    ...errors: ReadonlyArray<DeadConstructor<E>>
+    mapper: UnaryFunction<Detoxicated<A>, SReturnType<B, E>>,
+    ...errors: Array<DeadConstructor<E>>
   ): ISuperposition<B, D | E>;
 
   recover<B = A, E extends Error = D>(
-    mapper: UnaryFunction<D, Bdb<B> | ISuperposition<B, E> | PromiseLike<Bdb<B>> | PromiseLike<ISuperposition<B, E>>>,
-    ...errors: ReadonlyArray<DeadConstructor<E>>
+    mapper: UnaryFunction<D, SReturnType<B, E>>,
+    ...errors: Array<DeadConstructor<E>>
   ): ISuperposition<A | B, E>;
 
   transform<B = A, E extends Error = D>(
-    alive: UnaryFunction<Detoxicated<A>, Bdb<B> | ISuperposition<B, E> | PromiseLike<Bdb<B>> | PromiseLike<ISuperposition<B, E>>>,
-    dead: UnaryFunction<D, Bdb<B> | ISuperposition<B, E> | PromiseLike<Bdb<B>> | PromiseLike<ISuperposition<B, E>>>,
-    ...errors: ReadonlyArray<DeadConstructor<E>>
+    alive: UnaryFunction<Detoxicated<A>, SReturnType<B, E>>,
+    dead: UnaryFunction<D, SReturnType<B, E>>,
+    ...errors: Array<DeadConstructor<E>>
   ): ISuperposition<B, E>;
 
   ifAlive(consumer: Consumer<Detoxicated<A>>): this;

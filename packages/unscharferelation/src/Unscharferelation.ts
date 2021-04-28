@@ -3,10 +3,9 @@ import { Chrono, Detoxicated, Superposition } from '@jamashita/genitore-superpos
 import { Epoque } from './Epoque/Interface/Epoque';
 import { UnscharferelationError } from './Error/UnscharferelationError';
 import { Heisenberg } from './Heisenberg/Heisenberg';
-import { IUnscharferelation } from './Interface/IUnscharferelation';
+import { IUnscharferelation, UReturnType } from './Interface/IUnscharferelation';
 import { Matter } from './Interface/Matter';
 import { Nihil } from './Interface/Nihil';
-import { Ymy } from './Interface/Ymy';
 import { UnscharferelationInternal } from './UnscharferelationInternal';
 
 export class Unscharferelation<P> implements IUnscharferelation<P, 'Unscharferelation'> {
@@ -170,11 +169,11 @@ export class Unscharferelation<P> implements IUnscharferelation<P, 'Unscharferel
     return this.internal.terminate();
   }
 
-  public map<Q = P>(mapper: UnaryFunction<Matter<P>, IUnscharferelation<Q> | PromiseLike<IUnscharferelation<Q>> | PromiseLike<Ymy<Q>> | Ymy<Q>>): IUnscharferelation<Q> {
+  public map<Q = P>(mapper: UnaryFunction<Matter<P>, UReturnType<Q>>): Unscharferelation<Q> {
     return Unscharferelation.ofUnscharferelation<Q>(this.internal.map<Q>(mapper));
   }
 
-  public recover<Q = P>(mapper: Supplier<IUnscharferelation<Q> | PromiseLike<IUnscharferelation<Q>> | PromiseLike<Ymy<Q>> | Ymy<Q>>): IUnscharferelation<P | Q> {
+  public recover<Q = P>(mapper: Supplier<UReturnType<Q>>): Unscharferelation<P | Q> {
     return Unscharferelation.ofUnscharferelation<P | Q>(this.internal.recover<Q>(mapper));
   }
 

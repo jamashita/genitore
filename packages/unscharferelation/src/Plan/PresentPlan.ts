@@ -1,24 +1,23 @@
-import { Kind, UnaryFunction } from '@jamashita/anden-type';
+import { Kind, Suspicious, UnaryFunction } from '@jamashita/anden-type';
 import { MapPlan } from '../../../plan/src/Interface/MapPlan';
 import { Epoque } from '../Epoque/Interface/Epoque';
-import { isUnscharferelation, IUnscharferelation } from '../Interface/IUnscharferelation';
+import { isUnscharferelation, IUnscharferelation, UReturnType } from '../Interface/IUnscharferelation';
 import { Matter } from '../Interface/Matter';
-import { Ymy } from '../Interface/Ymy';
 
 export class PresentPlan<P, Q> implements MapPlan<Matter<P>, 'PresentPlan'> {
   public readonly noun: 'PresentPlan' = 'PresentPlan';
-  private readonly mapper: UnaryFunction<Matter<P>, IUnscharferelation<Q> | PromiseLike<IUnscharferelation<Q>> | PromiseLike<Ymy<Q>> | Ymy<Q>>;
+  private readonly mapper: UnaryFunction<Matter<P>, UReturnType<Q>>;
   private readonly epoque: Epoque<Q>;
 
   public static of<PT, QT>(
-    mapper: UnaryFunction<Matter<PT>, IUnscharferelation<QT> | PromiseLike<IUnscharferelation<QT>> | PromiseLike<Ymy<QT>> | Ymy<QT>>,
+    mapper: UnaryFunction<Matter<PT>, UReturnType<QT>>,
     epoque: Epoque<QT>
   ): PresentPlan<PT, QT> {
     return new PresentPlan<PT, QT>(mapper, epoque);
   }
 
   protected constructor(
-    mapper: UnaryFunction<Matter<P>, IUnscharferelation<Q> | PromiseLike<IUnscharferelation<Q>> | PromiseLike<Ymy<Q>> | Ymy<Q>>,
+    mapper: UnaryFunction<Matter<P>, UReturnType<Q>>,
     epoque: Epoque<Q>
   ) {
     this.mapper = mapper;
@@ -27,35 +26,35 @@ export class PresentPlan<P, Q> implements MapPlan<Matter<P>, 'PresentPlan'> {
 
   public onMap(value: Matter<P>): unknown {
     try {
-      const mapped: IUnscharferelation<Q> | PromiseLike<IUnscharferelation<Q>> | PromiseLike<Ymy<Q>> | Ymy<Q> = this.mapper(value);
+      const mapped: UReturnType<Q> = this.mapper(value);
 
-      if (Kind.isPromiseLike<IUnscharferelation<Q> | Ymy<Q>>(mapped)) {
+      if (isUnscharferelation<Q>(mapped)) {
+        return this.forUnscharferelation(mapped);
+      }
+      if (Kind.isPromiseLike<IUnscharferelation<Q> | Suspicious<Matter<Q>>>(mapped)) {
         return mapped.then<unknown, unknown>(
-          (v: IUnscharferelation<Q> | Ymy<Q>) => {
+          (v: IUnscharferelation<Q> | Suspicious<Matter<Q>>) => {
             if (isUnscharferelation<Q>(v)) {
               return this.forUnscharferelation(v);
             }
 
-            return this.sync(v);
+            return this.forOther(v);
           },
           (e: unknown) => {
             return this.epoque.throw(e);
           }
         );
       }
-      if (isUnscharferelation<Q>(mapped)) {
-        return this.forUnscharferelation(mapped);
-      }
 
-      return this.sync(mapped);
+      return this.forOther(mapped);
     }
     catch (err: unknown) {
       return this.epoque.throw(err);
     }
   }
 
-  private forUnscharferelation(unscharferelation: IUnscharferelation<Q>): unknown {
-    return unscharferelation.pass(
+  private forUnscharferelation(u: IUnscharferelation<Q>): unknown {
+    return u.pass(
       (v: Matter<Q>) => {
         return this.epoque.accept(v);
       },
@@ -68,7 +67,7 @@ export class PresentPlan<P, Q> implements MapPlan<Matter<P>, 'PresentPlan'> {
     );
   }
 
-  private sync(v: Ymy<Q>): unknown {
+  private forOther(v: Suspicious<Matter<Q>>): unknown {
     if (Kind.isUndefined(v) || Kind.isNull(v)) {
       return this.epoque.decline();
     }
