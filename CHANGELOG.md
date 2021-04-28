@@ -1,3 +1,11 @@
+# [1.4.0](https://github.com/jamashita/genitore/compare/v1.3.0...v1.4.0) (2021-04-28)
+
+
+### Features
+
+* 🎸 remvoed ([6cd9027](https://github.com/jamashita/genitore/commit/6cd9027c37a1576f7d8fb054b4b0e8f16d83add9))
+* 🎸 revmoed private ttrue ([2b256c7](https://github.com/jamashita/genitore/commit/2b256c7a17b8b10b36444fdd370b8cc5c770b3ce))
+
 # [1.3.0](https://github.com/jamashita/genitore/compare/v1.2.2...v1.3.0) (2021-04-28)
 
 
