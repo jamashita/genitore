@@ -8,23 +8,33 @@
   },
   "license": "MIT",
   "author": "jamashita <jamashita@arachnid.xyz>",
-  "workspaces": [
-    "packages/*"
+  "sideEffects": false,
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/esm/index.d.ts",
+  "files": [
+    "dist",
+    "src"
   ],
   "scripts": {
-    "build": "lerna run --parallel build",
-    "clean": "rimraf coverage && lerna run --parallel clean",
+    "build": "yarn clean && concurrently \"npm:build:*\"",
+    "build:cjs": "tsc -b tsconfig.cjs.json",
+    "build:esm": "tsc -b tsconfig.esm.json",
+    "clean": "rimaf dist && rimraf coverage",
     "commit": "git cz",
-    "format": "eslint --fix 'packages/*/src/**/*.{ts,tsx}'",
-    "release": "lerna exec --concurrency 1 -- semantic-release -e semantic-release-monorepo",
-    "setup": "lerna bootstrap && lerna link",
+    "format": "eslint --fix 'src/**/*.{ts,tsx}'",
+    "release": "semantic-release",
     "test": "jest test",
-    "update": "yarn setup && yarn update:upgrade && yarn update:install",
+    "update": "yarn update:upgrade && yarn update:install",
     "update:install": "yarn install && yarn upgrade && yarn audit fix --force",
-    "update:upgrade": "ncu --packageManager yarn --deep --upgrade --timeout 600000"
+    "update:upgrade": "ncu --packageManager yarn --upgrade"
+  },
+  "dependencies": {
+    "@jamashita/anden-error": "1.6.0",
+    "@jamashita/anden-object": "1.7.0",
+    "@jamashita/anden-type": "1.9.0"
   },
   "devDependencies": {
-    "@commitlint/cli": "12.1.1",
     "@commitlint/config-conventional": "12.1.1",
     "@jamashita/eslint-plugin": "1.42.0",
     "@semantic-release/changelog": "5.0.1",
@@ -40,12 +50,10 @@
     "git-cz": "4.7.6",
     "husky": "6.0.0",
     "jest": "26.6.3",
-    "lerna": "4.0.0",
     "lint-staged": "10.5.4",
     "npm-check-updates": "11.5.3",
     "rimraf": "3.0.2",
     "semantic-release": "17.4.2",
-    "semantic-release-monorepo": "7.0.5",
     "sinon": "10.0.1",
     "sort-package-json": "1.49.0",
     "ts-jest": "26.5.5",
