@@ -16,9 +16,7 @@ jobs:
         with:
           node-version: '15.0'
       - name: 'Set up'
-        run: |
-          yarn install --frozen-lockfile
-          yarn setup
+        run: 'yarn install --frozen-lockfile'
       - name: 'Compile'
         run: 'yarn build'
       - name: 'Publish to NPM'
