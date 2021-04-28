@@ -20,7 +20,7 @@
     "build": "yarn clean && concurrently \"npm:build:*\"",
     "build:cjs": "tsc -b tsconfig.cjs.json",
     "build:esm": "tsc -b tsconfig.esm.json",
-    "clean": "rimaf dist && rimraf coverage",
+    "clean": "rimraf dist && rimraf coverage",
     "commit": "git cz",
     "format": "eslint --fix 'src/**/*.{ts,tsx}'",
     "release": "semantic-release",
