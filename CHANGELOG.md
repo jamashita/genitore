@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/jamashita/genitore/compare/v1.2.2...v1.3.0) (2021-04-28)
+
+
+### Features
+
+* 🎸 twice ([0f2f717](https://github.com/jamashita/genitore/commit/0f2f7172f193c47a95893ce9a90a024f20738da4))
+
 ## [1.2.2](https://github.com/jamashita/genitore/compare/v1.2.1...v1.2.2) (2021-04-28)
 
 
