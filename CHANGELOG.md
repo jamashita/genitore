@@ -1,3 +1,15 @@
+# [1.2.0](https://github.com/jamashita/genitore/compare/v1.1.0...v1.2.0) (2021-04-28)
+
+
+### Bug Fixes
+
+* 🐛 new pose ([2ec1ef9](https://github.com/jamashita/genitore/commit/2ec1ef93f4943cb009af35ef49bd4bb2ebcdee4c))
+
+
+### Features
+
+* 🎸 update ([5beb0c3](https://github.com/jamashita/genitore/commit/5beb0c3ca876e3a4590fecd6c69f63513b3c9654))
+
 # [1.1.0](https://github.com/jamashita/genitore/compare/v1.0.0...v1.1.0) (2021-04-28)
 
 
