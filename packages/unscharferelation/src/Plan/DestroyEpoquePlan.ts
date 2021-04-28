@@ -1,4 +1,4 @@
-import { DestroyPlan } from '../../../plan/src/Interface/DestroyPlan';
+import { DestroyPlan } from '@jamashita/genitore-plan';
 import { Epoque } from '../Epoque/Interface/Epoque';
 
 export class DestroyEpoquePlan<P> implements DestroyPlan<'DestroyEpoquePlan'> {

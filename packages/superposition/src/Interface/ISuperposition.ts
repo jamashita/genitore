@@ -3,7 +3,7 @@ import { Schrodinger } from '../Schrodinger/Schrodinger';
 import { DeadConstructor } from './DeadConstructor';
 import { Detoxicated } from './Detoxicated';
 
-export type SReturnType<B, E extends Error> = SyncAsync<ISuperposition<B, E> | Detoxicated<B>>;
+export type SReturnType<B, E extends Error> = SyncAsync<Detoxicated<B> | ISuperposition<B, E>>;
 
 export interface ISuperposition<A, D extends Error, N extends string = string> extends Serializable, Noun<N> {
   get(): Promise<Detoxicated<A>>;
