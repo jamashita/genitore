@@ -1,4 +1,4 @@
-import { MapPlan } from '../../../plan/src/Interface/MapPlan';
+import { MapPlan } from '@jamashita/genitore-plan';
 import { Epoque } from '../Epoque/Interface/Epoque';
 import { Matter } from '../Interface/Matter';
 
