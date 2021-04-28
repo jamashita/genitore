@@ -558,6 +558,15 @@
     "@jamashita/anden-object" "1.6.0"
     "@jamashita/anden-type" "1.8.0"
 
+"@jamashita/genitore-plan@1.2.2":
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/@jamashita/genitore-plan/-/genitore-plan-1.2.2.tgz#48214652981efdee5bce8b261cb6915bb167ac20"
+  integrity sha512-zfil9BxvolcQdG1qfcKd4QstWNsn112UjApzjFsqT1yhS46ThWAiv2M19BlRducA3T0Q3LA0zKkm9XEiDC/avQ==
+  dependencies:
+    "@jamashita/anden-error" "1.5.0"
+    "@jamashita/anden-object" "1.6.0"
+    "@jamashita/anden-type" "1.8.0"
+
 "@jamashita/genitore-superposition@1.4.1":
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/@jamashita/genitore-superposition/-/genitore-superposition-1.4.1.tgz#10556448434d9d5ef5c846fc29557d5896df96a5"

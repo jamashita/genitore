@@ -1,16 +1,27 @@
-import { Consumer, Kind, Noun, Peek, Serializable, Supplier, UnaryFunction } from '@jamashita/anden-type';
+import {
+  Consumer,
+  Kind,
+  Noun,
+  Peek,
+  Serializable,
+  Supplier,
+  Suspicious,
+  SyncAsync,
+  UnaryFunction
+} from '@jamashita/anden-type';
 import { Heisenberg } from '../Heisenberg/Heisenberg';
 import { Matter } from './Matter';
-import { Ymy } from './Ymy';
+
+export type UReturnType<Q> = SyncAsync<IUnscharferelation<Q> | Suspicious<Matter<Q>>>;
 
 export interface IUnscharferelation<P, N extends string = string> extends Serializable, Noun<N> {
   get(): Promise<Matter<P>>;
 
   terminate(): Promise<Heisenberg<P>>;
 
-  map<Q = P>(mapper: UnaryFunction<Matter<P>, IUnscharferelation<Q> | PromiseLike<IUnscharferelation<Q>> | PromiseLike<Ymy<Q>> | Ymy<Q>>): IUnscharferelation<Q>;
+  map<Q = P>(mapper: UnaryFunction<Matter<P>, UReturnType<Q>>): IUnscharferelation<Q>;
 
-  recover<Q = P>(mapper: Supplier<IUnscharferelation<Q> | PromiseLike<IUnscharferelation<Q>> | PromiseLike<Ymy<Q>> | Ymy<Q>>): IUnscharferelation<P | Q>;
+  recover<Q = P>(mapper: Supplier<UReturnType<Q>>): IUnscharferelation<P | Q>;
 
   ifPresent(consumer: Consumer<Matter<P>>): this;
 

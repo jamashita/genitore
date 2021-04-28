@@ -1,3 +1,10 @@
+# [@jamashita/genitore-unscharferelation-v1.6.0](https://github.com/jamashita/genitore/compare/@jamashita/genitore-unscharferelation-v1.5.0...@jamashita/genitore-unscharferelation-v1.6.0) (2021-04-27)
+
+
+### Features
+
+* 🎸 Internal -> Superpositioin ([40e1ef0](https://github.com/jamashita/genitore/commit/40e1ef0e5b0691fcbecbac92f2c2fc456fda37a2))
+
 # [@jamashita/genitore-unscharferelation-v1.5.0](https://github.com/jamashita/genitore/compare/@jamashita/genitore-unscharferelation-v1.4.1...@jamashita/genitore-unscharferelation-v1.5.0) (2021-04-27)
 
 
