@@ -1,7 +1,7 @@
 import { Consumer, Kind, Peek, Supplier, Suspicious, UnaryFunction } from '@jamashita/anden-type';
-import { Chrono } from '../Superposition/Chrono/Interface/Chrono';
-import { Detoxicated } from '../Superposition/Interface/Detoxicated';
-import { Superposition } from '../Superposition/Superposition';
+import { Chrono } from '../superposition/Chrono/Interface/Chrono';
+import { Detoxicated } from '../superposition/Interface/Detoxicated';
+import { Superposition } from '../superposition/Superposition';
 import { Epoque } from './Epoque/Interface/Epoque';
 import { UnscharferelationError } from './Error/UnscharferelationError';
 import { Heisenberg } from './Heisenberg/Heisenberg';
