@@ -1,7 +1,6 @@
 import { Kind, UnaryFunction } from '@jamashita/anden-type';
 import { RecoveryPlan } from '@jamashita/genitore-plan';
 import { Chrono } from '../Chrono/Interface/Chrono';
-import { Bdb } from '../Interface/Bdb';
 import { Detoxicated } from '../Interface/Detoxicated';
 import { containsError, isSuperposition, ISuperposition, SReturnType } from '../Interface/ISuperposition';
 
