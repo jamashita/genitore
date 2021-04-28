@@ -1,4 +1,4 @@
-import { DestroyPlan } from '../../Plan/Interface/DestroyPlan';
+import { DestroyPlan } from '../../plan/Interface/DestroyPlan';
 import { Epoque } from '../Epoque/Interface/Epoque';
 
 export class DestroyEpoquePlan<P> implements DestroyPlan<'DestroyEpoquePlan'> {

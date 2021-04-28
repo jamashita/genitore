@@ -1,5 +1,5 @@
 import { Kind, Suspicious, UnaryFunction } from '@jamashita/anden-type';
-import { MapPlan } from '../../Plan/Interface/MapPlan';
+import { MapPlan } from '../../plan/Interface/MapPlan';
 import { Epoque } from '../Epoque/Interface/Epoque';
 import { isUnscharferelation, IUnscharferelation, UReturnType } from '../Interface/IUnscharferelation';
 import { Matter } from '../Interface/Matter';

@@ -1,6 +1,6 @@
 import { MockRuntimeError } from '@jamashita/anden-error';
-import { Schrodinger } from '@jamashita/genitore-superposition';
 import sinon, { SinonSpy } from 'sinon';
+import { Schrodinger } from '../../superposition/Schrodinger/Schrodinger';
 import { Epoque } from '../Epoque/Interface/Epoque';
 import { UnscharferelationError } from '../Error/UnscharferelationError';
 import { Absent } from '../Heisenberg/Absent';

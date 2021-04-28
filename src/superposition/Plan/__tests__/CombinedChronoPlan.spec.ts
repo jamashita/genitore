@@ -1,6 +1,6 @@
 import { MockRuntimeError } from '@jamashita/anden-error';
-import { PassThroughPlan } from '@jamashita/genitore-plan';
 import sinon, { SinonSpy } from 'sinon';
+import { PassThroughPlan } from '../../../plan/PassThroughPlan';
 import { CombinedChronoPlan } from '../CombinedChronoPlan';
 
 describe('CombinedChronoPlan', () => {

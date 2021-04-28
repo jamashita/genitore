@@ -1,5 +1,5 @@
 import sinon, { SinonSpy } from 'sinon';
-import { PassThroughPlan } from '../../../../plan/src/PassThroughPlan';
+import { PassThroughPlan } from '../../../plan/PassThroughPlan';
 import { CombinedEpoquePlan } from '../CombinedEpoquePlan';
 
 describe('CombinedEpoquePlan', () => {

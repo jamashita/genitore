@@ -1,4 +1,4 @@
-import { DestroyPlan } from '../../Plan/Interface/DestroyPlan';
+import { DestroyPlan } from '../../plan/Interface/DestroyPlan';
 import { Chrono } from '../Chrono/Interface/Chrono';
 
 export class DestroyChronoPlan<A, D extends Error> implements DestroyPlan<'DestroyChronoPlan'> {

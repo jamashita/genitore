@@ -1,4 +1,4 @@
-import { MapPlan } from '../../Plan/Interface/MapPlan';
+import { MapPlan } from '../../plan/Interface/MapPlan';
 import { Chrono } from '../Chrono/Interface/Chrono';
 import { Detoxicated } from '../Interface/Detoxicated';
 

@@ -1,6 +1,6 @@
 import { UnimplementedError } from '@jamashita/anden-error';
 import { ValueObject } from '@jamashita/anden-object';
-import { ISuperposition } from '../../Superposition/Interface/ISuperposition';
+import { ISuperposition } from '../../superposition/Interface/ISuperposition';
 import { UnscharferelationError } from '../Error/UnscharferelationError';
 import { Heisenberg } from '../Heisenberg/Heisenberg';
 import { IUnscharferelation } from '../Interface/IUnscharferelation';

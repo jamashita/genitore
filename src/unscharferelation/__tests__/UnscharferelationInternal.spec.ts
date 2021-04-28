@@ -1,6 +1,6 @@
 import { MockRuntimeError } from '@jamashita/anden-error';
-import { Plan } from '@jamashita/genitore-plan';
 import sinon, { SinonSpy } from 'sinon';
+import { Plan } from '../../plan/Interface/Plan';
 import { Epoque } from '../Epoque/Interface/Epoque';
 import { UnscharferelationError } from '../Error/UnscharferelationError';
 import { Heisenberg } from '../Heisenberg/Heisenberg';

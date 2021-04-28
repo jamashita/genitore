@@ -1,4 +1,4 @@
-import { RecoveryPlan } from '../../Plan/Interface/RecoveryPlan';
+import { RecoveryPlan } from '../../plan/Interface/RecoveryPlan';
 import { Epoque } from '../Epoque/Interface/Epoque';
 
 export class RecoveryEpoquePlan<P> implements RecoveryPlan<'RecoveryEpoquePlan'> {

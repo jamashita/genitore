@@ -1,4 +1,4 @@
-import { MapPlan } from '../../Plan/Interface/MapPlan';
+import { MapPlan } from '../../plan/Interface/MapPlan';
 import { Epoque } from '../Epoque/Interface/Epoque';
 import { Matter } from '../Interface/Matter';
 

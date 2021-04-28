@@ -1,6 +1,6 @@
 import { MockRuntimeError } from '@jamashita/anden-error';
 import sinon, { SinonSpy } from 'sinon';
-import { Plan } from '../../../plan/src/Interface/Plan';
+import { Plan } from '../../plan/Interface/Plan';
 import { Chrono } from '../Chrono/Interface/Chrono';
 import { Detoxicated } from '../Interface/Detoxicated';
 import { Schrodinger } from '../Schrodinger/Schrodinger';

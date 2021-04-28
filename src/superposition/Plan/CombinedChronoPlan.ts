@@ -1,7 +1,7 @@
-import { DestroyPlan } from '../../Plan/Interface/DestroyPlan';
-import { MapPlan } from '../../Plan/Interface/MapPlan';
-import { Plan } from '../../Plan/Interface/Plan';
-import { RecoveryPlan } from '../../Plan/Interface/RecoveryPlan';
+import { DestroyPlan } from '../../plan/Interface/DestroyPlan';
+import { MapPlan } from '../../plan/Interface/MapPlan';
+import { Plan } from '../../plan/Interface/Plan';
+import { RecoveryPlan } from '../../plan/Interface/RecoveryPlan';
 import { Detoxicated } from '../Interface/Detoxicated';
 
 export class CombinedChronoPlan<A, D extends Error> implements Plan<Detoxicated<A>, D, 'CombinedChronoPlan'> {
