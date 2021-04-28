@@ -7,6 +7,5 @@
 .releaserc.json
 commitlint.config.js
 jest.config.cjs
-lerna.json
 tsconfig.json
 **/*.spec.ts
