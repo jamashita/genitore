@@ -8,3 +8,6 @@ export const inc = (i: number): number => {
 export const neg = (i: number): number => {
   return -i;
 };
+export const twice = (i: number): number => {
+  return i * 2;
+};
