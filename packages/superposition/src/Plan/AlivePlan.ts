@@ -1,7 +1,6 @@
 import { Kind, UnaryFunction } from '@jamashita/anden-type';
 import { MapPlan } from '@jamashita/genitore-plan';
 import { Chrono } from '../Chrono/Interface/Chrono';
-import { Bdb } from '../Interface/Bdb';
 import { Detoxicated } from '../Interface/Detoxicated';
 import { containsError, isSuperposition, ISuperposition, SReturnType } from '../Interface/ISuperposition';
 
@@ -32,9 +31,9 @@ export class AlivePlan<A, B, E extends Error> implements MapPlan<Detoxicated<A>,
       if (isSuperposition<B, E>(mapped)) {
         return this.forSuperposition(mapped);
       }
-      if (Kind.isPromiseLike<Bdb<B> | ISuperposition<B, E>>(mapped)) {
+      if (Kind.isPromiseLike<Detoxicated<B> | ISuperposition<B, E>>(mapped)) {
         return mapped.then<unknown, unknown>(
-          (v: Bdb<B> | ISuperposition<B, E>) => {
+          (v: Detoxicated<B> | ISuperposition<B, E>) => {
             if (isSuperposition<B, E>(v)) {
               return this.forSuperposition(v);
             }
@@ -70,7 +69,7 @@ export class AlivePlan<A, B, E extends Error> implements MapPlan<Detoxicated<A>,
     );
   }
 
-  private forOther(v: Bdb<B>): unknown {
+  private forOther(v: Detoxicated<B>): unknown {
     if (v instanceof Error) {
       return this.forError(v);
     }
