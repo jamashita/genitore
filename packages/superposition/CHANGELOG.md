@@ -1,3 +1,19 @@
+# [@jamashita/genitore-superposition-v1.6.0](https://github.com/jamashita/genitore/compare/@jamashita/genitore-superposition-v1.5.0...@jamashita/genitore-superposition-v1.6.0) (2021-04-28)
+
+
+### Bug Fixes
+
+* 🐛 all test had passed ([0dbdd20](https://github.com/jamashita/genitore/commit/0dbdd20a4702a93cf98e5d645cfc9fe16b3a46e6))
+* 🐛 Dbd eliminated ([4b3d408](https://github.com/jamashita/genitore/commit/4b3d4080d4db2d30ec58d499d1beef6de415363d))
+* 🐛 dbd eradicated again ([88a8440](https://github.com/jamashita/genitore/commit/88a8440482a21acd52965caf06547242589b5ab6))
+* 🐛 delete unused import export ([529d801](https://github.com/jamashita/genitore/commit/529d801c1fbd308c0096a53b2f57963d217c90a4))
+* 🐛 remove unused import ([fdcc74c](https://github.com/jamashita/genitore/commit/fdcc74c7cc1f49c82ece20c41a9fad1e5a91f87a))
+
+
+### Features
+
+* 🎸 radical changes ([e462ebb](https://github.com/jamashita/genitore/commit/e462ebb3ad3dde3c2fa27bb0d4f04cfb3fc5e31c))
+
 # [@jamashita/genitore-superposition-v1.5.0](https://github.com/jamashita/genitore/compare/@jamashita/genitore-superposition-v1.4.1...@jamashita/genitore-superposition-v1.5.0) (2021-04-27)
 
 
