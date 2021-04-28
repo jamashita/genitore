@@ -1,3 +1,10 @@
+## [1.2.2](https://github.com/jamashita/genitore/compare/v1.2.1...v1.2.2) (2021-04-28)
+
+
+### Bug Fixes
+
+* 🐛 neg ([397955c](https://github.com/jamashita/genitore/commit/397955c7f2d7d20e8da485ce6a5007850a448f29))
+
 ## [1.2.1](https://github.com/jamashita/genitore/compare/v1.2.0...v1.2.1) (2021-04-28)
 
 
