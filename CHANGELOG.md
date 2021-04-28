@@ -1,3 +1,32 @@
+# [1.4.0](https://github.com/jamashita/genitore/compare/v1.3.0...v1.4.0) (2021-04-28)
+
+
+### Features
+
+* 🎸 remvoed ([6cd9027](https://github.com/jamashita/genitore/commit/6cd9027c37a1576f7d8fb054b4b0e8f16d83add9))
+* 🎸 revmoed private ttrue ([2b256c7](https://github.com/jamashita/genitore/commit/2b256c7a17b8b10b36444fdd370b8cc5c770b3ce))
+
+# [1.3.0](https://github.com/jamashita/genitore/compare/v1.2.2...v1.3.0) (2021-04-28)
+
+
+### Features
+
+* 🎸 twice ([0f2f717](https://github.com/jamashita/genitore/commit/0f2f7172f193c47a95893ce9a90a024f20738da4))
+
+## [1.2.2](https://github.com/jamashita/genitore/compare/v1.2.1...v1.2.2) (2021-04-28)
+
+
+### Bug Fixes
+
+* 🐛 neg ([397955c](https://github.com/jamashita/genitore/commit/397955c7f2d7d20e8da485ce6a5007850a448f29))
+
+## [1.2.1](https://github.com/jamashita/genitore/compare/v1.2.0...v1.2.1) (2021-04-28)
+
+
+### Bug Fixes
+
+* 🐛 fauc ([e63455e](https://github.com/jamashita/genitore/commit/e63455e66c7365b780ca8734f737a1c0774d493e))
+
 # [1.2.0](https://github.com/jamashita/genitore/compare/v1.1.0...v1.2.0) (2021-04-28)
 
 
