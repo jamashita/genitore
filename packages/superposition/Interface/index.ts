@@ -1,3 +1,3 @@
-export * from './DeadConstructor';
-export * from './Detoxicated';
-export * from './ISuperposition';
+export * from './DeadConstructor.js';
+export * from './Detoxicated.js';
+export * from './ISuperposition.js';

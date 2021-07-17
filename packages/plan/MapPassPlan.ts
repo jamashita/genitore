@@ -1,5 +1,5 @@
 import { Consumer, Whatever } from '@jamashita/anden-type';
-import { MapPlan } from './Interface/MapPlan';
+import { MapPlan } from './Interface/MapPlan.js';
 
 export class MapPassPlan<M> implements MapPlan<M, 'MapPassPlan'> {
   public readonly noun: 'MapPassPlan' = 'MapPassPlan';

@@ -1,1 +1,1 @@
-export * from './UnscharferelationError';
+export * from './UnscharferelationError.js';

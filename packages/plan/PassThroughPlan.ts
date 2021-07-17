@@ -1,5 +1,5 @@
 import { Consumer, Whatever } from '@jamashita/anden-type';
-import { Plan } from './Interface/Plan';
+import { Plan } from './Interface/Plan.js';
 
 export class PassThroughPlan<M, R> implements Plan<M, R, 'PassThroughPlan'> {
   public readonly noun: 'PassThroughPlan' = 'PassThroughPlan';
@@ -17,15 +17,15 @@ export class PassThroughPlan<M, R> implements Plan<M, R, 'PassThroughPlan'> {
     this.destroy = destroy;
   }
 
+  public onDestroy(cause: unknown): Whatever {
+    return this.destroy(cause);
+  }
+
   public onMap(value: M): Whatever {
     return this.map(value);
   }
 
   public onRecover(value: R): Whatever {
     return this.recover(value);
-  }
-
-  public onDestroy(cause: unknown): Whatever {
-    return this.destroy(cause);
   }
 }

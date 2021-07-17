@@ -1,7 +1,7 @@
 import { MockRuntimeError } from '@jamashita/anden-error';
 import sinon, { SinonSpy } from 'sinon';
-import { Alive } from '../Alive';
-import { Schrodinger } from '../Schrodinger';
+import { Alive } from '../Alive.js';
+import { Schrodinger } from '../Schrodinger.js';
 
 describe('Alive', () => {
   describe('get', () => {

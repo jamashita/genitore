@@ -1,14 +1,14 @@
 import { Consumer, Kind, Peek, Supplier, Suspicious, SyncAsync, UnaryFunction } from '@jamashita/anden-type';
-import { Chrono } from '../superposition/Chrono/Interface/Chrono';
-import { Detoxicated } from '../superposition/Interface/Detoxicated';
-import { Superposition } from '../superposition/Superposition';
-import { Epoque } from './Epoque/Interface/Epoque';
-import { UnscharferelationError } from './Error/UnscharferelationError';
-import { Heisenberg } from './Heisenberg/Heisenberg';
-import { IUnscharferelation, UReturnType } from './Interface/IUnscharferelation';
-import { Matter } from './Interface/Matter';
-import { Nihil } from './Interface/Nihil';
-import { UnscharferelationInternal } from './UnscharferelationInternal';
+import { Chrono } from '../superposition/Chrono/Interface/Chrono.js';
+import { Detoxicated } from '../superposition/Interface/Detoxicated.js';
+import { Superposition } from '../superposition/Superposition.js';
+import { Epoque } from './Epoque/Interface/Epoque.js';
+import { UnscharferelationError } from './Error/UnscharferelationError.js';
+import { Heisenberg } from './Heisenberg/Heisenberg.js';
+import { IUnscharferelation, UReturnType } from './Interface/IUnscharferelation.js';
+import { Matter } from './Interface/Matter.js';
+import { Nihil } from './Interface/Nihil.js';
+import { UnscharferelationInternal } from './UnscharferelationInternal.js';
 
 export class Unscharferelation<P> implements IUnscharferelation<P, 'Unscharferelation'> {
   public readonly noun: 'Unscharferelation' = 'Unscharferelation';
@@ -197,12 +197,12 @@ export class Unscharferelation<P> implements IUnscharferelation<P, 'Unscharferel
     return Unscharferelation.ofUnscharferelation<P | Q>(this.internal.recover<Q>(mapper));
   }
 
-  public serialize(): string {
-    return this.internal.toString();
-  }
-
   public terminate(): Promise<Heisenberg<P>> {
     return this.internal.terminate();
+  }
+
+  public serialize(): string {
+    return this.internal.toString();
   }
 
   public toString(): string {

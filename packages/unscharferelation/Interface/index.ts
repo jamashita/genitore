@@ -1,3 +1,3 @@
-export * from './Matter';
-export * from './Nihil';
-export * from './IUnscharferelation';
+export * from './Matter.js';
+export * from './Nihil.js';
+export * from './IUnscharferelation.js';

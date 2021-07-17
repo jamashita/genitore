@@ -1,10 +1,10 @@
 import { UnimplementedError } from '@jamashita/anden-error';
 import { ValueObject } from '@jamashita/anden-object';
-import { ISuperposition } from '../../superposition/Interface/ISuperposition';
-import { UnscharferelationError } from '../Error/UnscharferelationError';
-import { Heisenberg } from '../Heisenberg/Heisenberg';
-import { IUnscharferelation } from '../Interface/IUnscharferelation';
-import { Matter } from '../Interface/Matter';
+import { ISuperposition } from '../../superposition/Interface/ISuperposition.js';
+import { UnscharferelationError } from '../Error/UnscharferelationError.js';
+import { Heisenberg } from '../Heisenberg/Heisenberg.js';
+import { IUnscharferelation } from '../Interface/IUnscharferelation.js';
+import { Matter } from '../Interface/Matter.js';
 
 export class MockUnscharferelation<P> extends ValueObject<'MockUnscharferelation'> implements IUnscharferelation<P, 'MockUnscharferelation'> {
   public readonly noun: 'MockUnscharferelation' = 'MockUnscharferelation';

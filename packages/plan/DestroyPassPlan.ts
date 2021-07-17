@@ -1,5 +1,5 @@
 import { Consumer, Whatever } from '@jamashita/anden-type';
-import { DestroyPlan } from './Interface/DestroyPlan';
+import { DestroyPlan } from './Interface/DestroyPlan.js';
 
 export class DestroyPassPlan implements DestroyPlan<'DestroyPassPlan'> {
   public readonly noun: 'DestroyPassPlan' = 'DestroyPassPlan';

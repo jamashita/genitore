@@ -1,8 +1,8 @@
 import { Consumer, Peek, Reject, Resolve, UnaryFunction } from '@jamashita/anden-type';
-import { DestroyPassPlan } from '../plan/DestroyPassPlan';
-import { DestroySpoilPlan } from '../plan/DestroySpoilPlan';
-import { DestroyPlan } from '../plan/Interface/DestroyPlan';
-import { MapPlan } from '../plan/Interface/MapPlan';
+import { DestroyPassPlan } from '../plan/DestroyPassPlan.js';
+import { DestroySpoilPlan } from '../plan/DestroySpoilPlan.js';
+import { DestroyPlan } from '../plan/Interface/DestroyPlan.js';
+import { MapPlan } from '../plan/Interface/MapPlan.js';
 import { Plan } from '../plan/Interface/Plan';
 import { RecoveryPlan } from '../plan/Interface/RecoveryPlan';
 import { MapPassPlan } from '../plan/MapPassPlan';
@@ -42,12 +42,34 @@ export class SuperpositionInternal<A, D extends Error> implements ISuperposition
     func(this);
   }
 
-  public serialize(): string {
-    return this.schrodinger.toString();
+  public accept(value: Detoxicated<A>): void {
+    if (this.settled()) {
+      return;
+    }
+
+    this.schrodinger = Alive.of<A, D>(value);
+
+    this.plans.forEach((plan: MapPlan<Detoxicated<A>>) => {
+      return plan.onMap(value);
+    });
   }
 
-  public toString(): string {
-    return this.serialize();
+  public catch(errors: Iterable<DeadConstructor<D>>): void {
+    [...errors].forEach((error: DeadConstructor<D>) => {
+      this.errors.add(error);
+    });
+  }
+
+  public decline(error: D): void {
+    if (this.settled()) {
+      return;
+    }
+
+    this.schrodinger = Dead.of<A, D>(error);
+
+    this.plans.forEach((plan: RecoveryPlan<D>) => {
+      return plan.onRecover(error);
+    });
   }
 
   public get(): Promise<Detoxicated<A>> {
@@ -70,12 +92,22 @@ export class SuperpositionInternal<A, D extends Error> implements ISuperposition
     return new Set<DeadConstructor<D>>(this.errors);
   }
 
-  public terminate(): Promise<Schrodinger<A, D>> {
-    return new Promise<Schrodinger<A, D>>((resolve: Resolve<Schrodinger<A, D>>) => {
-      this.peek(() => {
-        resolve(this.schrodinger);
-      });
-    });
+  public ifAlive(consumer: Consumer<Detoxicated<A>>): this {
+    this.handle(MapPassPlan.of<Detoxicated<A>>(consumer), RecoverySpoilPlan.of<D>(), DestroySpoilPlan.of());
+
+    return this;
+  }
+
+  public ifContradiction(consumer: Consumer<unknown>): this {
+    this.handle(MapSpoilPlan.of<Detoxicated<A>>(), RecoverySpoilPlan.of<D>(), DestroyPassPlan.of(consumer));
+
+    return this;
+  }
+
+  public ifDead(consumer: Consumer<D>): this {
+    this.handle(MapSpoilPlan.of<Detoxicated<A>>(), RecoveryPassPlan.of<D>(consumer), DestroySpoilPlan.of());
+
+    return this;
   }
 
   public map<B = A, E extends Error = D>(
@@ -91,6 +123,18 @@ export class SuperpositionInternal<A, D extends Error> implements ISuperposition
     }, [...this.errors, ...errors]);
   }
 
+  public pass(accepted: Consumer<Detoxicated<A>>, declined: Consumer<D>, thrown: Consumer<unknown>): this {
+    this.handle(MapPassPlan.of<Detoxicated<A>>(accepted), RecoveryPassPlan.of<D>(declined), DestroyPassPlan.of(thrown));
+
+    return this;
+  }
+
+  public peek(peek: Peek): this {
+    this.handle(MapPassPlan.of<Detoxicated<A>>(peek), RecoveryPassPlan.of<D>(peek), DestroyPassPlan.of(peek));
+
+    return this;
+  }
+
   public recover<B = A, E extends Error = D>(
     mapper: UnaryFunction<D, SReturnType<B, E>>,
     ...errors: Array<DeadConstructor<E>>
@@ -102,6 +146,26 @@ export class SuperpositionInternal<A, D extends Error> implements ISuperposition
         DestroyChronoPlan.of<A | B, E>(chrono)
       );
     }, errors);
+  }
+
+  public terminate(): Promise<Schrodinger<A, D>> {
+    return new Promise<Schrodinger<A, D>>((resolve: Resolve<Schrodinger<A, D>>) => {
+      this.peek(() => {
+        resolve(this.schrodinger);
+      });
+    });
+  }
+
+  public throw(cause: unknown): void {
+    if (this.settled()) {
+      return;
+    }
+
+    this.schrodinger = Contradiction.of<A, D>(cause);
+
+    this.plans.forEach((plan: DestroyPlan) => {
+      return plan.onDestroy(cause);
+    });
   }
 
   public transform<B = A, E extends Error = D>(
@@ -118,76 +182,22 @@ export class SuperpositionInternal<A, D extends Error> implements ISuperposition
     }, errors);
   }
 
-  public ifAlive(consumer: Consumer<Detoxicated<A>>): this {
-    this.handle(MapPassPlan.of<Detoxicated<A>>(consumer), RecoverySpoilPlan.of<D>(), DestroySpoilPlan.of());
-
-    return this;
-  }
-
-  public ifDead(consumer: Consumer<D>): this {
-    this.handle(MapSpoilPlan.of<Detoxicated<A>>(), RecoveryPassPlan.of<D>(consumer), DestroySpoilPlan.of());
-
-    return this;
-  }
-
-  public ifContradiction(consumer: Consumer<unknown>): this {
-    this.handle(MapSpoilPlan.of<Detoxicated<A>>(), RecoverySpoilPlan.of<D>(), DestroyPassPlan.of(consumer));
-
-    return this;
-  }
-
-  public pass(accepted: Consumer<Detoxicated<A>>, declined: Consumer<D>, thrown: Consumer<unknown>): this {
-    this.handle(MapPassPlan.of<Detoxicated<A>>(accepted), RecoveryPassPlan.of<D>(declined), DestroyPassPlan.of(thrown));
-
-    return this;
-  }
-
-  public peek(peek: Peek): this {
-    this.handle(MapPassPlan.of<Detoxicated<A>>(peek), RecoveryPassPlan.of<D>(peek), DestroyPassPlan.of(peek));
-
-    return this;
-  }
-
-  public accept(value: Detoxicated<A>): void {
-    if (this.settled()) {
-      return;
+  private handle(map: MapPlan<Detoxicated<A>>, recover: RecoveryPlan<D>, destroy: DestroyPlan): unknown {
+    if (this.schrodinger.isAlive()) {
+      return map.onMap(this.schrodinger.get());
+    }
+    if (this.schrodinger.isDead()) {
+      return recover.onRecover(this.schrodinger.getError());
+    }
+    if (this.schrodinger.isContradiction()) {
+      return destroy.onDestroy(this.schrodinger.getCause());
     }
 
-    this.schrodinger = Alive.of<A, D>(value);
-
-    this.plans.forEach((plan: MapPlan<Detoxicated<A>>) => {
-      return plan.onMap(value);
-    });
+    return this.plans.add(CombinedChronoPlan.of<A, D>(map, recover, destroy));
   }
 
-  public decline(error: D): void {
-    if (this.settled()) {
-      return;
-    }
-
-    this.schrodinger = Dead.of<A, D>(error);
-
-    this.plans.forEach((plan: RecoveryPlan<D>) => {
-      return plan.onRecover(error);
-    });
-  }
-
-  public throw(cause: unknown): void {
-    if (this.settled()) {
-      return;
-    }
-
-    this.schrodinger = Contradiction.of<A, D>(cause);
-
-    this.plans.forEach((plan: DestroyPlan) => {
-      return plan.onDestroy(cause);
-    });
-  }
-
-  public catch(errors: Iterable<DeadConstructor<D>>): void {
-    [...errors].forEach((error: DeadConstructor<D>) => {
-      this.errors.add(error);
-    });
+  public serialize(): string {
+    return this.schrodinger.toString();
   }
 
   private settled(): boolean {
@@ -204,17 +214,7 @@ export class SuperpositionInternal<A, D extends Error> implements ISuperposition
     }
   }
 
-  private handle(map: MapPlan<Detoxicated<A>>, recover: RecoveryPlan<D>, destroy: DestroyPlan): unknown {
-    if (this.schrodinger.isAlive()) {
-      return map.onMap(this.schrodinger.get());
-    }
-    if (this.schrodinger.isDead()) {
-      return recover.onRecover(this.schrodinger.getError());
-    }
-    if (this.schrodinger.isContradiction()) {
-      return destroy.onDestroy(this.schrodinger.getCause());
-    }
-
-    return this.plans.add(CombinedChronoPlan.of<A, D>(map, recover, destroy));
+  public toString(): string {
+    return this.serialize();
   }
 }

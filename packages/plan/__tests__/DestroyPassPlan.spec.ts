@@ -1,5 +1,5 @@
 import sinon, { SinonSpy } from 'sinon';
-import { DestroyPassPlan } from '../DestroyPassPlan';
+import { DestroyPassPlan } from '../DestroyPassPlan.js';
 
 describe('DestroyPassPlan', () => {
   describe('onDestroy', () => {

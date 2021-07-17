@@ -1,8 +1,8 @@
 import { Kind, Suspicious, UnaryFunction } from '@jamashita/anden-type';
-import { MapPlan } from '../../plan/Interface/MapPlan';
-import { Epoque } from '../Epoque/Interface/Epoque';
-import { isUnscharferelation, IUnscharferelation, UReturnType } from '../Interface/IUnscharferelation';
-import { Matter } from '../Interface/Matter';
+import { MapPlan } from '../../plan/Interface/MapPlan.js';
+import { Epoque } from '../Epoque/Interface/Epoque.js';
+import { isUnscharferelation, IUnscharferelation, UReturnType } from '../Interface/IUnscharferelation.js';
+import { Matter } from '../Interface/Matter.js';
 
 export class PresentPlan<P, Q> implements MapPlan<Matter<P>, 'PresentPlan'> {
   public readonly noun: 'PresentPlan' = 'PresentPlan';

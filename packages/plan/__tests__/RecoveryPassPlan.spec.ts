@@ -1,5 +1,5 @@
 import sinon, { SinonSpy } from 'sinon';
-import { RecoveryPassPlan } from '../RecoveryPassPlan';
+import { RecoveryPassPlan } from '../RecoveryPassPlan.js';
 
 describe('RecoveryPassPlan', () => {
   describe('onRecover', () => {

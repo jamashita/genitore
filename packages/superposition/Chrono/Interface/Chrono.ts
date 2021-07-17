@@ -1,15 +1,15 @@
 import { Noun } from '@jamashita/anden-type';
-import { DeadConstructor } from '../../Interface/DeadConstructor';
-import { Detoxicated } from '../../Interface/Detoxicated';
+import { DeadConstructor } from '../../Interface/DeadConstructor.js';
+import { Detoxicated } from '../../Interface/Detoxicated.js';
 
 export interface Chrono<M, R extends Error, N extends string = string> extends Noun<N> {
   accept(value: Detoxicated<M>): unknown;
 
-  decline(value: R): unknown;
+  catch(errors: Iterable<DeadConstructor<R>>): void;
 
-  throw(cause: unknown): unknown;
+  decline(value: R): unknown;
 
   getErrors(): Set<DeadConstructor<R>>;
 
-  catch(errors: Iterable<DeadConstructor<R>>): void;
+  throw(cause: unknown): unknown;
 }

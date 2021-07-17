@@ -1,8 +1,8 @@
 import { MockRuntimeError } from '@jamashita/anden-error';
 import sinon, { SinonSpy } from 'sinon';
-import { SuperpositionError } from '../../Error/SuperpositionError';
-import { Schrodinger } from '../Schrodinger';
-import { Still } from '../Still';
+import { SuperpositionError } from '../../Error/SuperpositionError.js';
+import { Schrodinger } from '../Schrodinger.js';
+import { Still } from '../Still.js';
 
 describe('Still', () => {
   describe('get', () => {

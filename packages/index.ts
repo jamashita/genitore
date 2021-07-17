@@ -1,3 +1,3 @@
-export * from './plan';
-export * from './superposition';
-export * from './unscharferelation';
+export * from './plan.js';
+export * from './superposition.js';
+export * from './unscharferelation.js';

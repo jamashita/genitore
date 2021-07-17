@@ -1,7 +1,7 @@
 import { Consumer } from '@jamashita/anden-type';
-import { DeadConstructor } from '../../Interface/DeadConstructor';
-import { Detoxicated } from '../../Interface/Detoxicated';
-import { Chrono } from '../Interface/Chrono';
+import { DeadConstructor } from '../../Interface/DeadConstructor.js';
+import { Detoxicated } from '../../Interface/Detoxicated.js';
+import { Chrono } from '../Interface/Chrono.js';
 
 export class MockChrono<M, R extends Error> implements Chrono<M, R, 'MockChrono'> {
   public readonly noun: 'MockChrono' = 'MockChrono';
@@ -21,21 +21,21 @@ export class MockChrono<M, R extends Error> implements Chrono<M, R, 'MockChrono'
     return this.map(value);
   }
 
-  public decline(value: R): unknown {
-    return this.recover(value);
-  }
-
-  public throw(cause: unknown): unknown {
-    return this.destroy(cause);
-  }
-
   public catch(errors: Iterable<DeadConstructor<R>>): void {
     [...errors].forEach((error: DeadConstructor<R>) => {
       this.errors.add(error);
     });
   }
 
+  public decline(value: R): unknown {
+    return this.recover(value);
+  }
+
   public getErrors(): Set<DeadConstructor<R>> {
     return this.errors;
+  }
+
+  public throw(cause: unknown): unknown {
+    return this.destroy(cause);
   }
 }

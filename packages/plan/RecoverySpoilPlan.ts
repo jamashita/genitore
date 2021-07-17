@@ -1,4 +1,4 @@
-import { RecoveryPlan } from './Interface/RecoveryPlan';
+import { RecoveryPlan } from './Interface/RecoveryPlan.js';
 
 export class RecoverySpoilPlan<R> implements RecoveryPlan<R, 'RecoverySpoilPlan'> {
   public readonly noun: 'RecoverySpoilPlan' = 'RecoverySpoilPlan';

@@ -1,4 +1,4 @@
-import { DestroySpoilPlan } from '../DestroySpoilPlan';
+import { DestroySpoilPlan } from '../DestroySpoilPlan.js';
 
 describe('DestroySpoilPlan', () => {
   describe('of', () => {

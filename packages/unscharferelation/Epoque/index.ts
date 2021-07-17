@@ -1,1 +1,1 @@
-export * from './Interface/Epoque';
+export * from './Interface/Epoque.js';

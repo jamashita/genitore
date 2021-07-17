@@ -1,7 +1,7 @@
 import { MockRuntimeError } from '@jamashita/anden-error';
 import sinon, { SinonSpy } from 'sinon';
-import { Contradiction } from '../Contradiction';
-import { Schrodinger } from '../Schrodinger';
+import { Contradiction } from '../Contradiction.js';
+import { Schrodinger } from '../Schrodinger.js';
 
 describe('Contradiction', () => {
   describe('get', () => {

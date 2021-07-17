@@ -1,5 +1,5 @@
 import sinon, { SinonSpy } from 'sinon';
-import { PassThroughPlan } from '../PassThroughPlan';
+import { PassThroughPlan } from '../PassThroughPlan.js';
 
 describe('PassThroughPlan', () => {
   describe('onMap', () => {

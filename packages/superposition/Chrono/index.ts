@@ -1,1 +1,1 @@
-export * from './Interface/Chrono';
+export * from './Interface/Chrono.js';

@@ -1,12 +1,12 @@
 import { Consumer, Kind, Nullable, Peek, Supplier, SyncAsync, UnaryFunction } from '@jamashita/anden-type';
-import { Chrono } from './Chrono/Interface/Chrono';
-import { SuperpositionError } from './Error/SuperpositionError';
-import { DeadConstructor } from './Interface/DeadConstructor';
-import { Detoxicated } from './Interface/Detoxicated';
-import { containsError, ISuperposition, SReturnType } from './Interface/ISuperposition';
-import { Dead } from './Schrodinger/Dead';
-import { Schrodinger } from './Schrodinger/Schrodinger';
-import { SuperpositionInternal } from './SuperpositionInternal';
+import { Chrono } from './Chrono/Interface/Chrono.js';
+import { SuperpositionError } from './Error/SuperpositionError.js';
+import { DeadConstructor } from './Interface/DeadConstructor.js';
+import { Detoxicated } from './Interface/Detoxicated.js';
+import { containsError, ISuperposition, SReturnType } from './Interface/ISuperposition.js';
+import { Dead } from './Schrodinger/Dead.js';
+import { Schrodinger } from './Schrodinger/Schrodinger.js';
+import { SuperpositionInternal } from './SuperpositionInternal.js';
 
 export class Superposition<A, D extends Error> implements ISuperposition<A, D, 'Superposition'> {
   public readonly noun: 'Superposition' = 'Superposition';
@@ -224,16 +224,8 @@ export class Superposition<A, D extends Error> implements ISuperposition<A, D, '
     return Superposition.ofSuperposition<A | B, E>(this.internal.recover<A | B, E>(mapper, ...errors));
   }
 
-  public serialize(): string {
-    return this.internal.toString();
-  }
-
   public terminate(): Promise<Schrodinger<A, D>> {
     return this.internal.terminate();
-  }
-
-  public toString(): string {
-    return this.serialize();
   }
 
   public transform<B = A, E extends Error = D>(
@@ -242,5 +234,13 @@ export class Superposition<A, D extends Error> implements ISuperposition<A, D, '
     ...errors: Array<DeadConstructor<E>>
   ): Superposition<B, E> {
     return Superposition.ofSuperposition<B, E>(this.internal.transform<B, E>(alive, dead, ...errors));
+  }
+
+  public serialize(): string {
+    return this.internal.toString();
+  }
+
+  public toString(): string {
+    return this.serialize();
   }
 }

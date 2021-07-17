@@ -1,8 +1,8 @@
-import { DestroyPlan } from '../../plan/Interface/DestroyPlan';
-import { MapPlan } from '../../plan/Interface/MapPlan';
-import { Plan } from '../../plan/Interface/Plan';
-import { RecoveryPlan } from '../../plan/Interface/RecoveryPlan';
-import { Matter } from '../Interface/Matter';
+import { DestroyPlan } from '../../plan/Interface/DestroyPlan.js';
+import { MapPlan } from '../../plan/Interface/MapPlan.js';
+import { Plan } from '../../plan/Interface/Plan.js';
+import { RecoveryPlan } from '../../plan/Interface/RecoveryPlan.js';
+import { Matter } from '../Interface/Matter.js';
 
 export class CombinedEpoquePlan<P> implements Plan<Matter<P>, void, 'CombinedEpoquePlan'> {
   public readonly noun: 'CombinedEpoquePlan' = 'CombinedEpoquePlan';
@@ -20,15 +20,15 @@ export class CombinedEpoquePlan<P> implements Plan<Matter<P>, void, 'CombinedEpo
     this.destroy = destroy;
   }
 
+  public onDestroy(cause: unknown): unknown {
+    return this.destroy.onDestroy(cause);
+  }
+
   public onMap(value: Matter<P>): unknown {
     return this.map.onMap(value);
   }
 
   public onRecover(): unknown {
     return this.recover.onRecover();
-  }
-
-  public onDestroy(cause: unknown): unknown {
-    return this.destroy.onDestroy(cause);
   }
 }

@@ -1,1 +1,1 @@
-export * from './SuperpositionError';
+export * from './SuperpositionError.js';
