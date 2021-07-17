@@ -1,4 +1,4 @@
-import { Consumer, Kind, Nullable, Peek, Supplier, UnaryFunction } from '@jamashita/anden-type';
+import { Consumer, Kind, Nullable, Peek, Supplier, SyncAsync, UnaryFunction } from '@jamashita/anden-type';
 import { Chrono } from './Chrono/Interface/Chrono';
 import { SuperpositionError } from './Error/SuperpositionError';
 import { DeadConstructor } from './Interface/DeadConstructor';
@@ -11,6 +11,23 @@ import { SuperpositionInternal } from './SuperpositionInternal';
 export class Superposition<A, D extends Error> implements ISuperposition<A, D, 'Superposition'> {
   public readonly noun: 'Superposition' = 'Superposition';
   private readonly internal: ISuperposition<A, D>;
+
+  public static alive<AT, DT extends Error>(value: SyncAsync<Detoxicated<AT>>, ...errors: ReadonlyArray<DeadConstructor<DT>>): Superposition<AT, DT> {
+    return Superposition.of<AT, DT>((chrono: Chrono<AT, DT>) => {
+      if (Kind.isPromiseLike<Detoxicated<AT>>(value)) {
+        return value.then<unknown, unknown>(
+          (v: Detoxicated<AT>) => {
+            return chrono.accept(v);
+          },
+          (e: unknown) => {
+            return chrono.throw(e);
+          }
+        );
+      }
+
+      return chrono.accept(value);
+    }, ...errors);
+  }
 
   public static all<AT, DT extends Error>(superpositions: Iterable<Superposition<AT, DT>>): Superposition<Array<AT>, DT> {
     const ss: Array<Superposition<AT, DT>> = [...superpositions];
@@ -65,73 +82,6 @@ export class Superposition<A, D extends Error> implements ISuperposition<A, D, '
     return Promise.all<Schrodinger<AT, DT>>(promises);
   }
 
-  public static playground<AT, DT extends Error>(supplier: Supplier<Detoxicated<AT> | PromiseLike<Detoxicated<AT>>>, ...errors: ReadonlyArray<DeadConstructor<DT>>): Superposition<AT, DT> {
-    return Superposition.of<AT, DT>((chrono: Chrono<AT, DT>) => {
-      try {
-        const value: Detoxicated<AT> | PromiseLike<Detoxicated<AT>> = supplier();
-
-        if (Kind.isPromiseLike<Detoxicated<AT>>(value)) {
-          return value.then<unknown, unknown>(
-            (v: Detoxicated<AT>) => {
-              return chrono.accept(v);
-            },
-            (e: unknown) => {
-              if (containsError<DT>(e, chrono.getErrors())) {
-                return chrono.decline(e);
-              }
-
-              return chrono.throw(e);
-            }
-          );
-        }
-
-        return chrono.accept(value);
-      }
-      catch (err: unknown) {
-        if (containsError<DT>(err, chrono.getErrors())) {
-          return chrono.decline(err);
-        }
-
-        return chrono.throw(err);
-      }
-    }, ...errors);
-  }
-
-  public static ofSchrodinger<AT, DT extends Error>(schrodinger: Schrodinger<AT, DT>, ...errors: ReadonlyArray<DeadConstructor<DT>>): Superposition<AT, DT> {
-    return Superposition.of<AT, DT>((chrono: Chrono<AT, DT>) => {
-      chrono.catch(errors);
-
-      if (schrodinger.isAlive()) {
-        return chrono.accept(schrodinger.get());
-      }
-      if (schrodinger.isDead()) {
-        return chrono.decline(schrodinger.getError());
-      }
-      if (schrodinger.isContradiction()) {
-        return chrono.throw(schrodinger.getCause());
-      }
-
-      return chrono.throw(new SuperpositionError('UNEXPECTED SCHRODINGER STATE'));
-    }, ...errors);
-  }
-
-  public static alive<AT, DT extends Error>(value: Detoxicated<AT> | PromiseLike<Detoxicated<AT>>, ...errors: ReadonlyArray<DeadConstructor<DT>>): Superposition<AT, DT> {
-    return Superposition.of<AT, DT>((chrono: Chrono<AT, DT>) => {
-      if (Kind.isPromiseLike<Detoxicated<AT>>(value)) {
-        return value.then<unknown, unknown>(
-          (v: Detoxicated<AT>) => {
-            return chrono.accept(v);
-          },
-          (e: unknown) => {
-            return chrono.throw(e);
-          }
-        );
-      }
-
-      return chrono.accept(value);
-    }, ...errors);
-  }
-
   public static dead<AT, DT extends Error>(error: DT | PromiseLike<Detoxicated<AT>>, ...errors: ReadonlyArray<DeadConstructor<DT>>): Superposition<AT, DT> {
     return Superposition.of<AT, DT>((chrono: Chrono<AT, DT>) => {
       if (Kind.isPromiseLike<Detoxicated<AT>>(error)) {
@@ -160,20 +110,62 @@ export class Superposition<A, D extends Error> implements ISuperposition<A, D, '
     return Superposition.ofSuperposition<AT, DT>(SuperpositionInternal.of<AT, DT>(func, errors));
   }
 
+  public static ofSchrodinger<AT, DT extends Error>(schrodinger: Schrodinger<AT, DT>, ...errors: ReadonlyArray<DeadConstructor<DT>>): Superposition<AT, DT> {
+    return Superposition.of<AT, DT>((chrono: Chrono<AT, DT>) => {
+      chrono.catch(errors);
+
+      if (schrodinger.isAlive()) {
+        return chrono.accept(schrodinger.get());
+      }
+      if (schrodinger.isDead()) {
+        return chrono.decline(schrodinger.getError());
+      }
+      if (schrodinger.isContradiction()) {
+        return chrono.throw(schrodinger.getCause());
+      }
+
+      return chrono.throw(new SuperpositionError('UNEXPECTED SCHRODINGER STATE'));
+    }, ...errors);
+  }
+
   public static ofSuperposition<AT, DT extends Error>(superposition: ISuperposition<AT, DT>): Superposition<AT, DT> {
     return new Superposition<AT, DT>(superposition);
   }
 
+  public static playground<AT, DT extends Error>(supplier: Supplier<SyncAsync<Detoxicated<AT>>>, ...errors: ReadonlyArray<DeadConstructor<DT>>): Superposition<AT, DT> {
+    return Superposition.of<AT, DT>((chrono: Chrono<AT, DT>) => {
+      try {
+        const value: SyncAsync<Detoxicated<AT>> = supplier();
+
+        if (Kind.isPromiseLike<Detoxicated<AT>>(value)) {
+          return value.then<unknown, unknown>(
+            (v: Detoxicated<AT>) => {
+              return chrono.accept(v);
+            },
+            (e: unknown) => {
+              if (containsError<DT>(e, chrono.getErrors())) {
+                return chrono.decline(e);
+              }
+
+              return chrono.throw(e);
+            }
+          );
+        }
+
+        return chrono.accept(value);
+      }
+      catch (err: unknown) {
+        if (containsError<DT>(err, chrono.getErrors())) {
+          return chrono.decline(err);
+        }
+
+        return chrono.throw(err);
+      }
+    }, ...errors);
+  }
+
   protected constructor(internal: ISuperposition<A, D>) {
     this.internal = internal;
-  }
-
-  public serialize(): string {
-    return this.internal.toString();
-  }
-
-  public toString(): string {
-    return this.serialize();
   }
 
   public get(): Promise<Detoxicated<A>> {
@@ -184,34 +176,14 @@ export class Superposition<A, D extends Error> implements ISuperposition<A, D, '
     return this.internal.getErrors();
   }
 
-  public terminate(): Promise<Schrodinger<A, D>> {
-    return this.internal.terminate();
-  }
-
-  public map<B = A, E extends Error = D>(
-    mapper: UnaryFunction<Detoxicated<A>, SReturnType<B, E>>,
-    ...errors: Array<DeadConstructor<E>>
-  ): Superposition<B, D | E> {
-    return Superposition.ofSuperposition<B, D | E>(this.internal.map<B, D | E>(mapper, ...this.internal.getErrors(), ...errors));
-  }
-
-  public recover<B = A, E extends Error = D>(
-    mapper: UnaryFunction<D, SReturnType<B, E>>,
-    ...errors: Array<DeadConstructor<E>>
-  ): Superposition<A | B, E> {
-    return Superposition.ofSuperposition<A | B, E>(this.internal.recover<A | B, E>(mapper, ...errors));
-  }
-
-  public transform<B = A, E extends Error = D>(
-    alive: UnaryFunction<Detoxicated<A>, SReturnType<B, E>>,
-    dead: UnaryFunction<D, SReturnType<B, E>>,
-    ...errors: Array<DeadConstructor<E>>
-  ): Superposition<B, E> {
-    return Superposition.ofSuperposition<B, E>(this.internal.transform<B, E>(alive, dead, ...errors));
-  }
-
   public ifAlive(consumer: Consumer<Detoxicated<A>>): this {
     this.internal.ifAlive(consumer);
+
+    return this;
+  }
+
+  public ifContradiction(consumer: Consumer<unknown>): this {
+    this.internal.ifContradiction(consumer);
 
     return this;
   }
@@ -222,10 +194,11 @@ export class Superposition<A, D extends Error> implements ISuperposition<A, D, '
     return this;
   }
 
-  public ifContradiction(consumer: Consumer<unknown>): this {
-    this.internal.ifContradiction(consumer);
-
-    return this;
+  public map<B = A, E extends Error = D>(
+    mapper: UnaryFunction<Detoxicated<A>, SReturnType<B, E>>,
+    ...errors: Array<DeadConstructor<E>>
+  ): Superposition<B, D | E> {
+    return Superposition.ofSuperposition<B, D | E>(this.internal.map<B, D | E>(mapper, ...this.internal.getErrors(), ...errors));
   }
 
   public pass(
@@ -242,5 +215,32 @@ export class Superposition<A, D extends Error> implements ISuperposition<A, D, '
     this.internal.peek(peek);
 
     return this;
+  }
+
+  public recover<B = A, E extends Error = D>(
+    mapper: UnaryFunction<D, SReturnType<B, E>>,
+    ...errors: Array<DeadConstructor<E>>
+  ): Superposition<A | B, E> {
+    return Superposition.ofSuperposition<A | B, E>(this.internal.recover<A | B, E>(mapper, ...errors));
+  }
+
+  public serialize(): string {
+    return this.internal.toString();
+  }
+
+  public terminate(): Promise<Schrodinger<A, D>> {
+    return this.internal.terminate();
+  }
+
+  public toString(): string {
+    return this.serialize();
+  }
+
+  public transform<B = A, E extends Error = D>(
+    alive: UnaryFunction<Detoxicated<A>, SReturnType<B, E>>,
+    dead: UnaryFunction<D, SReturnType<B, E>>,
+    ...errors: Array<DeadConstructor<E>>
+  ): Superposition<B, E> {
+    return Superposition.ofSuperposition<B, E>(this.internal.transform<B, E>(alive, dead, ...errors));
   }
 }
