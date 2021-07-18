@@ -1,3 +1,4 @@
+export * from './Error/HeisenbergError.js';
 export * from './Absent.js';
 export * from './Heisenberg.js';
 export * from './Lost.js';
