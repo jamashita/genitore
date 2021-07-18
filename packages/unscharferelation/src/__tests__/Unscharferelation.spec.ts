@@ -1,8 +1,8 @@
 import { MockRuntimeError } from '@jamashita/anden-error';
-import { Absent, Heisenberg, Lost, Present, Uncertain } from '@jamashita/genitore-heisenberg';
+import { Absent, Heisenberg, HeisenbergError, Lost, Present, Uncertain } from '@jamashita/genitore-heisenberg';
 import sinon, { SinonSpy } from 'sinon';
 import { Epoque } from '../Epoque.js';
-import { UnscharferelationError } from '../Error/UnscharferelationError.js';
+import { UnscharferelationError } from '../Error/UnscharferelationError';
 import { MockUnscharferelation } from '../Mock/MockUnscharferelation';
 import { Unscharferelation } from '../Unscharferelation';
 
@@ -61,7 +61,7 @@ describe('Unscharferelation', () => {
       expect(heisenberg.isAbsent()).toBe(true);
       expect(() => {
         heisenberg.get();
-      }).toThrow(UnscharferelationError);
+      }).toThrow(HeisenbergError);
     });
 
     it('returns Absent Unscharferelation with sync Unscharferelations which second one is Absent given', async () => {
@@ -80,7 +80,7 @@ describe('Unscharferelation', () => {
       expect(heisenberg.isAbsent()).toBe(true);
       expect(() => {
         heisenberg.get();
-      }).toThrow(UnscharferelationError);
+      }).toThrow(HeisenbergError);
     });
 
     it('returns Absent Unscharferelation with sync Unscharferelations which last one is Absent given', async () => {
@@ -99,7 +99,7 @@ describe('Unscharferelation', () => {
       expect(heisenberg.isAbsent()).toBe(true);
       expect(() => {
         heisenberg.get();
-      }).toThrow(UnscharferelationError);
+      }).toThrow(HeisenbergError);
     });
 
     it('returns Lost Unscharferelation when sync Unscharferelations which contains Lost given', async () => {
@@ -190,7 +190,7 @@ describe('Unscharferelation', () => {
       expect(heisenberg.isAbsent()).toBe(true);
       expect(() => {
         heisenberg.get();
-      }).toThrow(UnscharferelationError);
+      }).toThrow(HeisenbergError);
     });
 
     it('returns Absent Unscharferelation when async Unscharferelations which second one is Absent given', async () => {
@@ -209,7 +209,7 @@ describe('Unscharferelation', () => {
       expect(heisenberg.isAbsent()).toBe(true);
       expect(() => {
         heisenberg.get();
-      }).toThrow(UnscharferelationError);
+      }).toThrow(HeisenbergError);
     });
 
     it('returns Absent Unscharferelation when async Unscharferelations which last one is Absent given', async () => {
@@ -228,7 +228,7 @@ describe('Unscharferelation', () => {
       expect(heisenberg.isAbsent()).toBe(true);
       expect(() => {
         heisenberg.get();
-      }).toThrow(UnscharferelationError);
+      }).toThrow(HeisenbergError);
     });
 
     it('returns Lost Unscharferelation when async Unscharferelations which contains Lost given', async () => {
@@ -247,7 +247,7 @@ describe('Unscharferelation', () => {
       expect(heisenberg.isAbsent()).toBe(true);
       expect(() => {
         heisenberg.get();
-      }).toThrow(UnscharferelationError);
+      }).toThrow(HeisenbergError);
     });
 
     it('returns Lost Unscharferelation when async Unscharferelations which contains Lost given even if all of others are Absent', async () => {
@@ -266,7 +266,7 @@ describe('Unscharferelation', () => {
       expect(heisenberg.isAbsent()).toBe(true);
       expect(() => {
         heisenberg.get();
-      }).toThrow(UnscharferelationError);
+      }).toThrow(HeisenbergError);
     });
 
     it('returns Lost Unscharferelation if includes at least one Lost comes faster than Absent', async () => {
@@ -359,7 +359,7 @@ describe('Unscharferelation', () => {
 
         expect(() => {
           h.get();
-        }).toThrow(UnscharferelationError);
+        }).toThrow(HeisenbergError);
       }
     });
 
@@ -427,7 +427,7 @@ describe('Unscharferelation', () => {
           case 1: {
             expect(() => {
               h.get();
-            }).toThrow(UnscharferelationError);
+            }).toThrow(HeisenbergError);
             continue;
           }
           case 2:
@@ -605,7 +605,7 @@ describe('Unscharferelation', () => {
       expect(heisenberg.isAbsent()).toBe(true);
       expect(() => {
         heisenberg.get();
-      }).toThrow(UnscharferelationError);
+      }).toThrow(HeisenbergError);
     });
 
     it('constructs from async null or undefined', async () => {
@@ -617,7 +617,7 @@ describe('Unscharferelation', () => {
       expect(heisenberg.isAbsent()).toBe(true);
       expect(() => {
         heisenberg.get();
-      }).toThrow(UnscharferelationError);
+      }).toThrow(HeisenbergError);
     });
 
     it('returns Lost Unscharferelation if an unexpected rejected Promise given', async () => {

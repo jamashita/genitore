@@ -1,5 +1,5 @@
 import { MockRuntimeError } from '@jamashita/anden-error';
-import { Heisenberg, Matter } from '@jamashita/genitore-heisenberg';
+import { Heisenberg, HeisenbergError, Matter } from '@jamashita/genitore-heisenberg';
 import { Plan } from '@jamashita/genitore-plan';
 import sinon, { SinonSpy } from 'sinon';
 import { Epoque } from '../Epoque.js';
@@ -289,7 +289,7 @@ describe('UnscharferelationInternal', () => {
       expect(absent.isAbsent()).toBe(true);
       expect(() => {
         absent.get();
-      }).toThrow(UnscharferelationError);
+      }).toThrow(HeisenbergError);
       expect(lost.isLost()).toBe(true);
       expect(() => {
         lost.get();
