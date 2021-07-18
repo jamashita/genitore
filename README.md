@@ -1,6 +1,6 @@
 # Genitore
 
-This package enables you to use things in one class instance and the same interface.
+This package contains Optional monad and Result monad that support asynchronously.
 
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lerna.js.org/)
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
@@ -12,20 +12,13 @@ This package enables you to use things in one class instance and the same interf
 
 ```
 > node -v
-v12.0.0
-```
-
-### My environment
-
-```
-> node -v
-v15.5.0
+v16.2.0
 
 > npm -v
-7.3.0
+7.13.0
 
 > yarn -v
-1.22.20
+1.22.10
 ```
 
 ## Conventional commit
