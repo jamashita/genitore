@@ -5,7 +5,7 @@ import { Uncertain } from '../Uncertain.js';
 
 describe('Uncertain', () => {
   describe('get', () => {
-    it('throws UnscharferelationError', () => {
+    it('throws HeisenbergError', () => {
       expect.assertions(1);
 
       const uncertain: Uncertain<number> = Uncertain.of<number>();
