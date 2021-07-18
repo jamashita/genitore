@@ -1,8 +1,6 @@
 import { UnimplementedError } from '@jamashita/anden-error';
 import { ValueObject } from '@jamashita/anden-object';
 import { Heisenberg, Matter } from '@jamashita/genitore-heisenberg';
-import { ISuperposition } from '../../../superposition/Interface/ISuperposition.js';
-import { UnscharferelationError } from '../Error/UnscharferelationError.js';
 import { IUnscharferelation } from '../IUnscharferelation.js';
 
 export class MockUnscharferelation<P> extends ValueObject<'MockUnscharferelation'> implements IUnscharferelation<P, 'MockUnscharferelation'> {
@@ -57,10 +55,6 @@ export class MockUnscharferelation<P> extends ValueObject<'MockUnscharferelation
   }
 
   public filter(): IUnscharferelation<P> {
-    throw new UnimplementedError();
-  }
-
-  public toSuperposition(): ISuperposition<P, UnscharferelationError> {
     throw new UnimplementedError();
   }
 }
