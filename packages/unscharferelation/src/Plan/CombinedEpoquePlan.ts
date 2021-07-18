@@ -1,8 +1,5 @@
-import { DestroyPlan } from '../../plan/Interface/DestroyPlan.js';
-import { MapPlan } from '../../plan/Interface/MapPlan.js';
-import { Plan } from '../../plan/Interface/Plan.js';
-import { RecoveryPlan } from '../../plan/Interface/RecoveryPlan.js';
-import { Matter } from '../Interface/Matter.js';
+import { Matter } from '@jamashita/genitore-heisenberg';
+import { DestroyPlan, MapPlan, Plan, RecoveryPlan } from '@jamashita/genitore-plan';
 
 export class CombinedEpoquePlan<P> implements Plan<Matter<P>, void, 'CombinedEpoquePlan'> {
   public readonly noun: 'CombinedEpoquePlan' = 'CombinedEpoquePlan';

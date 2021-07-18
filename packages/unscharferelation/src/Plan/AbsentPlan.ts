@@ -1,8 +1,8 @@
 import { Kind, Supplier, Suspicious } from '@jamashita/anden-type';
-import { RecoveryPlan } from '../../plan/Interface/RecoveryPlan.js';
-import { Epoque } from '../Epoque/Interface/Epoque.js';
-import { isUnscharferelation, IUnscharferelation, UReturnType } from '../Interface/IUnscharferelation.js';
-import { Matter } from '../Interface/Matter.js';
+import { Matter } from '@jamashita/genitore-heisenberg';
+import { RecoveryPlan } from '@jamashita/genitore-plan';
+import { Epoque } from '../Epoque.js';
+import { isUnscharferelation, IUnscharferelation, UReturnType } from '../IUnscharferelation.js';
 
 export class AbsentPlan<P> implements RecoveryPlan<void, 'AbsentPlan'> {
   public readonly noun: 'AbsentPlan' = 'AbsentPlan';
@@ -53,6 +53,14 @@ export class AbsentPlan<P> implements RecoveryPlan<void, 'AbsentPlan'> {
     }
   }
 
+  private forOther(v: Suspicious<Matter<P>>): unknown {
+    if (Kind.isUndefined(v) || Kind.isNull(v)) {
+      return this.epoque.decline();
+    }
+
+    return this.epoque.accept(v);
+  }
+
   private forUnscharferelation(unscharferelation: IUnscharferelation<P>): unknown {
     return unscharferelation.pass(
       (v: Matter<P>) => {
@@ -65,13 +73,5 @@ export class AbsentPlan<P> implements RecoveryPlan<void, 'AbsentPlan'> {
         return this.epoque.throw(c);
       }
     );
-  }
-
-  private forOther(v: Suspicious<Matter<P>>): unknown {
-    if (Kind.isUndefined(v) || Kind.isNull(v)) {
-      return this.epoque.decline();
-    }
-
-    return this.epoque.accept(v);
   }
 }

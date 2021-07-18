@@ -1,11 +1,10 @@
 import { MockRuntimeError } from '@jamashita/anden-error';
+import { Heisenberg, Matter } from '@jamashita/genitore-heisenberg';
+import { Plan } from '@jamashita/genitore-plan';
 import sinon, { SinonSpy } from 'sinon';
-import { Plan } from '../../plan/Interface/Plan';
-import { Epoque } from '../Epoque/Interface/Epoque';
-import { UnscharferelationError } from '../Error/UnscharferelationError';
-import { Heisenberg } from '../Heisenberg/Heisenberg';
-import { Matter } from '../Interface/Matter';
-import { UnscharferelationInternal } from '../UnscharferelationInternal';
+import { Epoque } from '../Epoque.js';
+import { UnscharferelationError } from '../Error/UnscharferelationError.js';
+import { UnscharferelationInternal } from '../UnscharferelationInternal.js';
 
 describe('UnscharferelationInternal', () => {
   describe('toString', () => {

@@ -1,6 +1,6 @@
 import sinon, { SinonSpy } from 'sinon';
-import { MockEpoque } from '../../Epoque/Mock/MockEpoque';
-import { DestroyEpoquePlan } from '../DestroyEpoquePlan';
+import { MockEpoque } from '../../Mock/MockEpoque.js';
+import { DestroyEpoquePlan } from '../DestroyEpoquePlan.js';
 
 describe('DestroyEpoquePlan', () => {
   describe('onDestroy', () => {

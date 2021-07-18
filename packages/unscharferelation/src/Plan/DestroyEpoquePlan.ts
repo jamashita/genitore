@@ -1,5 +1,5 @@
-import { DestroyPlan } from '../../plan/Interface/DestroyPlan.js';
-import { Epoque } from '../Epoque/Interface/Epoque.js';
+import { DestroyPlan } from '@jamashita/genitore-plan';
+import { Epoque } from '../Epoque.js';
 
 export class DestroyEpoquePlan<P> implements DestroyPlan<'DestroyEpoquePlan'> {
   public readonly noun: 'DestroyEpoquePlan' = 'DestroyEpoquePlan';

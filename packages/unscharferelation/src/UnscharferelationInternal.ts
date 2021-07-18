@@ -1,23 +1,20 @@
 import { Consumer, Peek, Reject, Resolve, Supplier, UnaryFunction } from '@jamashita/anden-type';
-import { DestroyPassPlan } from '../plan/DestroyPassPlan.js';
-import { DestroySpoilPlan } from '../plan/DestroySpoilPlan.js';
-import { DestroyPlan } from '../plan/Interface/DestroyPlan.js';
-import { MapPlan } from '../plan/Interface/MapPlan.js';
-import { Plan } from '../plan/Interface/Plan.js';
-import { RecoveryPlan } from '../plan/Interface/RecoveryPlan.js';
-import { MapPassPlan } from '../plan/MapPassPlan.js';
-import { MapSpoilPlan } from '../plan/MapSpoilPlan.js';
-import { RecoveryPassPlan } from '../plan/RecoveryPassPlan.js';
-import { RecoverySpoilPlan } from '../plan/RecoverySpoilPlan.js';
-import { Epoque } from './Epoque/Interface/Epoque.js';
+import { Absent, Heisenberg, Lost, Matter, Present, Uncertain } from '@jamashita/genitore-heisenberg';
+import {
+  DestroyPassPlan,
+  DestroyPlan,
+  DestroySpoilPlan,
+  MapPassPlan,
+  MapPlan,
+  MapSpoilPlan,
+  Plan,
+  RecoveryPassPlan,
+  RecoveryPlan,
+  RecoverySpoilPlan
+} from '@jamashita/genitore-plan';
+import { Epoque } from './Epoque.js';
 import { UnscharferelationError } from './Error/UnscharferelationError.js';
-import { Absent } from './Heisenberg/Absent.js';
-import { Heisenberg } from './Heisenberg/Heisenberg.js';
-import { Lost } from './Heisenberg/Lost.js';
-import { Present } from './Heisenberg/Present.js';
-import { Uncertain } from './Heisenberg/Uncertain.js';
-import { IUnscharferelation, UReturnType } from './Interface/IUnscharferelation.js';
-import { Matter } from './Interface/Matter.js';
+import { IUnscharferelation, UReturnType } from './IUnscharferelation.js';
 import { AbsentPlan } from './Plan/AbsentPlan.js';
 import { CombinedEpoquePlan } from './Plan/CombinedEpoquePlan.js';
 import { DestroyEpoquePlan } from './Plan/DestroyEpoquePlan.js';
@@ -146,6 +143,10 @@ export class UnscharferelationInternal<P> implements IUnscharferelation<P, 'Unsc
     });
   }
 
+  public serialize(): string {
+    return this.heisenberg.toString();
+  }
+
   public terminate(): Promise<Heisenberg<P>> {
     return new Promise<Heisenberg<P>>((resolve: Resolve<Heisenberg<P>>) => {
       this.peek(() => {
@@ -166,6 +167,10 @@ export class UnscharferelationInternal<P> implements IUnscharferelation<P, 'Unsc
     });
   }
 
+  public toString(): string {
+    return this.serialize();
+  }
+
   private handle(map: MapPlan<Matter<P>>, recover: RecoveryPlan<void>, destroy: DestroyPlan): unknown {
     if (this.heisenberg.isPresent()) {
       return map.onMap(this.heisenberg.get());
@@ -180,25 +185,7 @@ export class UnscharferelationInternal<P> implements IUnscharferelation<P, 'Unsc
     return this.plans.add(CombinedEpoquePlan.of<P>(map, recover, destroy));
   }
 
-  public serialize(): string {
-    return this.heisenberg.toString();
-  }
-
   private settled(): boolean {
-    switch (this.heisenberg.status()) {
-      case 'Absent':
-      case 'Lost':
-      case 'Present': {
-        return true;
-      }
-      case 'Uncertain':
-      default: {
-        return false;
-      }
-    }
-  }
-
-  public toString(): string {
-    return this.serialize();
+    return this.heisenberg instanceof Present || this.heisenberg instanceof Lost || this.heisenberg instanceof Absent;
   }
 }

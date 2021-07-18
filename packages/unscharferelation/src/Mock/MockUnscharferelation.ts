@@ -1,10 +1,9 @@
 import { UnimplementedError } from '@jamashita/anden-error';
 import { ValueObject } from '@jamashita/anden-object';
-import { ISuperposition } from '../../superposition/Interface/ISuperposition.js';
+import { Heisenberg, Matter } from '@jamashita/genitore-heisenberg';
+import { ISuperposition } from '../../../superposition/Interface/ISuperposition.js';
 import { UnscharferelationError } from '../Error/UnscharferelationError.js';
-import { Heisenberg } from '../Heisenberg/Heisenberg.js';
-import { IUnscharferelation } from '../Interface/IUnscharferelation.js';
-import { Matter } from '../Interface/Matter.js';
+import { IUnscharferelation } from '../IUnscharferelation.js';
 
 export class MockUnscharferelation<P> extends ValueObject<'MockUnscharferelation'> implements IUnscharferelation<P, 'MockUnscharferelation'> {
   public readonly noun: 'MockUnscharferelation' = 'MockUnscharferelation';
@@ -13,23 +12,11 @@ export class MockUnscharferelation<P> extends ValueObject<'MockUnscharferelation
     super();
   }
 
+  public equals(): boolean {
+    throw new UnimplementedError();
+  }
+
   public get(): Promise<Matter<P>> {
-    throw new UnimplementedError();
-  }
-
-  public terminate(): Promise<Heisenberg<P>> {
-    throw new UnimplementedError();
-  }
-
-  public map<Q = P>(): IUnscharferelation<Q> {
-    throw new UnimplementedError();
-  }
-
-  public recover<Q = P>(): IUnscharferelation<P | Q> {
-    throw new UnimplementedError();
-  }
-
-  public ifPresent(): this {
     throw new UnimplementedError();
   }
 
@@ -41,6 +28,14 @@ export class MockUnscharferelation<P> extends ValueObject<'MockUnscharferelation
     throw new UnimplementedError();
   }
 
+  public ifPresent(): this {
+    throw new UnimplementedError();
+  }
+
+  public map<Q = P>(): IUnscharferelation<Q> {
+    throw new UnimplementedError();
+  }
+
   public pass(): this {
     throw new UnimplementedError();
   }
@@ -49,11 +44,15 @@ export class MockUnscharferelation<P> extends ValueObject<'MockUnscharferelation
     throw new UnimplementedError();
   }
 
-  public equals(): boolean {
+  public recover<Q = P>(): IUnscharferelation<P | Q> {
     throw new UnimplementedError();
   }
 
   public serialize(): string {
+    throw new UnimplementedError();
+  }
+
+  public terminate(): Promise<Heisenberg<P>> {
     throw new UnimplementedError();
   }
 

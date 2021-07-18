@@ -1,13 +1,8 @@
 import { Consumer, Kind, Peek, Supplier, Suspicious, SyncAsync, UnaryFunction } from '@jamashita/anden-type';
-import { Chrono } from '../superposition/Chrono/Interface/Chrono.js';
-import { Detoxicated } from '../superposition/Interface/Detoxicated.js';
-import { Superposition } from '../superposition/Superposition.js';
-import { Epoque } from './Epoque/Interface/Epoque.js';
+import { Heisenberg, Matter, Nihil } from '@jamashita/genitore-heisenberg';
+import { Epoque } from './Epoque.js';
 import { UnscharferelationError } from './Error/UnscharferelationError.js';
-import { Heisenberg } from './Heisenberg/Heisenberg.js';
-import { IUnscharferelation, UReturnType } from './Interface/IUnscharferelation.js';
-import { Matter } from './Interface/Matter.js';
-import { Nihil } from './Interface/Nihil.js';
+import { IUnscharferelation, UReturnType } from './IUnscharferelation.js';
 import { UnscharferelationInternal } from './UnscharferelationInternal.js';
 
 export class Unscharferelation<P> implements IUnscharferelation<P, 'Unscharferelation'> {
@@ -197,35 +192,15 @@ export class Unscharferelation<P> implements IUnscharferelation<P, 'Unscharferel
     return Unscharferelation.ofUnscharferelation<P | Q>(this.internal.recover<Q>(mapper));
   }
 
-  public terminate(): Promise<Heisenberg<P>> {
-    return this.internal.terminate();
-  }
-
   public serialize(): string {
     return this.internal.toString();
   }
 
-  public toString(): string {
-    return this.serialize();
+  public terminate(): Promise<Heisenberg<P>> {
+    return this.internal.terminate();
   }
 
-  public toSuperposition(): Superposition<P, UnscharferelationError> {
-    return Superposition.of<P, UnscharferelationError>((chrono: Chrono<P, UnscharferelationError>) => {
-      this.pass(
-        (value: Matter<P>) => {
-          if (value instanceof Error) {
-            return chrono.decline(new UnscharferelationError('ABSENT'));
-          }
-
-          return chrono.accept((value as unknown) as Detoxicated<P>);
-        },
-        () => {
-          return chrono.decline(new UnscharferelationError('ABSENT'));
-        },
-        (e: unknown) => {
-          return chrono.throw(e);
-        }
-      );
-    }, UnscharferelationError);
+  public toString(): string {
+    return this.serialize();
   }
 }

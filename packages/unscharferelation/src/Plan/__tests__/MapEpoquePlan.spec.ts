@@ -1,6 +1,6 @@
 import sinon, { SinonSpy } from 'sinon';
-import { MockEpoque } from '../../Epoque/Mock/MockEpoque';
-import { MapEpoquePlan } from '../MapEpoquePlan';
+import { MockEpoque } from '../../Mock/MockEpoque.js';
+import { MapEpoquePlan } from '../MapEpoquePlan.js';
 
 describe('MapEpoquePlan', () => {
   describe('onMap', () => {

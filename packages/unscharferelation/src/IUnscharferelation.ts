@@ -9,29 +9,28 @@ import {
   SyncAsync,
   UnaryFunction
 } from '@jamashita/anden-type';
-import { Heisenberg } from '../Heisenberg/Heisenberg';
-import { Matter } from './Matter';
+import { Heisenberg, Matter } from '@jamashita/genitore-heisenberg';
 
 export type UReturnType<Q> = SyncAsync<IUnscharferelation<Q> | Suspicious<Matter<Q>>>;
 
 export interface IUnscharferelation<P, N extends string = string> extends Serializable, Noun<N> {
   get(): Promise<Matter<P>>;
 
-  terminate(): Promise<Heisenberg<P>>;
-
-  map<Q = P>(mapper: UnaryFunction<Matter<P>, UReturnType<Q>>): IUnscharferelation<Q>;
-
-  recover<Q = P>(mapper: Supplier<UReturnType<Q>>): IUnscharferelation<P | Q>;
-
-  ifPresent(consumer: Consumer<Matter<P>>): this;
-
   ifAbsent(consumer: Consumer<void>): this;
 
   ifLost(consumer: Consumer<unknown>): this;
 
+  ifPresent(consumer: Consumer<Matter<P>>): this;
+
+  map<Q = P>(mapper: UnaryFunction<Matter<P>, UReturnType<Q>>): IUnscharferelation<Q>;
+
   pass(accepted: Consumer<Matter<P>>, declined: Consumer<void>, thrown: Consumer<unknown>): this;
 
   peek(peek: Peek): this;
+
+  recover<Q = P>(mapper: Supplier<UReturnType<Q>>): IUnscharferelation<P | Q>;
+
+  terminate(): Promise<Heisenberg<P>>;
 }
 
 export const isUnscharferelation = <P>(value: unknown): value is IUnscharferelation<P> => {

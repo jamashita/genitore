@@ -1,8 +1,8 @@
 import { Kind, Suspicious, UnaryFunction } from '@jamashita/anden-type';
-import { MapPlan } from '../../plan/Interface/MapPlan.js';
-import { Epoque } from '../Epoque/Interface/Epoque.js';
-import { isUnscharferelation, IUnscharferelation, UReturnType } from '../Interface/IUnscharferelation.js';
-import { Matter } from '../Interface/Matter.js';
+import { Matter } from '@jamashita/genitore-heisenberg';
+import { MapPlan } from '@jamashita/genitore-plan';
+import { Epoque } from '../Epoque.js';
+import { isUnscharferelation, IUnscharferelation, UReturnType } from '../IUnscharferelation.js';
 
 export class PresentPlan<P, Q> implements MapPlan<Matter<P>, 'PresentPlan'> {
   public readonly noun: 'PresentPlan' = 'PresentPlan';
@@ -53,6 +53,14 @@ export class PresentPlan<P, Q> implements MapPlan<Matter<P>, 'PresentPlan'> {
     }
   }
 
+  private forOther(v: Suspicious<Matter<Q>>): unknown {
+    if (Kind.isUndefined(v) || Kind.isNull(v)) {
+      return this.epoque.decline();
+    }
+
+    return this.epoque.accept(v);
+  }
+
   private forUnscharferelation(u: IUnscharferelation<Q>): unknown {
     return u.pass(
       (v: Matter<Q>) => {
@@ -65,13 +73,5 @@ export class PresentPlan<P, Q> implements MapPlan<Matter<P>, 'PresentPlan'> {
         return this.epoque.throw(c);
       }
     );
-  }
-
-  private forOther(v: Suspicious<Matter<Q>>): unknown {
-    if (Kind.isUndefined(v) || Kind.isNull(v)) {
-      return this.epoque.decline();
-    }
-
-    return this.epoque.accept(v);
   }
 }

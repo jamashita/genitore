@@ -1,5 +1,5 @@
-import { RecoveryPlan } from '../../plan/Interface/RecoveryPlan.js';
-import { Epoque } from '../Epoque/Interface/Epoque.js';
+import { RecoveryPlan } from '@jamashita/genitore-plan';
+import { Epoque } from '../Epoque.js';
 
 export class RecoveryEpoquePlan<P> implements RecoveryPlan<'RecoveryEpoquePlan'> {
   public readonly noun: 'RecoveryEpoquePlan' = 'RecoveryEpoquePlan';

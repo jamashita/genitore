@@ -1,6 +1,6 @@
+import { PassThroughPlan } from '@jamashita/genitore-plan';
 import sinon, { SinonSpy } from 'sinon';
-import { PassThroughPlan } from '../../../plan/PassThroughPlan';
-import { CombinedEpoquePlan } from '../CombinedEpoquePlan';
+import { CombinedEpoquePlan } from '../CombinedEpoquePlan.js';
 
 describe('CombinedEpoquePlan', () => {
   describe('onMap', () => {

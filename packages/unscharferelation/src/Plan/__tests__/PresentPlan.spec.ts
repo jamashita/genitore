@@ -1,10 +1,10 @@
 import { MockRuntimeError } from '@jamashita/anden-error';
 import { Resolve } from '@jamashita/anden-type';
 import sinon, { SinonSpy } from 'sinon';
-import { Epoque } from '../../Epoque/Interface/Epoque';
-import { MockEpoque } from '../../Epoque/Mock/MockEpoque';
-import { Unscharferelation } from '../../Unscharferelation';
-import { PresentPlan } from '../PresentPlan';
+import { Epoque } from '../../Epoque.js';
+import { MockEpoque } from '../../Mock/MockEpoque.js';
+import { Unscharferelation } from '../../Unscharferelation.js';
+import { PresentPlan } from '../PresentPlan.js';
 
 describe('PresentPlan', () => {
   describe('onMap', () => {

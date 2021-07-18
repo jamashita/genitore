@@ -1,6 +1,6 @@
 import { Consumer } from '@jamashita/anden-type';
-import { Matter } from '../../Interface/Matter';
-import { Epoque } from '../Interface/Epoque';
+import { Matter } from '@jamashita/genitore-heisenberg';
+import { Epoque } from '../Epoque.js';
 
 export class MockEpoque<M> implements Epoque<M, 'MockEpoque'> {
   public readonly noun: 'MockEpoque' = 'MockEpoque';
