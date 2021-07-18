@@ -1,7 +1,7 @@
 import { MockRuntimeError } from '@jamashita/anden-error';
 import sinon, { SinonSpy } from 'sinon';
-import { Heisenberg } from '../Heisenberg';
-import { Lost } from '../Lost';
+import { Heisenberg } from '../Heisenberg.js';
+import { Lost } from '../Lost.js';
 
 describe('Lost', () => {
   describe('get', () => {

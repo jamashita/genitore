@@ -1,9 +1,8 @@
 import { Objet } from '@jamashita/anden-object';
 import { Consumer } from '@jamashita/anden-type';
-import { Absent } from './Absent';
-import { Heisenberg } from './Heisenberg';
-import { HeisenbergType } from './HeisenbergType';
-import { Present } from './Present';
+import { Absent } from './Absent.js';
+import { Heisenberg } from './Heisenberg.js';
+import { Present } from './Present.js';
 
 export class Lost<P> implements Heisenberg<P, 'Lost'> {
   public readonly noun: 'Lost' = 'Lost';
@@ -17,24 +16,20 @@ export class Lost<P> implements Heisenberg<P, 'Lost'> {
     this.cause = cause;
   }
 
-  public serialize(): string {
-    return `Lost: ${Objet.identify(this.cause)}`;
-  }
-
-  public toString(): string {
-    return this.serialize();
-  }
-
   public get(): never {
     throw this.cause;
   }
 
-  public status(): HeisenbergType {
-    return 'Lost';
+  public ifAbsent(): void {
+    // NOOP
   }
 
-  public isPresent(): this is Present<P> {
-    return false;
+  public ifLost(consumer: Consumer<unknown>): void {
+    consumer(this.cause);
+  }
+
+  public ifPresent(): void {
+    // NOOP
   }
 
   public isAbsent(): this is Absent<P> {
@@ -45,16 +40,16 @@ export class Lost<P> implements Heisenberg<P, 'Lost'> {
     return true;
   }
 
-  public ifPresent(): void {
-    // NOOP
+  public isPresent(): this is Present<P> {
+    return false;
   }
 
-  public ifAbsent(): void {
-    // NOOP
+  public serialize(): string {
+    return `Lost: ${Objet.identify(this.cause)}`;
   }
 
-  public ifLost(consumer: Consumer<unknown>): void {
-    consumer(this.cause);
+  public toString(): string {
+    return this.serialize();
   }
 
   public getCause(): unknown {

@@ -1,7 +1,7 @@
 import sinon, { SinonSpy } from 'sinon';
-import { UnscharferelationError } from '../../Error/UnscharferelationError';
-import { Heisenberg } from '../Heisenberg';
-import { Uncertain } from '../Uncertain';
+import { HeisenbergError } from '../Error/HeisenbergError.js';
+import { Heisenberg } from '../Heisenberg.js';
+import { Uncertain } from '../Uncertain.js';
 
 describe('Uncertain', () => {
   describe('get', () => {
@@ -12,7 +12,7 @@ describe('Uncertain', () => {
 
       expect(() => {
         uncertain.get();
-      }).toThrow(UnscharferelationError);
+      }).toThrow(HeisenbergError);
     });
   });
 

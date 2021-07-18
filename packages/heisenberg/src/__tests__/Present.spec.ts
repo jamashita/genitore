@@ -1,6 +1,6 @@
 import sinon, { SinonSpy } from 'sinon';
-import { Heisenberg } from '../Heisenberg';
-import { Present } from '../Present';
+import { Heisenberg } from '../Heisenberg.js';
+import { Present } from '../Present.js';
 
 describe('Present', () => {
   describe('get', () => {
