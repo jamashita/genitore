@@ -1,7 +1,7 @@
-import { SuperpositionError } from '../../superposition/Error/SuperpositionError.js';
 import { Alive } from './Alive.js';
 import { Contradiction } from './Contradiction.js';
 import { Dead } from './Dead.js';
+import { SchrodingerError } from './Error/SchrodingerError.js';
 import { Schrodinger } from './Schrodinger.js';
 
 export class Still<A, D extends Error> implements Schrodinger<A, D, 'Still'> {
@@ -18,7 +18,7 @@ export class Still<A, D extends Error> implements Schrodinger<A, D, 'Still'> {
   }
 
   public get(): never {
-    throw new SuperpositionError('STILL');
+    throw new SchrodingerError('STILL');
   }
 
   public ifAlive(): void {
