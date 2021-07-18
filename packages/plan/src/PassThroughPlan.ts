@@ -1,5 +1,5 @@
 import { Consumer, Whatever } from '@jamashita/anden-type';
-import { Plan } from './Interface/Plan.js';
+import { Plan } from './Plan.js';
 
 export class PassThroughPlan<M, R> implements Plan<M, R, 'PassThroughPlan'> {
   public readonly noun: 'PassThroughPlan' = 'PassThroughPlan';
