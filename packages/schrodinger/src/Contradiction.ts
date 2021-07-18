@@ -1,9 +1,8 @@
 import { Objet } from '@jamashita/anden-object';
 import { Consumer } from '@jamashita/anden-type';
-import { Alive } from './Alive';
-import { Dead } from './Dead';
-import { Schrodinger } from './Schrodinger';
-import { SchrodingerType } from './SchrodingerType';
+import { Alive } from './Alive.js';
+import { Dead } from './Dead.js';
+import { Schrodinger } from './Schrodinger.js';
 
 export class Contradiction<A, D extends Error> implements Schrodinger<A, D, 'Contradiction'> {
   public readonly noun: 'Contradiction' = 'Contradiction';
@@ -17,27 +16,23 @@ export class Contradiction<A, D extends Error> implements Schrodinger<A, D, 'Con
     this.cause = cause;
   }
 
-  public serialize(): string {
-    return `Contradiction: ${Objet.identify(this.cause)}`;
-  }
-
-  public toString(): string {
-    return this.serialize();
-  }
-
   public get(): never {
     throw this.cause;
   }
 
-  public status(): SchrodingerType {
-    return 'Contradiction';
+  public ifAlive(): void {
+    // NOOP
+  }
+
+  public ifContradiction(consumer: Consumer<unknown>): void {
+    consumer(this.cause);
+  }
+
+  public ifDead(): void {
+    // NOOP
   }
 
   public isAlive(): this is Alive<A, D> {
-    return false;
-  }
-
-  public isDead(): this is Dead<A, D> {
     return false;
   }
 
@@ -45,16 +40,16 @@ export class Contradiction<A, D extends Error> implements Schrodinger<A, D, 'Con
     return true;
   }
 
-  public ifAlive(): void {
-    // NOOP
+  public isDead(): this is Dead<A, D> {
+    return false;
   }
 
-  public ifDead(): void {
-    // NOOP
+  public serialize(): string {
+    return `Contradiction: ${Objet.identify(this.cause)}`;
   }
 
-  public ifContradiction(consumer: Consumer<unknown>): void {
-    consumer(this.cause);
+  public toString(): string {
+    return this.serialize();
   }
 
   public getCause(): unknown {
