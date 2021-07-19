@@ -30,7 +30,7 @@
     "@jamashita/anden-error": "1.10.0",
     "@jamashita/anden-object": "1.11.0",
     "@jamashita/anden-type": "1.10.1",
-    "@jamashita/genitore-plan": "1.0.0",
+    "@jamashita/genitore-plan": "1.4.0",
     "@jamashita/genitore-schrodinger": "1.0.0"
   },
   "devDependencies": {
