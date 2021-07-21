@@ -1,3 +1,11 @@
+# [@jamashita/genitore-heisenberg-v1.1.0](https://github.com/jamashita/genitore/compare/@jamashita/genitore-heisenberg-v1.0.0...@jamashita/genitore-heisenberg-v1.1.0) (2021-07-21)
+
+
+### Features
+
+* 🎸 BREAKING CHANGE: update ([9384eda](https://github.com/jamashita/genitore/commit/9384eda97891171925b03e116cf288664781dada))
+* 🎸 update ([2ffbf4d](https://github.com/jamashita/genitore/commit/2ffbf4d6163307db807d76939171b14692fa5490))
+
 # Change Log
 
 All notable changes to this project will be documented in this file.
