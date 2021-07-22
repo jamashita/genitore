@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0](https://github.com/jamashita/genitore.git/packages/unscharferelation/compare/@jamashita/genitore-unscharferelation@1.10.0...@jamashita/genitore-unscharferelation@2.0.0) (2021-07-22)
+
+
+### Features
+
+* 🎸 BREAKING CHANGE: update ([9384eda](https://github.com/jamashita/genitore.git/packages/unscharferelation/commit/9384eda97891171925b03e116cf288664781dada))
+* 🎸 update ([62c4f19](https://github.com/jamashita/genitore.git/packages/unscharferelation/commit/62c4f19d09ab3f75a6d8be259302d4810243a0dc))
+
+
+
+
+
 # 1.10.0 (2021-07-21)
 
 
