@@ -1,6 +1,6 @@
 {
   "name": "@jamashita/genitore-plan",
-  "version": "1.5.0",
+  "version": "2.0.0",
   "private": false,
   "repository": {
     "type": "git",
@@ -27,7 +27,7 @@
     "clean:others": "rimraf *.log && rimraf tsconfig.build.tsbuildinfo"
   },
   "dependencies": {
-    "@jamashita/anden-type": "1.11.1"
+    "@jamashita/anden-type": "2.0.0"
   },
   "devDependencies": {
     "sinon": "11.1.1"
