@@ -28,8 +28,8 @@
   },
   "dependencies": {
     "@jamashita/anden-error": "2.0.0",
-    "@jamashita/anden-object": "2.0.0",
-    "@jamashita/anden-type": "2.0.0",
+    "@jamashita/anden-object": "2.1.0",
+    "@jamashita/anden-type": "2.1.0",
     "@jamashita/genitore-plan": "^2.0.0",
     "@jamashita/genitore-schrodinger": "^2.0.0"
   },
