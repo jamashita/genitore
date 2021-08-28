@@ -61,7 +61,7 @@ describe('Absent', () => {
       const absent: Heisenberg<number> = Absent.of<number>();
 
       absent.ifPresent(() => {
-        spy();
+        s();
       });
 
       expect(s.called).toBe(false);
@@ -77,7 +77,7 @@ describe('Absent', () => {
       const absent: Heisenberg<number> = Absent.of<number>();
 
       absent.ifAbsent(() => {
-        spy();
+        s();
       });
 
       expect(s.called).toBe(true);
@@ -93,7 +93,7 @@ describe('Absent', () => {
       const absent: Heisenberg<number> = Absent.of<number>();
 
       absent.ifLost(() => {
-        spy();
+        s();
       });
 
       expect(s.called).toBe(false);

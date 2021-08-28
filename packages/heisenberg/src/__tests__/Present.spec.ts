@@ -102,7 +102,7 @@ describe('Present', () => {
       const present: Heisenberg<number> = Present.of<number>(value);
 
       present.ifPresent((v: number) => {
-        spy();
+        s();
         expect(v).toBe(value);
       });
 
@@ -121,7 +121,7 @@ describe('Present', () => {
       const present: Heisenberg<number> = Present.of<number>(value);
 
       present.ifAbsent(() => {
-        spy();
+        s();
       });
 
       expect(s.called).toBe(false);
@@ -139,7 +139,7 @@ describe('Present', () => {
       const present: Heisenberg<number> = Present.of<number>(value);
 
       present.ifLost(() => {
-        spy();
+        s();
       });
 
       expect(s.called).toBe(false);

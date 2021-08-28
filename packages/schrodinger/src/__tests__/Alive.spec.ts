@@ -103,7 +103,7 @@ describe('Alive', () => {
       const alive: Schrodinger<number, MockRuntimeError> = Alive.of<number, MockRuntimeError>(value);
 
       alive.ifAlive((v: number) => {
-        spy();
+        s();
         expect(v).toBe(value);
       });
 
@@ -122,7 +122,7 @@ describe('Alive', () => {
       const alive: Schrodinger<number, MockRuntimeError> = Alive.of<number, MockRuntimeError>(value);
 
       alive.ifDead(() => {
-        spy();
+        s();
       });
 
       expect(s.called).toBe(false);
@@ -140,7 +140,7 @@ describe('Alive', () => {
       const alive: Schrodinger<number, MockRuntimeError> = Alive.of<number, MockRuntimeError>(value);
 
       alive.ifContradiction(() => {
-        spy();
+        s();
       });
 
       expect(s.called).toBe(false);
