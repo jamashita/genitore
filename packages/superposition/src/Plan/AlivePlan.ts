@@ -1,8 +1,8 @@
 import { Kind, UnaryFunction } from '@jamashita/anden-type';
 import { MapPlan } from '@jamashita/genitore-plan';
 import { Detoxicated } from '@jamashita/genitore-schrodinger';
-import { Chrono } from '../Chrono.js';
-import { containsError, isSuperposition, ISuperposition, SReturnType } from '../ISuperposition.js';
+import { Chrono } from '../Chrono';
+import { containsError, isSuperposition, ISuperposition, SReturnType } from '../ISuperposition';
 
 export class AlivePlan<A, B, E extends Error> implements MapPlan<Detoxicated<A>, 'AlivePlan'> {
   public readonly noun: 'AlivePlan' = 'AlivePlan';

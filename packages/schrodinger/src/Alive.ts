@@ -1,9 +1,9 @@
 import { Objet } from '@jamashita/anden-object';
 import { Consumer } from '@jamashita/anden-type';
-import { Contradiction } from './Contradiction.js';
-import { Dead } from './Dead.js';
-import { Detoxicated } from './Detoxicated.js';
-import { Schrodinger } from './Schrodinger.js';
+import { Contradiction } from './Contradiction';
+import { Dead } from './Dead';
+import { Detoxicated } from './Detoxicated';
+import { Schrodinger } from './Schrodinger';
 
 export class Alive<A, D extends Error> implements Schrodinger<A, D, 'Alive'> {
   public readonly noun: 'Alive' = 'Alive';

@@ -1,7 +1,7 @@
 import { MockRuntimeError } from '@jamashita/anden-error';
-import sinon, { SinonSpy } from 'sinon';
-import { Heisenberg } from '../Heisenberg.js';
-import { Lost } from '../Lost.js';
+import { SinonSpy, spy } from 'sinon';
+import { Heisenberg } from '../Heisenberg';
+import { Lost } from '../Lost';
 
 describe('Lost', () => {
   describe('get', () => {
@@ -74,15 +74,15 @@ describe('Lost', () => {
 
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
 
       const lost: Heisenberg<number> = Lost.of<number>(error);
 
       lost.ifPresent(() => {
-        spy();
+        s();
       });
 
-      expect(spy.called).toBe(false);
+      expect(s.called).toBe(false);
     });
   });
 
@@ -92,15 +92,15 @@ describe('Lost', () => {
 
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
 
       const lost: Heisenberg<number> = Lost.of<number>(error);
 
       lost.ifAbsent(() => {
-        spy();
+        s();
       });
 
-      expect(spy.called).toBe(false);
+      expect(s.called).toBe(false);
     });
   });
 
@@ -110,15 +110,15 @@ describe('Lost', () => {
 
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
 
       const lost: Heisenberg<number> = Lost.of<number>(error);
 
       lost.ifLost(() => {
-        spy();
+        s();
       });
 
-      expect(spy.called).toBe(true);
+      expect(s.called).toBe(true);
     });
   });
 

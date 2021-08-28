@@ -1,5 +1,5 @@
-import sinon, { SinonSpy } from 'sinon';
-import { MapPassPlan } from '../MapPassPlan.js';
+import { SinonSpy, spy } from 'sinon';
+import { MapPassPlan } from '../MapPassPlan';
 
 describe('MapPassPlan', () => {
   describe('onMap', () => {
@@ -8,18 +8,18 @@ describe('MapPassPlan', () => {
 
       const value: number = -35;
 
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
 
       const plan: MapPassPlan<number> = MapPassPlan.of<number>(
         (v: number) => {
-          spy();
+          s();
           expect(v).toBe(value);
         }
       );
 
       plan.onMap(value);
 
-      expect(spy.called).toBe(true);
+      expect(s.called).toBe(true);
     });
   });
 });

@@ -1,6 +1,6 @@
 import { Consumer } from '@jamashita/anden-type';
 import { DeadConstructor, Detoxicated } from '@jamashita/genitore-schrodinger';
-import { Chrono } from '../Chrono.js';
+import { Chrono } from '../Chrono';
 
 export class MockChrono<M, R extends Error> implements Chrono<M, R, 'MockChrono'> {
   public readonly noun: 'MockChrono' = 'MockChrono';

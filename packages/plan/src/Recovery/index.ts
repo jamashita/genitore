@@ -1,3 +1,3 @@
-export * from './RecoveryPassPlan.js';
-export * from './RecoveryPlan.js';
-export * from './RecoverySpoilPlan.js';
+export * from './RecoveryPassPlan';
+export * from './RecoveryPlan';
+export * from './RecoverySpoilPlan';

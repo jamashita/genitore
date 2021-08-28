@@ -1,10 +1,10 @@
 import { MockRuntimeError } from '@jamashita/anden-error';
 import { Heisenberg, HeisenbergError, Matter } from '@jamashita/genitore-heisenberg';
 import { Plan } from '@jamashita/genitore-plan';
-import sinon, { SinonSpy } from 'sinon';
-import { Epoque } from '../Epoque.js';
-import { UnscharferelationError } from '../Error/UnscharferelationError.js';
-import { UnscharferelationInternal } from '../UnscharferelationInternal.js';
+import { SinonSpy, spy } from 'sinon';
+import { Epoque } from '../Epoque';
+import { UnscharferelationError } from '../Error/UnscharferelationError';
+import { UnscharferelationInternal } from '../UnscharferelationInternal';
 
 describe('UnscharferelationInternal', () => {
   describe('toString', () => {
@@ -38,10 +38,10 @@ describe('UnscharferelationInternal', () => {
       expect.assertions(4);
 
       const value: number = -35;
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
       const plans: Set<Plan<Matter<number>, void>> = new Set<Plan<Matter<number>, void>>();
 
-      plans.forEach = spy;
+      plans.forEach = s;
 
       const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of<number>(
         (epoque: Epoque<number>) => {
@@ -61,7 +61,7 @@ describe('UnscharferelationInternal', () => {
 
       const heisenberg2: Heisenberg<number> = await unscharferelation.terminate();
 
-      expect(spy.called).toBe(false);
+      expect(s.called).toBe(false);
       expect(heisenberg1).toBe(heisenberg2);
     });
 
@@ -70,8 +70,8 @@ describe('UnscharferelationInternal', () => {
 
       const value: number = -1.3;
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
 
       const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of<number>(
         (epoque: Epoque<number>) => {
@@ -102,10 +102,10 @@ describe('UnscharferelationInternal', () => {
     it('does nothing if done once', async () => {
       expect.assertions(3);
 
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
       const plans: Set<Plan<Matter<number>, void>> = new Set<Plan<Matter<number>, void>>();
 
-      plans.forEach = spy;
+      plans.forEach = s;
 
       const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of<number>(
         (epoque: Epoque<number>) => {
@@ -124,15 +124,15 @@ describe('UnscharferelationInternal', () => {
 
       const heisenberg2: Heisenberg<number> = await unscharferelation.terminate();
 
-      expect(spy.called).toBe(false);
+      expect(s.called).toBe(false);
       expect(heisenberg1).toBe(heisenberg2);
     });
 
     it('invokes all maps', async () => {
       expect.assertions(2);
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
 
       const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of<number>(
         (epoque: Epoque<number>) => {
@@ -162,10 +162,10 @@ describe('UnscharferelationInternal', () => {
       expect.assertions(4);
 
       const error: MockRuntimeError = new MockRuntimeError();
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
       const plans: Set<Plan<Matter<number>, void>> = new Set<Plan<Matter<number>, void>>();
 
-      plans.forEach = spy;
+      plans.forEach = s;
 
       const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of<number>(
         (epoque: Epoque<number>) => {
@@ -187,7 +187,7 @@ describe('UnscharferelationInternal', () => {
 
       const heisenberg2: Heisenberg<number> = await unscharferelation.terminate();
 
-      expect(spy.callCount).toBe(0);
+      expect(s.callCount).toBe(0);
       expect(heisenberg1).toBe(heisenberg2);
     });
 
@@ -196,10 +196,10 @@ describe('UnscharferelationInternal', () => {
 
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
 
       const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of<number>(
         (epoque: Epoque<number>) => {
@@ -309,9 +309,9 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
 
       await unscharferelation.map<number>((v: number) => {
         spy1();
@@ -346,9 +346,9 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
 
       await unscharferelation.map<number>((v: number) => {
         spy1();
@@ -394,9 +394,9 @@ describe('UnscharferelationInternal', () => {
           epoque.accept(value3);
         }
       );
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
 
       await unscharferelation1.map<number>((v: number) => {
         spy1();
@@ -442,9 +442,9 @@ describe('UnscharferelationInternal', () => {
           epoque.accept(value3);
         }
       );
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
 
       await unscharferelation1.map<number>((v: number) => {
         spy1();
@@ -479,9 +479,9 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
 
       await unscharferelation.map<number>((v: number) => {
         spy1();
@@ -514,9 +514,9 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
 
       await unscharferelation.map<number>((v: number) => {
         spy1();
@@ -559,9 +559,9 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
 
       await unscharferelation1.map<number>((v: number) => {
         spy1();
@@ -604,9 +604,9 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
 
       await unscharferelation1.map<number>((v: number) => {
         spy1();
@@ -640,10 +640,10 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
 
       await unscharferelation.map<number>((v: number) => {
         spy1();
@@ -682,10 +682,10 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
 
       await unscharferelation.map<number>((v: number) => {
         spy1();
@@ -741,10 +741,10 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
 
       await unscharferelation1.map<number>((v: number) => {
         spy1();
@@ -788,9 +788,9 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
 
       await unscharferelation1.map<number>((v: number) => {
         spy1();
@@ -831,9 +831,9 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
 
       await unscharferelation1.map<number>((v: number) => {
         spy1();
@@ -873,9 +873,9 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
 
       await unscharferelation1.map<number>((v: number) => {
         spy1();
@@ -914,9 +914,9 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
 
       await unscharferelation1.map<number>((v: number) => {
         spy1();
@@ -951,9 +951,9 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
 
       await unscharferelation.map<number>((v: number) => {
         spy1();
@@ -986,9 +986,9 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
 
       await unscharferelation.map<number>((v: number) => {
         spy1();
@@ -1032,9 +1032,9 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
 
       await unscharferelation1.map<number>(() => {
         spy1();
@@ -1078,9 +1078,9 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
 
       await unscharferelation1.map<number>(() => {
         spy1();
@@ -1113,9 +1113,9 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
 
       await unscharferelation.recover<number>(() => {
         spy1();
@@ -1148,9 +1148,9 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
 
       await unscharferelation.recover<number>(() => {
         spy1();
@@ -1193,9 +1193,9 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
 
       await unscharferelation1.map<number>((v: number) => {
         spy1();
@@ -1238,9 +1238,9 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
 
       await unscharferelation1.map<number>((v: number) => {
         spy1();
@@ -1274,10 +1274,10 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
 
       await unscharferelation.map<number>((v: number) => {
         spy1();
@@ -1316,10 +1316,10 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
 
       await unscharferelation.map<number>((v: number) => {
         spy1();
@@ -1375,10 +1375,10 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
 
       await unscharferelation1.map<number>((v: number) => {
         spy1();
@@ -1434,10 +1434,10 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
 
       await unscharferelation1.map<number>((v: number) => {
         spy1();
@@ -1481,9 +1481,9 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
 
       await unscharferelation1.map<number>((v: number) => {
         spy1();
@@ -1523,9 +1523,9 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
 
       await unscharferelation1.map<number>((v: number) => {
         spy1();
@@ -1564,9 +1564,9 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
 
       await unscharferelation1.map<number>((v: number) => {
         spy1();
@@ -1601,14 +1601,14 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
 
       const heisenberg: Heisenberg<number> = await unscharferelation.ifPresent((v: number) => {
-        spy();
+        s();
         expect(v).toBe(value);
       }).terminate();
 
-      expect(spy.called).toBe(true);
+      expect(s.called).toBe(true);
       expect(heisenberg.isPresent()).toBe(true);
     });
 
@@ -1621,13 +1621,13 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
 
       const heisenberg: Heisenberg<number> = await unscharferelation.ifPresent(() => {
-        spy();
+        s();
       }).terminate();
 
-      expect(spy.called).toBe(false);
+      expect(s.called).toBe(false);
       expect(heisenberg.isAbsent()).toBe(true);
     });
 
@@ -1642,13 +1642,13 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
 
       const heisenberg: Heisenberg<number> = await unscharferelation.ifPresent(() => {
-        spy();
+        s();
       }).terminate();
 
-      expect(spy.called).toBe(false);
+      expect(s.called).toBe(false);
       expect(heisenberg.isLost()).toBe(true);
     });
   });
@@ -1665,13 +1665,13 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
 
       const heisenberg: Heisenberg<number> = await unscharferelation.ifAbsent(() => {
-        spy();
+        s();
       }).terminate();
 
-      expect(spy.called).toBe(false);
+      expect(s.called).toBe(false);
       expect(heisenberg.isPresent()).toBe(true);
       expect(heisenberg.get()).toBe(value);
     });
@@ -1685,13 +1685,13 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
 
       const heisenberg: Heisenberg<number> = await unscharferelation.ifAbsent(() => {
-        spy();
+        s();
       }).terminate();
 
-      expect(spy.called).toBe(true);
+      expect(s.called).toBe(true);
       expect(heisenberg.isAbsent()).toBe(true);
     });
 
@@ -1706,13 +1706,13 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
 
       const heisenberg: Heisenberg<number> = await unscharferelation.ifAbsent(() => {
-        spy();
+        s();
       }).terminate();
 
-      expect(spy.called).toBe(false);
+      expect(s.called).toBe(false);
       expect(heisenberg.isLost()).toBe(true);
     });
   });
@@ -1729,13 +1729,13 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
 
       const heisenberg: Heisenberg<number> = await unscharferelation.ifLost(() => {
-        spy();
+        s();
       }).terminate();
 
-      expect(spy.called).toBe(false);
+      expect(s.called).toBe(false);
       expect(heisenberg.isPresent()).toBe(true);
       expect(heisenberg.get()).toBe(value);
     });
@@ -1749,13 +1749,13 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
 
       const heisenberg: Heisenberg<number> = await unscharferelation.ifLost(() => {
-        spy();
+        s();
       }).terminate();
 
-      expect(spy.called).toBe(false);
+      expect(s.called).toBe(false);
       expect(heisenberg.isAbsent()).toBe(true);
     });
 
@@ -1770,14 +1770,14 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
 
       const heisenberg: Heisenberg<number> = await unscharferelation.ifLost((e: unknown) => {
-        spy();
+        s();
         expect(e).toBe(error);
       }).terminate();
 
-      expect(spy.called).toBe(true);
+      expect(s.called).toBe(true);
       expect(heisenberg.isLost()).toBe(true);
     });
   });
@@ -1794,9 +1794,9 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
 
       unscharferelation.pass(
         (v: number) => {
@@ -1825,9 +1825,9 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
 
       unscharferelation.pass(
         () => {
@@ -1857,9 +1857,9 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
 
       unscharferelation.pass(
         () => {
@@ -1892,13 +1892,13 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
 
       unscharferelation.peek(() => {
-        spy();
+        s();
       });
 
-      expect(spy.called).toBe(true);
+      expect(s.called).toBe(true);
     });
 
     it('invokes second callback if Unscharferelation is Absent', () => {
@@ -1910,13 +1910,13 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
 
       unscharferelation.peek(() => {
-        spy();
+        s();
       });
 
-      expect(spy.called).toBe(true);
+      expect(s.called).toBe(true);
     });
 
     it('invokes third callback if Unscharferelation is Lost', () => {
@@ -1930,13 +1930,13 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
 
       unscharferelation.peek(() => {
-        spy();
+        s();
       });
 
-      expect(spy.called).toBe(true);
+      expect(s.called).toBe(true);
     });
   });
 });

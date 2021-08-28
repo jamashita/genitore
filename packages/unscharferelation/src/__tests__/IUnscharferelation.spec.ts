@@ -1,7 +1,7 @@
-import { Epoque } from '../Epoque.js';
-import { isUnscharferelation } from '../IUnscharferelation.js';
-import { Unscharferelation } from '../Unscharferelation.js';
-import { UnscharferelationInternal } from '../UnscharferelationInternal.js';
+import { Epoque } from '../Epoque';
+import { isUnscharferelation } from '../IUnscharferelation';
+import { Unscharferelation } from '../Unscharferelation';
+import { UnscharferelationInternal } from '../UnscharferelationInternal';
 
 describe('IUnscharferelation', () => {
   describe('isUnscharferelation', () => {

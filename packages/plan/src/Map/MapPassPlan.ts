@@ -1,5 +1,5 @@
-import { Consumer, Whatever } from '@jamashita/anden-type';
-import { MapPlan } from './MapPlan.js';
+import { Consumer } from '@jamashita/anden-type';
+import { MapPlan } from './MapPlan';
 
 export class MapPassPlan<M> implements MapPlan<M, 'MapPassPlan'> {
   public readonly noun: 'MapPassPlan' = 'MapPassPlan';
@@ -13,7 +13,7 @@ export class MapPassPlan<M> implements MapPlan<M, 'MapPassPlan'> {
     this.map = map;
   }
 
-  public onMap(value: M): Whatever {
+  public onMap(value: M): unknown {
     return this.map(value);
   }
 }

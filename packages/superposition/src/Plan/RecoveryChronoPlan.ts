@@ -1,5 +1,5 @@
 import { RecoveryPlan } from '@jamashita/genitore-plan';
-import { Chrono } from '../Chrono.js';
+import { Chrono } from '../Chrono';
 
 export class RecoveryChronoPlan<A, D extends Error> implements RecoveryPlan<D, 'RecoveryChronoPlan'> {
   public readonly noun: 'RecoveryChronoPlan' = 'RecoveryChronoPlan';

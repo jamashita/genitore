@@ -1,8 +1,8 @@
-import { Alive } from './Alive.js';
-import { Contradiction } from './Contradiction.js';
-import { Dead } from './Dead.js';
-import { SchrodingerError } from './Error/SchrodingerError.js';
-import { Schrodinger } from './Schrodinger.js';
+import { Alive } from './Alive';
+import { Contradiction } from './Contradiction';
+import { Dead } from './Dead';
+import { SchrodingerError } from './Error/SchrodingerError';
+import { Schrodinger } from './Schrodinger';
 
 export class Still<A, D extends Error> implements Schrodinger<A, D, 'Still'> {
   public readonly noun: 'Still' = 'Still';

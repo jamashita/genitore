@@ -1,7 +1,7 @@
 import { MockRuntimeError } from '@jamashita/anden-error';
 import { PassThroughPlan } from '@jamashita/genitore-plan';
-import sinon, { SinonSpy } from 'sinon';
-import { CombinedChronoPlan } from '../CombinedChronoPlan.js';
+import { SinonSpy, spy } from 'sinon';
+import { CombinedChronoPlan } from '../CombinedChronoPlan';
 
 describe('CombinedChronoPlan', () => {
   describe('onMap', () => {
@@ -10,9 +10,9 @@ describe('CombinedChronoPlan', () => {
 
       const value: number = -35;
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
 
       const pass: PassThroughPlan<number, MockRuntimeError> = PassThroughPlan.of<number, MockRuntimeError>(
         (v: number) => {
@@ -42,9 +42,9 @@ describe('CombinedChronoPlan', () => {
 
       const value: MockRuntimeError = new MockRuntimeError();
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
 
       const pass: PassThroughPlan<number, MockRuntimeError> = PassThroughPlan.of<number, MockRuntimeError>(
         () => {
@@ -74,9 +74,9 @@ describe('CombinedChronoPlan', () => {
 
       const value: number = -35;
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
 
       const pass: PassThroughPlan<number, MockRuntimeError> = PassThroughPlan.of<number, MockRuntimeError>(
         () => {

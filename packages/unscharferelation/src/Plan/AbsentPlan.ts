@@ -1,8 +1,8 @@
 import { Kind, Supplier, Suspicious } from '@jamashita/anden-type';
 import { Matter } from '@jamashita/genitore-heisenberg';
 import { RecoveryPlan } from '@jamashita/genitore-plan';
-import { Epoque } from '../Epoque.js';
-import { isUnscharferelation, IUnscharferelation, UReturnType } from '../IUnscharferelation.js';
+import { Epoque } from '../Epoque';
+import { isUnscharferelation, IUnscharferelation, UReturnType } from '../IUnscharferelation';
 
 export class AbsentPlan<P> implements RecoveryPlan<void, 'AbsentPlan'> {
   public readonly noun: 'AbsentPlan' = 'AbsentPlan';
