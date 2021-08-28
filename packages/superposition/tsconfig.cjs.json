@@ -1,0 +1,16 @@
+{
+  "extends": "./tsconfig.build.json",
+  "compilerOptions": {
+    "module": "commonjs",
+    "rootDir": "./src",
+    "outDir": "./dist/cjs"
+  },
+  "references": [
+    {
+      "path": "../schrodinger/tsconfig.cjs.json"
+    },
+    {
+      "path": "../plan/tsconfig.cjs.json"
+    }
+  ]
+}

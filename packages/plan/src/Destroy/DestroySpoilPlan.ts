@@ -1,4 +1,4 @@
-import { DestroyPlan } from './DestroyPlan.js';
+import { DestroyPlan } from './DestroyPlan';
 
 export class DestroySpoilPlan implements DestroyPlan<'DestroySpoilPlan'> {
   public readonly noun: 'DestroySpoilPlan' = 'DestroySpoilPlan';

@@ -1,4 +1,4 @@
-import { MapSpoilPlan } from '../MapSpoilPlan.js';
+import { MapSpoilPlan } from '../MapSpoilPlan';
 
 describe('MapSpoilPlan', () => {
   describe('of', () => {

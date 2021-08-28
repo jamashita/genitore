@@ -1,7 +1,7 @@
 import { MockRuntimeError } from '@jamashita/anden-error';
-import sinon, { SinonSpy } from 'sinon';
-import { Alive } from '../Alive.js';
-import { Schrodinger } from '../Schrodinger.js';
+import { SinonSpy, spy } from 'sinon';
+import { Alive } from '../Alive';
+import { Schrodinger } from '../Schrodinger';
 
 describe('Alive', () => {
   describe('get', () => {
@@ -98,16 +98,16 @@ describe('Alive', () => {
 
       const value: number = 1;
 
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
 
       const alive: Schrodinger<number, MockRuntimeError> = Alive.of<number, MockRuntimeError>(value);
 
       alive.ifAlive((v: number) => {
-        spy();
+        s();
         expect(v).toBe(value);
       });
 
-      expect(spy.called).toBe(true);
+      expect(s.called).toBe(true);
     });
   });
 
@@ -117,15 +117,15 @@ describe('Alive', () => {
 
       const value: number = 1;
 
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
 
       const alive: Schrodinger<number, MockRuntimeError> = Alive.of<number, MockRuntimeError>(value);
 
       alive.ifDead(() => {
-        spy();
+        s();
       });
 
-      expect(spy.called).toBe(false);
+      expect(s.called).toBe(false);
     });
   });
 
@@ -135,15 +135,15 @@ describe('Alive', () => {
 
       const value: number = 1;
 
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
 
       const alive: Schrodinger<number, MockRuntimeError> = Alive.of<number, MockRuntimeError>(value);
 
       alive.ifContradiction(() => {
-        spy();
+        s();
       });
 
-      expect(spy.called).toBe(false);
+      expect(s.called).toBe(false);
     });
   });
 

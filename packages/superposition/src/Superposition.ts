@@ -1,9 +1,9 @@
 import { Consumer, Kind, Nullable, Peek, Supplier, SyncAsync, UnaryFunction } from '@jamashita/anden-type';
 import { Dead, DeadConstructor, Detoxicated, Schrodinger } from '@jamashita/genitore-schrodinger';
-import { Chrono } from './Chrono.js';
-import { SuperpositionError } from './Error/SuperpositionError.js';
-import { containsError, ISuperposition, SReturnType } from './ISuperposition.js';
-import { SuperpositionInternal } from './SuperpositionInternal.js';
+import { Chrono } from './Chrono';
+import { SuperpositionError } from './Error/SuperpositionError';
+import { containsError, ISuperposition, SReturnType } from './ISuperposition';
+import { SuperpositionInternal } from './SuperpositionInternal';
 
 export class Superposition<A, D extends Error> implements ISuperposition<A, D, 'Superposition'> {
   public readonly noun: 'Superposition' = 'Superposition';

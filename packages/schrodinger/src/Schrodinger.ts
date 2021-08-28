@@ -1,9 +1,9 @@
 import { Consumer, Noun, Serializable } from '@jamashita/anden-type';
-import { Alive } from './Alive.js';
-import { Contradiction } from './Contradiction.js';
-import { Dead } from './Dead.js';
-import { Detoxicated } from './Detoxicated.js';
-import { SchrodingerType } from './SchrodingerType.js';
+import { Alive } from './Alive';
+import { Contradiction } from './Contradiction';
+import { Dead } from './Dead';
+import { Detoxicated } from './Detoxicated';
+import { SchrodingerType } from './SchrodingerType';
 
 export interface Schrodinger<A, D extends Error, N extends SchrodingerType = SchrodingerType> extends Serializable, Noun<N> {
   get(): Detoxicated<A>;

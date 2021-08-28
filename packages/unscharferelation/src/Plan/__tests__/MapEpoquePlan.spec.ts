@@ -1,6 +1,6 @@
-import sinon, { SinonSpy } from 'sinon';
-import { MockEpoque } from '../../Mock/MockEpoque.js';
-import { MapEpoquePlan } from '../MapEpoquePlan.js';
+import { SinonSpy, spy } from 'sinon';
+import { MockEpoque } from '../../Mock/MockEpoque';
+import { MapEpoquePlan } from '../MapEpoquePlan';
 
 describe('MapEpoquePlan', () => {
   describe('onMap', () => {
@@ -9,9 +9,9 @@ describe('MapEpoquePlan', () => {
 
       const value: number = -35;
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
 
       const epoque: MockEpoque<number> = new MockEpoque<number>(
         (v: number) => {

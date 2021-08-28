@@ -1,8 +1,8 @@
 import { MockRuntimeError } from '@jamashita/anden-error';
-import sinon, { SinonSpy } from 'sinon';
-import { SchrodingerError } from '../Error/SchrodingerError.js';
-import { Schrodinger } from '../Schrodinger.js';
-import { Still } from '../Still.js';
+import { SinonSpy, spy } from 'sinon';
+import { SchrodingerError } from '../Error/SchrodingerError';
+import { Schrodinger } from '../Schrodinger';
+import { Still } from '../Still';
 
 describe('Still', () => {
   describe('get', () => {
@@ -51,7 +51,7 @@ describe('Still', () => {
     it('will not be invoked', () => {
       expect.assertions(1);
 
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
 
       const still: Schrodinger<number, MockRuntimeError> = Still.of<number, MockRuntimeError>();
 
@@ -59,7 +59,7 @@ describe('Still', () => {
         spy();
       });
 
-      expect(spy.called).toBe(false);
+      expect(s.called).toBe(false);
     });
   });
 
@@ -67,7 +67,7 @@ describe('Still', () => {
     it('will not be invoked', () => {
       expect.assertions(1);
 
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
 
       const still: Schrodinger<number, MockRuntimeError> = Still.of<number, MockRuntimeError>();
 
@@ -75,7 +75,7 @@ describe('Still', () => {
         spy();
       });
 
-      expect(spy.called).toBe(false);
+      expect(s.called).toBe(false);
     });
   });
 
@@ -83,7 +83,7 @@ describe('Still', () => {
     it('will not be invoked', () => {
       expect.assertions(1);
 
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
 
       const still: Schrodinger<number, MockRuntimeError> = Still.of<number, MockRuntimeError>();
 
@@ -91,7 +91,7 @@ describe('Still', () => {
         spy();
       });
 
-      expect(spy.called).toBe(false);
+      expect(s.called).toBe(false);
     });
   });
 

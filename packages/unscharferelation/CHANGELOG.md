@@ -1,3 +1,15 @@
+# [@jamashita/genitore-unscharferelation-v2.2.0](https://github.com/jamashita/genitore/compare/@jamashita/genitore-unscharferelation-v2.1.0...@jamashita/genitore-unscharferelation-v2.2.0) (2021-08-28)
+
+
+### Bug Fixes
+
+* 🐛 removed .js to adopt Dual package ([b2efdda](https://github.com/jamashita/genitore/commit/b2efdda920bab046b4106809967d7f189259708f))
+
+
+### Features
+
+* 🎸 update ([e402bc0](https://github.com/jamashita/genitore/commit/e402bc0f2b35cfc08429aad5cbd6b47da2cc9ffa))
+
 # [@jamashita/genitore-unscharferelation-v2.1.0](https://github.com/jamashita/genitore/compare/@jamashita/genitore-unscharferelation-v2.0.0...@jamashita/genitore-unscharferelation-v2.1.0) (2021-08-14)
 
 

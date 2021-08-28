@@ -1,8 +1,8 @@
 import { Consumer } from '@jamashita/anden-type';
-import { HeisenbergError } from './Error/HeisenbergError.js';
-import { Heisenberg } from './Heisenberg.js';
-import { Lost } from './Lost.js';
-import { Present } from './Present.js';
+import { HeisenbergError } from './Error/HeisenbergError';
+import { Heisenberg } from './Heisenberg';
+import { Lost } from './Lost';
+import { Present } from './Present';
 
 export class Absent<P> implements Heisenberg<P, 'Absent'> {
   public readonly noun: 'Absent' = 'Absent';

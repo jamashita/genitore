@@ -1,9 +1,9 @@
 import { Consumer, Kind, Peek, Supplier, Suspicious, SyncAsync, UnaryFunction } from '@jamashita/anden-type';
 import { Heisenberg, Matter, Nihil } from '@jamashita/genitore-heisenberg';
-import { Epoque } from './Epoque.js';
-import { UnscharferelationError } from './Error/UnscharferelationError.js';
-import { IUnscharferelation, UReturnType } from './IUnscharferelation.js';
-import { UnscharferelationInternal } from './UnscharferelationInternal.js';
+import { Epoque } from './Epoque';
+import { UnscharferelationError } from './Error/UnscharferelationError';
+import { IUnscharferelation, UReturnType } from './IUnscharferelation';
+import { UnscharferelationInternal } from './UnscharferelationInternal';
 
 export class Unscharferelation<P> implements IUnscharferelation<P, 'Unscharferelation'> {
   public readonly noun: 'Unscharferelation' = 'Unscharferelation';

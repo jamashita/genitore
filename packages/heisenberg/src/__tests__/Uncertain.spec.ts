@@ -1,7 +1,7 @@
-import sinon, { SinonSpy } from 'sinon';
-import { HeisenbergError } from '../Error/HeisenbergError.js';
-import { Heisenberg } from '../Heisenberg.js';
-import { Uncertain } from '../Uncertain.js';
+import { SinonSpy, spy } from 'sinon';
+import { HeisenbergError } from '../Error/HeisenbergError';
+import { Heisenberg } from '../Heisenberg';
+import { Uncertain } from '../Uncertain';
 
 describe('Uncertain', () => {
   describe('get', () => {
@@ -50,7 +50,7 @@ describe('Uncertain', () => {
     it('will not be invoked', () => {
       expect.assertions(1);
 
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
 
       const uncertain: Heisenberg<number> = Uncertain.of<number>();
 
@@ -58,7 +58,7 @@ describe('Uncertain', () => {
         spy();
       });
 
-      expect(spy.called).toBe(false);
+      expect(s.called).toBe(false);
     });
   });
 
@@ -66,7 +66,7 @@ describe('Uncertain', () => {
     it('will not be invoked', () => {
       expect.assertions(1);
 
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
 
       const uncertain: Heisenberg<number> = Uncertain.of<number>();
 
@@ -74,7 +74,7 @@ describe('Uncertain', () => {
         spy();
       });
 
-      expect(spy.called).toBe(false);
+      expect(s.called).toBe(false);
     });
   });
 
@@ -82,7 +82,7 @@ describe('Uncertain', () => {
     it('will not be invoked', () => {
       expect.assertions(1);
 
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
 
       const uncertain: Heisenberg<number> = Uncertain.of<number>();
 
@@ -90,7 +90,7 @@ describe('Uncertain', () => {
         spy();
       });
 
-      expect(spy.called).toBe(false);
+      expect(s.called).toBe(false);
     });
   });
 

@@ -1,9 +1,9 @@
 import { Consumer, Noun, Serializable } from '@jamashita/anden-type';
-import { Absent } from './Absent.js';
-import { HeisenbergType } from './HeisenbergType.js';
-import { Lost } from './Lost.js';
-import { Matter } from './Matter.js';
-import { Present } from './Present.js';
+import { Absent } from './Absent';
+import { HeisenbergType } from './HeisenbergType';
+import { Lost } from './Lost';
+import { Matter } from './Matter';
+import { Present } from './Present';
 
 export interface Heisenberg<P, N extends HeisenbergType = HeisenbergType> extends Serializable, Noun<N> {
   readonly noun: N;

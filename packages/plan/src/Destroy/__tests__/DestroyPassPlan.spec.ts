@@ -1,5 +1,5 @@
-import sinon, { SinonSpy } from 'sinon';
-import { DestroyPassPlan } from '../DestroyPassPlan.js';
+import { SinonSpy, spy } from 'sinon';
+import { DestroyPassPlan } from '../DestroyPassPlan';
 
 describe('DestroyPassPlan', () => {
   describe('onDestroy', () => {
@@ -8,18 +8,18 @@ describe('DestroyPassPlan', () => {
 
       const value: number = -35;
 
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
 
       const plan: DestroyPassPlan = DestroyPassPlan.of(
         (v: unknown) => {
-          spy();
+          s();
           expect(v).toBe(value);
         }
       );
 
       plan.onDestroy(value);
 
-      expect(spy.called).toBe(true);
+      expect(s.called).toBe(true);
     });
   });
 });

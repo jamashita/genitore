@@ -1,3 +1,3 @@
-import { Nihil } from './Nihil.js';
+import { Nihil } from './Nihil';
 
 export type Matter<T> = Exclude<T, Nihil>;

@@ -1,7 +1,7 @@
 import { UnimplementedError } from '@jamashita/anden-error';
 import { ValueObject } from '@jamashita/anden-object';
 import { Heisenberg, Matter } from '@jamashita/genitore-heisenberg';
-import { IUnscharferelation } from '../IUnscharferelation.js';
+import { IUnscharferelation } from '../IUnscharferelation';
 
 export class MockUnscharferelation<P> extends ValueObject<'MockUnscharferelation'> implements IUnscharferelation<P, 'MockUnscharferelation'> {
   public readonly noun: 'MockUnscharferelation' = 'MockUnscharferelation';

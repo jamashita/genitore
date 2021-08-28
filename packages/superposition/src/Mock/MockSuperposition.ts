@@ -1,8 +1,8 @@
 import { UnimplementedError } from '@jamashita/anden-error';
 import { ValueObject } from '@jamashita/anden-object';
 import { DeadConstructor, Detoxicated, Schrodinger } from '@jamashita/genitore-schrodinger';
-import { SuperpositionError } from '../Error/SuperpositionError.js';
-import { ISuperposition } from '../ISuperposition.js';
+import { SuperpositionError } from '../Error/SuperpositionError';
+import { ISuperposition } from '../ISuperposition';
 
 export class MockSuperposition<A, D extends Error> extends ValueObject<'MockSuperposition'> implements ISuperposition<A, D, 'MockSuperposition'> {
   public readonly noun: 'MockSuperposition' = 'MockSuperposition';

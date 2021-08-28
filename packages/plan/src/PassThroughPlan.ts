@@ -1,5 +1,5 @@
-import { Consumer, Whatever } from '@jamashita/anden-type';
-import { Plan } from './Plan.js';
+import { Consumer } from '@jamashita/anden-type';
+import { Plan } from './Plan';
 
 export class PassThroughPlan<M, R> implements Plan<M, R, 'PassThroughPlan'> {
   public readonly noun: 'PassThroughPlan' = 'PassThroughPlan';
@@ -17,15 +17,15 @@ export class PassThroughPlan<M, R> implements Plan<M, R, 'PassThroughPlan'> {
     this.destroy = destroy;
   }
 
-  public onDestroy(cause: unknown): Whatever {
+  public onDestroy(cause: unknown): unknown {
     return this.destroy(cause);
   }
 
-  public onMap(value: M): Whatever {
+  public onMap(value: M): unknown {
     return this.map(value);
   }
 
-  public onRecover(value: R): Whatever {
+  public onRecover(value: R): unknown {
     return this.recover(value);
   }
 }

@@ -20,14 +20,14 @@ import {
   Schrodinger,
   Still
 } from '@jamashita/genitore-schrodinger';
-import { Chrono } from './Chrono.js';
-import { ISuperposition, SReturnType } from './ISuperposition.js';
-import { AlivePlan } from './Plan/AlivePlan.js';
-import { CombinedChronoPlan } from './Plan/CombinedChronoPlan.js';
-import { DeadPlan } from './Plan/DeadPlan.js';
-import { DestroyChronoPlan } from './Plan/DestroyChronoPlan.js';
-import { MapChronoPlan } from './Plan/MapChronoPlan.js';
-import { RecoveryChronoPlan } from './Plan/RecoveryChronoPlan.js';
+import { Chrono } from './Chrono';
+import { ISuperposition, SReturnType } from './ISuperposition';
+import { AlivePlan } from './Plan/AlivePlan';
+import { CombinedChronoPlan } from './Plan/CombinedChronoPlan';
+import { DeadPlan } from './Plan/DeadPlan';
+import { DestroyChronoPlan } from './Plan/DestroyChronoPlan';
+import { MapChronoPlan } from './Plan/MapChronoPlan';
+import { RecoveryChronoPlan } from './Plan/RecoveryChronoPlan';
 
 export class SuperpositionInternal<A, D extends Error> implements ISuperposition<A, D, 'SuperpositionInternal'>, Chrono<A, D> {
   public readonly noun: 'SuperpositionInternal' = 'SuperpositionInternal';
