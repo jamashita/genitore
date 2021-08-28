@@ -27,9 +27,9 @@
     "clean:others": "rimraf *.log && rimraf tsconfig.build.tsbuildinfo"
   },
   "dependencies": {
-    "@jamashita/anden-error": "2.0.0",
-    "@jamashita/anden-object": "2.1.0",
-    "@jamashita/anden-type": "2.1.0"
+    "@jamashita/anden-error": "2.1.1",
+    "@jamashita/anden-object": "2.2.1",
+    "@jamashita/anden-type": "2.1.2"
   },
   "devDependencies": {
     "sinon": "11.1.2"
