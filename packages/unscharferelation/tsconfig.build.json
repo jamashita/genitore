@@ -1,9 +1,5 @@
 {
   "extends": "../../tsconfig.json",
-  "compilerOptions": {
-    "rootDir": "./src",
-    "outDir": "./dist"
-  },
   "include": [
     "src/**/*.ts"
   ],
@@ -11,13 +7,5 @@
     "node_modules",
     "dist",
     "src/**/*.spec.ts"
-  ],
-  "references": [
-    {
-      "path": "../heisenberg/tsconfig.build.json"
-    },
-    {
-      "path": "../plan/tsconfig.build.json"
-    }
   ]
 }
