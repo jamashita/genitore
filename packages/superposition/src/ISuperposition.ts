@@ -1,6 +1,5 @@
 import { Consumer, Kind, Noun, Peek, Serializable, SyncAsync, UnaryFunction } from '@jamashita/anden-type';
-import { DeadConstructor, Detoxicated } from '@jamashita/genitore-schrodinger';
-import { Schrodinger } from '../../schrodinger/src/Schrodinger.js';
+import { DeadConstructor, Detoxicated, Schrodinger } from '@jamashita/genitore-schrodinger';
 
 export type SReturnType<B, E extends Error> = SyncAsync<Detoxicated<B> | ISuperposition<B, E>>;
 

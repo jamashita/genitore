@@ -1,7 +1,7 @@
-import sinon, { SinonSpy } from 'sinon';
-import { Absent } from '../Absent.js';
-import { HeisenbergError } from '../Error/HeisenbergError.js';
-import { Heisenberg } from '../Heisenberg.js';
+import { SinonSpy, spy } from 'sinon';
+import { Absent } from '../Absent';
+import { HeisenbergError } from '../Error/HeisenbergError';
+import { Heisenberg } from '../Heisenberg';
 
 describe('Absent', () => {
   describe('get', () => {
@@ -56,15 +56,15 @@ describe('Absent', () => {
     it('will not be invoked', () => {
       expect.assertions(1);
 
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
 
       const absent: Heisenberg<number> = Absent.of<number>();
 
       absent.ifPresent(() => {
-        spy();
+        s();
       });
 
-      expect(spy.called).toBe(false);
+      expect(s.called).toBe(false);
     });
   });
 
@@ -72,15 +72,15 @@ describe('Absent', () => {
     it('will be invoked', () => {
       expect.assertions(1);
 
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
 
       const absent: Heisenberg<number> = Absent.of<number>();
 
       absent.ifAbsent(() => {
-        spy();
+        s();
       });
 
-      expect(spy.called).toBe(true);
+      expect(s.called).toBe(true);
     });
   });
 
@@ -88,15 +88,15 @@ describe('Absent', () => {
     it('will not be invoked', () => {
       expect.assertions(1);
 
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
 
       const absent: Heisenberg<number> = Absent.of<number>();
 
       absent.ifLost(() => {
-        spy();
+        s();
       });
 
-      expect(spy.called).toBe(false);
+      expect(s.called).toBe(false);
     });
   });
 

@@ -1,4 +1,4 @@
-import { MapPlan } from './MapPlan.js';
+import { MapPlan } from './MapPlan';
 
 export class MapSpoilPlan<M> implements MapPlan<M, 'MapSpoilPlan'> {
   public readonly noun: 'MapSpoilPlan' = 'MapSpoilPlan';

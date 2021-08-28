@@ -1,5 +1,5 @@
-import sinon, { SinonSpy } from 'sinon';
-import { PassThroughPlan } from '../PassThroughPlan.js';
+import { SinonSpy, spy } from 'sinon';
+import { PassThroughPlan } from '../PassThroughPlan';
 
 describe('PassThroughPlan', () => {
   describe('onMap', () => {
@@ -8,9 +8,9 @@ describe('PassThroughPlan', () => {
 
       const value: number = -35;
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
 
       const epoque: PassThroughPlan<number, string> = PassThroughPlan.of<number, string>(
         (v: number) => {
@@ -39,9 +39,9 @@ describe('PassThroughPlan', () => {
 
       const value: string = 'halt';
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
 
       const epoque: PassThroughPlan<number, string> = PassThroughPlan.of<number, string>(
         () => {
@@ -70,9 +70,9 @@ describe('PassThroughPlan', () => {
 
       const value: number = -35;
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
 
       const epoque: PassThroughPlan<number, string> = PassThroughPlan.of<number, string>(
         () => {

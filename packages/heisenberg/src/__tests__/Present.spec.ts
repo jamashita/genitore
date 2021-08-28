@@ -1,6 +1,6 @@
-import sinon, { SinonSpy } from 'sinon';
-import { Heisenberg } from '../Heisenberg.js';
-import { Present } from '../Present.js';
+import { SinonSpy, spy } from 'sinon';
+import { Heisenberg } from '../Heisenberg';
+import { Present } from '../Present';
 
 describe('Present', () => {
   describe('get', () => {
@@ -97,16 +97,16 @@ describe('Present', () => {
 
       const value: number = 1;
 
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
 
       const present: Heisenberg<number> = Present.of<number>(value);
 
       present.ifPresent((v: number) => {
-        spy();
+        s();
         expect(v).toBe(value);
       });
 
-      expect(spy.called).toBe(true);
+      expect(s.called).toBe(true);
     });
   });
 
@@ -116,15 +116,15 @@ describe('Present', () => {
 
       const value: number = 1;
 
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
 
       const present: Heisenberg<number> = Present.of<number>(value);
 
       present.ifAbsent(() => {
-        spy();
+        s();
       });
 
-      expect(spy.called).toBe(false);
+      expect(s.called).toBe(false);
     });
   });
 
@@ -134,15 +134,15 @@ describe('Present', () => {
 
       const value: number = 1;
 
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
 
       const present: Heisenberg<number> = Present.of<number>(value);
 
       present.ifLost(() => {
-        spy();
+        s();
       });
 
-      expect(spy.called).toBe(false);
+      expect(s.called).toBe(false);
     });
   });
 

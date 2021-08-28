@@ -1,8 +1,8 @@
 import { Objet } from '@jamashita/anden-object';
 import { Consumer } from '@jamashita/anden-type';
-import { Absent } from './Absent.js';
-import { Heisenberg } from './Heisenberg.js';
-import { Present } from './Present.js';
+import { Absent } from './Absent';
+import { Heisenberg } from './Heisenberg';
+import { Present } from './Present';
 
 export class Lost<P> implements Heisenberg<P, 'Lost'> {
   public readonly noun: 'Lost' = 'Lost';

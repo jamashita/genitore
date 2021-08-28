@@ -1,10 +1,10 @@
 import { MockRuntimeError } from '@jamashita/anden-error';
 import { Alive, Contradiction, Dead, Schrodinger, Still } from '@jamashita/genitore-schrodinger';
-import sinon, { SinonSpy, SinonStub } from 'sinon';
-import { Chrono } from '../Chrono.js';
-import { SuperpositionError } from '../Error/SuperpositionError.js';
-import { MockSuperposition } from '../Mock/MockSuperposition.js';
-import { Superposition } from '../Superposition.js';
+import { SinonSpy, SinonStub, spy, stub } from 'sinon';
+import { Chrono } from '../Chrono';
+import { SuperpositionError } from '../Error/SuperpositionError';
+import { MockSuperposition } from '../Mock/MockSuperposition';
+import { Superposition } from '../Superposition';
 
 describe('Superposition', () => {
   describe('all', () => {
@@ -779,15 +779,15 @@ describe('Superposition', () => {
 
       const mock: MockSuperposition<number, MockRuntimeError> = new MockSuperposition<number, MockRuntimeError>();
 
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
 
-      mock.get = spy;
+      mock.get = s;
 
       const superposition: Superposition<number, MockRuntimeError> = Superposition.ofSuperposition<number, MockRuntimeError>(mock);
 
       await superposition.get();
 
-      expect(spy.called).toBe(true);
+      expect(s.called).toBe(true);
     });
   });
 
@@ -797,15 +797,15 @@ describe('Superposition', () => {
 
       const mock: MockSuperposition<number, MockRuntimeError> = new MockSuperposition<number, MockRuntimeError>();
 
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
 
-      mock.terminate = spy;
+      mock.terminate = s;
 
       const superposition: Superposition<number, MockRuntimeError> = Superposition.ofSuperposition<number, MockRuntimeError>(mock);
 
       await superposition.terminate();
 
-      expect(spy.called).toBe(true);
+      expect(s.called).toBe(true);
     });
   });
 
@@ -815,12 +815,12 @@ describe('Superposition', () => {
 
       const mock: MockSuperposition<number, MockRuntimeError> = new MockSuperposition<number, MockRuntimeError>();
 
-      const spy: SinonSpy = sinon.spy();
-      const stub: SinonStub = sinon.stub();
+      const sp: SinonSpy = spy();
+      const st: SinonStub = stub();
 
-      mock.map = spy;
-      mock.getErrors = stub;
-      stub.returns([]);
+      mock.map = sp;
+      mock.getErrors = st;
+      st.returns([]);
 
       const superposition: Superposition<number, MockRuntimeError> = Superposition.ofSuperposition<number, MockRuntimeError>(mock);
 
@@ -828,8 +828,8 @@ describe('Superposition', () => {
         return v + 2;
       });
 
-      expect(spy.called).toBe(true);
-      expect(stub.called).toBe(true);
+      expect(sp.called).toBe(true);
+      expect(st.called).toBe(true);
     });
   });
 
@@ -839,9 +839,9 @@ describe('Superposition', () => {
 
       const mock: MockSuperposition<number, MockRuntimeError> = new MockSuperposition<number, MockRuntimeError>();
 
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
 
-      mock.recover = spy;
+      mock.recover = s;
 
       const superposition: Superposition<number, MockRuntimeError> = Superposition.ofSuperposition<number, MockRuntimeError>(mock);
 
@@ -849,7 +849,7 @@ describe('Superposition', () => {
         return 2;
       });
 
-      expect(spy.called).toBe(true);
+      expect(s.called).toBe(true);
     });
   });
 
@@ -859,9 +859,9 @@ describe('Superposition', () => {
 
       const mock: MockSuperposition<number, MockRuntimeError> = new MockSuperposition<number, MockRuntimeError>();
 
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
 
-      mock.transform = spy;
+      mock.transform = s;
 
       const superposition: Superposition<number, MockRuntimeError> = Superposition.ofSuperposition<number, MockRuntimeError>(mock);
 
@@ -874,7 +874,7 @@ describe('Superposition', () => {
         }
       );
 
-      expect(spy.called).toBe(true);
+      expect(s.called).toBe(true);
     });
   });
 
@@ -884,9 +884,9 @@ describe('Superposition', () => {
 
       const mock: MockSuperposition<number, MockRuntimeError> = new MockSuperposition<number, MockRuntimeError>();
 
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
 
-      mock.ifAlive = spy;
+      mock.ifAlive = s;
 
       const superposition: Superposition<number, MockRuntimeError> = Superposition.ofSuperposition<number, MockRuntimeError>(mock);
 
@@ -894,7 +894,7 @@ describe('Superposition', () => {
         // NOOP
       });
 
-      expect(spy.called).toBe(true);
+      expect(s.called).toBe(true);
     });
   });
 
@@ -904,9 +904,9 @@ describe('Superposition', () => {
 
       const mock: MockSuperposition<number, MockRuntimeError> = new MockSuperposition<number, MockRuntimeError>();
 
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
 
-      mock.ifDead = spy;
+      mock.ifDead = s;
 
       const superposition: Superposition<number, MockRuntimeError> = Superposition.ofSuperposition<number, MockRuntimeError>(mock);
 
@@ -914,7 +914,7 @@ describe('Superposition', () => {
         // NOOP
       });
 
-      expect(spy.called).toBe(true);
+      expect(s.called).toBe(true);
     });
   });
 
@@ -924,9 +924,9 @@ describe('Superposition', () => {
 
       const mock: MockSuperposition<number, MockRuntimeError> = new MockSuperposition<number, MockRuntimeError>();
 
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
 
-      mock.ifContradiction = spy;
+      mock.ifContradiction = s;
 
       const superposition: Superposition<number, MockRuntimeError> = Superposition.ofSuperposition<number, MockRuntimeError>(mock);
 
@@ -934,7 +934,7 @@ describe('Superposition', () => {
         // NOOP
       });
 
-      expect(spy.called).toBe(true);
+      expect(s.called).toBe(true);
     });
   });
 
@@ -944,9 +944,9 @@ describe('Superposition', () => {
 
       const mock: MockSuperposition<number, MockRuntimeError> = new MockSuperposition<number, MockRuntimeError>();
 
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
 
-      mock.pass = spy;
+      mock.pass = s;
 
       const superposition: Superposition<number, MockRuntimeError> = Superposition.ofSuperposition<number, MockRuntimeError>(mock);
 
@@ -962,7 +962,7 @@ describe('Superposition', () => {
         }
       );
 
-      expect(spy.called).toBe(true);
+      expect(s.called).toBe(true);
     });
   });
 
@@ -972,9 +972,9 @@ describe('Superposition', () => {
 
       const mock: MockSuperposition<number, MockRuntimeError> = new MockSuperposition<number, MockRuntimeError>();
 
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
 
-      mock.peek = spy;
+      mock.peek = s;
 
       const superposition: Superposition<number, MockRuntimeError> = Superposition.ofSuperposition<number, MockRuntimeError>(mock);
 
@@ -982,7 +982,7 @@ describe('Superposition', () => {
         // NOOP
       });
 
-      expect(spy.called).toBe(true);
+      expect(s.called).toBe(true);
     });
   });
 });

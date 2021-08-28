@@ -1,3 +1,3 @@
-export * from './DestroyPassPlan.js';
-export * from './DestroyPlan.js';
-export * from './DestroySpoilPlan.js';
+export * from './DestroyPassPlan';
+export * from './DestroyPlan';
+export * from './DestroySpoilPlan';
