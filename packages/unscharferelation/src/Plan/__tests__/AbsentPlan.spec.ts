@@ -1,10 +1,10 @@
 import { MockRuntimeError } from '@jamashita/anden-error';
 import { Resolve } from '@jamashita/anden-type';
-import sinon, { SinonSpy } from 'sinon';
-import { Epoque } from '../../Epoque.js';
-import { MockEpoque } from '../../Mock/MockEpoque.js';
-import { Unscharferelation } from '../../Unscharferelation.js';
-import { AbsentPlan } from '../AbsentPlan.js';
+import { SinonSpy, spy } from 'sinon';
+import { Epoque } from '../../Epoque';
+import { MockEpoque } from '../../Mock/MockEpoque';
+import { Unscharferelation } from '../../Unscharferelation';
+import { AbsentPlan } from '../AbsentPlan';
 
 describe('AbsentPlan', () => {
   describe('onRecover', () => {
@@ -13,10 +13,10 @@ describe('AbsentPlan', () => {
 
       const value: number = 10;
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
 
       await new Promise<void>((resolve: Resolve<void>) => {
         const plan: AbsentPlan<number> = AbsentPlan.of<number>(
@@ -59,10 +59,10 @@ describe('AbsentPlan', () => {
 
       const value: number = 10;
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
 
       await new Promise<void>((resolve: Resolve<void>) => {
         const plan: AbsentPlan<number> = AbsentPlan.of<number>(
@@ -105,10 +105,10 @@ describe('AbsentPlan', () => {
 
       const value: number = 10;
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
 
       await new Promise<void>((resolve: Resolve<void>) => {
         const plan: AbsentPlan<number> = AbsentPlan.of<number>(
@@ -151,10 +151,10 @@ describe('AbsentPlan', () => {
 
       const value: number = 10;
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
 
       await new Promise<void>((resolve: Resolve<void>) => {
         const plan: AbsentPlan<number> = AbsentPlan.of<number>(
@@ -197,10 +197,10 @@ describe('AbsentPlan', () => {
     it('invokes second callback when null given', async () => {
       expect.assertions(4);
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
 
       await new Promise<void>((resolve: Resolve<void>) => {
         const plan: AbsentPlan<number> = AbsentPlan.of<number>(
@@ -240,10 +240,10 @@ describe('AbsentPlan', () => {
     it('invokes second callback when undefined given', async () => {
       expect.assertions(4);
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
 
       await new Promise<void>((resolve: Resolve<void>) => {
         const plan: AbsentPlan<number> = AbsentPlan.of<number>(
@@ -283,10 +283,10 @@ describe('AbsentPlan', () => {
     it('invokes second callback when Promise<null> given', async () => {
       expect.assertions(4);
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
 
       await new Promise<void>((resolve: Resolve<void>) => {
         const plan: AbsentPlan<number> = AbsentPlan.of<number>(
@@ -326,10 +326,10 @@ describe('AbsentPlan', () => {
     it('invokes second callback when Promise<undefined> given', async () => {
       expect.assertions(4);
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
 
       await new Promise<void>((resolve: Resolve<void>) => {
         const plan: AbsentPlan<number> = AbsentPlan.of<number>(
@@ -369,10 +369,10 @@ describe('AbsentPlan', () => {
     it('invokes second callback when Absent Unscharferelation given', async () => {
       expect.assertions(4);
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
 
       await new Promise<void>((resolve: Resolve<void>) => {
         const plan: AbsentPlan<number> = AbsentPlan.of<number>(
@@ -412,10 +412,10 @@ describe('AbsentPlan', () => {
     it('invokes second callback when Promise<Absent Unscharferelation> given', async () => {
       expect.assertions(4);
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
 
       await new Promise<void>((resolve: Resolve<void>) => {
         const plan: AbsentPlan<number> = AbsentPlan.of<number>(
@@ -457,10 +457,10 @@ describe('AbsentPlan', () => {
 
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
 
       await new Promise<void>((resolve: Resolve<void>) => {
         const plan: AbsentPlan<number> = AbsentPlan.of<number>(
@@ -503,10 +503,10 @@ describe('AbsentPlan', () => {
 
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
 
       await new Promise<void>((resolve: Resolve<void>) => {
         const plan: AbsentPlan<number> = AbsentPlan.of<number>(
@@ -549,10 +549,10 @@ describe('AbsentPlan', () => {
 
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
 
       await new Promise<void>((resolve: Resolve<void>) => {
         const plan: AbsentPlan<number> = AbsentPlan.of<number>(
@@ -597,10 +597,10 @@ describe('AbsentPlan', () => {
 
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
 
       await new Promise<void>((resolve: Resolve<void>) => {
         const plan: AbsentPlan<number> = AbsentPlan.of<number>(

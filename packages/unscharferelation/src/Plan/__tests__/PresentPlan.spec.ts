@@ -1,10 +1,10 @@
 import { MockRuntimeError } from '@jamashita/anden-error';
 import { Resolve } from '@jamashita/anden-type';
-import sinon, { SinonSpy } from 'sinon';
-import { Epoque } from '../../Epoque.js';
-import { MockEpoque } from '../../Mock/MockEpoque.js';
-import { Unscharferelation } from '../../Unscharferelation.js';
-import { PresentPlan } from '../PresentPlan.js';
+import { SinonSpy, spy } from 'sinon';
+import { Epoque } from '../../Epoque';
+import { MockEpoque } from '../../Mock/MockEpoque';
+import { Unscharferelation } from '../../Unscharferelation';
+import { PresentPlan } from '../PresentPlan';
 
 describe('PresentPlan', () => {
   describe('onMap', () => {
@@ -13,10 +13,10 @@ describe('PresentPlan', () => {
 
       const value: number = 10;
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
 
       await new Promise<void>((resolve: Resolve<void>) => {
         const plan: PresentPlan<number, number> = PresentPlan.of<number, number>(
@@ -60,10 +60,10 @@ describe('PresentPlan', () => {
 
       const value: number = 10;
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
 
       await new Promise<void>((resolve: Resolve<void>) => {
         const plan: PresentPlan<number, number> = PresentPlan.of<number, number>(
@@ -107,10 +107,10 @@ describe('PresentPlan', () => {
 
       const value: number = 10;
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
 
       await new Promise<void>((resolve: Resolve<void>) => {
         const plan: PresentPlan<number, number> = PresentPlan.of<number, number>(
@@ -154,10 +154,10 @@ describe('PresentPlan', () => {
 
       const value: number = 10;
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
 
       await new Promise<void>((resolve: Resolve<void>) => {
         const plan: PresentPlan<number, number> = PresentPlan.of<number, number>(
@@ -201,10 +201,10 @@ describe('PresentPlan', () => {
 
       const value: number = 10;
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
 
       await new Promise<void>((resolve: Resolve<void>) => {
         const plan: PresentPlan<number, number> = PresentPlan.of<number, number>(
@@ -247,10 +247,10 @@ describe('PresentPlan', () => {
 
       const value: number = 10;
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
 
       await new Promise<void>((resolve: Resolve<void>) => {
         const plan: PresentPlan<number, number> = PresentPlan.of<number, number>(
@@ -293,10 +293,10 @@ describe('PresentPlan', () => {
 
       const value: number = 10;
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
 
       await new Promise<void>((resolve: Resolve<void>) => {
         const plan: PresentPlan<number, number> = PresentPlan.of<number, number>(
@@ -339,10 +339,10 @@ describe('PresentPlan', () => {
 
       const value: number = 10;
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
 
       await new Promise<void>((resolve: Resolve<void>) => {
         const plan: PresentPlan<number, number> = PresentPlan.of<number, number>(
@@ -384,10 +384,10 @@ describe('PresentPlan', () => {
 
       const value: number = 10;
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
 
       await new Promise<void>((resolve: Resolve<void>) => {
         const plan: PresentPlan<number, number> = PresentPlan.of<number, number>(
@@ -430,10 +430,10 @@ describe('PresentPlan', () => {
 
       const value: number = 10;
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
 
       await new Promise<void>((resolve: Resolve<void>) => {
         const plan: PresentPlan<number, number> = PresentPlan.of<number, number>(
@@ -477,10 +477,10 @@ describe('PresentPlan', () => {
       const value: number = 10;
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
 
       await new Promise<void>((resolve: Resolve<void>) => {
         const plan: PresentPlan<number, number> = PresentPlan.of<number, number>(
@@ -525,10 +525,10 @@ describe('PresentPlan', () => {
       const value: number = 10;
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
 
       await new Promise<void>((resolve: Resolve<void>) => {
         const plan: PresentPlan<number, number> = PresentPlan.of<number, number>(
@@ -573,10 +573,10 @@ describe('PresentPlan', () => {
       const value: number = 10;
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
 
       await new Promise<void>((resolve: Resolve<void>) => {
         const plan: PresentPlan<number, number> = PresentPlan.of<number, number>(
@@ -623,10 +623,10 @@ describe('PresentPlan', () => {
       const value: number = 10;
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
 
       await new Promise<void>((resolve: Resolve<void>) => {
         const plan: PresentPlan<number, number> = PresentPlan.of<number, number>(

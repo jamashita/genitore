@@ -1,8 +1,8 @@
 import { MockRuntimeError } from '@jamashita/anden-error';
 import { DeadConstructor } from '@jamashita/genitore-schrodinger';
-import sinon, { SinonSpy } from 'sinon';
-import { MockChrono } from '../../Mock/MockChrono.js';
-import { MapChronoPlan } from '../MapChronoPlan.js';
+import { SinonSpy, spy } from 'sinon';
+import { MockChrono } from '../../Mock/MockChrono';
+import { MapChronoPlan } from '../MapChronoPlan';
 
 describe('MapChronoPlan', () => {
   describe('onMap', () => {
@@ -11,9 +11,9 @@ describe('MapChronoPlan', () => {
 
       const value: number = -35;
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
 
       const chrono: MockChrono<number, MockRuntimeError> = new MockChrono<number, MockRuntimeError>(
         (v: number) => {

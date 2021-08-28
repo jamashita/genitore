@@ -1,5 +1,5 @@
-import { Consumer, Whatever } from '@jamashita/anden-type';
-import { RecoveryPlan } from './RecoveryPlan.js';
+import { Consumer } from '@jamashita/anden-type';
+import { RecoveryPlan } from './RecoveryPlan';
 
 export class RecoveryPassPlan<R> implements RecoveryPlan<R, 'RecoveryPassPlan'> {
   public readonly noun: 'RecoveryPassPlan' = 'RecoveryPassPlan';
@@ -13,7 +13,7 @@ export class RecoveryPassPlan<R> implements RecoveryPlan<R, 'RecoveryPassPlan'> 
     this.recover = recover;
   }
 
-  public onRecover(value: R): Whatever {
+  public onRecover(value: R): unknown {
     return this.recover(value);
   }
 }

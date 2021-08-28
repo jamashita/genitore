@@ -1,4 +1,4 @@
-import { RecoverySpoilPlan } from '../RecoverySpoilPlan.js';
+import { RecoverySpoilPlan } from '../RecoverySpoilPlan';
 
 describe('RecoverySpoilPlan', () => {
   describe('of', () => {

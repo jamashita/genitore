@@ -1,5 +1,5 @@
 import { DestroyPlan } from '@jamashita/genitore-plan';
-import { Chrono } from '../Chrono.js';
+import { Chrono } from '../Chrono';
 
 export class DestroyChronoPlan<A, D extends Error> implements DestroyPlan<'DestroyChronoPlan'> {
   public readonly noun: 'DestroyChronoPlan' = 'DestroyChronoPlan';

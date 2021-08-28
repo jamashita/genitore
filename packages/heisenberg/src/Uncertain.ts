@@ -1,8 +1,8 @@
-import { Absent } from './Absent.js';
-import { HeisenbergError } from './Error/HeisenbergError.js';
-import { Heisenberg } from './Heisenberg.js';
-import { Lost } from './Lost.js';
-import { Present } from './Present.js';
+import { Absent } from './Absent';
+import { HeisenbergError } from './Error/HeisenbergError';
+import { Heisenberg } from './Heisenberg';
+import { Lost } from './Lost';
+import { Present } from './Present';
 
 export class Uncertain<P> implements Heisenberg<P, 'Uncertain'> {
   public readonly noun: 'Uncertain' = 'Uncertain';

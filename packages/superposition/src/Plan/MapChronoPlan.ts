@@ -1,6 +1,6 @@
 import { MapPlan } from '@jamashita/genitore-plan';
 import { Detoxicated } from '@jamashita/genitore-schrodinger';
-import { Chrono } from '../Chrono.js';
+import { Chrono } from '../Chrono';
 
 export class MapChronoPlan<A, D extends Error> implements MapPlan<Detoxicated<A>, 'MapChronoPlan'> {
   public readonly noun: 'MapChronoPlan' = 'MapChronoPlan';

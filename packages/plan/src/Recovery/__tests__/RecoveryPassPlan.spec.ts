@@ -1,5 +1,5 @@
-import sinon, { SinonSpy } from 'sinon';
-import { RecoveryPassPlan } from '../RecoveryPassPlan.js';
+import { SinonSpy, spy } from 'sinon';
+import { RecoveryPassPlan } from '../RecoveryPassPlan';
 
 describe('RecoveryPassPlan', () => {
   describe('onRecover', () => {
@@ -8,18 +8,18 @@ describe('RecoveryPassPlan', () => {
 
       const value: number = -35;
 
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
 
       const epoque: RecoveryPassPlan<number> = RecoveryPassPlan.of<number>(
         (v: number) => {
-          spy();
+          s();
           expect(v).toBe(value);
         }
       );
 
       epoque.onRecover(value);
 
-      expect(spy.called).toBe(true);
+      expect(s.called).toBe(true);
     });
   });
 });

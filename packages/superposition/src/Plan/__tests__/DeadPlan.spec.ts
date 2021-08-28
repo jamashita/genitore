@@ -1,11 +1,11 @@
 import { MockRuntimeError } from '@jamashita/anden-error';
 import { Resolve } from '@jamashita/anden-type';
 import { DeadConstructor } from '@jamashita/genitore-schrodinger';
-import sinon, { SinonSpy } from 'sinon';
-import { Chrono } from '../../Chrono.js';
-import { MockChrono } from '../../Mock/MockChrono.js';
-import { Superposition } from '../../Superposition.js';
-import { DeadPlan } from '../DeadPlan.js';
+import { SinonSpy, spy } from 'sinon';
+import { Chrono } from '../../Chrono';
+import { MockChrono } from '../../Mock/MockChrono';
+import { Superposition } from '../../Superposition';
+import { DeadPlan } from '../DeadPlan';
 
 describe('DeadPlan', () => {
   describe('onRecover', () => {
@@ -15,10 +15,10 @@ describe('DeadPlan', () => {
       const value: number = 101;
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
 
       await new Promise<void>((resolve: Resolve<void>) => {
         const plan: DeadPlan<number, MockRuntimeError, MockRuntimeError> = DeadPlan.of<number, MockRuntimeError, MockRuntimeError>(
@@ -64,10 +64,10 @@ describe('DeadPlan', () => {
       const value: number = 101;
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
 
       await new Promise<void>((resolve: Resolve<void>) => {
         const plan: DeadPlan<number, MockRuntimeError, MockRuntimeError> = DeadPlan.of<number, MockRuntimeError, MockRuntimeError>(
@@ -113,10 +113,10 @@ describe('DeadPlan', () => {
       const value: number = 101;
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
 
       await new Promise<void>((resolve: Resolve<void>) => {
         const plan: DeadPlan<number, MockRuntimeError, MockRuntimeError> = DeadPlan.of<number, MockRuntimeError, MockRuntimeError>(
@@ -162,10 +162,10 @@ describe('DeadPlan', () => {
       const value: number = 101;
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
 
       await new Promise<void>((resolve: Resolve<void>) => {
         const plan: DeadPlan<number, MockRuntimeError, MockRuntimeError> = DeadPlan.of<number, MockRuntimeError, MockRuntimeError>(
@@ -210,10 +210,10 @@ describe('DeadPlan', () => {
 
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
 
       await new Promise<void>((resolve: Resolve<void>) => {
         const plan: DeadPlan<number, MockRuntimeError, MockRuntimeError> = DeadPlan.of<number, MockRuntimeError, MockRuntimeError>(
@@ -258,10 +258,10 @@ describe('DeadPlan', () => {
 
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
 
       await new Promise<void>((resolve: Resolve<void>) => {
         const plan: DeadPlan<number, MockRuntimeError, MockRuntimeError> = DeadPlan.of<number, MockRuntimeError, MockRuntimeError>(
@@ -306,10 +306,10 @@ describe('DeadPlan', () => {
 
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
 
       await new Promise<void>((resolve: Resolve<void>) => {
         const plan: DeadPlan<number, MockRuntimeError, MockRuntimeError> = DeadPlan.of<number, MockRuntimeError, MockRuntimeError>(
@@ -354,10 +354,10 @@ describe('DeadPlan', () => {
 
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
 
       await new Promise<void>((resolve: Resolve<void>) => {
         const plan: DeadPlan<number, MockRuntimeError, MockRuntimeError> = DeadPlan.of<number, MockRuntimeError, MockRuntimeError>(
@@ -402,10 +402,10 @@ describe('DeadPlan', () => {
 
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
 
       await new Promise<void>((resolve: Resolve<void>) => {
         const plan: DeadPlan<number, MockRuntimeError, MockRuntimeError> = DeadPlan.of<number, MockRuntimeError, MockRuntimeError>(
@@ -449,10 +449,10 @@ describe('DeadPlan', () => {
 
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
 
       await new Promise<void>((resolve: Resolve<void>) => {
         const plan: DeadPlan<number, MockRuntimeError, MockRuntimeError> = DeadPlan.of<number, MockRuntimeError, MockRuntimeError>(
@@ -496,10 +496,10 @@ describe('DeadPlan', () => {
 
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
 
       const plan: DeadPlan<number, MockRuntimeError, MockRuntimeError> = DeadPlan.of<number, MockRuntimeError, MockRuntimeError>(
         (e: MockRuntimeError) => {
@@ -537,10 +537,10 @@ describe('DeadPlan', () => {
 
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
 
       await new Promise<void>((resolve: Resolve<void>) => {
         const plan: DeadPlan<number, MockRuntimeError, MockRuntimeError> = DeadPlan.of<number, MockRuntimeError, MockRuntimeError>(

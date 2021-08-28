@@ -12,15 +12,15 @@ import {
   RecoveryPlan,
   RecoverySpoilPlan
 } from '@jamashita/genitore-plan';
-import { Epoque } from './Epoque.js';
-import { UnscharferelationError } from './Error/UnscharferelationError.js';
-import { IUnscharferelation, UReturnType } from './IUnscharferelation.js';
-import { AbsentPlan } from './Plan/AbsentPlan.js';
-import { CombinedEpoquePlan } from './Plan/CombinedEpoquePlan.js';
-import { DestroyEpoquePlan } from './Plan/DestroyEpoquePlan.js';
-import { MapEpoquePlan } from './Plan/MapEpoquePlan.js';
-import { PresentPlan } from './Plan/PresentPlan.js';
-import { RecoveryEpoquePlan } from './Plan/RecoveryEpoquePlan.js';
+import { Epoque } from './Epoque';
+import { UnscharferelationError } from './Error/UnscharferelationError';
+import { IUnscharferelation, UReturnType } from './IUnscharferelation';
+import { AbsentPlan } from './Plan/AbsentPlan';
+import { CombinedEpoquePlan } from './Plan/CombinedEpoquePlan';
+import { DestroyEpoquePlan } from './Plan/DestroyEpoquePlan';
+import { MapEpoquePlan } from './Plan/MapEpoquePlan';
+import { PresentPlan } from './Plan/PresentPlan';
+import { RecoveryEpoquePlan } from './Plan/RecoveryEpoquePlan';
 
 export class UnscharferelationInternal<P> implements IUnscharferelation<P, 'UnscharferelationInternal'>, Epoque<P, 'UnscharferelationInternal'> {
   public readonly noun: 'UnscharferelationInternal' = 'UnscharferelationInternal';

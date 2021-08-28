@@ -1,5 +1,5 @@
-import { Consumer, Whatever } from '@jamashita/anden-type';
-import { DestroyPlan } from './DestroyPlan.js';
+import { Consumer } from '@jamashita/anden-type';
+import { DestroyPlan } from './DestroyPlan';
 
 export class DestroyPassPlan implements DestroyPlan<'DestroyPassPlan'> {
   public readonly noun: 'DestroyPassPlan' = 'DestroyPassPlan';
@@ -13,7 +13,7 @@ export class DestroyPassPlan implements DestroyPlan<'DestroyPassPlan'> {
     this.destroy = destroy;
   }
 
-  public onDestroy(cause: unknown): Whatever {
+  public onDestroy(cause: unknown): unknown {
     return this.destroy(cause);
   }
 }

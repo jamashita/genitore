@@ -1,7 +1,7 @@
 import { MockRuntimeError } from '@jamashita/anden-error';
 import { Absent, Heisenberg, HeisenbergError, Lost, Present, Uncertain } from '@jamashita/genitore-heisenberg';
-import sinon, { SinonSpy } from 'sinon';
-import { Epoque } from '../Epoque.js';
+import { SinonSpy, spy } from 'sinon';
+import { Epoque } from '../Epoque';
 import { UnscharferelationError } from '../Error/UnscharferelationError';
 import { MockUnscharferelation } from '../Mock/MockUnscharferelation';
 import { Unscharferelation } from '../Unscharferelation';
@@ -659,15 +659,15 @@ describe('Unscharferelation', () => {
 
       const mock: MockUnscharferelation<number> = new MockUnscharferelation<number>();
 
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
 
-      mock.get = spy;
+      mock.get = s;
 
       const unscharferelation: Unscharferelation<number> = Unscharferelation.ofUnscharferelation<number>(mock);
 
       await unscharferelation.get();
 
-      expect(spy.called).toBe(true);
+      expect(s.called).toBe(true);
     });
   });
 
@@ -677,15 +677,15 @@ describe('Unscharferelation', () => {
 
       const mock: MockUnscharferelation<number> = new MockUnscharferelation<number>();
 
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
 
-      mock.terminate = spy;
+      mock.terminate = s;
 
       const unscharferelation: Unscharferelation<number> = Unscharferelation.ofUnscharferelation<number>(mock);
 
       await unscharferelation.terminate();
 
-      expect(spy.called).toBe(true);
+      expect(s.called).toBe(true);
     });
   });
 
@@ -695,9 +695,9 @@ describe('Unscharferelation', () => {
 
       const mock: MockUnscharferelation<number> = new MockUnscharferelation<number>();
 
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
 
-      mock.map = spy;
+      mock.map = s;
 
       const unscharferelation: Unscharferelation<number> = Unscharferelation.ofUnscharferelation<number>(mock);
 
@@ -705,7 +705,7 @@ describe('Unscharferelation', () => {
         return v + 2;
       });
 
-      expect(spy.called).toBe(true);
+      expect(s.called).toBe(true);
     });
   });
 
@@ -715,9 +715,9 @@ describe('Unscharferelation', () => {
 
       const mock: MockUnscharferelation<number> = new MockUnscharferelation<number>();
 
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
 
-      mock.recover = spy;
+      mock.recover = s;
 
       const unscharferelation: Unscharferelation<number> = Unscharferelation.ofUnscharferelation<number>(mock);
 
@@ -725,7 +725,7 @@ describe('Unscharferelation', () => {
         return 2;
       });
 
-      expect(spy.called).toBe(true);
+      expect(s.called).toBe(true);
     });
   });
 
@@ -735,9 +735,9 @@ describe('Unscharferelation', () => {
 
       const mock: MockUnscharferelation<number> = new MockUnscharferelation<number>();
 
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
 
-      mock.ifPresent = spy;
+      mock.ifPresent = s;
 
       const unscharferelation: Unscharferelation<number> = Unscharferelation.ofUnscharferelation<number>(mock);
 
@@ -745,7 +745,7 @@ describe('Unscharferelation', () => {
         // NOOP
       });
 
-      expect(spy.called).toBe(true);
+      expect(s.called).toBe(true);
     });
   });
 
@@ -755,9 +755,9 @@ describe('Unscharferelation', () => {
 
       const mock: MockUnscharferelation<number> = new MockUnscharferelation<number>();
 
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
 
-      mock.ifAbsent = spy;
+      mock.ifAbsent = s;
 
       const unscharferelation: Unscharferelation<number> = Unscharferelation.ofUnscharferelation<number>(mock);
 
@@ -765,7 +765,7 @@ describe('Unscharferelation', () => {
         // NOOP
       });
 
-      expect(spy.called).toBe(true);
+      expect(s.called).toBe(true);
     });
   });
   describe('ifLost', () => {
@@ -774,9 +774,9 @@ describe('Unscharferelation', () => {
 
       const mock: MockUnscharferelation<number> = new MockUnscharferelation<number>();
 
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
 
-      mock.ifLost = spy;
+      mock.ifLost = s;
 
       const unscharferelation: Unscharferelation<number> = Unscharferelation.ofUnscharferelation<number>(mock);
 
@@ -784,7 +784,7 @@ describe('Unscharferelation', () => {
         // NOOP
       });
 
-      expect(spy.called).toBe(true);
+      expect(s.called).toBe(true);
     });
   });
 
@@ -794,9 +794,9 @@ describe('Unscharferelation', () => {
 
       const mock: MockUnscharferelation<number> = new MockUnscharferelation<number>();
 
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
 
-      mock.pass = spy;
+      mock.pass = s;
 
       const unscharferelation: Unscharferelation<number> = Unscharferelation.ofUnscharferelation<number>(mock);
 
@@ -812,7 +812,7 @@ describe('Unscharferelation', () => {
         }
       );
 
-      expect(spy.called).toBe(true);
+      expect(s.called).toBe(true);
     });
   });
 
@@ -822,9 +822,9 @@ describe('Unscharferelation', () => {
 
       const mock: MockUnscharferelation<number> = new MockUnscharferelation<number>();
 
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
 
-      mock.peek = spy;
+      mock.peek = s;
 
       const unscharferelation: Unscharferelation<number> = Unscharferelation.ofUnscharferelation<number>(mock);
 
@@ -832,7 +832,7 @@ describe('Unscharferelation', () => {
         // NOOP
       });
 
-      expect(spy.called).toBe(true);
+      expect(s.called).toBe(true);
     });
   });
 });

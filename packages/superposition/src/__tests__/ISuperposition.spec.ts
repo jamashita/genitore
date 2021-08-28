@@ -1,9 +1,9 @@
 import { MockRuntimeError } from '@jamashita/anden-error';
 import { DeadConstructor } from '@jamashita/genitore-schrodinger';
-import { Chrono } from '../Chrono.js';
-import { containsError, isSuperposition } from '../ISuperposition.js';
-import { Superposition } from '../Superposition.js';
-import { SuperpositionInternal } from '../SuperpositionInternal.js';
+import { Chrono } from '../Chrono';
+import { containsError, isSuperposition } from '../ISuperposition';
+import { Superposition } from '../Superposition';
+import { SuperpositionInternal } from '../SuperpositionInternal';
 
 describe('ISuperposition', () => {
   describe('isSuperposition', () => {

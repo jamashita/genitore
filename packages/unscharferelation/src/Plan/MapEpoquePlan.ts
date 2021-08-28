@@ -1,6 +1,6 @@
 import { Matter } from '@jamashita/genitore-heisenberg';
 import { MapPlan } from '@jamashita/genitore-plan';
-import { Epoque } from '../Epoque.js';
+import { Epoque } from '../Epoque';
 
 export class MapEpoquePlan<P> implements MapPlan<Matter<P>, 'MapEpoquePlan'> {
   public readonly noun: 'MapEpoquePlan' = 'MapEpoquePlan';

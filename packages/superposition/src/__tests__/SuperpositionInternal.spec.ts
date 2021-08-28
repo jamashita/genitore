@@ -1,9 +1,9 @@
 import { MockRuntimeError } from '@jamashita/anden-error';
 import { Plan } from '@jamashita/genitore-plan';
 import { Detoxicated, Schrodinger } from '@jamashita/genitore-schrodinger';
-import sinon, { SinonSpy } from 'sinon';
-import { Chrono } from '../Chrono.js';
-import { SuperpositionInternal } from '../SuperpositionInternal.js';
+import { SinonSpy, spy } from 'sinon';
+import { Chrono } from '../Chrono';
+import { SuperpositionInternal } from '../SuperpositionInternal';
 
 describe('SuperpositionInternal', () => {
   describe('toString', () => {
@@ -40,7 +40,7 @@ describe('SuperpositionInternal', () => {
       expect.assertions(4);
 
       const value: number = -35;
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
       const plans: Set<Plan<Detoxicated<number>, MockRuntimeError>> = new Set<Plan<Detoxicated<number>, MockRuntimeError>>();
 
       plans.forEach = spy;
@@ -64,7 +64,7 @@ describe('SuperpositionInternal', () => {
 
       const schrodinger2: Schrodinger<number, MockRuntimeError> = await superposition.terminate();
 
-      expect(spy.called).toBe(false);
+      expect(s.called).toBe(false);
       expect(schrodinger1).toBe(schrodinger2);
     });
 
@@ -73,8 +73,8 @@ describe('SuperpositionInternal', () => {
 
       const value: number = -1.3;
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
 
       const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
         (chrono: Chrono<number, MockRuntimeError>) => {
@@ -107,7 +107,7 @@ describe('SuperpositionInternal', () => {
       expect.assertions(3);
 
       const error: MockRuntimeError = new MockRuntimeError();
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
       const plans: Set<Plan<Detoxicated<number>, MockRuntimeError>> = new Set<Plan<Detoxicated<number>, MockRuntimeError>>();
 
       plans.forEach = spy;
@@ -130,7 +130,7 @@ describe('SuperpositionInternal', () => {
 
       const schrodinger2: Schrodinger<number, MockRuntimeError> = await superposition.terminate();
 
-      expect(spy.called).toBe(false);
+      expect(s.called).toBe(false);
       expect(schrodinger1).toBe(schrodinger2);
     });
 
@@ -139,8 +139,8 @@ describe('SuperpositionInternal', () => {
 
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
 
       const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
         (chrono: Chrono<number, MockRuntimeError>) => {
@@ -171,7 +171,7 @@ describe('SuperpositionInternal', () => {
       expect.assertions(4);
 
       const error: MockRuntimeError = new MockRuntimeError();
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
       const plans: Set<Plan<Detoxicated<number>, void>> = new Set<Plan<Detoxicated<number>, void>>();
 
       plans.forEach = spy;
@@ -197,7 +197,7 @@ describe('SuperpositionInternal', () => {
 
       const schrodinger2: Schrodinger<number, MockRuntimeError> = await superposition.terminate();
 
-      expect(spy.called).toBe(false);
+      expect(s.called).toBe(false);
       expect(schrodinger1).toBe(schrodinger2);
     });
 
@@ -206,10 +206,10 @@ describe('SuperpositionInternal', () => {
 
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
 
       const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
         (chrono: Chrono<number, MockRuntimeError>) => {
@@ -333,9 +333,9 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
 
       await superposition.map<number>((v: number) => {
         spy1();
@@ -371,9 +371,9 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
 
       await superposition.map<number>((v: number) => {
         spy1();
@@ -423,9 +423,9 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
 
       await superposition1.map<number>((v: number) => {
         spy1();
@@ -474,9 +474,9 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
 
       await superposition1.map<number>((v: number) => {
         spy1();
@@ -512,9 +512,9 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
 
       await superposition.map<number>((v: number) => {
         spy1();
@@ -549,9 +549,9 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
 
       await superposition.map<number>((v: number) => {
         spy1();
@@ -598,9 +598,9 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
 
       await superposition1.map<number>((v: number) => {
         spy1();
@@ -647,9 +647,9 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
 
       await superposition1.map<number>((v: number) => {
         spy1();
@@ -684,10 +684,10 @@ describe('SuperpositionInternal', () => {
         []
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
 
       await superposition.map<number>((v: number) => {
         spy1();
@@ -727,10 +727,10 @@ describe('SuperpositionInternal', () => {
         []
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
 
       await superposition.map<number>((v: number) => {
         spy1();
@@ -790,10 +790,10 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
 
       await superposition1.map<number>((v: number) => {
         spy1();
@@ -853,10 +853,10 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
 
       await superposition1.map<number>((v: number) => {
         spy1();
@@ -902,9 +902,9 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
 
       await superposition1.map<number, MockRuntimeError>((v: number) => {
         spy1();
@@ -947,9 +947,9 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
 
       await superposition1.map<number, MockRuntimeError>((v: number) => {
         spy1();
@@ -990,9 +990,9 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
 
       await superposition1.map<number, MockRuntimeError>((v: number) => {
         spy1();
@@ -1030,9 +1030,9 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
 
       await superposition.map<number, MockRuntimeError>((v: number) => {
         spy1();
@@ -1068,9 +1068,9 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
 
       await superposition.map<number, MockRuntimeError>((v: number) => {
         spy1();
@@ -1119,9 +1119,9 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
 
       await superposition1.map<number, MockRuntimeError>(() => {
         spy1();
@@ -1170,9 +1170,9 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
 
       await superposition1.map<number, MockRuntimeError>(() => {
         spy1();
@@ -1209,9 +1209,9 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
 
       await superposition.recover<number, MockRuntimeError>((err: MockRuntimeError) => {
         spy1();
@@ -1249,9 +1249,9 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
 
       await superposition.recover<number, MockRuntimeError>((err: MockRuntimeError) => {
         spy1();
@@ -1301,9 +1301,9 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
 
       await superposition1.map<number, MockRuntimeError>((v: number) => {
         spy1();
@@ -1353,9 +1353,9 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
 
       await superposition1.map<number, MockRuntimeError>((v: number) => {
         spy1();
@@ -1392,10 +1392,10 @@ describe('SuperpositionInternal', () => {
         []
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
 
       await superposition.map<number, MockRuntimeError>((v: number) => {
         spy1();
@@ -1435,10 +1435,10 @@ describe('SuperpositionInternal', () => {
         []
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
 
       await superposition.map<number, MockRuntimeError>((v: number) => {
         spy1();
@@ -1498,10 +1498,10 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
 
       await superposition1.map<number, MockRuntimeError>((v: number) => {
         spy1();
@@ -1557,10 +1557,10 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
 
       await superposition1.map<number, MockRuntimeError>((v: number) => {
         spy1();
@@ -1602,9 +1602,9 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
 
       await superposition1.map<number, MockRuntimeError>((v: number) => {
         spy1();
@@ -1647,9 +1647,9 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
 
       await superposition1.map<number, MockRuntimeError>((v: number) => {
         spy1();
@@ -1692,9 +1692,9 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
 
       await superposition1.map<number, MockRuntimeError>((v: number) => {
         spy1();
@@ -1734,10 +1734,10 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
 
       await superposition.transform<number, MockRuntimeError>(
         (v: number) => {
@@ -1787,10 +1787,10 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
 
       await superposition.transform<number, MockRuntimeError>(
         (v: number) => {
@@ -1852,10 +1852,10 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
 
       await superposition1.transform<number, MockRuntimeError>(
         (v: number) => {
@@ -1917,10 +1917,10 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
 
       await superposition1.transform<number, MockRuntimeError>(
         (v: number) => {
@@ -1970,10 +1970,10 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
 
       await superposition.transform<number, MockRuntimeError>(
         () => {
@@ -2021,10 +2021,10 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
 
       await superposition.transform<number, MockRuntimeError>(
         () => {
@@ -2086,10 +2086,10 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
 
       await superposition1.transform<number, MockRuntimeError>(
         () => {
@@ -2151,10 +2151,10 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
 
       await superposition1.transform<number, MockRuntimeError>(
         () => {
@@ -2209,12 +2209,12 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
-      const spy5: SinonSpy = sinon.spy();
-      const spy6: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
+      const spy5: SinonSpy = spy();
+      const spy6: SinonSpy = spy();
 
       await superposition1.transform<number, MockRuntimeError>(
         (v: number) => {
@@ -2284,12 +2284,12 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
-      const spy5: SinonSpy = sinon.spy();
-      const spy6: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
+      const spy5: SinonSpy = spy();
+      const spy6: SinonSpy = spy();
 
       await superposition1.transform<number, MockRuntimeError>(
         () => {
@@ -2359,12 +2359,12 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
-      const spy4: SinonSpy = sinon.spy();
-      const spy5: SinonSpy = sinon.spy();
-      const spy6: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
+      const spy4: SinonSpy = spy();
+      const spy5: SinonSpy = spy();
+      const spy6: SinonSpy = spy();
 
       await superposition1.transform<number>(
         () => {
@@ -2425,14 +2425,14 @@ describe('SuperpositionInternal', () => {
         }, [MockRuntimeError]
       );
 
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
 
       const schrodinger: Schrodinger<number, MockRuntimeError> = await superposition.ifAlive((n: number) => {
-        spy();
+        s();
         expect(n).toBe(value);
       }).terminate();
 
-      expect(spy.called).toBe(true);
+      expect(s.called).toBe(true);
       expect(schrodinger.isAlive()).toBe(true);
     });
 
@@ -2447,13 +2447,13 @@ describe('SuperpositionInternal', () => {
         }, [MockRuntimeError]
       );
 
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
 
       const schrodinger: Schrodinger<number, MockRuntimeError> = await superposition.ifAlive(() => {
-        spy();
+        s();
       }).terminate();
 
-      expect(spy.called).toBe(false);
+      expect(s.called).toBe(false);
       expect(schrodinger.isDead()).toBe(true);
     });
 
@@ -2468,13 +2468,13 @@ describe('SuperpositionInternal', () => {
         }, [MockRuntimeError]
       );
 
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
 
       const schrodinger: Schrodinger<number, MockRuntimeError> = await superposition.ifAlive(() => {
-        spy();
+        s();
       }).terminate();
 
-      expect(spy.called).toBe(false);
+      expect(s.called).toBe(false);
       expect(schrodinger.isContradiction()).toBe(true);
     });
   });
@@ -2491,13 +2491,13 @@ describe('SuperpositionInternal', () => {
         }, [MockRuntimeError]
       );
 
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
 
       const schrodinger: Schrodinger<number, MockRuntimeError> = await superposition.ifDead(() => {
-        spy();
+        s();
       }).terminate();
 
-      expect(spy.called).toBe(false);
+      expect(s.called).toBe(false);
       expect(schrodinger.isAlive()).toBe(true);
     });
 
@@ -2512,14 +2512,14 @@ describe('SuperpositionInternal', () => {
         }, [MockRuntimeError]
       );
 
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
 
       const schrodinger: Schrodinger<number, MockRuntimeError> = await superposition.ifDead((e: MockRuntimeError) => {
-        spy();
+        s();
         expect(e).toBe(error);
       }).terminate();
 
-      expect(spy.called).toBe(true);
+      expect(s.called).toBe(true);
       expect(schrodinger.isDead()).toBe(true);
     });
 
@@ -2534,13 +2534,13 @@ describe('SuperpositionInternal', () => {
         }, [MockRuntimeError]
       );
 
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
 
       const schrodinger: Schrodinger<number, MockRuntimeError> = await superposition.ifDead(() => {
-        spy();
+        s();
       }).terminate();
 
-      expect(spy.called).toBe(false);
+      expect(s.called).toBe(false);
       expect(schrodinger.isContradiction()).toBe(true);
     });
   });
@@ -2557,13 +2557,13 @@ describe('SuperpositionInternal', () => {
         }, [MockRuntimeError]
       );
 
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
 
       const schrodinger: Schrodinger<number, MockRuntimeError> = await superposition.ifContradiction(() => {
-        spy();
+        s();
       }).terminate();
 
-      expect(spy.called).toBe(false);
+      expect(s.called).toBe(false);
       expect(schrodinger.isAlive()).toBe(true);
     });
 
@@ -2578,13 +2578,13 @@ describe('SuperpositionInternal', () => {
         }, [MockRuntimeError]
       );
 
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
 
       const schrodinger: Schrodinger<number, MockRuntimeError> = await superposition.ifContradiction(() => {
-        spy();
+        s();
       }).terminate();
 
-      expect(spy.called).toBe(false);
+      expect(s.called).toBe(false);
       expect(schrodinger.isDead()).toBe(true);
     });
 
@@ -2599,14 +2599,14 @@ describe('SuperpositionInternal', () => {
         }, [MockRuntimeError]
       );
 
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
 
       const schrodinger: Schrodinger<number, MockRuntimeError> = await superposition.ifContradiction((e: unknown) => {
-        spy();
+        s();
         expect(e).toBe(error);
       }).terminate();
 
-      expect(spy.called).toBe(true);
+      expect(s.called).toBe(true);
       expect(schrodinger.isContradiction()).toBe(true);
     });
   });
@@ -2624,9 +2624,9 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
 
       superposition.pass(
         (v: number) => {
@@ -2658,9 +2658,9 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
 
       superposition.pass(
         () => {
@@ -2692,9 +2692,9 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = sinon.spy();
-      const spy2: SinonSpy = sinon.spy();
-      const spy3: SinonSpy = sinon.spy();
+      const spy1: SinonSpy = spy();
+      const spy2: SinonSpy = spy();
+      const spy3: SinonSpy = spy();
 
       superposition.pass(
         () => {
@@ -2728,13 +2728,13 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
 
       superposition.peek(() => {
-        spy();
+        s();
       });
 
-      expect(spy.called).toBe(true);
+      expect(s.called).toBe(true);
     });
 
     it('invokes second callback if Superposition is Dead', () => {
@@ -2749,13 +2749,13 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
 
       superposition.peek(() => {
-        spy();
+        s();
       });
 
-      expect(spy.called).toBe(true);
+      expect(s.called).toBe(true);
     });
 
     it('invokes third callback if Superposition is Contradiction', () => {
@@ -2770,13 +2770,13 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
 
       superposition.peek(() => {
-        spy();
+        s();
       });
 
-      expect(spy.called).toBe(true);
+      expect(s.called).toBe(true);
     });
   });
 });

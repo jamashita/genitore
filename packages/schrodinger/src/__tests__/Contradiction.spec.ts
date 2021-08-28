@@ -1,7 +1,7 @@
 import { MockRuntimeError } from '@jamashita/anden-error';
-import sinon, { SinonSpy } from 'sinon';
-import { Contradiction } from '../Contradiction.js';
-import { Schrodinger } from '../Schrodinger.js';
+import { SinonSpy, spy } from 'sinon';
+import { Contradiction } from '../Contradiction';
+import { Schrodinger } from '../Schrodinger';
 
 describe('Contradiction', () => {
   describe('get', () => {
@@ -75,15 +75,15 @@ describe('Contradiction', () => {
 
       const value: number = 1;
 
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
 
       const contradiction: Schrodinger<number, MockRuntimeError> = Contradiction.of<number, MockRuntimeError>(value);
 
       contradiction.ifAlive(() => {
-        spy();
+        s();
       });
 
-      expect(spy.called).toBe(false);
+      expect(s.called).toBe(false);
     });
   });
 
@@ -93,15 +93,15 @@ describe('Contradiction', () => {
 
       const value: number = 1;
 
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
 
       const contradiction: Schrodinger<number, MockRuntimeError> = Contradiction.of<number, MockRuntimeError>(value);
 
       contradiction.ifDead(() => {
-        spy();
+        s();
       });
 
-      expect(spy.called).toBe(false);
+      expect(s.called).toBe(false);
     });
   });
 
@@ -111,16 +111,16 @@ describe('Contradiction', () => {
 
       const value: number = 1;
 
-      const spy: SinonSpy = sinon.spy();
+      const s: SinonSpy = spy();
 
       const contradiction: Schrodinger<number, MockRuntimeError> = Contradiction.of<number, MockRuntimeError>(value);
 
       contradiction.ifContradiction((v: unknown) => {
-        spy();
+        s();
         expect(v).toBe(value);
       });
 
-      expect(spy.called).toBe(true);
+      expect(s.called).toBe(true);
     });
   });
 
