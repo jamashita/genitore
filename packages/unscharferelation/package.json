@@ -32,9 +32,6 @@
     "@jamashita/genitore-heisenberg": "^2.3.0",
     "@jamashita/genitore-plan": "^2.3.0"
   },
-  "devDependencies": {
-    "sinon": "12.0.1"
-  },
   "engines": {
     "node": ">=14.0.0",
     "npm": "npm is not supported"
