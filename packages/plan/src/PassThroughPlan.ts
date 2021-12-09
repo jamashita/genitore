@@ -1,14 +1,13 @@
 import { Consumer } from '@jamashita/anden-type';
 import { Plan } from './Plan';
 
-export class PassThroughPlan<M, R> implements Plan<M, R, 'PassThroughPlan'> {
-  public readonly noun: 'PassThroughPlan' = 'PassThroughPlan';
+export class PassThroughPlan<M, R> implements Plan<M, R> {
   private readonly map: Consumer<M>;
   private readonly recover: Consumer<R>;
   private readonly destroy: Consumer<unknown>;
 
-  public static of<MT, RT>(map: Consumer<MT>, recover: Consumer<RT>, destroy: Consumer<unknown>): PassThroughPlan<MT, RT> {
-    return new PassThroughPlan<MT, RT>(map, recover, destroy);
+  public static of<M, R>(map: Consumer<M>, recover: Consumer<R>, destroy: Consumer<unknown>): PassThroughPlan<M, R> {
+    return new PassThroughPlan<M, R>(map, recover, destroy);
   }
 
   protected constructor(map: Consumer<M>, recover: Consumer<R>, destroy: Consumer<unknown>) {

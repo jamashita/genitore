@@ -1,8 +1,7 @@
 import { Consumer } from '@jamashita/anden-type';
 import { DestroyPlan } from './DestroyPlan';
 
-export class DestroyPassPlan implements DestroyPlan<'DestroyPassPlan'> {
-  public readonly noun: 'DestroyPassPlan' = 'DestroyPassPlan';
+export class DestroyPassPlan implements DestroyPlan {
   private readonly destroy: Consumer<unknown>;
 
   public static of(destroy: Consumer<unknown>): DestroyPassPlan {

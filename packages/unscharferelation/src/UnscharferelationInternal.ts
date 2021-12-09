@@ -22,13 +22,12 @@ import { MapEpoquePlan } from './Plan/MapEpoquePlan';
 import { PresentPlan } from './Plan/PresentPlan';
 import { RecoveryEpoquePlan } from './Plan/RecoveryEpoquePlan';
 
-export class UnscharferelationInternal<P> implements IUnscharferelation<P, 'UnscharferelationInternal'>, Epoque<P, 'UnscharferelationInternal'> {
-  public readonly noun: 'UnscharferelationInternal' = 'UnscharferelationInternal';
+export class UnscharferelationInternal<P> implements IUnscharferelation<P>, Epoque<P> {
   private heisenberg: Heisenberg<P>;
   private readonly plans: Set<Plan<Matter<P>, void>>;
 
-  public static of<PT>(func: UnaryFunction<Epoque<PT>, unknown>): UnscharferelationInternal<PT> {
-    return new UnscharferelationInternal<PT>(func);
+  public static of<P>(func: UnaryFunction<Epoque<P>, unknown>): UnscharferelationInternal<P> {
+    return new UnscharferelationInternal<P>(func);
   }
 
   protected constructor(func: UnaryFunction<Epoque<P>, unknown>) {
@@ -75,6 +74,20 @@ export class UnscharferelationInternal<P> implements IUnscharferelation<P, 'Unsc
         }
       );
     });
+  }
+
+  private handle(map: MapPlan<Matter<P>>, recover: RecoveryPlan<void>, destroy: DestroyPlan): unknown {
+    if (this.heisenberg.isPresent()) {
+      return map.onMap(this.heisenberg.get());
+    }
+    if (this.heisenberg.isAbsent()) {
+      return recover.onRecover();
+    }
+    if (this.heisenberg.isLost()) {
+      return destroy.onDestroy(this.heisenberg.getCause());
+    }
+
+    return this.plans.add(CombinedEpoquePlan.of<P>(map, recover, destroy));
   }
 
   public ifAbsent(consumer: Consumer<void>): this {
@@ -147,6 +160,10 @@ export class UnscharferelationInternal<P> implements IUnscharferelation<P, 'Unsc
     return this.heisenberg.toString();
   }
 
+  private settled(): boolean {
+    return this.heisenberg instanceof Present || this.heisenberg instanceof Lost || this.heisenberg instanceof Absent;
+  }
+
   public terminate(): Promise<Heisenberg<P>> {
     return new Promise<Heisenberg<P>>((resolve: Resolve<Heisenberg<P>>) => {
       this.peek(() => {
@@ -169,23 +186,5 @@ export class UnscharferelationInternal<P> implements IUnscharferelation<P, 'Unsc
 
   public toString(): string {
     return this.serialize();
-  }
-
-  private handle(map: MapPlan<Matter<P>>, recover: RecoveryPlan<void>, destroy: DestroyPlan): unknown {
-    if (this.heisenberg.isPresent()) {
-      return map.onMap(this.heisenberg.get());
-    }
-    if (this.heisenberg.isAbsent()) {
-      return recover.onRecover();
-    }
-    if (this.heisenberg.isLost()) {
-      return destroy.onDestroy(this.heisenberg.getCause());
-    }
-
-    return this.plans.add(CombinedEpoquePlan.of<P>(map, recover, destroy));
-  }
-
-  private settled(): boolean {
-    return this.heisenberg instanceof Present || this.heisenberg instanceof Lost || this.heisenberg instanceof Absent;
   }
 }

@@ -1,4 +1,3 @@
-import { SinonSpy, spy } from 'sinon';
 import { Absent } from '../Absent';
 import { HeisenbergError } from '../Error/HeisenbergError';
 import { Heisenberg } from '../Heisenberg';
@@ -6,8 +5,6 @@ import { Heisenberg } from '../Heisenberg';
 describe('Absent', () => {
   describe('get', () => {
     it('throws UnscharferelationError', () => {
-      expect.assertions(1);
-
       const absent: Absent<number> = Absent.of<number>();
 
       expect(() => {
@@ -18,8 +15,6 @@ describe('Absent', () => {
 
   describe('isPresent', () => {
     it('always returns false', () => {
-      expect.assertions(2);
-
       const absent1: Absent<void> = Absent.of<void>();
       const absent2: Absent<number> = Absent.of<number>();
 
@@ -30,8 +25,6 @@ describe('Absent', () => {
 
   describe('isAbsent', () => {
     it('always returns true', () => {
-      expect.assertions(2);
-
       const absent1: Absent<void> = Absent.of<void>();
       const absent2: Absent<number> = Absent.of<number>();
 
@@ -42,8 +35,6 @@ describe('Absent', () => {
 
   describe('isLost', () => {
     it('always returns false', () => {
-      expect.assertions(2);
-
       const absent1: Absent<void> = Absent.of<void>();
       const absent2: Absent<number> = Absent.of<number>();
 
@@ -54,56 +45,48 @@ describe('Absent', () => {
 
   describe('ifPresent', () => {
     it('will not be invoked', () => {
-      expect.assertions(1);
-
-      const s: SinonSpy = spy();
+      const fn: jest.Mock = jest.fn();
 
       const absent: Heisenberg<number> = Absent.of<number>();
 
       absent.ifPresent(() => {
-        s();
+        fn();
       });
 
-      expect(s.called).toBe(false);
+      expect(fn.mock.calls).toHaveLength(0);
     });
   });
 
   describe('ifAbsent', () => {
     it('will be invoked', () => {
-      expect.assertions(1);
-
-      const s: SinonSpy = spy();
+      const fn: jest.Mock = jest.fn();
 
       const absent: Heisenberg<number> = Absent.of<number>();
 
       absent.ifAbsent(() => {
-        s();
+        fn();
       });
 
-      expect(s.called).toBe(true);
+      expect(fn.mock.calls).toHaveLength(1);
     });
   });
 
   describe('ifLost', () => {
     it('will not be invoked', () => {
-      expect.assertions(1);
-
-      const s: SinonSpy = spy();
+      const fn: jest.Mock = jest.fn();
 
       const absent: Heisenberg<number> = Absent.of<number>();
 
       absent.ifLost(() => {
-        s();
+        fn();
       });
 
-      expect(s.called).toBe(false);
+      expect(fn.mock.calls).toHaveLength(0);
     });
   });
 
   describe('toString', () => {
     it('returns Absent', () => {
-      expect.assertions(1);
-
       expect(Absent.of<number>().toString()).toBe('Absent');
     });
   });

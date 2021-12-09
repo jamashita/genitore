@@ -1,25 +1,22 @@
-import { SinonSpy, spy } from 'sinon';
 import { RecoveryPassPlan } from '../RecoveryPassPlan';
 
 describe('RecoveryPassPlan', () => {
   describe('onRecover', () => {
     it('invokes callback when onRecover() called', () => {
-      expect.assertions(2);
-
       const value: number = -35;
 
-      const s: SinonSpy = spy();
+      const fn: jest.Mock = jest.fn();
 
       const epoque: RecoveryPassPlan<number> = RecoveryPassPlan.of<number>(
         (v: number) => {
-          s();
+          fn();
           expect(v).toBe(value);
         }
       );
 
       epoque.onRecover(value);
 
-      expect(s.called).toBe(true);
+      expect(fn.mock.calls).toHaveLength(1);
     });
   });
 });

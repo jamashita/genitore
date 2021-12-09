@@ -1,12 +1,11 @@
 import { Consumer } from '@jamashita/anden-type';
 import { RecoveryPlan } from './RecoveryPlan';
 
-export class RecoveryPassPlan<R> implements RecoveryPlan<R, 'RecoveryPassPlan'> {
-  public readonly noun: 'RecoveryPassPlan' = 'RecoveryPassPlan';
+export class RecoveryPassPlan<R> implements RecoveryPlan<R> {
   private readonly recover: Consumer<R>;
 
-  public static of<RT>(recover: Consumer<RT>): RecoveryPassPlan<RT> {
-    return new RecoveryPassPlan<RT>(recover);
+  public static of<R>(recover: Consumer<R>): RecoveryPassPlan<R> {
+    return new RecoveryPassPlan<R>(recover);
   }
 
   protected constructor(recover: Consumer<R>) {
