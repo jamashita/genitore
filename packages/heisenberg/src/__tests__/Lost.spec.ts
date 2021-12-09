@@ -1,5 +1,4 @@
 import { MockRuntimeError } from '@jamashita/anden-error';
-import { SinonSpy, spy } from 'sinon';
 import { Heisenberg } from '../Heisenberg';
 import { Lost } from '../Lost';
 
@@ -62,15 +61,15 @@ describe('Lost', () => {
     it('will not be invoked', () => {
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const s: SinonSpy = spy();
+      const fn: jest.Mock = jest.fn();
 
       const lost: Heisenberg<number> = Lost.of<number>(error);
 
       lost.ifPresent(() => {
-        s();
+        fn();
       });
 
-      expect(s.called).toBe(false);
+      expect(fn.mock.calls).toHaveLength(0);
     });
   });
 
@@ -78,15 +77,15 @@ describe('Lost', () => {
     it('will not be invoked', () => {
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const s: SinonSpy = spy();
+      const fn: jest.Mock = jest.fn();
 
       const lost: Heisenberg<number> = Lost.of<number>(error);
 
       lost.ifAbsent(() => {
-        s();
+        fn();
       });
 
-      expect(s.called).toBe(false);
+      expect(fn.mock.calls).toHaveLength(0);
     });
   });
 
@@ -94,15 +93,15 @@ describe('Lost', () => {
     it('will be invoked', () => {
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const s: SinonSpy = spy();
+      const fn: jest.Mock = jest.fn();
 
       const lost: Heisenberg<number> = Lost.of<number>(error);
 
       lost.ifLost(() => {
-        s();
+        fn();
       });
 
-      expect(s.called).toBe(true);
+      expect(fn.mock.calls).toHaveLength(1);
     });
   });
 

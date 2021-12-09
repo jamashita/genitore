@@ -1,5 +1,4 @@
 import { PassThroughPlan } from '@jamashita/genitore-plan';
-import { SinonSpy, spy } from 'sinon';
 import { CombinedEpoquePlan } from '../CombinedEpoquePlan';
 
 describe('CombinedEpoquePlan', () => {
@@ -7,56 +6,56 @@ describe('CombinedEpoquePlan', () => {
     it('invokes first callback', () => {
       const value: number = -35;
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
 
       const pass: PassThroughPlan<number, void> = PassThroughPlan.of<number, void>(
         (v: number) => {
-          spy1();
+          fn1();
           expect(v).toBe(value);
         },
         () => {
-          spy2();
+          fn2();
         },
         () => {
-          spy3();
+          fn3();
         }
       );
       const plan: CombinedEpoquePlan<number> = CombinedEpoquePlan.of<number>(pass, pass, pass);
 
       plan.onMap(value);
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(false);
-      expect(spy3.called).toBe(false);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(0);
+      expect(fn3.mock.calls).toHaveLength(0);
     });
   });
 
   describe('onRecover', () => {
     it('invokes second callback', () => {
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
 
       const pass: PassThroughPlan<number, void> = PassThroughPlan.of<number, void>(
         () => {
-          spy1();
+          fn1();
         },
         () => {
-          spy2();
+          fn2();
         },
         () => {
-          spy3();
+          fn3();
         }
       );
       const plan: CombinedEpoquePlan<number> = CombinedEpoquePlan.of<number>(pass, pass, pass);
 
       plan.onRecover();
 
-      expect(spy1.called).toBe(false);
-      expect(spy2.called).toBe(true);
-      expect(spy3.called).toBe(false);
+      expect(fn1.mock.calls).toHaveLength(0);
+      expect(fn2.mock.calls).toHaveLength(1);
+      expect(fn3.mock.calls).toHaveLength(0);
     });
   });
 
@@ -64,19 +63,19 @@ describe('CombinedEpoquePlan', () => {
     it('invokes third callback', () => {
       const value: number = -35;
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
 
       const pass: PassThroughPlan<number, void> = PassThroughPlan.of<number, void>(
         () => {
-          spy1();
+          fn1();
         },
         () => {
-          spy2();
+          fn2();
         },
         (v: unknown) => {
-          spy3();
+          fn3();
           expect(v).toBe(value);
         }
       );
@@ -84,9 +83,9 @@ describe('CombinedEpoquePlan', () => {
 
       plan.onDestroy(value);
 
-      expect(spy1.called).toBe(false);
-      expect(spy2.called).toBe(false);
-      expect(spy3.called).toBe(true);
+      expect(fn1.mock.calls).toHaveLength(0);
+      expect(fn2.mock.calls).toHaveLength(0);
+      expect(fn3.mock.calls).toHaveLength(1);
     });
   });
 });

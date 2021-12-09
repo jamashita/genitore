@@ -1,6 +1,5 @@
 import { MockRuntimeError } from '@jamashita/anden-error';
 import { Alive, Contradiction, Dead, Schrodinger, Still } from '@jamashita/genitore-schrodinger';
-import { SinonSpy, SinonStub, spy, stub } from 'sinon';
 import { Chrono } from '../Chrono';
 import { SuperpositionError } from '../Error/SuperpositionError';
 import { MockSuperposition } from '../Mock/MockSuperposition';
@@ -701,15 +700,15 @@ describe('Superposition', () => {
     it('delegates inner Superposition', async () => {
       const mock: MockSuperposition<number, MockRuntimeError> = new MockSuperposition<number, MockRuntimeError>();
 
-      const s: SinonSpy = spy();
+      const fn: jest.Mock = jest.fn();
 
-      mock.get = s;
+      mock.get = fn;
 
       const superposition: Superposition<number, MockRuntimeError> = Superposition.ofSuperposition<number, MockRuntimeError>(mock);
 
       await superposition.get();
 
-      expect(s.called).toBe(true);
+      expect(fn.mock.calls).toHaveLength(1);
     });
   });
 
@@ -717,15 +716,15 @@ describe('Superposition', () => {
     it('delegates inner Superposition', async () => {
       const mock: MockSuperposition<number, MockRuntimeError> = new MockSuperposition<number, MockRuntimeError>();
 
-      const s: SinonSpy = spy();
+      const fn: jest.Mock = jest.fn();
 
-      mock.terminate = s;
+      mock.terminate = fn;
 
       const superposition: Superposition<number, MockRuntimeError> = Superposition.ofSuperposition<number, MockRuntimeError>(mock);
 
       await superposition.terminate();
 
-      expect(s.called).toBe(true);
+      expect(fn.mock.calls).toHaveLength(1);
     });
   });
 
@@ -733,12 +732,12 @@ describe('Superposition', () => {
     it('delegates inner Superposition', () => {
       const mock: MockSuperposition<number, MockRuntimeError> = new MockSuperposition<number, MockRuntimeError>();
 
-      const sp: SinonSpy = spy();
-      const st: SinonStub = stub();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
 
-      mock.map = sp;
-      mock.getErrors = st;
-      st.returns([]);
+      mock.map = fn1;
+      mock.getErrors = fn2;
+      fn2.mockReturnValue([]);
 
       const superposition: Superposition<number, MockRuntimeError> = Superposition.ofSuperposition<number, MockRuntimeError>(mock);
 
@@ -746,8 +745,8 @@ describe('Superposition', () => {
         return v + 2;
       });
 
-      expect(sp.called).toBe(true);
-      expect(st.called).toBe(true);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(1);
     });
   });
 
@@ -755,9 +754,9 @@ describe('Superposition', () => {
     it('delegates inner Superposition', () => {
       const mock: MockSuperposition<number, MockRuntimeError> = new MockSuperposition<number, MockRuntimeError>();
 
-      const s: SinonSpy = spy();
+      const fn: jest.Mock = jest.fn();
 
-      mock.recover = s;
+      mock.recover = fn;
 
       const superposition: Superposition<number, MockRuntimeError> = Superposition.ofSuperposition<number, MockRuntimeError>(mock);
 
@@ -765,7 +764,7 @@ describe('Superposition', () => {
         return 2;
       });
 
-      expect(s.called).toBe(true);
+      expect(fn.mock.calls).toHaveLength(1);
     });
   });
 
@@ -773,9 +772,9 @@ describe('Superposition', () => {
     it('delegates inner Superposition', () => {
       const mock: MockSuperposition<number, MockRuntimeError> = new MockSuperposition<number, MockRuntimeError>();
 
-      const s: SinonSpy = spy();
+      const fn: jest.Mock = jest.fn();
 
-      mock.transform = s;
+      mock.transform = fn;
 
       const superposition: Superposition<number, MockRuntimeError> = Superposition.ofSuperposition<number, MockRuntimeError>(mock);
 
@@ -788,7 +787,7 @@ describe('Superposition', () => {
         }
       );
 
-      expect(s.called).toBe(true);
+      expect(fn.mock.calls).toHaveLength(1);
     });
   });
 
@@ -796,9 +795,9 @@ describe('Superposition', () => {
     it('delegates inner Superposition', () => {
       const mock: MockSuperposition<number, MockRuntimeError> = new MockSuperposition<number, MockRuntimeError>();
 
-      const s: SinonSpy = spy();
+      const fn: jest.Mock = jest.fn();
 
-      mock.ifAlive = s;
+      mock.ifAlive = fn;
 
       const superposition: Superposition<number, MockRuntimeError> = Superposition.ofSuperposition<number, MockRuntimeError>(mock);
 
@@ -806,7 +805,7 @@ describe('Superposition', () => {
         // NOOP
       });
 
-      expect(s.called).toBe(true);
+      expect(fn.mock.calls).toHaveLength(1);
     });
   });
 
@@ -814,9 +813,9 @@ describe('Superposition', () => {
     it('delegates inner Superposition', () => {
       const mock: MockSuperposition<number, MockRuntimeError> = new MockSuperposition<number, MockRuntimeError>();
 
-      const s: SinonSpy = spy();
+      const fn: jest.Mock = jest.fn();
 
-      mock.ifDead = s;
+      mock.ifDead = fn;
 
       const superposition: Superposition<number, MockRuntimeError> = Superposition.ofSuperposition<number, MockRuntimeError>(mock);
 
@@ -824,7 +823,7 @@ describe('Superposition', () => {
         // NOOP
       });
 
-      expect(s.called).toBe(true);
+      expect(fn.mock.calls).toHaveLength(1);
     });
   });
 
@@ -832,9 +831,9 @@ describe('Superposition', () => {
     it('delegates inner Superposition', () => {
       const mock: MockSuperposition<number, MockRuntimeError> = new MockSuperposition<number, MockRuntimeError>();
 
-      const s: SinonSpy = spy();
+      const fn: jest.Mock = jest.fn();
 
-      mock.ifContradiction = s;
+      mock.ifContradiction = fn;
 
       const superposition: Superposition<number, MockRuntimeError> = Superposition.ofSuperposition<number, MockRuntimeError>(mock);
 
@@ -842,7 +841,7 @@ describe('Superposition', () => {
         // NOOP
       });
 
-      expect(s.called).toBe(true);
+      expect(fn.mock.calls).toHaveLength(1);
     });
   });
 
@@ -850,9 +849,9 @@ describe('Superposition', () => {
     it('delegates inner Superposition', () => {
       const mock: MockSuperposition<number, MockRuntimeError> = new MockSuperposition<number, MockRuntimeError>();
 
-      const s: SinonSpy = spy();
+      const fn: jest.Mock = jest.fn();
 
-      mock.pass = s;
+      mock.pass = fn;
 
       const superposition: Superposition<number, MockRuntimeError> = Superposition.ofSuperposition<number, MockRuntimeError>(mock);
 
@@ -868,7 +867,7 @@ describe('Superposition', () => {
         }
       );
 
-      expect(s.called).toBe(true);
+      expect(fn.mock.calls).toHaveLength(1);
     });
   });
 
@@ -876,9 +875,9 @@ describe('Superposition', () => {
     it('delegates inner Superposition', () => {
       const mock: MockSuperposition<number, MockRuntimeError> = new MockSuperposition<number, MockRuntimeError>();
 
-      const s: SinonSpy = spy();
+      const fn: jest.Mock = jest.fn();
 
-      mock.peek = s;
+      mock.peek = fn;
 
       const superposition: Superposition<number, MockRuntimeError> = Superposition.ofSuperposition<number, MockRuntimeError>(mock);
 
@@ -886,7 +885,7 @@ describe('Superposition', () => {
         // NOOP
       });
 
-      expect(s.called).toBe(true);
+      expect(fn.mock.calls).toHaveLength(1);
     });
   });
 });

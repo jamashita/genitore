@@ -1,4 +1,3 @@
-import { SinonSpy, spy } from 'sinon';
 import { PassThroughPlan } from '../PassThroughPlan';
 
 describe('PassThroughPlan', () => {
@@ -6,28 +5,28 @@ describe('PassThroughPlan', () => {
     it('invokes first callback when onMap() called', () => {
       const value: number = -35;
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
 
       const epoque: PassThroughPlan<number, string> = PassThroughPlan.of<number, string>(
         (v: number) => {
-          spy1();
+          fn1();
           expect(v).toBe(value);
         },
         () => {
-          spy2();
+          fn2();
         },
         () => {
-          spy3();
+          fn3();
         }
       );
 
       epoque.onMap(value);
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(false);
-      expect(spy3.called).toBe(false);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(0);
+      expect(fn3.mock.calls).toHaveLength(0);
     });
   });
 
@@ -35,28 +34,28 @@ describe('PassThroughPlan', () => {
     it('invokes second callback when onRecover() called', () => {
       const value: string = 'halt';
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
 
       const epoque: PassThroughPlan<number, string> = PassThroughPlan.of<number, string>(
         () => {
-          spy1();
+          fn1();
         },
         (v: string) => {
-          spy2();
+          fn2();
           expect(v).toBe(value);
         },
         () => {
-          spy3();
+          fn3();
         }
       );
 
       epoque.onRecover(value);
 
-      expect(spy1.called).toBe(false);
-      expect(spy2.called).toBe(true);
-      expect(spy3.called).toBe(false);
+      expect(fn1.mock.calls).toHaveLength(0);
+      expect(fn2.mock.calls).toHaveLength(1);
+      expect(fn3.mock.calls).toHaveLength(0);
     });
   });
 
@@ -64,28 +63,28 @@ describe('PassThroughPlan', () => {
     it('invokes third callback when onDestroy() called', () => {
       const value: number = -35;
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
 
       const epoque: PassThroughPlan<number, string> = PassThroughPlan.of<number, string>(
         () => {
-          spy1();
+          fn1();
         },
         () => {
-          spy2();
+          fn2();
         },
         (n: unknown) => {
-          spy3();
+          fn3();
           expect(n).toBe(value);
         }
       );
 
       epoque.onDestroy(value);
 
-      expect(spy1.called).toBe(false);
-      expect(spy2.called).toBe(false);
-      expect(spy3.called).toBe(true);
+      expect(fn1.mock.calls).toHaveLength(0);
+      expect(fn2.mock.calls).toHaveLength(0);
+      expect(fn3.mock.calls).toHaveLength(1);
     });
   });
 });

@@ -1,7 +1,6 @@
 import { MockRuntimeError } from '@jamashita/anden-error';
 import { Plan } from '@jamashita/genitore-plan';
 import { Detoxicated, Schrodinger } from '@jamashita/genitore-schrodinger';
-import { SinonSpy, spy } from 'sinon';
 import { Chrono } from '../Chrono';
 import { SuperpositionInternal } from '../SuperpositionInternal';
 
@@ -36,10 +35,10 @@ describe('SuperpositionInternal', () => {
   describe('accept', () => {
     it('does nothing if done once', async () => {
       const value: number = -35;
-      const s: SinonSpy = spy();
+      const fn: jest.Mock = jest.fn();
       const plans: Set<Plan<Detoxicated<number>, MockRuntimeError>> = new Set<Plan<Detoxicated<number>, MockRuntimeError>>();
 
-      plans.forEach = spy;
+      plans.forEach = fn;
 
       const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
         (chrono: Chrono<number, MockRuntimeError>) => {
@@ -60,15 +59,15 @@ describe('SuperpositionInternal', () => {
 
       const schrodinger2: Schrodinger<number, MockRuntimeError> = await superposition.terminate();
 
-      expect(s.called).toBe(false);
+      expect(fn.mock.calls).toHaveLength(0);
       expect(schrodinger1).toBe(schrodinger2);
     });
 
     it('invokes all maps', async () => {
       const value: number = -1.3;
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
 
       const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
         (chrono: Chrono<number, MockRuntimeError>) => {
@@ -78,31 +77,31 @@ describe('SuperpositionInternal', () => {
       );
 
       await superposition.map<number>((v: number) => {
-        spy1();
+        fn1();
         expect(v).toBe(value);
 
         return v + 4;
       }).terminate();
 
       await superposition.map<number>((v: number) => {
-        spy2();
+        fn2();
         expect(v).toBe(value);
 
         return v + 3;
       }).terminate();
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(true);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(1);
     });
   });
 
   describe('decline', () => {
     it('does nothing if done once', async () => {
       const error: MockRuntimeError = new MockRuntimeError();
-      const s: SinonSpy = spy();
+      const fn: jest.Mock = jest.fn();
       const plans: Set<Plan<Detoxicated<number>, MockRuntimeError>> = new Set<Plan<Detoxicated<number>, MockRuntimeError>>();
 
-      plans.forEach = spy;
+      plans.forEach = fn;
 
       const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
         (chrono: Chrono<number, MockRuntimeError>) => {
@@ -122,15 +121,15 @@ describe('SuperpositionInternal', () => {
 
       const schrodinger2: Schrodinger<number, MockRuntimeError> = await superposition.terminate();
 
-      expect(s.called).toBe(false);
+      expect(fn.mock.calls).toHaveLength(0);
       expect(schrodinger1).toBe(schrodinger2);
     });
 
     it('invokes all recovers', async () => {
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
 
       const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
         (chrono: Chrono<number, MockRuntimeError>) => {
@@ -140,29 +139,29 @@ describe('SuperpositionInternal', () => {
       );
 
       await superposition.recover<number, MockRuntimeError>(() => {
-        spy1();
+        fn1();
 
         return 4;
       }).terminate();
 
       await superposition.recover<number, MockRuntimeError>(() => {
-        spy2();
+        fn2();
 
         return 3;
       }).terminate();
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(true);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(1);
     });
   });
 
   describe('throw', () => {
     it('does nothing if done once', async () => {
       const error: MockRuntimeError = new MockRuntimeError();
-      const s: SinonSpy = spy();
+      const fn: jest.Mock = jest.fn();
       const plans: Set<Plan<Detoxicated<number>, void>> = new Set<Plan<Detoxicated<number>, void>>();
 
-      plans.forEach = spy;
+      plans.forEach = fn;
 
       const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
         (chrono: Chrono<number, MockRuntimeError>) => {
@@ -185,17 +184,17 @@ describe('SuperpositionInternal', () => {
 
       const schrodinger2: Schrodinger<number, MockRuntimeError> = await superposition.terminate();
 
-      expect(s.called).toBe(false);
+      expect(fn.mock.calls).toHaveLength(0);
       expect(schrodinger1).toBe(schrodinger2);
     });
 
     it('invokes all throws', async () => {
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
-      const spy4: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
+      const fn4: jest.Mock = jest.fn();
 
       const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
         (chrono: Chrono<number, MockRuntimeError>) => {
@@ -205,33 +204,33 @@ describe('SuperpositionInternal', () => {
       );
 
       await superposition.map<number, MockRuntimeError>(() => {
-        spy1();
+        fn1();
 
         return 4;
       }).terminate();
 
       await superposition.recover<number, MockRuntimeError>(() => {
-        spy2();
+        fn2();
 
         return 3;
       }).terminate();
 
       await superposition.map<number, MockRuntimeError>(() => {
-        spy3();
+        fn3();
 
         return 2;
       }).terminate();
 
       await superposition.recover<number, MockRuntimeError>(() => {
-        spy4();
+        fn4();
 
         return 1;
       }).terminate();
 
-      expect(spy1.called).toBe(false);
-      expect(spy2.called).toBe(false);
-      expect(spy3.called).toBe(false);
-      expect(spy4.called).toBe(false);
+      expect(fn1.mock.calls).toHaveLength(0);
+      expect(fn2.mock.calls).toHaveLength(0);
+      expect(fn3.mock.calls).toHaveLength(0);
+      expect(fn4.mock.calls).toHaveLength(0);
     });
   });
 
@@ -313,30 +312,30 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
 
       await superposition.map<number>((v: number) => {
-        spy1();
+        fn1();
         expect(v).toBe(value);
 
         return v + 1;
       }).map<number, MockRuntimeError>((v: number) => {
-        spy2();
+        fn2();
         expect(v).toBe(value + 1);
 
         return v + 1;
       }).map<number, MockRuntimeError>((v: number) => {
-        spy3();
+        fn3();
         expect(v).toBe(value + 2);
 
         return v + 1;
       }).terminate();
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(true);
-      expect(spy3.called).toBe(true);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(1);
+      expect(fn3.mock.calls).toHaveLength(1);
     });
 
     it('invokes callbacks unless it is not Dead nor Contradiction, even if the return value is Promise', async () => {
@@ -349,30 +348,30 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
 
       await superposition.map<number>((v: number) => {
-        spy1();
+        fn1();
         expect(v).toBe(value);
 
         return Promise.resolve<number>(v + 1);
       }).map<number, MockRuntimeError>((v: number) => {
-        spy2();
+        fn2();
         expect(v).toBe(value + 1);
 
         return Promise.resolve<number>(v + 2);
       }).map<number, MockRuntimeError>((v: number) => {
-        spy3();
+        fn3();
         expect(v).toBe(value + 2);
 
         return Promise.resolve<number>(v + 1);
       }).terminate();
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(true);
-      expect(spy3.called).toBe(true);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(1);
+      expect(fn3.mock.calls).toHaveLength(1);
     });
 
     it('invokes callbacks unless it is not Dead nor Contradiction, even if the return value is Alive Superposition', async () => {
@@ -399,29 +398,29 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
 
       await superposition1.map<number>((v: number) => {
-        spy1();
+        fn1();
         expect(v).toBe(value1);
 
         return superposition2;
       }).map<number, MockRuntimeError>(() => {
-        spy2();
+        fn2();
 
         return superposition3;
       }).map<number, MockRuntimeError>((v: number) => {
-        spy3();
+        fn3();
         expect(v).toBe(value3);
 
         return superposition3;
       }).terminate();
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(true);
-      expect(spy3.called).toBe(true);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(1);
+      expect(fn3.mock.calls).toHaveLength(1);
     });
 
     it('invokes callbacks unless it is not Dead nor Contradiction, even if the return value is Promise<Alive Superposition>', async () => {
@@ -448,29 +447,29 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
 
       await superposition1.map<number>((v: number) => {
-        spy1();
+        fn1();
         expect(v).toBe(value1);
 
         return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition2);
       }).map<number, MockRuntimeError>(() => {
-        spy2();
+        fn2();
 
         return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition3);
       }).map<number, MockRuntimeError>((v: number) => {
-        spy3();
+        fn3();
         expect(v).toBe(value3);
 
         return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition3);
       }).terminate();
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(true);
-      expect(spy3.called).toBe(true);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(1);
+      expect(fn3.mock.calls).toHaveLength(1);
     });
 
     it('will not invoke callbacks when a callback throws Dead error', async () => {
@@ -484,28 +483,28 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
 
       await superposition.map<number>((v: number) => {
-        spy1();
+        fn1();
         expect(v).toBe(value);
 
         throw error;
       }).map<number, MockRuntimeError>(() => {
-        spy2();
+        fn2();
 
         throw error;
       }).map<number, MockRuntimeError>(() => {
-        spy3();
+        fn3();
 
         throw error;
       }).terminate();
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(false);
-      expect(spy3.called).toBe(false);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(0);
+      expect(fn3.mock.calls).toHaveLength(0);
     });
 
     it('will not invoke callbacks when a callback returns rejected Promise Dead', async () => {
@@ -519,28 +518,28 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
 
       await superposition.map<number>((v: number) => {
-        spy1();
+        fn1();
         expect(v).toBe(value);
 
         return Promise.reject<number>(error);
       }).map<number, MockRuntimeError>(() => {
-        spy2();
+        fn2();
 
         return Promise.reject<number>(error);
       }).map<number, MockRuntimeError>(() => {
-        spy3();
+        fn3();
 
         return Promise.reject<number>(error);
       }).terminate();
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(false);
-      expect(spy3.called).toBe(false);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(0);
+      expect(fn3.mock.calls).toHaveLength(0);
     });
 
     it('will not invoke callbacks when a callback returns Dead Superposition', async () => {
@@ -566,28 +565,28 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
 
       await superposition1.map<number>((v: number) => {
-        spy1();
+        fn1();
         expect(v).toBe(value);
 
         return superposition2;
       }).map<number, MockRuntimeError>(() => {
-        spy2();
+        fn2();
 
         return superposition3;
       }).map<number, MockRuntimeError>(() => {
-        spy3();
+        fn3();
 
         return superposition3;
       }).terminate();
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(false);
-      expect(spy3.called).toBe(false);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(0);
+      expect(fn3.mock.calls).toHaveLength(0);
     });
 
     it('will not invoke callbacks when a callback returns Promise<Dead Superposition>', async () => {
@@ -613,28 +612,28 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
 
       await superposition1.map<number>((v: number) => {
-        spy1();
+        fn1();
         expect(v).toBe(value);
 
         return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition2);
       }).map<number, MockRuntimeError>(() => {
-        spy2();
+        fn2();
 
         return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition3);
       }).map<number, MockRuntimeError>(() => {
-        spy3();
+        fn3();
 
         return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition3);
       }).terminate();
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(false);
-      expect(spy3.called).toBe(false);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(0);
+      expect(fn3.mock.calls).toHaveLength(0);
     });
 
     it('will not invoke callbacks when a callback throws unexpected error', async () => {
@@ -648,34 +647,34 @@ describe('SuperpositionInternal', () => {
         []
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
-      const spy4: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
+      const fn4: jest.Mock = jest.fn();
 
       await superposition.map<number>((v: number) => {
-        spy1();
+        fn1();
         expect(v).toBe(value);
 
         throw error;
       }).map<number, MockRuntimeError>(() => {
-        spy2();
+        fn2();
 
         throw error;
       }).map<number, MockRuntimeError>(() => {
-        spy3();
+        fn3();
 
         throw error;
       }).recover<number, MockRuntimeError>(() => {
-        spy4();
+        fn4();
 
         throw error;
       }).terminate();
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(false);
-      expect(spy3.called).toBe(false);
-      expect(spy4.called).toBe(false);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(0);
+      expect(fn3.mock.calls).toHaveLength(0);
+      expect(fn4.mock.calls).toHaveLength(0);
     });
 
     it('will not invoke callbacks when a callback returns unexpected rejected Promise', async () => {
@@ -689,34 +688,34 @@ describe('SuperpositionInternal', () => {
         []
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
-      const spy4: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
+      const fn4: jest.Mock = jest.fn();
 
       await superposition.map<number>((v: number) => {
-        spy1();
+        fn1();
         expect(v).toBe(value);
 
         return Promise.reject<number>(error);
       }).map<number, MockRuntimeError>(() => {
-        spy2();
+        fn2();
 
         return Promise.reject<number>(error);
       }).map<number, MockRuntimeError>(() => {
-        spy3();
+        fn3();
 
         return Promise.reject<number>(error);
       }).recover<number, MockRuntimeError>(() => {
-        spy4();
+        fn4();
 
         return Promise.reject<number>(error);
       }).terminate();
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(false);
-      expect(spy3.called).toBe(false);
-      expect(spy4.called).toBe(false);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(0);
+      expect(fn3.mock.calls).toHaveLength(0);
+      expect(fn4.mock.calls).toHaveLength(0);
     });
 
     it('will not invoke callbacks when a callback returns Contradiction Superposition', async () => {
@@ -750,34 +749,34 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
-      const spy4: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
+      const fn4: jest.Mock = jest.fn();
 
       await superposition1.map<number>((v: number) => {
-        spy1();
+        fn1();
         expect(v).toBe(value);
 
         return superposition2;
       }).map<number, MockRuntimeError>(() => {
-        spy2();
+        fn2();
 
         return superposition3;
       }).map<number, MockRuntimeError>(() => {
-        spy3();
+        fn3();
 
         return superposition4;
       }, MockRuntimeError).recover<number, MockRuntimeError>(() => {
-        spy4();
+        fn4();
 
         return superposition4;
       }).terminate();
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(false);
-      expect(spy3.called).toBe(false);
-      expect(spy4.called).toBe(false);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(0);
+      expect(fn3.mock.calls).toHaveLength(0);
+      expect(fn4.mock.calls).toHaveLength(0);
     });
 
     it('will not invoke callbacks when a callback returns Promise<Contradiction Superposition>', async () => {
@@ -811,34 +810,34 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
-      const spy4: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
+      const fn4: jest.Mock = jest.fn();
 
       await superposition1.map<number>((v: number) => {
-        spy1();
+        fn1();
         expect(v).toBe(value);
 
         return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition2);
       }).map<number, MockRuntimeError>(() => {
-        spy2();
+        fn2();
 
         return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition3);
       }).map<number, MockRuntimeError>(() => {
-        spy3();
+        fn3();
 
         return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition4);
       }, MockRuntimeError).recover<number, MockRuntimeError>(() => {
-        spy4();
+        fn4();
 
         return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition4);
       }).terminate();
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(false);
-      expect(spy3.called).toBe(false);
-      expect(spy4.called).toBe(false);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(0);
+      expect(fn3.mock.calls).toHaveLength(0);
+      expect(fn4.mock.calls).toHaveLength(0);
     });
 
     it('instantly accepts once accepted Superposition', async () => {
@@ -858,30 +857,30 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
 
       await superposition1.map<number, MockRuntimeError>((v: number) => {
-        spy1();
+        fn1();
         expect(v).toBe(value1);
 
         return superposition2;
       }).map<number, MockRuntimeError>((v: number) => {
-        spy2();
+        fn2();
         expect(v).toBe(value2);
 
         return superposition2;
       }).map<number, MockRuntimeError>((v: number) => {
-        spy3();
+        fn3();
         expect(v).toBe(value2);
 
         return superposition2;
       }).terminate();
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(true);
-      expect(spy3.called).toBe(true);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(1);
+      expect(fn3.mock.calls).toHaveLength(1);
     });
 
     it('instantly declines once declined Superposition', async () => {
@@ -901,28 +900,28 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
 
       await superposition1.map<number, MockRuntimeError>((v: number) => {
-        spy1();
+        fn1();
         expect(v).toBe(value);
 
         return superposition2;
       }).recover<number, MockRuntimeError>(() => {
-        spy2();
+        fn2();
 
         return superposition2;
       }).recover<number, MockRuntimeError>(() => {
-        spy3();
+        fn3();
 
         return superposition2;
       }).terminate();
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(true);
-      expect(spy3.called).toBe(true);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(1);
+      expect(fn3.mock.calls).toHaveLength(1);
     });
 
     it('instantly throws once thrown Superposition', async () => {
@@ -942,29 +941,29 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
 
       await superposition1.map<number, MockRuntimeError>((v: number) => {
-        spy1();
+        fn1();
         expect(v).toBe(value);
 
         return superposition2;
       }).recover<number, MockRuntimeError>(() => {
-        spy2();
+        fn2();
 
         return superposition2;
       }, MockRuntimeError).map<number, MockRuntimeError>((v: number) => {
-        spy3();
+        fn3();
         expect(v).toBe(value);
 
         return superposition2;
       }).terminate();
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(false);
-      expect(spy3.called).toBe(false);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(0);
+      expect(fn3.mock.calls).toHaveLength(0);
     });
   });
 
@@ -980,29 +979,29 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
 
       await superposition.map<number, MockRuntimeError>((v: number) => {
-        spy1();
+        fn1();
 
         return v + 1;
       }, MockRuntimeError).recover<number, MockRuntimeError>((err: MockRuntimeError) => {
-        spy2();
+        fn2();
         expect(err).toBe(error);
 
         return value + 13;
       }, MockRuntimeError).map<number, MockRuntimeError>((v: number) => {
-        spy3();
+        fn3();
         expect(v).toBe(value + 13);
 
         return value + 130;
       }).terminate();
 
-      expect(spy1.called).toBe(false);
-      expect(spy2.called).toBe(true);
-      expect(spy3.called).toBe(true);
+      expect(fn1.mock.calls).toHaveLength(0);
+      expect(fn2.mock.calls).toHaveLength(1);
+      expect(fn3.mock.calls).toHaveLength(1);
     });
 
     it('invokes callbacks unless it is not Alive nor Contradiction, even if the return value is Promise', async () => {
@@ -1016,29 +1015,29 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
 
       await superposition.map<number, MockRuntimeError>((v: number) => {
-        spy1();
+        fn1();
 
         return Promise.resolve<number>(v + 1);
       }).recover<number, MockRuntimeError>((err: MockRuntimeError) => {
-        spy2();
+        fn2();
         expect(err).toBe(error);
 
         return Promise.resolve<number>(value + 13);
       }, MockRuntimeError).map<number, MockRuntimeError>((v: number) => {
-        spy3();
+        fn3();
         expect(v).toBe(v + 13);
 
         return Promise.resolve<number>(v + 130);
       }).terminate();
 
-      expect(spy1.called).toBe(false);
-      expect(spy2.called).toBe(true);
-      expect(spy3.called).toBe(true);
+      expect(fn1.mock.calls).toHaveLength(0);
+      expect(fn2.mock.calls).toHaveLength(1);
+      expect(fn3.mock.calls).toHaveLength(1);
     });
 
     it('invokes callbacks unless it is not Alive nor Contradiction, even if the return value is Alive Superposition', async () => {
@@ -1065,29 +1064,29 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
 
       await superposition1.map<number, MockRuntimeError>(() => {
-        spy1();
+        fn1();
 
         return superposition2;
       }).recover<number, MockRuntimeError>((err: MockRuntimeError) => {
-        spy2();
+        fn2();
         expect(err).toBe(error);
 
         return superposition3;
       }, MockRuntimeError).map<number, MockRuntimeError>((v: number) => {
-        spy3();
+        fn3();
         expect(v).toBe(value2);
 
         return superposition3;
       }).terminate();
 
-      expect(spy1.called).toBe(false);
-      expect(spy2.called).toBe(true);
-      expect(spy3.called).toBe(true);
+      expect(fn1.mock.calls).toHaveLength(0);
+      expect(fn2.mock.calls).toHaveLength(1);
+      expect(fn3.mock.calls).toHaveLength(1);
     });
 
     it('invokes callbacks unless it is not Alive nor Contradiction, even if the return value is Promise<Alive Superposition>', async () => {
@@ -1114,29 +1113,29 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
 
       await superposition1.map<number, MockRuntimeError>(() => {
-        spy1();
+        fn1();
 
         return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition2);
       }).recover<number, MockRuntimeError>((err: MockRuntimeError) => {
-        spy2();
+        fn2();
         expect(err).toBe(error);
 
         return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition3);
       }, MockRuntimeError).map<number, MockRuntimeError>((v: number) => {
-        spy3();
+        fn3();
         expect(v).toBe(value2);
 
         return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition3);
       }).terminate();
 
-      expect(spy1.called).toBe(false);
-      expect(spy2.called).toBe(true);
-      expect(spy3.called).toBe(true);
+      expect(fn1.mock.calls).toHaveLength(0);
+      expect(fn2.mock.calls).toHaveLength(1);
+      expect(fn3.mock.calls).toHaveLength(1);
     });
 
     it('will not invoke callbacks when a callback throws Dead error', async () => {
@@ -1151,30 +1150,30 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
 
       await superposition.recover<number, MockRuntimeError>((err: MockRuntimeError) => {
-        spy1();
+        fn1();
         expect(err).toBe(error1);
 
         throw error2;
       }, MockRuntimeError).recover<number, MockRuntimeError>((err: MockRuntimeError) => {
-        spy2();
+        fn2();
         expect(err).toBe(error2);
 
         return value + 13;
       }, MockRuntimeError).map<number, MockRuntimeError>((v: number) => {
-        spy3();
+        fn3();
         expect(v).toBe(value + 13);
 
         return value + 130;
       }).terminate();
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(true);
-      expect(spy3.called).toBe(true);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(1);
+      expect(fn3.mock.calls).toHaveLength(1);
     });
 
     it('will not invoke callbacks when a callback returns rejected Promise Dead', async () => {
@@ -1189,30 +1188,30 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
 
       await superposition.recover<number, MockRuntimeError>((err: MockRuntimeError) => {
-        spy1();
+        fn1();
         expect(err).toBe(error1);
 
         return Promise.reject<number>(error2);
       }, MockRuntimeError).recover<number, MockRuntimeError>((err: MockRuntimeError) => {
-        spy2();
+        fn2();
         expect(err).toBe(error2);
 
         return value + 13;
       }, MockRuntimeError).map<number, MockRuntimeError>((v: number) => {
-        spy3();
+        fn3();
         expect(v).toBe(value + 13);
 
         return value + 130;
       }).terminate();
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(true);
-      expect(spy3.called).toBe(true);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(1);
+      expect(fn3.mock.calls).toHaveLength(1);
     });
 
     it('will not invoke callbacks when a callback returns Dead Superposition', async () => {
@@ -1239,30 +1238,30 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
 
       await superposition1.map<number, MockRuntimeError>((v: number) => {
-        spy1();
+        fn1();
         expect(v).toBe(value);
 
         return superposition2;
       }).recover<number, MockRuntimeError>((err: MockRuntimeError) => {
-        spy2();
+        fn2();
         expect(err).toBe(error1);
 
         return superposition3;
       }, MockRuntimeError).map<number, MockRuntimeError>((v: number) => {
-        spy3();
+        fn3();
         expect(v).toBe(v + 13);
 
         return superposition3;
       }).terminate();
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(true);
-      expect(spy3.called).toBe(false);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(1);
+      expect(fn3.mock.calls).toHaveLength(0);
     });
 
     it('will not invoke callbacks when a callback returns Promise<Dead Superposition>', async () => {
@@ -1289,30 +1288,30 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
 
       await superposition1.map<number, MockRuntimeError>((v: number) => {
-        spy1();
+        fn1();
         expect(v).toBe(value);
 
         return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition2);
       }).recover<number, MockRuntimeError>((err: MockRuntimeError) => {
-        spy2();
+        fn2();
         expect(err).toBe(error1);
 
         return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition3);
       }, MockRuntimeError).map<number, MockRuntimeError>((v: number) => {
-        spy3();
+        fn3();
         expect(v).toBe(v + 13);
 
         return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition3);
       }).terminate();
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(true);
-      expect(spy3.called).toBe(false);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(1);
+      expect(fn3.mock.calls).toHaveLength(0);
     });
 
     it('will not invoke callbacks when a callback throws unexpected error', async () => {
@@ -1326,34 +1325,34 @@ describe('SuperpositionInternal', () => {
         []
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
-      const spy4: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
+      const fn4: jest.Mock = jest.fn();
 
       await superposition.map<number, MockRuntimeError>((v: number) => {
-        spy1();
+        fn1();
         expect(v).toBe(value);
 
         throw error;
       }).recover<number, MockRuntimeError>(() => {
-        spy2();
+        fn2();
 
         return value + 13;
       }, MockRuntimeError).map<number, MockRuntimeError>(() => {
-        spy3();
+        fn3();
 
         return value + 130;
       }).recover<number, MockRuntimeError>(() => {
-        spy4();
+        fn4();
 
         return value + 13;
       }, MockRuntimeError).terminate();
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(false);
-      expect(spy3.called).toBe(false);
-      expect(spy4.called).toBe(false);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(0);
+      expect(fn3.mock.calls).toHaveLength(0);
+      expect(fn4.mock.calls).toHaveLength(0);
     });
 
     it('will not invoke callbacks when a callback returns unexpected rejected Promise', async () => {
@@ -1367,34 +1366,34 @@ describe('SuperpositionInternal', () => {
         []
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
-      const spy4: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
+      const fn4: jest.Mock = jest.fn();
 
       await superposition.map<number, MockRuntimeError>((v: number) => {
-        spy1();
+        fn1();
         expect(v).toBe(value);
 
         return Promise.reject<number>(error);
       }).recover<number, MockRuntimeError>(() => {
-        spy2();
+        fn2();
 
         return Promise.reject<number>(error);
       }, MockRuntimeError).map<number, MockRuntimeError>(() => {
-        spy3();
+        fn3();
 
         return Promise.reject<number>(error);
       }, MockRuntimeError).recover<number, MockRuntimeError>(() => {
-        spy4();
+        fn4();
 
         return Promise.reject<number>(error);
       }, MockRuntimeError).terminate();
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(false);
-      expect(spy3.called).toBe(false);
-      expect(spy4.called).toBe(false);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(0);
+      expect(fn3.mock.calls).toHaveLength(0);
+      expect(fn4.mock.calls).toHaveLength(0);
     });
 
     it('will not invoke callbacks when a callback returns Contradiction Superposition', async () => {
@@ -1428,30 +1427,30 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
-      const spy4: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
+      const fn4: jest.Mock = jest.fn();
 
       await superposition1.map<number, MockRuntimeError>((v: number) => {
-        spy1();
+        fn1();
         expect(v).toBe(value);
 
         return superposition2;
       }).recover<number, MockRuntimeError>(() => {
-        spy2();
+        fn2();
 
         return superposition3;
       }, MockRuntimeError).map<number, MockRuntimeError>(() => {
-        spy3();
+        fn3();
 
         return superposition4;
       }).terminate();
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(false);
-      expect(spy3.called).toBe(false);
-      expect(spy4.called).toBe(false);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(0);
+      expect(fn3.mock.calls).toHaveLength(0);
+      expect(fn4.mock.calls).toHaveLength(0);
     });
 
     it('will not invoke callbacks when a callback returns Promise<Contradiction Superposition>', async () => {
@@ -1485,30 +1484,30 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
-      const spy4: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
+      const fn4: jest.Mock = jest.fn();
 
       await superposition1.map<number, MockRuntimeError>((v: number) => {
-        spy1();
+        fn1();
         expect(v).toBe(value);
 
         return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition2);
       }).recover<number, MockRuntimeError>(() => {
-        spy2();
+        fn2();
 
         return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition3);
       }, MockRuntimeError).map<number, MockRuntimeError>(() => {
-        spy3();
+        fn3();
 
         return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition4);
       }).terminate();
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(false);
-      expect(spy3.called).toBe(false);
-      expect(spy4.called).toBe(false);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(0);
+      expect(fn3.mock.calls).toHaveLength(0);
+      expect(fn4.mock.calls).toHaveLength(0);
     });
 
     it('instantly accepts once accepted Superposition', async () => {
@@ -1528,30 +1527,30 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
 
       await superposition1.map<number, MockRuntimeError>((v: number) => {
-        spy1();
+        fn1();
         expect(v).toBe(value1);
 
         return superposition2;
       }).map<number>((v: number) => {
-        spy2();
+        fn2();
         expect(v).toBe(value2);
 
         return superposition2;
       }).map<number, MockRuntimeError>((v: number) => {
-        spy3();
+        fn3();
         expect(v).toBe(value2);
 
         return superposition2;
       }).terminate();
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(true);
-      expect(spy3.called).toBe(true);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(1);
+      expect(fn3.mock.calls).toHaveLength(1);
     });
 
     it('instantly declines once declined Superposition', async () => {
@@ -1571,30 +1570,30 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
 
       await superposition1.map<number, MockRuntimeError>((v: number) => {
-        spy1();
+        fn1();
         expect(v).toBe(value);
 
         return superposition2;
       }).recover<number, MockRuntimeError>((err: MockRuntimeError) => {
-        spy2();
+        fn2();
         expect(err).toBe(error);
 
         return superposition2;
       }, MockRuntimeError).recover<number, MockRuntimeError>((err: MockRuntimeError) => {
-        spy3();
+        fn3();
         expect(err).toBe(error);
 
         return superposition2;
       }, MockRuntimeError).terminate();
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(true);
-      expect(spy3.called).toBe(true);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(1);
+      expect(fn3.mock.calls).toHaveLength(1);
     });
 
     it('instantly throws once thrown Superposition', async () => {
@@ -1614,30 +1613,30 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
 
       await superposition1.map<number, MockRuntimeError>((v: number) => {
-        spy1();
+        fn1();
         expect(v).toBe(value);
 
         return superposition2;
       }).recover<number, MockRuntimeError>((err: MockRuntimeError) => {
-        spy2();
+        fn2();
         expect(err).toBe(error);
 
         return superposition2;
       }, MockRuntimeError).map<number, MockRuntimeError>((v: number) => {
-        spy3();
+        fn3();
         expect(v).toBe(error);
 
         return superposition2;
       }, MockRuntimeError).terminate();
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(false);
-      expect(spy3.called).toBe(false);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(0);
+      expect(fn3.mock.calls).toHaveLength(0);
     });
   });
 
@@ -1654,43 +1653,43 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
-      const spy4: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
+      const fn4: jest.Mock = jest.fn();
 
       await superposition.transform<number, MockRuntimeError>(
         (v: number) => {
-          spy1();
+          fn1();
           expect(v).toBe(value1);
 
           return value2;
         },
         () => {
-          spy2();
+          fn2();
 
           return value3;
         },
         MockRuntimeError
       ).transform<number, MockRuntimeError>(
         (v: number) => {
-          spy3();
+          fn3();
           expect(v).toBe(value2);
 
           return value2;
         },
         () => {
-          spy4();
+          fn4();
 
           return value3;
         },
         MockRuntimeError
       ).terminate();
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(false);
-      expect(spy3.called).toBe(true);
-      expect(spy4.called).toBe(false);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(0);
+      expect(fn3.mock.calls).toHaveLength(1);
+      expect(fn4.mock.calls).toHaveLength(0);
     });
 
     it('invokes first callback when Superposition is Alive even if the returns value is Promise', async () => {
@@ -1705,43 +1704,43 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
-      const spy4: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
+      const fn4: jest.Mock = jest.fn();
 
       await superposition.transform<number, MockRuntimeError>(
         (v: number) => {
-          spy1();
+          fn1();
           expect(v).toBe(value1);
 
           return Promise.resolve<number>(value2);
         },
         () => {
-          spy2();
+          fn2();
 
           return Promise.resolve<number>(value3);
         },
         MockRuntimeError
       ).transform<number, MockRuntimeError>(
         (v: number) => {
-          spy3();
+          fn3();
           expect(v).toBe(value2);
 
           return Promise.resolve<number>(value2);
         },
         () => {
-          spy4();
+          fn4();
 
           return Promise.resolve<number>(value3);
         },
         MockRuntimeError
       ).terminate();
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(false);
-      expect(spy3.called).toBe(true);
-      expect(spy4.called).toBe(false);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(0);
+      expect(fn3.mock.calls).toHaveLength(1);
+      expect(fn4.mock.calls).toHaveLength(0);
     });
 
     it('invokes first callback when Superposition is Alive even if the returns value is Alive Superposition', async () => {
@@ -1768,43 +1767,43 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
-      const spy4: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
+      const fn4: jest.Mock = jest.fn();
 
       await superposition1.transform<number, MockRuntimeError>(
         (v: number) => {
-          spy1();
+          fn1();
           expect(v).toBe(value1);
 
           return superposition2;
         },
         () => {
-          spy2();
+          fn2();
 
           return superposition3;
         },
         MockRuntimeError
       ).transform<number, MockRuntimeError>(
         (v: number) => {
-          spy3();
+          fn3();
           expect(v).toBe(value2);
 
           return superposition2;
         },
         () => {
-          spy4();
+          fn4();
 
           return superposition3;
         },
         MockRuntimeError
       ).terminate();
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(false);
-      expect(spy3.called).toBe(true);
-      expect(spy4.called).toBe(false);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(0);
+      expect(fn3.mock.calls).toHaveLength(1);
+      expect(fn4.mock.calls).toHaveLength(0);
     });
 
     it('invokes first callback when Superposition is Alive even if the returns value is Promise<Alive Superposition>', async () => {
@@ -1831,43 +1830,43 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
-      const spy4: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
+      const fn4: jest.Mock = jest.fn();
 
       await superposition1.transform<number, MockRuntimeError>(
         (v: number) => {
-          spy1();
+          fn1();
           expect(v).toBe(value1);
 
           return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition2);
         },
         () => {
-          spy2();
+          fn2();
 
           return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition3);
         },
         MockRuntimeError
       ).transform<number, MockRuntimeError>(
         (v: number) => {
-          spy3();
+          fn3();
           expect(v).toBe(value2);
 
           return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition2);
         },
         () => {
-          spy4();
+          fn4();
 
           return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition3);
         },
         MockRuntimeError
       ).terminate();
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(false);
-      expect(spy3.called).toBe(true);
-      expect(spy4.called).toBe(false);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(0);
+      expect(fn3.mock.calls).toHaveLength(1);
+      expect(fn4.mock.calls).toHaveLength(0);
     });
 
     it('invokes second callback when Superposition is Dead', async () => {
@@ -1882,41 +1881,41 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
-      const spy4: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
+      const fn4: jest.Mock = jest.fn();
 
       await superposition.transform<number, MockRuntimeError>(
         () => {
-          spy1();
+          fn1();
 
           throw error2;
         },
         (err: MockRuntimeError) => {
-          spy2();
+          fn2();
           expect(err).toBe(error1);
 
           throw error3;
         }
       ).transform<number, MockRuntimeError>(
         () => {
-          spy3();
+          fn3();
 
           throw error2;
         },
         (err: MockRuntimeError) => {
-          spy4();
+          fn4();
           expect(err).toBe(error1);
 
           throw error3;
         }
       ).terminate();
 
-      expect(spy1.called).toBe(false);
-      expect(spy2.called).toBe(true);
-      expect(spy3.called).toBe(false);
-      expect(spy4.called).toBe(false);
+      expect(fn1.mock.calls).toHaveLength(0);
+      expect(fn2.mock.calls).toHaveLength(1);
+      expect(fn3.mock.calls).toHaveLength(0);
+      expect(fn4.mock.calls).toHaveLength(0);
     });
 
     it('invokes second callback when Superposition is Dead even if the return value is rejected Promise', async () => {
@@ -1931,19 +1930,19 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
-      const spy4: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
+      const fn4: jest.Mock = jest.fn();
 
       await superposition.transform<number, MockRuntimeError>(
         () => {
-          spy1();
+          fn1();
 
           return Promise.reject<number>(error2);
         },
         (err: MockRuntimeError) => {
-          spy2();
+          fn2();
           expect(err).toBe(error1);
 
           return Promise.reject<number>(error3);
@@ -1951,12 +1950,12 @@ describe('SuperpositionInternal', () => {
         MockRuntimeError
       ).transform<number, MockRuntimeError>(
         () => {
-          spy3();
+          fn3();
 
           return Promise.reject<number>(error2);
         },
         (err: MockRuntimeError) => {
-          spy4();
+          fn4();
           expect(err).toBe(error1);
 
           return Promise.reject<number>(error3);
@@ -1964,10 +1963,10 @@ describe('SuperpositionInternal', () => {
         MockRuntimeError
       ).terminate();
 
-      expect(spy1.called).toBe(false);
-      expect(spy2.called).toBe(true);
-      expect(spy3.called).toBe(false);
-      expect(spy4.called).toBe(true);
+      expect(fn1.mock.calls).toHaveLength(0);
+      expect(fn2.mock.calls).toHaveLength(1);
+      expect(fn3.mock.calls).toHaveLength(0);
+      expect(fn4.mock.calls).toHaveLength(1);
     });
 
     it('invokes second callback when Superposition is Dead even if the return value is Dead Superposition', async () => {
@@ -1994,19 +1993,19 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
-      const spy4: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
+      const fn4: jest.Mock = jest.fn();
 
       await superposition1.transform<number, MockRuntimeError>(
         () => {
-          spy1();
+          fn1();
 
           return superposition2;
         },
         (err: MockRuntimeError) => {
-          spy2();
+          fn2();
           expect(err).toBe(error1);
 
           return superposition3;
@@ -2014,12 +2013,12 @@ describe('SuperpositionInternal', () => {
         MockRuntimeError
       ).transform<number, MockRuntimeError>(
         () => {
-          spy3();
+          fn3();
 
           return superposition2;
         },
         (err: MockRuntimeError) => {
-          spy4();
+          fn4();
           expect(err).toBe(error1);
 
           return superposition3;
@@ -2027,10 +2026,10 @@ describe('SuperpositionInternal', () => {
         MockRuntimeError
       ).terminate();
 
-      expect(spy1.called).toBe(false);
-      expect(spy2.called).toBe(true);
-      expect(spy3.called).toBe(false);
-      expect(spy4.called).toBe(true);
+      expect(fn1.mock.calls).toHaveLength(0);
+      expect(fn2.mock.calls).toHaveLength(1);
+      expect(fn3.mock.calls).toHaveLength(0);
+      expect(fn4.mock.calls).toHaveLength(1);
     });
 
     it('invokes second callback when Superposition is Dead even if the return value is Promise<Dead Superposition>', async () => {
@@ -2057,19 +2056,19 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
-      const spy4: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
+      const fn4: jest.Mock = jest.fn();
 
       await superposition1.transform<number, MockRuntimeError>(
         () => {
-          spy1();
+          fn1();
 
           return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition2);
         },
         (err: MockRuntimeError) => {
-          spy2();
+          fn2();
           expect(err).toBe(error1);
 
           return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition3);
@@ -2077,12 +2076,12 @@ describe('SuperpositionInternal', () => {
         MockRuntimeError
       ).transform<number, MockRuntimeError>(
         () => {
-          spy3();
+          fn3();
 
           return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition2);
         },
         (err: MockRuntimeError) => {
-          spy4();
+          fn4();
           expect(err).toBe(error1);
 
           return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition3);
@@ -2090,10 +2089,10 @@ describe('SuperpositionInternal', () => {
         MockRuntimeError
       ).terminate();
 
-      expect(spy1.called).toBe(false);
-      expect(spy2.called).toBe(true);
-      expect(spy3.called).toBe(false);
-      expect(spy4.called).toBe(true);
+      expect(fn1.mock.calls).toHaveLength(0);
+      expect(fn2.mock.calls).toHaveLength(1);
+      expect(fn3.mock.calls).toHaveLength(0);
+      expect(fn4.mock.calls).toHaveLength(1);
     });
 
     it('instantly accepts once accepted Superposition', async () => {
@@ -2113,60 +2112,60 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
-      const spy4: SinonSpy = spy();
-      const spy5: SinonSpy = spy();
-      const spy6: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
+      const fn4: jest.Mock = jest.fn();
+      const fn5: jest.Mock = jest.fn();
+      const fn6: jest.Mock = jest.fn();
 
       await superposition1.transform<number, MockRuntimeError>(
         (v: number) => {
-          spy1();
+          fn1();
           expect(v).toBe(value1);
 
           return superposition2;
         },
         () => {
-          spy2();
+          fn2();
 
           return superposition2;
         },
         MockRuntimeError
       ).transform<number, MockRuntimeError>(
         (v: number) => {
-          spy3();
+          fn3();
           expect(v).toBe(value2);
 
           return superposition2;
         },
         () => {
-          spy4();
+          fn4();
 
           return superposition2;
         },
         MockRuntimeError
       ).transform<number, MockRuntimeError>(
         (v: number) => {
-          spy5();
+          fn5();
           expect(v).toBe(value2);
 
           return superposition2;
         },
         () => {
-          spy6();
+          fn6();
 
           return superposition2;
         },
         MockRuntimeError
       ).terminate();
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(false);
-      expect(spy3.called).toBe(true);
-      expect(spy4.called).toBe(false);
-      expect(spy5.called).toBe(true);
-      expect(spy6.called).toBe(false);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(0);
+      expect(fn3.mock.calls).toHaveLength(1);
+      expect(fn4.mock.calls).toHaveLength(0);
+      expect(fn5.mock.calls).toHaveLength(1);
+      expect(fn6.mock.calls).toHaveLength(0);
     });
 
     it('instantly declines once declined Superposition', async () => {
@@ -2186,21 +2185,21 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
-      const spy4: SinonSpy = spy();
-      const spy5: SinonSpy = spy();
-      const spy6: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
+      const fn4: jest.Mock = jest.fn();
+      const fn5: jest.Mock = jest.fn();
+      const fn6: jest.Mock = jest.fn();
 
       await superposition1.transform<number, MockRuntimeError>(
         () => {
-          spy1();
+          fn1();
 
           return superposition2;
         },
         (err: MockRuntimeError) => {
-          spy2();
+          fn2();
           expect(err).toBe(error1);
 
           return superposition2;
@@ -2208,12 +2207,12 @@ describe('SuperpositionInternal', () => {
         MockRuntimeError
       ).transform<number, MockRuntimeError>(
         () => {
-          spy3();
+          fn3();
 
           return superposition2;
         },
         (err: MockRuntimeError) => {
-          spy4();
+          fn4();
           expect(err).toBe(error2);
 
           return superposition2;
@@ -2221,12 +2220,12 @@ describe('SuperpositionInternal', () => {
         MockRuntimeError
       ).transform<number, MockRuntimeError>(
         () => {
-          spy5();
+          fn5();
 
           return superposition2;
         },
         (err: MockRuntimeError) => {
-          spy6();
+          fn6();
           expect(err).toBe(error2);
 
           return superposition2;
@@ -2234,12 +2233,12 @@ describe('SuperpositionInternal', () => {
         MockRuntimeError
       ).terminate();
 
-      expect(spy1.called).toBe(false);
-      expect(spy2.called).toBe(true);
-      expect(spy3.called).toBe(false);
-      expect(spy4.called).toBe(true);
-      expect(spy5.called).toBe(false);
-      expect(spy6.called).toBe(true);
+      expect(fn1.mock.calls).toHaveLength(0);
+      expect(fn2.mock.calls).toHaveLength(1);
+      expect(fn3.mock.calls).toHaveLength(0);
+      expect(fn4.mock.calls).toHaveLength(1);
+      expect(fn5.mock.calls).toHaveLength(0);
+      expect(fn6.mock.calls).toHaveLength(1);
     });
 
     it('instantly throws once thrown Superposition', async () => {
@@ -2259,57 +2258,57 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
-      const spy4: SinonSpy = spy();
-      const spy5: SinonSpy = spy();
-      const spy6: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
+      const fn4: jest.Mock = jest.fn();
+      const fn5: jest.Mock = jest.fn();
+      const fn6: jest.Mock = jest.fn();
 
       await superposition1.transform<number>(
         () => {
-          spy1();
+          fn1();
 
           return superposition2;
         },
         () => {
-          spy2();
-
-          return superposition2;
-        },
-        MockRuntimeError
-      ).transform<number>(
-        () => {
-          spy3();
-
-          return superposition2;
-        },
-        () => {
-          spy4();
+          fn2();
 
           return superposition2;
         },
         MockRuntimeError
       ).transform<number>(
         () => {
-          spy5();
+          fn3();
 
           return superposition2;
         },
         () => {
-          spy6();
+          fn4();
+
+          return superposition2;
+        },
+        MockRuntimeError
+      ).transform<number>(
+        () => {
+          fn5();
+
+          return superposition2;
+        },
+        () => {
+          fn6();
 
           return superposition2;
         },
         MockRuntimeError
       ).terminate();
 
-      expect(spy1.called).toBe(false);
-      expect(spy2.called).toBe(false);
-      expect(spy3.called).toBe(false);
-      expect(spy4.called).toBe(false);
-      expect(spy5.called).toBe(false);
-      expect(spy6.called).toBe(false);
+      expect(fn1.mock.calls).toHaveLength(0);
+      expect(fn2.mock.calls).toHaveLength(0);
+      expect(fn3.mock.calls).toHaveLength(0);
+      expect(fn4.mock.calls).toHaveLength(0);
+      expect(fn5.mock.calls).toHaveLength(0);
+      expect(fn6.mock.calls).toHaveLength(0);
     });
   });
 
@@ -2323,14 +2322,14 @@ describe('SuperpositionInternal', () => {
         }, [MockRuntimeError]
       );
 
-      const s: SinonSpy = spy();
+      const fn: jest.Mock = jest.fn();
 
       const schrodinger: Schrodinger<number, MockRuntimeError> = await superposition.ifAlive((n: number) => {
-        s();
+        fn();
         expect(n).toBe(value);
       }).terminate();
 
-      expect(s.called).toBe(true);
+      expect(fn.mock.calls).toHaveLength(1);
       expect(schrodinger.isAlive()).toBe(true);
     });
 
@@ -2343,13 +2342,13 @@ describe('SuperpositionInternal', () => {
         }, [MockRuntimeError]
       );
 
-      const s: SinonSpy = spy();
+      const fn: jest.Mock = jest.fn();
 
       const schrodinger: Schrodinger<number, MockRuntimeError> = await superposition.ifAlive(() => {
-        s();
+        fn();
       }).terminate();
 
-      expect(s.called).toBe(false);
+      expect(fn.mock.calls).toHaveLength(0);
       expect(schrodinger.isDead()).toBe(true);
     });
 
@@ -2362,13 +2361,13 @@ describe('SuperpositionInternal', () => {
         }, [MockRuntimeError]
       );
 
-      const s: SinonSpy = spy();
+      const fn: jest.Mock = jest.fn();
 
       const schrodinger: Schrodinger<number, MockRuntimeError> = await superposition.ifAlive(() => {
-        s();
+        fn();
       }).terminate();
 
-      expect(s.called).toBe(false);
+      expect(fn.mock.calls).toHaveLength(0);
       expect(schrodinger.isContradiction()).toBe(true);
     });
   });
@@ -2383,13 +2382,13 @@ describe('SuperpositionInternal', () => {
         }, [MockRuntimeError]
       );
 
-      const s: SinonSpy = spy();
+      const fn: jest.Mock = jest.fn();
 
       const schrodinger: Schrodinger<number, MockRuntimeError> = await superposition.ifDead(() => {
-        s();
+        fn();
       }).terminate();
 
-      expect(s.called).toBe(false);
+      expect(fn.mock.calls).toHaveLength(0);
       expect(schrodinger.isAlive()).toBe(true);
     });
 
@@ -2402,14 +2401,14 @@ describe('SuperpositionInternal', () => {
         }, [MockRuntimeError]
       );
 
-      const s: SinonSpy = spy();
+      const fn: jest.Mock = jest.fn();
 
       const schrodinger: Schrodinger<number, MockRuntimeError> = await superposition.ifDead((e: MockRuntimeError) => {
-        s();
+        fn();
         expect(e).toBe(error);
       }).terminate();
 
-      expect(s.called).toBe(true);
+      expect(fn.mock.calls).toHaveLength(1);
       expect(schrodinger.isDead()).toBe(true);
     });
 
@@ -2422,13 +2421,13 @@ describe('SuperpositionInternal', () => {
         }, [MockRuntimeError]
       );
 
-      const s: SinonSpy = spy();
+      const fn: jest.Mock = jest.fn();
 
       const schrodinger: Schrodinger<number, MockRuntimeError> = await superposition.ifDead(() => {
-        s();
+        fn();
       }).terminate();
 
-      expect(s.called).toBe(false);
+      expect(fn.mock.calls).toHaveLength(0);
       expect(schrodinger.isContradiction()).toBe(true);
     });
   });
@@ -2443,13 +2442,13 @@ describe('SuperpositionInternal', () => {
         }, [MockRuntimeError]
       );
 
-      const s: SinonSpy = spy();
+      const fn: jest.Mock = jest.fn();
 
       const schrodinger: Schrodinger<number, MockRuntimeError> = await superposition.ifContradiction(() => {
-        s();
+        fn();
       }).terminate();
 
-      expect(s.called).toBe(false);
+      expect(fn.mock.calls).toHaveLength(0);
       expect(schrodinger.isAlive()).toBe(true);
     });
 
@@ -2462,13 +2461,13 @@ describe('SuperpositionInternal', () => {
         }, [MockRuntimeError]
       );
 
-      const s: SinonSpy = spy();
+      const fn: jest.Mock = jest.fn();
 
       const schrodinger: Schrodinger<number, MockRuntimeError> = await superposition.ifContradiction(() => {
-        s();
+        fn();
       }).terminate();
 
-      expect(s.called).toBe(false);
+      expect(fn.mock.calls).toHaveLength(0);
       expect(schrodinger.isDead()).toBe(true);
     });
 
@@ -2481,14 +2480,14 @@ describe('SuperpositionInternal', () => {
         }, [MockRuntimeError]
       );
 
-      const s: SinonSpy = spy();
+      const fn: jest.Mock = jest.fn();
 
       const schrodinger: Schrodinger<number, MockRuntimeError> = await superposition.ifContradiction((e: unknown) => {
-        s();
+        fn();
         expect(e).toBe(error);
       }).terminate();
 
-      expect(s.called).toBe(true);
+      expect(fn.mock.calls).toHaveLength(1);
       expect(schrodinger.isContradiction()).toBe(true);
     });
   });
@@ -2504,26 +2503,26 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
 
       superposition.pass(
         (v: number) => {
-          spy1();
+          fn1();
           expect(v).toBe(value);
         },
         () => {
-          spy2();
+          fn2();
         },
         () => {
-          spy3();
+          fn3();
         }
       );
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(false);
-      expect(spy3.called).toBe(false);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(0);
+      expect(fn3.mock.calls).toHaveLength(0);
     });
 
     it('invokes second callback if Superposition is Dead', () => {
@@ -2536,26 +2535,26 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
 
       superposition.pass(
         () => {
-          spy1();
+          fn1();
         },
         (e: MockRuntimeError) => {
-          spy2();
+          fn2();
           expect(e).toBe(error);
         },
         () => {
-          spy3();
+          fn3();
         }
       );
 
-      expect(spy1.called).toBe(false);
-      expect(spy2.called).toBe(true);
-      expect(spy3.called).toBe(false);
+      expect(fn1.mock.calls).toHaveLength(0);
+      expect(fn2.mock.calls).toHaveLength(1);
+      expect(fn3.mock.calls).toHaveLength(0);
     });
 
     it('invokes third callback if Superposition is Contradiction', () => {
@@ -2568,26 +2567,26 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
 
       superposition.pass(
         () => {
-          spy1();
+          fn1();
         },
         () => {
-          spy2();
+          fn2();
         },
         (e: unknown) => {
-          spy3();
+          fn3();
           expect(e).toBe(error);
         }
       );
 
-      expect(spy1.called).toBe(false);
-      expect(spy2.called).toBe(false);
-      expect(spy3.called).toBe(true);
+      expect(fn1.mock.calls).toHaveLength(0);
+      expect(fn2.mock.calls).toHaveLength(0);
+      expect(fn3.mock.calls).toHaveLength(1);
     });
   });
 
@@ -2602,13 +2601,13 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const s: SinonSpy = spy();
+      const fn: jest.Mock = jest.fn();
 
       superposition.peek(() => {
-        s();
+        fn();
       });
 
-      expect(s.called).toBe(true);
+      expect(fn.mock.calls).toHaveLength(1);
     });
 
     it('invokes second callback if Superposition is Dead', () => {
@@ -2621,13 +2620,13 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const s: SinonSpy = spy();
+      const fn: jest.Mock = jest.fn();
 
       superposition.peek(() => {
-        s();
+        fn();
       });
 
-      expect(s.called).toBe(true);
+      expect(fn.mock.calls).toHaveLength(1);
     });
 
     it('invokes third callback if Superposition is Contradiction', () => {
@@ -2640,13 +2639,13 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      const s: SinonSpy = spy();
+      const fn: jest.Mock = jest.fn();
 
       superposition.peek(() => {
-        s();
+        fn();
       });
 
-      expect(s.called).toBe(true);
+      expect(fn.mock.calls).toHaveLength(1);
     });
   });
 });

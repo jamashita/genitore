@@ -1,5 +1,4 @@
 import { MockRuntimeError } from '@jamashita/anden-error';
-import { SinonSpy, spy } from 'sinon';
 import { Alive } from '../Alive';
 import { Schrodinger } from '../Schrodinger';
 
@@ -88,16 +87,16 @@ describe('Alive', () => {
     it('will be invoked', () => {
       const value: number = 1;
 
-      const s: SinonSpy = spy();
+      const fn: jest.Mock = jest.fn();
 
       const alive: Schrodinger<number, MockRuntimeError> = Alive.of<number, MockRuntimeError>(value);
 
       alive.ifAlive((v: number) => {
-        s();
+        fn();
         expect(v).toBe(value);
       });
 
-      expect(s.called).toBe(true);
+      expect(fn.mock.calls).toHaveLength(1);
     });
   });
 
@@ -105,15 +104,15 @@ describe('Alive', () => {
     it('will not be invoked', () => {
       const value: number = 1;
 
-      const s: SinonSpy = spy();
+      const fn: jest.Mock = jest.fn();
 
       const alive: Schrodinger<number, MockRuntimeError> = Alive.of<number, MockRuntimeError>(value);
 
       alive.ifDead(() => {
-        s();
+        fn();
       });
 
-      expect(s.called).toBe(false);
+      expect(fn.mock.calls).toHaveLength(0);
     });
   });
 
@@ -121,15 +120,15 @@ describe('Alive', () => {
     it('will not be invoked', () => {
       const value: number = 1;
 
-      const s: SinonSpy = spy();
+      const fn: jest.Mock = jest.fn();
 
       const alive: Schrodinger<number, MockRuntimeError> = Alive.of<number, MockRuntimeError>(value);
 
       alive.ifContradiction(() => {
-        s();
+        fn();
       });
 
-      expect(s.called).toBe(false);
+      expect(fn.mock.calls).toHaveLength(0);
     });
   });
 

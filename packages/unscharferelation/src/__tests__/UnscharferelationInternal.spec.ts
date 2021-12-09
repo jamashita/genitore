@@ -1,7 +1,6 @@
 import { MockRuntimeError } from '@jamashita/anden-error';
 import { Heisenberg, HeisenbergError, Matter } from '@jamashita/genitore-heisenberg';
 import { Plan } from '@jamashita/genitore-plan';
-import { SinonSpy, spy } from 'sinon';
 import { Epoque } from '../Epoque';
 import { UnscharferelationError } from '../Error/UnscharferelationError';
 import { UnscharferelationInternal } from '../UnscharferelationInternal';
@@ -34,10 +33,12 @@ describe('UnscharferelationInternal', () => {
   describe('accept', () => {
     it('does nothing if done once', async () => {
       const value: number = -35;
-      const s: SinonSpy = spy();
+
+      const fn: jest.Mock = jest.fn();
+
       const plans: Set<Plan<Matter<number>, void>> = new Set<Plan<Matter<number>, void>>();
 
-      plans.forEach = s;
+      plans.forEach = fn;
 
       const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of<number>(
         (epoque: Epoque<number>) => {
@@ -57,15 +58,15 @@ describe('UnscharferelationInternal', () => {
 
       const heisenberg2: Heisenberg<number> = await unscharferelation.terminate();
 
-      expect(s.called).toBe(false);
+      expect(fn.mock.calls).toHaveLength(0);
       expect(heisenberg1).toBe(heisenberg2);
     });
 
     it('invokes all maps', async () => {
       const value: number = -1.3;
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
 
       const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of<number>(
         (epoque: Epoque<number>) => {
@@ -74,30 +75,31 @@ describe('UnscharferelationInternal', () => {
       );
 
       await unscharferelation.map<number>((v: number) => {
-        spy1();
+        fn1();
         expect(v).toBe(value);
 
         return v + 4;
       }).terminate();
 
       await unscharferelation.map<number>((v: number) => {
-        spy2();
+        fn2();
         expect(v).toBe(value);
 
         return v + 3;
       }).terminate();
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(true);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(1);
     });
   });
 
   describe('decline', () => {
     it('does nothing if done once', async () => {
-      const s: SinonSpy = spy();
+      const fn: jest.Mock = jest.fn();
+
       const plans: Set<Plan<Matter<number>, void>> = new Set<Plan<Matter<number>, void>>();
 
-      plans.forEach = s;
+      plans.forEach = fn;
 
       const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of<number>(
         (epoque: Epoque<number>) => {
@@ -116,13 +118,13 @@ describe('UnscharferelationInternal', () => {
 
       const heisenberg2: Heisenberg<number> = await unscharferelation.terminate();
 
-      expect(s.called).toBe(false);
+      expect(fn.mock.calls).toHaveLength(0);
       expect(heisenberg1).toBe(heisenberg2);
     });
 
     it('invokes all maps', async () => {
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
 
       const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of<number>(
         (epoque: Epoque<number>) => {
@@ -131,29 +133,31 @@ describe('UnscharferelationInternal', () => {
       );
 
       await unscharferelation.recover<number>(() => {
-        spy1();
+        fn1();
 
         return 4;
       }).terminate();
 
       await unscharferelation.recover<number>(() => {
-        spy2();
+        fn2();
 
         return 3;
       }).terminate();
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(true);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(1);
     });
   });
 
   describe('throw', () => {
     it('does nothing if done once', async () => {
       const error: MockRuntimeError = new MockRuntimeError();
-      const s: SinonSpy = spy();
+
+      const fn: jest.Mock = jest.fn();
+
       const plans: Set<Plan<Matter<number>, void>> = new Set<Plan<Matter<number>, void>>();
 
-      plans.forEach = s;
+      plans.forEach = fn;
 
       const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of<number>(
         (epoque: Epoque<number>) => {
@@ -175,17 +179,17 @@ describe('UnscharferelationInternal', () => {
 
       const heisenberg2: Heisenberg<number> = await unscharferelation.terminate();
 
-      expect(s.callCount).toBe(0);
+      expect(fn.mock.calls).toHaveLength(0);
       expect(heisenberg1).toBe(heisenberg2);
     });
 
     it('invokes all maps', async () => {
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
-      const spy4: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
+      const fn4: jest.Mock = jest.fn();
 
       const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of<number>(
         (epoque: Epoque<number>) => {
@@ -194,33 +198,33 @@ describe('UnscharferelationInternal', () => {
       );
 
       await unscharferelation.map<number>(() => {
-        spy1();
+        fn1();
 
         return 4;
       }).terminate();
 
       await unscharferelation.recover<number>(() => {
-        spy2();
+        fn2();
 
         return 3;
       }).terminate();
 
       await unscharferelation.map<number>(() => {
-        spy3();
+        fn3();
 
         return 2;
       }).terminate();
 
       await unscharferelation.recover<number>(() => {
-        spy4();
+        fn4();
 
         return 1;
       }).terminate();
 
-      expect(spy1.called).toBe(false);
-      expect(spy2.called).toBe(false);
-      expect(spy3.called).toBe(false);
-      expect(spy4.called).toBe(false);
+      expect(fn1.mock.calls).toHaveLength(0);
+      expect(fn2.mock.calls).toHaveLength(0);
+      expect(fn3.mock.calls).toHaveLength(0);
+      expect(fn4.mock.calls).toHaveLength(0);
     });
   });
 
@@ -289,30 +293,30 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
 
       await unscharferelation.map<number>((v: number) => {
-        spy1();
+        fn1();
         expect(v).toBe(value);
 
         return v + 1;
       }).map<number>((v: number) => {
-        spy2();
+        fn2();
         expect(v).toBe(value + 1);
 
         return v + 1;
       }).map<number>((v: number) => {
-        spy3();
+        fn3();
         expect(v).toBe(value + 2);
 
         return v + 1;
       }).terminate();
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(true);
-      expect(spy3.called).toBe(true);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(1);
+      expect(fn3.mock.calls).toHaveLength(1);
     });
 
     it('invokes callbacks unless it is not Absent nor Lost, even if the return value is Promise', async () => {
@@ -324,30 +328,30 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
 
       await unscharferelation.map<number>((v: number) => {
-        spy1();
+        fn1();
         expect(v).toBe(value);
 
         return Promise.resolve<number>(v + 1);
       }).map<number>((v: number) => {
-        spy2();
+        fn2();
         expect(v).toBe(value + 1);
 
         return Promise.resolve<number>(v + 1);
       }).map<number>((v: number) => {
-        spy3();
+        fn3();
         expect(v).toBe(value + 2);
 
         return Promise.resolve<number>(v + 1);
       }).terminate();
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(true);
-      expect(spy3.called).toBe(true);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(1);
+      expect(fn3.mock.calls).toHaveLength(1);
     });
 
     it('invokes callbacks unless it is not Absent nor Lost, even if the return value is Present Unscharferelation', async () => {
@@ -370,30 +374,31 @@ describe('UnscharferelationInternal', () => {
           epoque.accept(value3);
         }
       );
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
+
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
 
       await unscharferelation1.map<number>((v: number) => {
-        spy1();
+        fn1();
         expect(v).toBe(value1);
 
         return unscharferelation2;
       }).map<number>((v: number) => {
-        spy2();
+        fn2();
         expect(v).toBe(value2);
 
         return unscharferelation3;
       }).map<number>((v: number) => {
-        spy3();
+        fn3();
         expect(v).toBe(value3);
 
         return unscharferelation3;
       }).terminate();
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(true);
-      expect(spy3.called).toBe(true);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(1);
+      expect(fn3.mock.calls).toHaveLength(1);
     });
 
     it('invokes callbacks unless it is not Absent nor Lost, even if the return value is Promise<Present Unscharferelation>', async () => {
@@ -416,30 +421,31 @@ describe('UnscharferelationInternal', () => {
           epoque.accept(value3);
         }
       );
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
+
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
 
       await unscharferelation1.map<number>((v: number) => {
-        spy1();
+        fn1();
         expect(v).toBe(value1);
 
         return Promise.resolve<UnscharferelationInternal<number>>(unscharferelation2);
       }).map<number>((v: number) => {
-        spy2();
+        fn2();
         expect(v).toBe(value2);
 
         return Promise.resolve<UnscharferelationInternal<number>>(unscharferelation3);
       }).map<number>((v: number) => {
-        spy3();
+        fn3();
         expect(v).toBe(value3);
 
         return Promise.resolve<UnscharferelationInternal<number>>(unscharferelation3);
       }).terminate();
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(true);
-      expect(spy3.called).toBe(true);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(1);
+      expect(fn3.mock.calls).toHaveLength(1);
     });
 
     it('will not invoke callbacks when a callback returns null', async () => {
@@ -451,28 +457,28 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
 
       await unscharferelation.map<number>((v: number) => {
-        spy1();
+        fn1();
         expect(v).toBe(value);
 
         return null;
       }).map<number>(() => {
-        spy2();
+        fn2();
 
         return null;
       }).map<number>(() => {
-        spy3();
+        fn3();
 
         return null;
       }).terminate();
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(false);
-      expect(spy3.called).toBe(false);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(0);
+      expect(fn3.mock.calls).toHaveLength(0);
     });
 
     it('will not invoke callbacks when a callback returns Promise<null>', async () => {
@@ -484,28 +490,28 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
 
       await unscharferelation.map<number>((v: number) => {
-        spy1();
+        fn1();
         expect(v).toBe(value);
 
         return Promise.resolve<null>(null);
       }).map<number>(() => {
-        spy2();
+        fn2();
 
         return Promise.resolve<null>(null);
       }).map<number>(() => {
-        spy3();
+        fn3();
 
         return Promise.resolve<null>(null);
       }).terminate();
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(false);
-      expect(spy3.called).toBe(false);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(0);
+      expect(fn3.mock.calls).toHaveLength(0);
     });
 
     it('will not invoke callbacks when a callback returns Absent Unscharferelation', async () => {
@@ -527,28 +533,28 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
 
       await unscharferelation1.map<number>((v: number) => {
-        spy1();
+        fn1();
         expect(v).toBe(value);
 
         return unscharferelation2;
       }).map<number>(() => {
-        spy2();
+        fn2();
 
         return unscharferelation3;
       }).map<number>(() => {
-        spy3();
+        fn3();
 
         return unscharferelation3;
       }).terminate();
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(false);
-      expect(spy3.called).toBe(false);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(0);
+      expect(fn3.mock.calls).toHaveLength(0);
     });
 
     it('will not invoke callbacks when a callback returns Promise<Absent Unscharferelation>', async () => {
@@ -570,28 +576,28 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
 
       await unscharferelation1.map<number>((v: number) => {
-        spy1();
+        fn1();
         expect(v).toBe(value);
 
         return Promise.resolve<UnscharferelationInternal<number>>(unscharferelation2);
       }).map<number>(() => {
-        spy2();
+        fn2();
 
         return Promise.resolve<UnscharferelationInternal<number>>(unscharferelation3);
       }).map<number>(() => {
-        spy3();
+        fn3();
 
         return Promise.resolve<UnscharferelationInternal<number>>(unscharferelation3);
       }).terminate();
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(false);
-      expect(spy3.called).toBe(false);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(0);
+      expect(fn3.mock.calls).toHaveLength(0);
     });
 
     it('will not invoke callbacks when a callback throws unexpected error', async () => {
@@ -604,34 +610,34 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
-      const spy4: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
+      const fn4: jest.Mock = jest.fn();
 
       await unscharferelation.map<number>((v: number) => {
-        spy1();
+        fn1();
         expect(v).toBe(value);
 
         throw error;
       }).map<number>(() => {
-        spy2();
+        fn2();
 
         throw error;
       }).map<number>(() => {
-        spy3();
+        fn3();
 
         throw error;
       }).recover<number>(() => {
-        spy4();
+        fn4();
 
         throw error;
       }).terminate();
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(false);
-      expect(spy3.called).toBe(false);
-      expect(spy4.called).toBe(false);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(0);
+      expect(fn3.mock.calls).toHaveLength(0);
+      expect(fn4.mock.calls).toHaveLength(0);
     });
 
     it('will not invoke callbacks when a callback returns unexpected rejected Promise', async () => {
@@ -644,34 +650,34 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
-      const spy4: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
+      const fn4: jest.Mock = jest.fn();
 
       await unscharferelation.map<number>((v: number) => {
-        spy1();
+        fn1();
         expect(v).toBe(value);
 
         return Promise.reject<null>(error);
       }).map<number>(() => {
-        spy2();
+        fn2();
 
         return Promise.reject<null>(error);
       }).map<number>(() => {
-        spy3();
+        fn3();
 
         return Promise.reject<null>(error);
       }).recover<number>(() => {
-        spy4();
+        fn4();
 
         return Promise.reject<null>(error);
       }).terminate();
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(false);
-      expect(spy3.called).toBe(false);
-      expect(spy4.called).toBe(false);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(0);
+      expect(fn3.mock.calls).toHaveLength(0);
+      expect(fn4.mock.calls).toHaveLength(0);
     });
 
     it('will not invoke callbacks when a callback returns Lost Unscharferelation', async () => {
@@ -701,34 +707,34 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
-      const spy4: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
+      const fn4: jest.Mock = jest.fn();
 
       await unscharferelation1.map<number>((v: number) => {
-        spy1();
+        fn1();
         expect(v).toBe(value);
 
         return unscharferelation2;
       }).map<number>(() => {
-        spy2();
+        fn2();
 
         return unscharferelation3;
       }).map<number>(() => {
-        spy3();
+        fn3();
 
         return unscharferelation4;
       }).recover<number>(() => {
-        spy4();
+        fn4();
 
         return unscharferelation4;
       }).terminate();
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(false);
-      expect(spy3.called).toBe(false);
-      expect(spy4.called).toBe(false);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(0);
+      expect(fn3.mock.calls).toHaveLength(0);
+      expect(fn4.mock.calls).toHaveLength(0);
     });
 
     it('will not invoke callbacks when a callback returns Promise<Lost Unscharferelation>', async () => {
@@ -746,30 +752,30 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
 
       await unscharferelation1.map<number>((v: number) => {
-        spy1();
+        fn1();
         expect(v).toBe(value1);
 
         return unscharferelation2;
       }).map<number>((v: number) => {
-        spy2();
+        fn2();
         expect(v).toBe(value2);
 
         return unscharferelation2;
       }).map<number>((v: number) => {
-        spy3();
+        fn3();
         expect(v).toBe(value2);
 
         return unscharferelation2;
       }).terminate();
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(true);
-      expect(spy3.called).toBe(true);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(1);
+      expect(fn3.mock.calls).toHaveLength(1);
     });
 
     it('instantly accepts once accepted Unscharferelation', async () => {
@@ -787,30 +793,30 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
 
       await unscharferelation1.map<number>((v: number) => {
-        spy1();
+        fn1();
         expect(v).toBe(value1);
 
         return unscharferelation2;
       }).map<number>((v: number) => {
-        spy2();
+        fn2();
         expect(v).toBe(value2);
 
         return unscharferelation2;
       }).map<number>((v: number) => {
-        spy3();
+        fn3();
         expect(v).toBe(value2);
 
         return unscharferelation2;
       }).terminate();
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(true);
-      expect(spy3.called).toBe(true);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(1);
+      expect(fn3.mock.calls).toHaveLength(1);
     });
 
     it('instantly declines once declined Unscharferelation', async () => {
@@ -827,28 +833,28 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
 
       await unscharferelation1.map<number>((v: number) => {
-        spy1();
+        fn1();
         expect(v).toBe(value);
 
         return unscharferelation2;
       }).recover<number>(() => {
-        spy2();
+        fn2();
 
         return unscharferelation2;
       }).recover<number>(() => {
-        spy3();
+        fn3();
 
         return unscharferelation2;
       }).terminate();
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(true);
-      expect(spy3.called).toBe(true);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(1);
+      expect(fn3.mock.calls).toHaveLength(1);
     });
 
     it('instantly throws once declined Unscharferelation', async () => {
@@ -866,28 +872,28 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
 
       await unscharferelation1.map<number>((v: number) => {
-        spy1();
+        fn1();
         expect(v).toBe(value);
 
         return unscharferelation2;
       }).recover<number>(() => {
-        spy2();
+        fn2();
 
         return unscharferelation2;
       }).map<number>(() => {
-        spy3();
+        fn3();
 
         return unscharferelation2;
       }).terminate();
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(false);
-      expect(spy3.called).toBe(false);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(0);
+      expect(fn3.mock.calls).toHaveLength(0);
     });
   });
 
@@ -901,28 +907,28 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
 
       await unscharferelation.map<number>((v: number) => {
-        spy1();
+        fn1();
 
         return v + 1;
       }).recover<number>(() => {
-        spy2();
+        fn2();
 
         return value + 23;
       }).map<number>((v: number) => {
-        spy3();
+        fn3();
         expect(v).toBe(value + 23);
 
         return v + 230;
       }).terminate();
 
-      expect(spy1.called).toBe(false);
-      expect(spy2.called).toBe(true);
-      expect(spy3.called).toBe(true);
+      expect(fn1.mock.calls).toHaveLength(0);
+      expect(fn2.mock.calls).toHaveLength(1);
+      expect(fn3.mock.calls).toHaveLength(1);
     });
 
     it('invokes callbacks unless it is not Present nor Lost, even if the return value is Promise', async () => {
@@ -934,28 +940,28 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
 
       await unscharferelation.map<number>((v: number) => {
-        spy1();
+        fn1();
 
         return Promise.resolve<number>(v + 23);
       }).recover<number>(() => {
-        spy2();
+        fn2();
 
         return Promise.resolve<number>(value + 23);
       }).map<number>((v: number) => {
-        spy3();
+        fn3();
         expect(v).toBe(value + 23);
 
         return Promise.resolve<number>(value + 23);
       }).terminate();
 
-      expect(spy1.called).toBe(false);
-      expect(spy2.called).toBe(true);
-      expect(spy3.called).toBe(true);
+      expect(fn1.mock.calls).toHaveLength(0);
+      expect(fn2.mock.calls).toHaveLength(1);
+      expect(fn3.mock.calls).toHaveLength(1);
     });
 
     it('invokes callbacks unless it is not Present nor Lost, even if the return value is Present Unscharferelation', async () => {
@@ -978,28 +984,28 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
 
       await unscharferelation1.map<number>(() => {
-        spy1();
+        fn1();
 
         return unscharferelation2;
       }).recover<number>(() => {
-        spy2();
+        fn2();
 
         return unscharferelation3;
       }).map<number>((v: number) => {
-        spy3();
+        fn3();
         expect(v).toBe(value2);
 
         return unscharferelation3;
       }).terminate();
 
-      expect(spy1.called).toBe(false);
-      expect(spy2.called).toBe(true);
-      expect(spy3.called).toBe(true);
+      expect(fn1.mock.calls).toHaveLength(0);
+      expect(fn2.mock.calls).toHaveLength(1);
+      expect(fn3.mock.calls).toHaveLength(1);
     });
 
     it('invokes callbacks unless it is not Present nor Lost, even if the return value is Promise<Present Unscharferelation>', async () => {
@@ -1022,28 +1028,28 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
 
       await unscharferelation1.map<number>(() => {
-        spy1();
+        fn1();
 
         return Promise.resolve<UnscharferelationInternal<number>>(unscharferelation2);
       }).recover<number>(() => {
-        spy2();
+        fn2();
 
         return Promise.resolve<UnscharferelationInternal<number>>(unscharferelation3);
       }).map<number>((v: number) => {
-        spy3();
+        fn3();
         expect(v).toBe(value2);
 
         return Promise.resolve<UnscharferelationInternal<number>>(unscharferelation3);
       }).terminate();
 
-      expect(spy1.called).toBe(false);
-      expect(spy2.called).toBe(true);
-      expect(spy3.called).toBe(true);
+      expect(fn1.mock.calls).toHaveLength(0);
+      expect(fn2.mock.calls).toHaveLength(1);
+      expect(fn3.mock.calls).toHaveLength(1);
     });
 
     it('will not invoke callbacks with a callback returns null', async () => {
@@ -1055,28 +1061,28 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
 
       await unscharferelation.recover<number>(() => {
-        spy1();
+        fn1();
 
         return null;
       }).recover<number>(() => {
-        spy2();
+        fn2();
 
         return value + 23;
       }).map<number>((v: number) => {
-        spy3();
+        fn3();
         expect(v).toBe(value + 23);
 
         return v + 230;
       }).terminate();
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(true);
-      expect(spy2.called).toBe(true);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(1);
+      expect(fn3.mock.calls).toHaveLength(1);
     });
 
     it('will not invoke callbacks with a callback returns Promise<null>', async () => {
@@ -1088,28 +1094,28 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
 
       await unscharferelation.recover<number>(() => {
-        spy1();
+        fn1();
 
         return Promise.resolve<null>(null);
       }).recover<number>(() => {
-        spy2();
+        fn2();
 
         return value + 23;
       }).map<number>((v: number) => {
-        spy3();
+        fn3();
         expect(v).toBe(value + 23);
 
         return v + 230;
       }).terminate();
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(true);
-      expect(spy3.called).toBe(true);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(1);
+      expect(fn3.mock.calls).toHaveLength(1);
     });
 
     it('will not invoke callbacks with a callback returns Absent Unscharferelation', async () => {
@@ -1131,28 +1137,28 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
 
       await unscharferelation1.map<number>((v: number) => {
-        spy1();
+        fn1();
         expect(v).toBe(value);
 
         return unscharferelation2;
       }).recover<number>(() => {
-        spy2();
+        fn2();
 
         return unscharferelation3;
       }).map<number>(() => {
-        spy3();
+        fn3();
 
         return unscharferelation3;
       }).terminate();
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(true);
-      expect(spy3.called).toBe(false);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(1);
+      expect(fn3.mock.calls).toHaveLength(0);
     });
 
     it('will not invoke callbacks with a callback returns Promise<Absent Unscharferelation>', async () => {
@@ -1174,28 +1180,28 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
 
       await unscharferelation1.map<number>((v: number) => {
-        spy1();
+        fn1();
         expect(v).toBe(value);
 
         return Promise.resolve<UnscharferelationInternal<number>>(unscharferelation2);
       }).recover<number>(() => {
-        spy2();
+        fn2();
 
         return Promise.resolve<UnscharferelationInternal<number>>(unscharferelation3);
       }).map<number>(() => {
-        spy3();
+        fn3();
 
         return Promise.resolve<UnscharferelationInternal<number>>(unscharferelation3);
       }).terminate();
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(true);
-      expect(spy3.called).toBe(false);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(1);
+      expect(fn3.mock.calls).toHaveLength(0);
     });
 
     it('will not invoke callbacks with a callback throws unexpected error', async () => {
@@ -1208,34 +1214,34 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
-      const spy4: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
+      const fn4: jest.Mock = jest.fn();
 
       await unscharferelation.map<number>((v: number) => {
-        spy1();
+        fn1();
         expect(v).toBe(value);
 
         throw error;
       }).recover<number>(() => {
-        spy2();
+        fn2();
 
         throw error;
       }).map<number>(() => {
-        spy3();
+        fn3();
 
         throw error;
       }).recover<number>(() => {
-        spy4();
+        fn4();
 
         throw error;
       }).terminate();
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(false);
-      expect(spy3.called).toBe(false);
-      expect(spy4.called).toBe(false);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(0);
+      expect(fn3.mock.calls).toHaveLength(0);
+      expect(fn4.mock.calls).toHaveLength(0);
     });
 
     it('will not invoke callbacks with a callback throws unexpected rejected Promise', async () => {
@@ -1248,34 +1254,34 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
-      const spy4: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
+      const fn4: jest.Mock = jest.fn();
 
       await unscharferelation.map<number>((v: number) => {
-        spy1();
+        fn1();
         expect(v).toBe(value);
 
         return Promise.reject<null>(error);
       }).recover<number>(() => {
-        spy2();
+        fn2();
 
         return Promise.reject<null>(error);
       }).map<number>(() => {
-        spy3();
+        fn3();
 
         return Promise.reject<null>(error);
       }).recover<number>(() => {
-        spy4();
+        fn4();
 
         throw error;
       }).terminate();
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(false);
-      expect(spy3.called).toBe(false);
-      expect(spy4.called).toBe(false);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(0);
+      expect(fn3.mock.calls).toHaveLength(0);
+      expect(fn4.mock.calls).toHaveLength(0);
     });
 
     it('will not invoke callbacks with a callback returns Lost Unscharferelation', async () => {
@@ -1305,34 +1311,34 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
-      const spy4: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
+      const fn4: jest.Mock = jest.fn();
 
       await unscharferelation1.map<number>((v: number) => {
-        spy1();
+        fn1();
         expect(v).toBe(value);
 
         return unscharferelation2;
       }).recover<number>(() => {
-        spy2();
+        fn2();
 
         return unscharferelation3;
       }).map<number>(() => {
-        spy3();
+        fn3();
 
         return unscharferelation4;
       }).recover<number>(() => {
-        spy4();
+        fn4();
 
         return unscharferelation4;
       }).terminate();
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(false);
-      expect(spy3.called).toBe(false);
-      expect(spy4.called).toBe(false);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(0);
+      expect(fn3.mock.calls).toHaveLength(0);
+      expect(fn4.mock.calls).toHaveLength(0);
     });
 
     it('will not invoke callbacks with a callback returns Promise<Lost Unscharferelation>', async () => {
@@ -1362,34 +1368,34 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
-      const spy4: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
+      const fn4: jest.Mock = jest.fn();
 
       await unscharferelation1.map<number>((v: number) => {
-        spy1();
+        fn1();
         expect(v).toBe(value);
 
         return Promise.resolve<UnscharferelationInternal<number>>(unscharferelation2);
       }).recover<number>(() => {
-        spy2();
+        fn2();
 
         return Promise.resolve<UnscharferelationInternal<number>>(unscharferelation3);
       }).map<number>(() => {
-        spy3();
+        fn3();
 
         return Promise.resolve<UnscharferelationInternal<number>>(unscharferelation3);
       }).recover<number>(() => {
-        spy4();
+        fn4();
 
         return unscharferelation4;
       }).terminate();
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(false);
-      expect(spy3.called).toBe(false);
-      expect(spy4.called).toBe(false);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(0);
+      expect(fn3.mock.calls).toHaveLength(0);
+      expect(fn4.mock.calls).toHaveLength(0);
     });
 
     it('instantly accepts once accepted Unscharferelation', async () => {
@@ -1407,30 +1413,30 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
 
       await unscharferelation1.map<number>((v: number) => {
-        spy1();
+        fn1();
         expect(v).toBe(value1);
 
         return unscharferelation2;
       }).map<number>((v: number) => {
-        spy2();
+        fn2();
         expect(v).toBe(value2);
 
         return unscharferelation2;
       }).map<number>((v: number) => {
-        spy3();
+        fn3();
         expect(v).toBe(value2);
 
         return unscharferelation2;
       }).terminate();
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(true);
-      expect(spy3.called).toBe(true);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(1);
+      expect(fn3.mock.calls).toHaveLength(1);
     });
 
     it('instantly declines once declined Unscharferelation', async () => {
@@ -1447,28 +1453,28 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
 
       await unscharferelation1.map<number>((v: number) => {
-        spy1();
+        fn1();
         expect(v).toBe(value);
 
         return unscharferelation2;
       }).recover<number>(() => {
-        spy2();
+        fn2();
 
         return unscharferelation2;
       }).recover<number>(() => {
-        spy3();
+        fn3();
 
         return unscharferelation2;
       }).terminate();
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(true);
-      expect(spy3.called).toBe(true);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(1);
+      expect(fn3.mock.calls).toHaveLength(1);
     });
 
     it('instantly throws once thrown Unscharferelation', async () => {
@@ -1486,28 +1492,28 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
 
       await unscharferelation1.map<number>((v: number) => {
-        spy1();
+        fn1();
         expect(v).toBe(value);
 
         return unscharferelation2;
       }).recover<number>(() => {
-        spy2();
+        fn2();
 
         return unscharferelation2;
       }).map<number>(() => {
-        spy3();
+        fn3();
 
         return unscharferelation2;
       }).terminate();
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(false);
-      expect(spy3.called).toBe(false);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(0);
+      expect(fn3.mock.calls).toHaveLength(0);
     });
   });
 
@@ -1521,14 +1527,14 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const s: SinonSpy = spy();
+      const fn: jest.Mock = jest.fn();
 
       const heisenberg: Heisenberg<number> = await unscharferelation.ifPresent((v: number) => {
-        s();
+        fn();
         expect(v).toBe(value);
       }).terminate();
 
-      expect(s.called).toBe(true);
+      expect(fn.mock.calls).toHaveLength(1);
       expect(heisenberg.isPresent()).toBe(true);
     });
 
@@ -1539,13 +1545,13 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const s: SinonSpy = spy();
+      const fn: jest.Mock = jest.fn();
 
       const heisenberg: Heisenberg<number> = await unscharferelation.ifPresent(() => {
-        s();
+        fn();
       }).terminate();
 
-      expect(s.called).toBe(false);
+      expect(fn.mock.calls).toHaveLength(0);
       expect(heisenberg.isAbsent()).toBe(true);
     });
 
@@ -1558,13 +1564,13 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const s: SinonSpy = spy();
+      const fn: jest.Mock = jest.fn();
 
       const heisenberg: Heisenberg<number> = await unscharferelation.ifPresent(() => {
-        s();
+        fn();
       }).terminate();
 
-      expect(s.called).toBe(false);
+      expect(fn.mock.calls).toHaveLength(0);
       expect(heisenberg.isLost()).toBe(true);
     });
   });
@@ -1579,13 +1585,13 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const s: SinonSpy = spy();
+      const fn: jest.Mock = jest.fn();
 
       const heisenberg: Heisenberg<number> = await unscharferelation.ifAbsent(() => {
-        s();
+        fn();
       }).terminate();
 
-      expect(s.called).toBe(false);
+      expect(fn.mock.calls).toHaveLength(0);
       expect(heisenberg.isPresent()).toBe(true);
       expect(heisenberg.get()).toBe(value);
     });
@@ -1597,13 +1603,13 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const s: SinonSpy = spy();
+      const fn: jest.Mock = jest.fn();
 
       const heisenberg: Heisenberg<number> = await unscharferelation.ifAbsent(() => {
-        s();
+        fn();
       }).terminate();
 
-      expect(s.called).toBe(true);
+      expect(fn.mock.calls).toHaveLength(1);
       expect(heisenberg.isAbsent()).toBe(true);
     });
 
@@ -1616,13 +1622,13 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const s: SinonSpy = spy();
+      const fn: jest.Mock = jest.fn();
 
       const heisenberg: Heisenberg<number> = await unscharferelation.ifAbsent(() => {
-        s();
+        fn();
       }).terminate();
 
-      expect(s.called).toBe(false);
+      expect(fn.mock.calls).toHaveLength(0);
       expect(heisenberg.isLost()).toBe(true);
     });
   });
@@ -1637,13 +1643,13 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const s: SinonSpy = spy();
+      const fn: jest.Mock = jest.fn();
 
       const heisenberg: Heisenberg<number> = await unscharferelation.ifLost(() => {
-        s();
+        fn();
       }).terminate();
 
-      expect(s.called).toBe(false);
+      expect(fn.mock.calls).toHaveLength(0);
       expect(heisenberg.isPresent()).toBe(true);
       expect(heisenberg.get()).toBe(value);
     });
@@ -1655,13 +1661,13 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const s: SinonSpy = spy();
+      const fn: jest.Mock = jest.fn();
 
       const heisenberg: Heisenberg<number> = await unscharferelation.ifLost(() => {
-        s();
+        fn();
       }).terminate();
 
-      expect(s.called).toBe(false);
+      expect(fn.mock.calls).toHaveLength(0);
       expect(heisenberg.isAbsent()).toBe(true);
     });
 
@@ -1674,14 +1680,14 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const s: SinonSpy = spy();
+      const fn: jest.Mock = jest.fn();
 
       const heisenberg: Heisenberg<number> = await unscharferelation.ifLost((e: unknown) => {
-        s();
+        fn();
         expect(e).toBe(error);
       }).terminate();
 
-      expect(s.called).toBe(true);
+      expect(fn.mock.calls).toHaveLength(1);
       expect(heisenberg.isLost()).toBe(true);
     });
   });
@@ -1696,26 +1702,26 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
 
       unscharferelation.pass(
         (v: number) => {
-          spy1();
+          fn1();
           expect(v).toBe(value);
         },
         () => {
-          spy2();
+          fn2();
         },
         () => {
-          spy3();
+          fn3();
         }
       );
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(false);
-      expect(spy3.called).toBe(false);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(0);
+      expect(fn3.mock.calls).toHaveLength(0);
     });
 
     it('invokes second callback if Unscharferelation is Absent', () => {
@@ -1725,25 +1731,25 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
 
       unscharferelation.pass(
         () => {
-          spy1();
+          fn1();
         },
         () => {
-          spy2();
+          fn2();
         },
         () => {
-          spy3();
+          fn3();
         }
       );
 
-      expect(spy1.called).toBe(false);
-      expect(spy2.called).toBe(true);
-      expect(spy3.called).toBe(false);
+      expect(fn1.mock.calls).toHaveLength(0);
+      expect(fn2.mock.calls).toHaveLength(1);
+      expect(fn3.mock.calls).toHaveLength(0);
     });
 
     it('invokes third callback if Unscharferelation is Lost', () => {
@@ -1755,26 +1761,26 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
 
       unscharferelation.pass(
         () => {
-          spy1();
+          fn1();
         },
         () => {
-          spy2();
+          fn2();
         },
         (e: unknown) => {
-          spy3();
+          fn3();
           expect(e).toBe(error);
         }
       );
 
-      expect(spy1.called).toBe(false);
-      expect(spy2.called).toBe(false);
-      expect(spy3.called).toBe(true);
+      expect(fn1.mock.calls).toHaveLength(0);
+      expect(fn2.mock.calls).toHaveLength(0);
+      expect(fn3.mock.calls).toHaveLength(1);
     });
   });
 
@@ -1788,13 +1794,13 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const s: SinonSpy = spy();
+      const fn: jest.Mock = jest.fn();
 
       unscharferelation.peek(() => {
-        s();
+        fn();
       });
 
-      expect(s.called).toBe(true);
+      expect(fn.mock.calls).toHaveLength(1);
     });
 
     it('invokes second callback if Unscharferelation is Absent', () => {
@@ -1804,13 +1810,13 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const s: SinonSpy = spy();
+      const fn: jest.Mock = jest.fn();
 
       unscharferelation.peek(() => {
-        s();
+        fn();
       });
 
-      expect(s.called).toBe(true);
+      expect(fn.mock.calls).toHaveLength(1);
     });
 
     it('invokes third callback if Unscharferelation is Lost', () => {
@@ -1822,13 +1828,13 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      const s: SinonSpy = spy();
+      const fn: jest.Mock = jest.fn();
 
       unscharferelation.peek(() => {
-        s();
+        fn();
       });
 
-      expect(s.called).toBe(true);
+      expect(fn.mock.calls).toHaveLength(1);
     });
   });
 });

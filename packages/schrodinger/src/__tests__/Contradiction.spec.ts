@@ -1,5 +1,4 @@
 import { MockRuntimeError } from '@jamashita/anden-error';
-import { SinonSpy, spy } from 'sinon';
 import { Contradiction } from '../Contradiction';
 import { Schrodinger } from '../Schrodinger';
 
@@ -63,15 +62,15 @@ describe('Contradiction', () => {
     it('will not be invoked', () => {
       const value: number = 1;
 
-      const s: SinonSpy = spy();
+      const fn: jest.Mock = jest.fn();
 
       const contradiction: Schrodinger<number, MockRuntimeError> = Contradiction.of<number, MockRuntimeError>(value);
 
       contradiction.ifAlive(() => {
-        s();
+        fn();
       });
 
-      expect(s.called).toBe(false);
+      expect(fn.mock.calls).toHaveLength(0);
     });
   });
 
@@ -79,15 +78,15 @@ describe('Contradiction', () => {
     it('will not be invoked', () => {
       const value: number = 1;
 
-      const s: SinonSpy = spy();
+      const fn: jest.Mock = jest.fn();
 
       const contradiction: Schrodinger<number, MockRuntimeError> = Contradiction.of<number, MockRuntimeError>(value);
 
       contradiction.ifDead(() => {
-        s();
+        fn();
       });
 
-      expect(s.called).toBe(false);
+      expect(fn.mock.calls).toHaveLength(0);
     });
   });
 
@@ -95,16 +94,16 @@ describe('Contradiction', () => {
     it('will be invoked', () => {
       const value: number = 1;
 
-      const s: SinonSpy = spy();
+      const fn: jest.Mock = jest.fn();
 
       const contradiction: Schrodinger<number, MockRuntimeError> = Contradiction.of<number, MockRuntimeError>(value);
 
       contradiction.ifContradiction((v: unknown) => {
-        s();
+        fn();
         expect(v).toBe(value);
       });
 
-      expect(s.called).toBe(true);
+      expect(fn.mock.calls).toHaveLength(1);
     });
   });
 

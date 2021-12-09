@@ -1,4 +1,3 @@
-import { SinonSpy, spy } from 'sinon';
 import { HeisenbergError } from '../Error/HeisenbergError';
 import { Heisenberg } from '../Heisenberg';
 import { Uncertain } from '../Uncertain';
@@ -40,43 +39,43 @@ describe('Uncertain', () => {
 
   describe('ifPresent', () => {
     it('will not be invoked', () => {
-      const s: SinonSpy = spy();
+      const fn: jest.Mock = jest.fn();
 
       const uncertain: Heisenberg<number> = Uncertain.of<number>();
 
       uncertain.ifPresent(() => {
-        spy();
+        fn();
       });
 
-      expect(s.called).toBe(false);
+      expect(fn.mock.calls).toHaveLength(0);
     });
   });
 
   describe('ifAbsent', () => {
     it('will not be invoked', () => {
-      const s: SinonSpy = spy();
+      const fn: jest.Mock = jest.fn();
 
       const uncertain: Heisenberg<number> = Uncertain.of<number>();
 
       uncertain.ifAbsent(() => {
-        spy();
+        fn();
       });
 
-      expect(s.called).toBe(false);
+      expect(fn.mock.calls).toHaveLength(0);
     });
   });
 
   describe('ifLost', () => {
     it('will not be invoked', () => {
-      const s: SinonSpy = spy();
+      const fn: jest.Mock = jest.fn();
 
       const uncertain: Heisenberg<number> = Uncertain.of<number>();
 
       uncertain.ifLost(() => {
-        spy();
+        fn();
       });
 
-      expect(s.called).toBe(false);
+      expect(fn.mock.calls).toHaveLength(0);
     });
   });
 

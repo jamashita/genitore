@@ -1,5 +1,4 @@
 import { MockRuntimeError } from '@jamashita/anden-error';
-import { SinonSpy, spy } from 'sinon';
 import { SchrodingerError } from '../Error/SchrodingerError';
 import { Schrodinger } from '../Schrodinger';
 import { Still } from '../Still';
@@ -41,43 +40,43 @@ describe('Still', () => {
 
   describe('ifAlive', () => {
     it('will not be invoked', () => {
-      const s: SinonSpy = spy();
+      const fn: jest.Mock = jest.fn();
 
       const still: Schrodinger<number, MockRuntimeError> = Still.of<number, MockRuntimeError>();
 
       still.ifAlive(() => {
-        spy();
+        fn();
       });
 
-      expect(s.called).toBe(false);
+      expect(fn.mock.calls).toHaveLength(0);
     });
   });
 
   describe('ifDead', () => {
     it('will not be invoked', () => {
-      const s: SinonSpy = spy();
+      const fn: jest.Mock = jest.fn();
 
       const still: Schrodinger<number, MockRuntimeError> = Still.of<number, MockRuntimeError>();
 
       still.ifDead(() => {
-        spy();
+        fn();
       });
 
-      expect(s.called).toBe(false);
+      expect(fn.mock.calls).toHaveLength(0);
     });
   });
 
   describe('ifContradiction', () => {
     it('will not be invoked', () => {
-      const s: SinonSpy = spy();
+      const fn: jest.Mock = jest.fn();
 
       const still: Schrodinger<number, MockRuntimeError> = Still.of<number, MockRuntimeError>();
 
       still.ifContradiction(() => {
-        spy();
+        fn();
       });
 
-      expect(s.called).toBe(false);
+      expect(fn.mock.calls).toHaveLength(0);
     });
   });
 

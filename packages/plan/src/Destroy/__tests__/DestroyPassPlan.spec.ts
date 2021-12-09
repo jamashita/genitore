@@ -1,4 +1,3 @@
-import { SinonSpy, spy } from 'sinon';
 import { DestroyPassPlan } from '../DestroyPassPlan';
 
 describe('DestroyPassPlan', () => {
@@ -6,18 +5,18 @@ describe('DestroyPassPlan', () => {
     it('invokes callback when onDestroy() called', () => {
       const value: number = -35;
 
-      const s: SinonSpy = spy();
+      const fn: jest.Mock = jest.fn();
 
       const plan: DestroyPassPlan = DestroyPassPlan.of(
         (v: unknown) => {
-          s();
+          fn();
           expect(v).toBe(value);
         }
       );
 
       plan.onDestroy(value);
 
-      expect(s.called).toBe(true);
+      expect(fn.mock.calls).toHaveLength(1);
     });
   });
 });

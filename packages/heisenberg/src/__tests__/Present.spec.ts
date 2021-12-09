@@ -1,4 +1,3 @@
-import { SinonSpy, spy } from 'sinon';
 import { Heisenberg } from '../Heisenberg';
 import { Present } from '../Present';
 
@@ -87,16 +86,16 @@ describe('Present', () => {
     it('will be invoked', () => {
       const value: number = 1;
 
-      const s: SinonSpy = spy();
+      const fn: jest.Mock = jest.fn();
 
       const present: Heisenberg<number> = Present.of<number>(value);
 
       present.ifPresent((v: number) => {
-        s();
+        fn();
         expect(v).toBe(value);
       });
 
-      expect(s.called).toBe(true);
+      expect(fn.mock.calls).toHaveLength(1);
     });
   });
 
@@ -104,15 +103,15 @@ describe('Present', () => {
     it('will not be invoked', () => {
       const value: number = 1;
 
-      const s: SinonSpy = spy();
+      const fn: jest.Mock = jest.fn();
 
       const present: Heisenberg<number> = Present.of<number>(value);
 
       present.ifAbsent(() => {
-        s();
+        fn();
       });
 
-      expect(s.called).toBe(false);
+      expect(fn.mock.calls).toHaveLength(0);
     });
   });
 
@@ -120,15 +119,15 @@ describe('Present', () => {
     it('will not be invoked', () => {
       const value: number = 1;
 
-      const s: SinonSpy = spy();
+      const fn: jest.Mock = jest.fn();
 
       const present: Heisenberg<number> = Present.of<number>(value);
 
       present.ifLost(() => {
-        s();
+        fn();
       });
 
-      expect(s.called).toBe(false);
+      expect(fn.mock.calls).toHaveLength(0);
     });
   });
 
