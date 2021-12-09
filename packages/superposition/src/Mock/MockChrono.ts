@@ -2,8 +2,7 @@ import { Consumer } from '@jamashita/anden-type';
 import { DeadConstructor, Detoxicated } from '@jamashita/genitore-schrodinger';
 import { Chrono } from '../Chrono';
 
-export class MockChrono<M, R extends Error> implements Chrono<M, R, 'MockChrono'> {
-  public readonly noun: 'MockChrono' = 'MockChrono';
+export class MockChrono<M, R extends Error> implements Chrono<M, R> {
   private readonly map: Consumer<Detoxicated<M>>;
   private readonly recover: Consumer<R>;
   private readonly destroy: Consumer<unknown>;

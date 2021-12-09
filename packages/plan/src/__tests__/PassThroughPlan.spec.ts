@@ -4,8 +4,6 @@ import { PassThroughPlan } from '../PassThroughPlan';
 describe('PassThroughPlan', () => {
   describe('onMap', () => {
     it('invokes first callback when onMap() called', () => {
-      expect.assertions(4);
-
       const value: number = -35;
 
       const spy1: SinonSpy = spy();
@@ -35,8 +33,6 @@ describe('PassThroughPlan', () => {
 
   describe('onRecover', () => {
     it('invokes second callback when onRecover() called', () => {
-      expect.assertions(4);
-
       const value: string = 'halt';
 
       const spy1: SinonSpy = spy();
@@ -66,8 +62,6 @@ describe('PassThroughPlan', () => {
 
   describe('onDestroy', () => {
     it('invokes third callback when onDestroy() called', () => {
-      expect.assertions(4);
-
       const value: number = -35;
 
       const spy1: SinonSpy = spy();

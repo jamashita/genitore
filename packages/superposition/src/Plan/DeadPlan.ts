@@ -4,16 +4,15 @@ import { Detoxicated } from '@jamashita/genitore-schrodinger';
 import { Chrono } from '../Chrono';
 import { containsError, isSuperposition, ISuperposition, SReturnType } from '../ISuperposition';
 
-export class DeadPlan<B, D extends Error, E extends Error> implements RecoveryPlan<D, 'DeadPlan'> {
-  public readonly noun: 'DeadPlan' = 'DeadPlan';
+export class DeadPlan<B, D extends Error, E extends Error> implements RecoveryPlan<D> {
   private readonly mapper: UnaryFunction<D, SReturnType<B, E>>;
   private readonly chrono: Chrono<B, E>;
 
-  public static of<BT, DT extends Error, ET extends Error>(
-    mapper: UnaryFunction<DT, SReturnType<BT, ET>>,
-    chrono: Chrono<BT, ET>
-  ): DeadPlan<BT, DT, ET> {
-    return new DeadPlan<BT, DT, ET>(mapper, chrono);
+  public static of<B, D extends Error, E extends Error>(
+    mapper: UnaryFunction<D, SReturnType<B, E>>,
+    chrono: Chrono<B, E>
+  ): DeadPlan<B, D, E> {
+    return new DeadPlan<B, D, E>(mapper, chrono);
   }
 
   protected constructor(
@@ -22,36 +21,6 @@ export class DeadPlan<B, D extends Error, E extends Error> implements RecoveryPl
   ) {
     this.mapper = mapper;
     this.chrono = chrono;
-  }
-
-  public onRecover(value: D): unknown {
-    try {
-      const mapped: SReturnType<B, E> = this.mapper(value);
-
-      if (isSuperposition<B, E>(mapped)) {
-        return this.forSuperposition(mapped);
-      }
-      if (Kind.isPromiseLike<Detoxicated<B> | ISuperposition<B, E>>(mapped)) {
-        return mapped.then<unknown, unknown>(
-          (v: Detoxicated<B> | ISuperposition<B, E>) => {
-            if (isSuperposition<B, E>(v)) {
-              return this.forSuperposition(v);
-            }
-
-            return this.forOther(v);
-
-          },
-          (e: unknown) => {
-            return this.forError(e);
-          }
-        );
-      }
-
-      return this.forOther(mapped);
-    }
-    catch (err: unknown) {
-      return this.forError(err);
-    }
   }
 
   private forError(e: unknown): unknown {
@@ -84,5 +53,35 @@ export class DeadPlan<B, D extends Error, E extends Error> implements RecoveryPl
         return this.chrono.throw(c);
       }
     );
+  }
+
+  public onRecover(value: D): unknown {
+    try {
+      const mapped: SReturnType<B, E> = this.mapper(value);
+
+      if (isSuperposition<B, E>(mapped)) {
+        return this.forSuperposition(mapped);
+      }
+      if (Kind.isPromiseLike<Detoxicated<B> | ISuperposition<B, E>>(mapped)) {
+        return mapped.then<unknown, unknown>(
+          (v: Detoxicated<B> | ISuperposition<B, E>) => {
+            if (isSuperposition<B, E>(v)) {
+              return this.forSuperposition(v);
+            }
+
+            return this.forOther(v);
+
+          },
+          (e: unknown) => {
+            return this.forError(e);
+          }
+        );
+      }
+
+      return this.forOther(mapped);
+    }
+    catch (err: unknown) {
+      return this.forError(err);
+    }
   }
 }

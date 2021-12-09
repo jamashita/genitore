@@ -1,12 +1,11 @@
 import { DestroyPlan } from '@jamashita/genitore-plan';
 import { Epoque } from '../Epoque';
 
-export class DestroyEpoquePlan<P> implements DestroyPlan<'DestroyEpoquePlan'> {
-  public readonly noun: 'DestroyEpoquePlan' = 'DestroyEpoquePlan';
+export class DestroyEpoquePlan<P> implements DestroyPlan {
   private readonly epoque: Epoque<P>;
 
-  public static of<PT>(epoque: Epoque<PT>): DestroyEpoquePlan<PT> {
-    return new DestroyEpoquePlan<PT>(epoque);
+  public static of<P>(epoque: Epoque<P>): DestroyEpoquePlan<P> {
+    return new DestroyEpoquePlan<P>(epoque);
   }
 
   protected constructor(epoque: Epoque<P>) {

@@ -4,13 +4,11 @@ import { Heisenberg } from './Heisenberg';
 import { Lost } from './Lost';
 import { Present } from './Present';
 
-export class Absent<P> implements Heisenberg<P, 'Absent'> {
-  public readonly noun: 'Absent' = 'Absent';
-
+export class Absent<P> implements Heisenberg<P> {
   private static readonly INSTANCE: Absent<unknown> = new Absent<unknown>();
 
-  public static of<PT>(): Absent<PT> {
-    return (Absent.INSTANCE as unknown) as Absent<PT>;
+  public static of<P>(): Absent<P> {
+    return (Absent.INSTANCE as unknown) as Absent<P>;
   }
 
   private constructor() {

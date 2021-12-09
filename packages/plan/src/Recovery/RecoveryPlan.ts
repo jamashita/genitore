@@ -1,5 +1,3 @@
-import { Noun } from '@jamashita/anden-type';
-
-export interface RecoveryPlan<R, N extends string = string> extends Noun<N> {
+export interface RecoveryPlan<R> {
   onRecover(value: R): unknown;
 }

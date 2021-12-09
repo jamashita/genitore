@@ -4,13 +4,11 @@ import { Heisenberg } from './Heisenberg';
 import { Lost } from './Lost';
 import { Present } from './Present';
 
-export class Uncertain<P> implements Heisenberg<P, 'Uncertain'> {
-  public readonly noun: 'Uncertain' = 'Uncertain';
-
+export class Uncertain<P> implements Heisenberg<P> {
   private static readonly INSTANCE: Uncertain<unknown> = new Uncertain<unknown>();
 
-  public static of<PT>(): Uncertain<PT> {
-    return (Uncertain.INSTANCE as unknown) as Uncertain<PT>;
+  public static of<P>(): Uncertain<P> {
+    return (Uncertain.INSTANCE as unknown) as Uncertain<P>;
   }
 
   private constructor() {

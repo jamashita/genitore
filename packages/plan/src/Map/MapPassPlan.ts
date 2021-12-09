@@ -1,12 +1,11 @@
 import { Consumer } from '@jamashita/anden-type';
 import { MapPlan } from './MapPlan';
 
-export class MapPassPlan<M> implements MapPlan<M, 'MapPassPlan'> {
-  public readonly noun: 'MapPassPlan' = 'MapPassPlan';
+export class MapPassPlan<M> implements MapPlan<M> {
   private readonly map: Consumer<M>;
 
-  public static of<MT>(map: Consumer<MT>): MapPassPlan<MT> {
-    return new MapPassPlan<MT>(map);
+  public static of<M>(map: Consumer<M>): MapPassPlan<M> {
+    return new MapPassPlan<M>(map);
   }
 
   protected constructor(map: Consumer<M>) {

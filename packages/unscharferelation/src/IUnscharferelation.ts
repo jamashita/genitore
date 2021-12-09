@@ -1,7 +1,6 @@
 import {
   Consumer,
   Kind,
-  Noun,
   Peek,
   Serializable,
   Supplier,
@@ -13,7 +12,7 @@ import { Heisenberg, Matter } from '@jamashita/genitore-heisenberg';
 
 export type UReturnType<Q> = SyncAsync<IUnscharferelation<Q> | Suspicious<Matter<Q>>>;
 
-export interface IUnscharferelation<P, N extends string = string> extends Serializable, Noun<N> {
+export interface IUnscharferelation<P> extends Serializable {
   get(): Promise<Matter<P>>;
 
   ifAbsent(consumer: Consumer<void>): this;

@@ -2,8 +2,7 @@ import { Consumer } from '@jamashita/anden-type';
 import { Matter } from '@jamashita/genitore-heisenberg';
 import { Epoque } from '../Epoque';
 
-export class MockEpoque<M> implements Epoque<M, 'MockEpoque'> {
-  public readonly noun: 'MockEpoque' = 'MockEpoque';
+export class MockEpoque<M> implements Epoque<M> {
   private readonly map: Consumer<Matter<M>>;
   private readonly recover: Consumer<void>;
   private readonly destroy: Consumer<unknown>;
