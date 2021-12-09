@@ -3,8 +3,7 @@ import { ValueObject } from '@jamashita/anden-object';
 import { Heisenberg, Matter } from '@jamashita/genitore-heisenberg';
 import { IUnscharferelation } from '../IUnscharferelation';
 
-export class MockUnscharferelation<P> extends ValueObject<'MockUnscharferelation'> implements IUnscharferelation<P, 'MockUnscharferelation'> {
-  public readonly noun: 'MockUnscharferelation' = 'MockUnscharferelation';
+export class MockUnscharferelation<P> extends ValueObject implements IUnscharferelation<P> {
 
   public constructor() {
     super();
@@ -51,10 +50,6 @@ export class MockUnscharferelation<P> extends ValueObject<'MockUnscharferelation
   }
 
   public terminate(): Promise<Heisenberg<P>> {
-    throw new UnimplementedError();
-  }
-
-  public filter(): IUnscharferelation<P> {
     throw new UnimplementedError();
   }
 }

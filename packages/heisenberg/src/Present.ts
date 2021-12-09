@@ -5,12 +5,11 @@ import { Heisenberg } from './Heisenberg';
 import { Lost } from './Lost';
 import { Matter } from './Matter';
 
-export class Present<P> implements Heisenberg<P, 'Present'> {
-  public readonly noun: 'Present' = 'Present';
+export class Present<P> implements Heisenberg<P> {
   private readonly value: Matter<P>;
 
-  public static of<PT>(value: Matter<PT>): Present<PT> {
-    return new Present<PT>(value);
+  public static of<P>(value: Matter<P>): Present<P> {
+    return new Present<P>(value);
   }
 
   private constructor(value: Matter<P>) {

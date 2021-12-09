@@ -1,12 +1,11 @@
 import { RecoveryPlan } from '@jamashita/genitore-plan';
 import { Epoque } from '../Epoque';
 
-export class RecoveryEpoquePlan<P> implements RecoveryPlan<'RecoveryEpoquePlan'> {
-  public readonly noun: 'RecoveryEpoquePlan' = 'RecoveryEpoquePlan';
+export class RecoveryEpoquePlan<P> implements RecoveryPlan<void> {
   private readonly epoque: Epoque<P>;
 
-  public static of<PT>(epoque: Epoque<PT>): RecoveryEpoquePlan<PT> {
-    return new RecoveryEpoquePlan<PT>(epoque);
+  public static of<P>(epoque: Epoque<P>): RecoveryEpoquePlan<P> {
+    return new RecoveryEpoquePlan<P>(epoque);
   }
 
   protected constructor(epoque: Epoque<P>) {

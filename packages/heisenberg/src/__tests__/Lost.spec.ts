@@ -1,13 +1,10 @@
 import { MockRuntimeError } from '@jamashita/anden-error';
-import { SinonSpy, spy } from 'sinon';
 import { Heisenberg } from '../Heisenberg';
 import { Lost } from '../Lost';
 
 describe('Lost', () => {
   describe('get', () => {
     it('throws given error', () => {
-      expect.assertions(2);
-
       const error1: MockRuntimeError = new MockRuntimeError();
       const error2: MockRuntimeError = new MockRuntimeError();
       const lost1: Lost<void> = Lost.of<void>(error1);
@@ -24,8 +21,6 @@ describe('Lost', () => {
 
   describe('getCause', () => {
     it('returns thrown error', () => {
-      expect.assertions(2);
-
       const error1: MockRuntimeError = new MockRuntimeError();
       const error2: MockRuntimeError = new MockRuntimeError();
       const lost1: Lost<void> = Lost.of<void>(error1);
@@ -38,8 +33,6 @@ describe('Lost', () => {
 
   describe('isPresent', () => {
     it('always returns false', () => {
-      expect.assertions(1);
-
       const error: MockRuntimeError = new MockRuntimeError();
       const lost: Lost<void> = Lost.of<void>(error);
 
@@ -48,8 +41,6 @@ describe('Lost', () => {
   });
   describe('isAbsent', () => {
     it('always returns false', () => {
-      expect.assertions(1);
-
       const error: MockRuntimeError = new MockRuntimeError();
       const lost: Lost<void> = Lost.of<void>(error);
 
@@ -59,8 +50,6 @@ describe('Lost', () => {
 
   describe('isLost', () => {
     it('always returns true', () => {
-      expect.assertions(1);
-
       const error: MockRuntimeError = new MockRuntimeError();
       const lost: Lost<void> = Lost.of<void>(error);
 
@@ -70,62 +59,54 @@ describe('Lost', () => {
 
   describe('ifPresent', () => {
     it('will not be invoked', () => {
-      expect.assertions(1);
-
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const s: SinonSpy = spy();
+      const fn: jest.Mock = jest.fn();
 
       const lost: Heisenberg<number> = Lost.of<number>(error);
 
       lost.ifPresent(() => {
-        s();
+        fn();
       });
 
-      expect(s.called).toBe(false);
+      expect(fn.mock.calls).toHaveLength(0);
     });
   });
 
   describe('ifAbsent', () => {
     it('will not be invoked', () => {
-      expect.assertions(1);
-
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const s: SinonSpy = spy();
+      const fn: jest.Mock = jest.fn();
 
       const lost: Heisenberg<number> = Lost.of<number>(error);
 
       lost.ifAbsent(() => {
-        s();
+        fn();
       });
 
-      expect(s.called).toBe(false);
+      expect(fn.mock.calls).toHaveLength(0);
     });
   });
 
   describe('ifLost', () => {
     it('will be invoked', () => {
-      expect.assertions(1);
-
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const s: SinonSpy = spy();
+      const fn: jest.Mock = jest.fn();
 
       const lost: Heisenberg<number> = Lost.of<number>(error);
 
       lost.ifLost(() => {
-        s();
+        fn();
       });
 
-      expect(s.called).toBe(true);
+      expect(fn.mock.calls).toHaveLength(1);
     });
   });
 
   describe('toString', () => {
     it('returns Lost and its retaining cause', () => {
-      expect.assertions(1);
-
       expect(Lost.of<number>(null).toString()).toBe('Lost: null');
     });
   });

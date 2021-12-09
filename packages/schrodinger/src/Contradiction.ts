@@ -4,12 +4,11 @@ import { Alive } from './Alive';
 import { Dead } from './Dead';
 import { Schrodinger } from './Schrodinger';
 
-export class Contradiction<A, D extends Error> implements Schrodinger<A, D, 'Contradiction'> {
-  public readonly noun: 'Contradiction' = 'Contradiction';
+export class Contradiction<A, D extends Error> implements Schrodinger<A, D> {
   private readonly cause: unknown;
 
-  public static of<AT, DT extends Error>(cause: unknown): Contradiction<AT, DT> {
-    return new Contradiction<AT, DT>(cause);
+  public static of<A, D extends Error>(cause: unknown): Contradiction<A, D> {
+    return new Contradiction<A, D>(cause);
   }
 
   protected constructor(cause: unknown) {
@@ -18,6 +17,10 @@ export class Contradiction<A, D extends Error> implements Schrodinger<A, D, 'Con
 
   public get(): never {
     throw this.cause;
+  }
+
+  public getCause(): unknown {
+    return this.cause;
   }
 
   public ifAlive(): void {
@@ -50,9 +53,5 @@ export class Contradiction<A, D extends Error> implements Schrodinger<A, D, 'Con
 
   public toString(): string {
     return this.serialize();
-  }
-
-  public getCause(): unknown {
-    return this.cause;
   }
 }

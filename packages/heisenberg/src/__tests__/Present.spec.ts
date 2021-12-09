@@ -1,12 +1,9 @@
-import { SinonSpy, spy } from 'sinon';
 import { Heisenberg } from '../Heisenberg';
 import { Present } from '../Present';
 
 describe('Present', () => {
   describe('get', () => {
     it('returns the inner value', () => {
-      expect.assertions(7);
-
       const present1: Present<number> = Present.of<number>(1);
       const present2: Present<number> = Present.of<number>(0);
       const present3: Present<number> = Present.of<number>(-1);
@@ -27,8 +24,6 @@ describe('Present', () => {
 
   describe('isPresent', () => {
     it('always returns true', () => {
-      expect.assertions(7);
-
       const present1: Present<number> = Present.of<number>(1);
       const present2: Present<number> = Present.of<number>(0);
       const present3: Present<number> = Present.of<number>(-1);
@@ -49,8 +44,6 @@ describe('Present', () => {
 
   describe('isAbsent', () => {
     it('always returns false', () => {
-      expect.assertions(7);
-
       const present1: Present<number> = Present.of<number>(1);
       const present2: Present<number> = Present.of<number>(0);
       const present3: Present<number> = Present.of<number>(-1);
@@ -71,8 +64,6 @@ describe('Present', () => {
 
   describe('isLost', () => {
     it('always returns false', () => {
-      expect.assertions(7);
-
       const present1: Present<number> = Present.of<number>(1);
       const present2: Present<number> = Present.of<number>(0);
       const present3: Present<number> = Present.of<number>(-1);
@@ -93,63 +84,55 @@ describe('Present', () => {
 
   describe('ifPresent', () => {
     it('will be invoked', () => {
-      expect.assertions(2);
-
       const value: number = 1;
 
-      const s: SinonSpy = spy();
+      const fn: jest.Mock = jest.fn();
 
       const present: Heisenberg<number> = Present.of<number>(value);
 
       present.ifPresent((v: number) => {
-        s();
+        fn();
         expect(v).toBe(value);
       });
 
-      expect(s.called).toBe(true);
+      expect(fn.mock.calls).toHaveLength(1);
     });
   });
 
   describe('ifAbsent', () => {
     it('will not be invoked', () => {
-      expect.assertions(1);
-
       const value: number = 1;
 
-      const s: SinonSpy = spy();
+      const fn: jest.Mock = jest.fn();
 
       const present: Heisenberg<number> = Present.of<number>(value);
 
       present.ifAbsent(() => {
-        s();
+        fn();
       });
 
-      expect(s.called).toBe(false);
+      expect(fn.mock.calls).toHaveLength(0);
     });
   });
 
   describe('ifLost', () => {
     it('will not be invoked', () => {
-      expect.assertions(1);
-
       const value: number = 1;
 
-      const s: SinonSpy = spy();
+      const fn: jest.Mock = jest.fn();
 
       const present: Heisenberg<number> = Present.of<number>(value);
 
       present.ifLost(() => {
-        s();
+        fn();
       });
 
-      expect(s.called).toBe(false);
+      expect(fn.mock.calls).toHaveLength(0);
     });
   });
 
   describe('toString', () => {
     it('returns Present and its retaining value', () => {
-      expect.assertions(1);
-
       expect(Present.of<boolean>(true).toString()).toBe('Present: true');
     });
   });

@@ -1,30 +1,27 @@
 import { MockRuntimeError } from '@jamashita/anden-error';
 import { DeadConstructor } from '@jamashita/genitore-schrodinger';
-import { SinonSpy, spy } from 'sinon';
 import { MockChrono } from '../../Mock/MockChrono';
 import { MapChronoPlan } from '../MapChronoPlan';
 
 describe('MapChronoPlan', () => {
   describe('onMap', () => {
     it('invokes first callback', () => {
-      expect.assertions(4);
-
       const value: number = -35;
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
 
       const chrono: MockChrono<number, MockRuntimeError> = new MockChrono<number, MockRuntimeError>(
         (v: number) => {
-          spy1();
+          fn1();
           expect(v).toBe(value);
         },
         () => {
-          spy2();
+          fn2();
         },
         () => {
-          spy3();
+          fn3();
         },
         new Set<DeadConstructor<MockRuntimeError>>()
       );
@@ -32,9 +29,9 @@ describe('MapChronoPlan', () => {
 
       plan.onMap(value);
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(false);
-      expect(spy3.called).toBe(false);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(0);
+      expect(fn3.mock.calls).toHaveLength(0);
     });
   });
 });

@@ -4,12 +4,11 @@ import { Absent } from './Absent';
 import { Heisenberg } from './Heisenberg';
 import { Present } from './Present';
 
-export class Lost<P> implements Heisenberg<P, 'Lost'> {
-  public readonly noun: 'Lost' = 'Lost';
+export class Lost<P> implements Heisenberg<P> {
   private readonly cause: unknown;
 
-  public static of<PT>(cause: unknown): Lost<PT> {
-    return new Lost<PT>(cause);
+  public static of<P>(cause: unknown): Lost<P> {
+    return new Lost<P>(cause);
   }
 
   private constructor(cause: unknown) {
@@ -18,6 +17,10 @@ export class Lost<P> implements Heisenberg<P, 'Lost'> {
 
   public get(): never {
     throw this.cause;
+  }
+
+  public getCause(): unknown {
+    return this.cause;
   }
 
   public ifAbsent(): void {
@@ -50,9 +53,5 @@ export class Lost<P> implements Heisenberg<P, 'Lost'> {
 
   public toString(): string {
     return this.serialize();
-  }
-
-  public getCause(): unknown {
-    return this.cause;
   }
 }
