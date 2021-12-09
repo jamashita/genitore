@@ -4,8 +4,6 @@ import { MapPassPlan } from '../MapPassPlan';
 describe('MapPassPlan', () => {
   describe('onMap', () => {
     it('invokes callback when onMap() called', () => {
-      expect.assertions(2);
-
       const value: number = -35;
 
       const s: SinonSpy = spy();

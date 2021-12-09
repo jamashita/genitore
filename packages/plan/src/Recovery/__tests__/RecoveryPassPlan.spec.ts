@@ -4,8 +4,6 @@ import { RecoveryPassPlan } from '../RecoveryPassPlan';
 describe('RecoveryPassPlan', () => {
   describe('onRecover', () => {
     it('invokes callback when onRecover() called', () => {
-      expect.assertions(2);
-
       const value: number = -35;
 
       const s: SinonSpy = spy();

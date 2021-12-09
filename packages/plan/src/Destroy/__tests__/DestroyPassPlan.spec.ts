@@ -4,8 +4,6 @@ import { DestroyPassPlan } from '../DestroyPassPlan';
 describe('DestroyPassPlan', () => {
   describe('onDestroy', () => {
     it('invokes callback when onDestroy() called', () => {
-      expect.assertions(2);
-
       const value: number = -35;
 
       const s: SinonSpy = spy();

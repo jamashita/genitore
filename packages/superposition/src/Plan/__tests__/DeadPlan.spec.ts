@@ -10,8 +10,6 @@ import { DeadPlan } from '../DeadPlan';
 describe('DeadPlan', () => {
   describe('onRecover', () => {
     it('invokes first callback when A given', async () => {
-      expect.assertions(6);
-
       const value: number = 101;
       const error: MockRuntimeError = new MockRuntimeError();
 
@@ -59,8 +57,6 @@ describe('DeadPlan', () => {
     });
 
     it('invokes first callback when Promise<A> given', async () => {
-      expect.assertions(6);
-
       const value: number = 101;
       const error: MockRuntimeError = new MockRuntimeError();
 
@@ -108,8 +104,6 @@ describe('DeadPlan', () => {
     });
 
     it('invokes first callback when Alive Superposition given', async () => {
-      expect.assertions(6);
-
       const value: number = 101;
       const error: MockRuntimeError = new MockRuntimeError();
 
@@ -157,8 +151,6 @@ describe('DeadPlan', () => {
     });
 
     it('invokes first callback when Promise<Alive Superposition> given', async () => {
-      expect.assertions(6);
-
       const value: number = 101;
       const error: MockRuntimeError = new MockRuntimeError();
 
@@ -206,8 +198,6 @@ describe('DeadPlan', () => {
     });
 
     it('invokes second callback when D thrown', async () => {
-      expect.assertions(6);
-
       const error: MockRuntimeError = new MockRuntimeError();
 
       const spy1: SinonSpy = spy();
@@ -254,8 +244,6 @@ describe('DeadPlan', () => {
     });
 
     it('invokes second callback when rejected Promise<A> given', async () => {
-      expect.assertions(6);
-
       const error: MockRuntimeError = new MockRuntimeError();
 
       const spy1: SinonSpy = spy();
@@ -302,8 +290,6 @@ describe('DeadPlan', () => {
     });
 
     it('invokes second callback when Dead Superposition given', async () => {
-      expect.assertions(6);
-
       const error: MockRuntimeError = new MockRuntimeError();
 
       const spy1: SinonSpy = spy();
@@ -350,8 +336,6 @@ describe('DeadPlan', () => {
     });
 
     it('invokes second callback when Promise<Dead Superposition given', async () => {
-      expect.assertions(6);
-
       const error: MockRuntimeError = new MockRuntimeError();
 
       const spy1: SinonSpy = spy();
@@ -398,8 +382,6 @@ describe('DeadPlan', () => {
     });
 
     it('invokes third callback when an unexpected error thrown', async () => {
-      expect.assertions(5);
-
       const error: MockRuntimeError = new MockRuntimeError();
 
       const spy1: SinonSpy = spy();
@@ -445,8 +427,6 @@ describe('DeadPlan', () => {
     });
 
     it('invokes third callback when an unexpected rejected Promise given', async () => {
-      expect.assertions(5);
-
       const error: MockRuntimeError = new MockRuntimeError();
 
       const spy1: SinonSpy = spy();
@@ -492,8 +472,6 @@ describe('DeadPlan', () => {
     });
 
     it('invokes third callback when Contradiction Superposition given', () => {
-      expect.assertions(5);
-
       const error: MockRuntimeError = new MockRuntimeError();
 
       const spy1: SinonSpy = spy();
@@ -533,8 +511,6 @@ describe('DeadPlan', () => {
     });
 
     it('invokes third callback when Promise<Contradiction Superposition> given', async () => {
-      expect.assertions(5);
-
       const error: MockRuntimeError = new MockRuntimeError();
 
       const spy1: SinonSpy = spy();

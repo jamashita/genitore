@@ -8,8 +8,6 @@ import { SuperpositionInternal } from '../SuperpositionInternal';
 describe('SuperpositionInternal', () => {
   describe('toString', () => {
     it('returns its retaining Schrodinger string', () => {
-      expect.assertions(3);
-
       const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.accept(-1);
@@ -30,15 +28,13 @@ describe('SuperpositionInternal', () => {
       );
 
       expect(superposition1.toString()).toBe('Alive: -1');
-      expect(superposition2.toString()).toBe('Dead: MockRuntimeError { noun: \'MockRuntimeError\' }');
+      expect(superposition2.toString()).toBe('Dead: MockRuntimeError {}');
       expect(superposition3.toString()).toBe('Contradiction: null');
     });
   });
 
   describe('accept', () => {
     it('does nothing if done once', async () => {
-      expect.assertions(4);
-
       const value: number = -35;
       const s: SinonSpy = spy();
       const plans: Set<Plan<Detoxicated<number>, MockRuntimeError>> = new Set<Plan<Detoxicated<number>, MockRuntimeError>>();
@@ -69,8 +65,6 @@ describe('SuperpositionInternal', () => {
     });
 
     it('invokes all maps', async () => {
-      expect.assertions(4);
-
       const value: number = -1.3;
 
       const spy1: SinonSpy = spy();
@@ -104,8 +98,6 @@ describe('SuperpositionInternal', () => {
 
   describe('decline', () => {
     it('does nothing if done once', async () => {
-      expect.assertions(3);
-
       const error: MockRuntimeError = new MockRuntimeError();
       const s: SinonSpy = spy();
       const plans: Set<Plan<Detoxicated<number>, MockRuntimeError>> = new Set<Plan<Detoxicated<number>, MockRuntimeError>>();
@@ -135,8 +127,6 @@ describe('SuperpositionInternal', () => {
     });
 
     it('invokes all recovers', async () => {
-      expect.assertions(2);
-
       const error: MockRuntimeError = new MockRuntimeError();
 
       const spy1: SinonSpy = spy();
@@ -168,8 +158,6 @@ describe('SuperpositionInternal', () => {
 
   describe('throw', () => {
     it('does nothing if done once', async () => {
-      expect.assertions(4);
-
       const error: MockRuntimeError = new MockRuntimeError();
       const s: SinonSpy = spy();
       const plans: Set<Plan<Detoxicated<number>, void>> = new Set<Plan<Detoxicated<number>, void>>();
@@ -202,8 +190,6 @@ describe('SuperpositionInternal', () => {
     });
 
     it('invokes all throws', async () => {
-      expect.assertions(4);
-
       const error: MockRuntimeError = new MockRuntimeError();
 
       const spy1: SinonSpy = spy();
@@ -251,8 +237,6 @@ describe('SuperpositionInternal', () => {
 
   describe('get', () => {
     it('returns inner value', async () => {
-      expect.assertions(3);
-
       const value: number = -149;
       const error: MockRuntimeError = new MockRuntimeError();
 
@@ -283,8 +267,6 @@ describe('SuperpositionInternal', () => {
 
   describe('terminate', () => {
     it('returns Schrodinger subclass instance', async () => {
-      expect.assertions(6);
-
       const value: number = -149;
       const error: MockRuntimeError = new MockRuntimeError();
 
@@ -322,8 +304,6 @@ describe('SuperpositionInternal', () => {
 
   describe('map', () => {
     it('invokes callbacks unless it is not Dead nor Contradiction', async () => {
-      expect.assertions(6);
-
       const value: number = 2;
 
       const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
@@ -360,8 +340,6 @@ describe('SuperpositionInternal', () => {
     });
 
     it('invokes callbacks unless it is not Dead nor Contradiction, even if the return value is Promise', async () => {
-      expect.assertions(6);
-
       const value: number = 2;
 
       const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
@@ -398,8 +376,6 @@ describe('SuperpositionInternal', () => {
     });
 
     it('invokes callbacks unless it is not Dead nor Contradiction, even if the return value is Alive Superposition', async () => {
-      expect.assertions(5);
-
       const value1: number = 2;
       const value2: number = 200;
       const value3: number = 20000;
@@ -449,8 +425,6 @@ describe('SuperpositionInternal', () => {
     });
 
     it('invokes callbacks unless it is not Dead nor Contradiction, even if the return value is Promise<Alive Superposition>', async () => {
-      expect.assertions(5);
-
       const value1: number = 2;
       const value2: number = 200;
       const value3: number = 20000;
@@ -500,8 +474,6 @@ describe('SuperpositionInternal', () => {
     });
 
     it('will not invoke callbacks when a callback throws Dead error', async () => {
-      expect.assertions(4);
-
       const value: number = 2;
       const error: MockRuntimeError = new MockRuntimeError();
 
@@ -537,8 +509,6 @@ describe('SuperpositionInternal', () => {
     });
 
     it('will not invoke callbacks when a callback returns rejected Promise Dead', async () => {
-      expect.assertions(4);
-
       const value: number = 2;
       const error: MockRuntimeError = new MockRuntimeError();
 
@@ -574,8 +544,6 @@ describe('SuperpositionInternal', () => {
     });
 
     it('will not invoke callbacks when a callback returns Dead Superposition', async () => {
-      expect.assertions(4);
-
       const value: number = 2;
       const error: MockRuntimeError = new MockRuntimeError();
 
@@ -623,8 +591,6 @@ describe('SuperpositionInternal', () => {
     });
 
     it('will not invoke callbacks when a callback returns Promise<Dead Superposition>', async () => {
-      expect.assertions(4);
-
       const value: number = 2;
       const error: MockRuntimeError = new MockRuntimeError();
 
@@ -672,8 +638,6 @@ describe('SuperpositionInternal', () => {
     });
 
     it('will not invoke callbacks when a callback throws unexpected error', async () => {
-      expect.assertions(5);
-
       const value: number = 2;
       const error: MockRuntimeError = new MockRuntimeError();
 
@@ -715,8 +679,6 @@ describe('SuperpositionInternal', () => {
     });
 
     it('will not invoke callbacks when a callback returns unexpected rejected Promise', async () => {
-      expect.assertions(5);
-
       const value: number = 2;
       const error: MockRuntimeError = new MockRuntimeError();
 
@@ -758,8 +720,6 @@ describe('SuperpositionInternal', () => {
     });
 
     it('will not invoke callbacks when a callback returns Contradiction Superposition', async () => {
-      expect.assertions(5);
-
       const value: number = 2;
       const error1: MockRuntimeError = new MockRuntimeError();
       const error2: MockRuntimeError = new MockRuntimeError();
@@ -821,8 +781,6 @@ describe('SuperpositionInternal', () => {
     });
 
     it('will not invoke callbacks when a callback returns Promise<Contradiction Superposition>', async () => {
-      expect.assertions(5);
-
       const value: number = 2;
       const error1: MockRuntimeError = new MockRuntimeError();
       const error2: MockRuntimeError = new MockRuntimeError();
@@ -884,8 +842,6 @@ describe('SuperpositionInternal', () => {
     });
 
     it('instantly accepts once accepted Superposition', async () => {
-      expect.assertions(6);
-
       const value1: number = 2;
       const value2: number = 20;
 
@@ -929,8 +885,6 @@ describe('SuperpositionInternal', () => {
     });
 
     it('instantly declines once declined Superposition', async () => {
-      expect.assertions(4);
-
       const value: number = 2;
       const error: MockRuntimeError = new MockRuntimeError();
 
@@ -972,8 +926,6 @@ describe('SuperpositionInternal', () => {
     });
 
     it('instantly throws once thrown Superposition', async () => {
-      expect.assertions(4);
-
       const value: number = 2;
       const error: MockRuntimeError = new MockRuntimeError();
 
@@ -1018,8 +970,6 @@ describe('SuperpositionInternal', () => {
 
   describe('recover', () => {
     it('invokes callbacks unless it is not Alive nor Contradiction', async () => {
-      expect.assertions(5);
-
       const value: number = -201;
       const error: MockRuntimeError = new MockRuntimeError();
 
@@ -1056,8 +1006,6 @@ describe('SuperpositionInternal', () => {
     });
 
     it('invokes callbacks unless it is not Alive nor Contradiction, even if the return value is Promise', async () => {
-      expect.assertions(5);
-
       const value: number = -201;
       const error: MockRuntimeError = new MockRuntimeError();
 
@@ -1094,8 +1042,6 @@ describe('SuperpositionInternal', () => {
     });
 
     it('invokes callbacks unless it is not Alive nor Contradiction, even if the return value is Alive Superposition', async () => {
-      expect.assertions(5);
-
       const value1: number = 2;
       const value2: number = 20;
       const error: MockRuntimeError = new MockRuntimeError();
@@ -1145,8 +1091,6 @@ describe('SuperpositionInternal', () => {
     });
 
     it('invokes callbacks unless it is not Alive nor Contradiction, even if the return value is Promise<Alive Superposition>', async () => {
-      expect.assertions(5);
-
       const value1: number = 2;
       const value2: number = 20;
       const error: MockRuntimeError = new MockRuntimeError();
@@ -1196,8 +1140,6 @@ describe('SuperpositionInternal', () => {
     });
 
     it('will not invoke callbacks when a callback throws Dead error', async () => {
-      expect.assertions(6);
-
       const value: number = 2;
       const error1: MockRuntimeError = new MockRuntimeError();
       const error2: MockRuntimeError = new MockRuntimeError();
@@ -1236,8 +1178,6 @@ describe('SuperpositionInternal', () => {
     });
 
     it('will not invoke callbacks when a callback returns rejected Promise Dead', async () => {
-      expect.assertions(6);
-
       const value: number = 2;
       const error1: MockRuntimeError = new MockRuntimeError();
       const error2: MockRuntimeError = new MockRuntimeError();
@@ -1276,8 +1216,6 @@ describe('SuperpositionInternal', () => {
     });
 
     it('will not invoke callbacks when a callback returns Dead Superposition', async () => {
-      expect.assertions(5);
-
       const value: number = 2;
       const error1: MockRuntimeError = new MockRuntimeError();
       const error2: MockRuntimeError = new MockRuntimeError();
@@ -1328,8 +1266,6 @@ describe('SuperpositionInternal', () => {
     });
 
     it('will not invoke callbacks when a callback returns Promise<Dead Superposition>', async () => {
-      expect.assertions(5);
-
       const value: number = 2;
       const error1: MockRuntimeError = new MockRuntimeError();
       const error2: MockRuntimeError = new MockRuntimeError();
@@ -1380,8 +1316,6 @@ describe('SuperpositionInternal', () => {
     });
 
     it('will not invoke callbacks when a callback throws unexpected error', async () => {
-      expect.assertions(5);
-
       const value: number = 2;
       const error: MockRuntimeError = new MockRuntimeError();
 
@@ -1423,8 +1357,6 @@ describe('SuperpositionInternal', () => {
     });
 
     it('will not invoke callbacks when a callback returns unexpected rejected Promise', async () => {
-      expect.assertions(5);
-
       const value: number = 2;
       const error: MockRuntimeError = new MockRuntimeError();
 
@@ -1466,8 +1398,6 @@ describe('SuperpositionInternal', () => {
     });
 
     it('will not invoke callbacks when a callback returns Contradiction Superposition', async () => {
-      expect.assertions(5);
-
       const value: number = 2;
       const error1: MockRuntimeError = new MockRuntimeError();
       const error2: MockRuntimeError = new MockRuntimeError();
@@ -1525,8 +1455,6 @@ describe('SuperpositionInternal', () => {
     });
 
     it('will not invoke callbacks when a callback returns Promise<Contradiction Superposition>', async () => {
-      expect.assertions(5);
-
       const value: number = 2;
       const error1: MockRuntimeError = new MockRuntimeError();
       const error2: MockRuntimeError = new MockRuntimeError();
@@ -1584,8 +1512,6 @@ describe('SuperpositionInternal', () => {
     });
 
     it('instantly accepts once accepted Superposition', async () => {
-      expect.assertions(6);
-
       const value1: number = 2;
       const value2: number = 2;
 
@@ -1629,8 +1555,6 @@ describe('SuperpositionInternal', () => {
     });
 
     it('instantly declines once declined Superposition', async () => {
-      expect.assertions(6);
-
       const value: number = 2;
       const error: MockRuntimeError = new MockRuntimeError();
 
@@ -1674,8 +1598,6 @@ describe('SuperpositionInternal', () => {
     });
 
     it('instantly throws once thrown Superposition', async () => {
-      expect.assertions(4);
-
       const value: number = 2;
       const error: MockRuntimeError = new MockRuntimeError();
 
@@ -1721,8 +1643,6 @@ describe('SuperpositionInternal', () => {
 
   describe('transform', () => {
     it('invokes first callback when Superposition is Alive', async () => {
-      expect.assertions(6);
-
       const value1: number = 2;
       const value2: number = 20;
       const value3: number = 200;
@@ -1774,8 +1694,6 @@ describe('SuperpositionInternal', () => {
     });
 
     it('invokes first callback when Superposition is Alive even if the returns value is Promise', async () => {
-      expect.assertions(6);
-
       const value1: number = 2;
       const value2: number = 20;
       const value3: number = 200;
@@ -1827,8 +1745,6 @@ describe('SuperpositionInternal', () => {
     });
 
     it('invokes first callback when Superposition is Alive even if the returns value is Alive Superposition', async () => {
-      expect.assertions(6);
-
       const value1: number = 2;
       const value2: number = 20;
       const value3: number = 200;
@@ -1892,8 +1808,6 @@ describe('SuperpositionInternal', () => {
     });
 
     it('invokes first callback when Superposition is Alive even if the returns value is Promise<Alive Superposition>', async () => {
-      expect.assertions(6);
-
       const value1: number = 2;
       const value2: number = 20;
       const value3: number = 200;
@@ -1957,8 +1871,6 @@ describe('SuperpositionInternal', () => {
     });
 
     it('invokes second callback when Superposition is Dead', async () => {
-      expect.assertions(5);
-
       const error1: MockRuntimeError = new MockRuntimeError();
       const error2: MockRuntimeError = new MockRuntimeError();
       const error3: MockRuntimeError = new MockRuntimeError();
@@ -2008,8 +1920,6 @@ describe('SuperpositionInternal', () => {
     });
 
     it('invokes second callback when Superposition is Dead even if the return value is rejected Promise', async () => {
-      expect.assertions(6);
-
       const error1: MockRuntimeError = new MockRuntimeError();
       const error2: MockRuntimeError = new MockRuntimeError();
       const error3: MockRuntimeError = new MockRuntimeError();
@@ -2061,8 +1971,6 @@ describe('SuperpositionInternal', () => {
     });
 
     it('invokes second callback when Superposition is Dead even if the return value is Dead Superposition', async () => {
-      expect.assertions(6);
-
       const error1: MockRuntimeError = new MockRuntimeError();
       const error2: MockRuntimeError = new MockRuntimeError();
       const error3: MockRuntimeError = new MockRuntimeError();
@@ -2126,8 +2034,6 @@ describe('SuperpositionInternal', () => {
     });
 
     it('invokes second callback when Superposition is Dead even if the return value is Promise<Dead Superposition>', async () => {
-      expect.assertions(6);
-
       const error1: MockRuntimeError = new MockRuntimeError();
       const error2: MockRuntimeError = new MockRuntimeError();
       const error3: MockRuntimeError = new MockRuntimeError();
@@ -2191,8 +2097,6 @@ describe('SuperpositionInternal', () => {
     });
 
     it('instantly accepts once accepted Superposition', async () => {
-      expect.assertions(9);
-
       const value1: number = 2;
       const value2: number = 2;
 
@@ -2266,8 +2170,6 @@ describe('SuperpositionInternal', () => {
     });
 
     it('instantly declines once declined Superposition', async () => {
-      expect.assertions(9);
-
       const error1: MockRuntimeError = new MockRuntimeError();
       const error2: MockRuntimeError = new MockRuntimeError();
 
@@ -2341,8 +2243,6 @@ describe('SuperpositionInternal', () => {
     });
 
     it('instantly throws once thrown Superposition', async () => {
-      expect.assertions(6);
-
       const error1: MockRuntimeError = new MockRuntimeError();
       const error2: MockRuntimeError = new MockRuntimeError();
 
@@ -2415,8 +2315,6 @@ describe('SuperpositionInternal', () => {
 
   describe('ifAlive', () => {
     it('invokes callback if Superposition is Alive', async () => {
-      expect.assertions(3);
-
       const value: number = -201;
 
       const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
@@ -2437,8 +2335,6 @@ describe('SuperpositionInternal', () => {
     });
 
     it('does not invoke callback if Superposition is Dead', async () => {
-      expect.assertions(2);
-
       const error: MockRuntimeError = new MockRuntimeError();
 
       const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
@@ -2458,8 +2354,6 @@ describe('SuperpositionInternal', () => {
     });
 
     it('does not invoke callback if Superposition is Contradiction', async () => {
-      expect.assertions(2);
-
       const error: MockRuntimeError = new MockRuntimeError();
 
       const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
@@ -2481,8 +2375,6 @@ describe('SuperpositionInternal', () => {
 
   describe('ifDead', () => {
     it('does not invoke callback if Superposition is Alive', async () => {
-      expect.assertions(2);
-
       const value: number = -201;
 
       const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
@@ -2502,8 +2394,6 @@ describe('SuperpositionInternal', () => {
     });
 
     it('invokes callback if Superposition is Dead', async () => {
-      expect.assertions(3);
-
       const error: MockRuntimeError = new MockRuntimeError();
 
       const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
@@ -2524,8 +2414,6 @@ describe('SuperpositionInternal', () => {
     });
 
     it('does not invoke callback if Superposition is Contradiction', async () => {
-      expect.assertions(2);
-
       const error: MockRuntimeError = new MockRuntimeError();
 
       const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
@@ -2547,8 +2435,6 @@ describe('SuperpositionInternal', () => {
 
   describe('ifContradiction', () => {
     it('does not invoke callback if Superposition is Alive', async () => {
-      expect.assertions(2);
-
       const value: number = -201;
 
       const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
@@ -2568,8 +2454,6 @@ describe('SuperpositionInternal', () => {
     });
 
     it('does not invoke callback if Superposition is Dead', async () => {
-      expect.assertions(2);
-
       const error: MockRuntimeError = new MockRuntimeError();
 
       const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
@@ -2589,8 +2473,6 @@ describe('SuperpositionInternal', () => {
     });
 
     it('invokes callback if Superposition is Contradiction', async () => {
-      expect.assertions(3);
-
       const error: MockRuntimeError = new MockRuntimeError();
 
       const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
@@ -2613,8 +2495,6 @@ describe('SuperpositionInternal', () => {
 
   describe('pass', () => {
     it('invokes first callback if Superposition is Alive', () => {
-      expect.assertions(4);
-
       const value: number = 2;
 
       const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
@@ -2647,8 +2527,6 @@ describe('SuperpositionInternal', () => {
     });
 
     it('invokes second callback if Superposition is Dead', () => {
-      expect.assertions(4);
-
       const error: MockRuntimeError = new MockRuntimeError();
 
       const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
@@ -2681,8 +2559,6 @@ describe('SuperpositionInternal', () => {
     });
 
     it('invokes third callback if Superposition is Contradiction', () => {
-      expect.assertions(4);
-
       const error: MockRuntimeError = new MockRuntimeError();
 
       const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
@@ -2717,8 +2593,6 @@ describe('SuperpositionInternal', () => {
 
   describe('peek', () => {
     it('invokes first callback if Superposition is Alive', () => {
-      expect.assertions(1);
-
       const value: number = 2;
 
       const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
@@ -2738,8 +2612,6 @@ describe('SuperpositionInternal', () => {
     });
 
     it('invokes second callback if Superposition is Dead', () => {
-      expect.assertions(1);
-
       const error: MockRuntimeError = new MockRuntimeError();
 
       const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
@@ -2759,8 +2631,6 @@ describe('SuperpositionInternal', () => {
     });
 
     it('invokes third callback if Superposition is Contradiction', () => {
-      expect.assertions(1);
-
       const error: MockRuntimeError = new MockRuntimeError();
 
       const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(

@@ -5,8 +5,6 @@ import { DestroyEpoquePlan } from '../DestroyEpoquePlan';
 describe('DestroyEpoquePlan', () => {
   describe('onDestroy', () => {
     it('invokes third callback', () => {
-      expect.assertions(4);
-
       const value: number = -35;
 
       const spy1: SinonSpy = spy();

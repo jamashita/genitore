@@ -5,8 +5,6 @@ import { Present } from '../Present';
 describe('Present', () => {
   describe('get', () => {
     it('returns the inner value', () => {
-      expect.assertions(7);
-
       const present1: Present<number> = Present.of<number>(1);
       const present2: Present<number> = Present.of<number>(0);
       const present3: Present<number> = Present.of<number>(-1);
@@ -27,8 +25,6 @@ describe('Present', () => {
 
   describe('isPresent', () => {
     it('always returns true', () => {
-      expect.assertions(7);
-
       const present1: Present<number> = Present.of<number>(1);
       const present2: Present<number> = Present.of<number>(0);
       const present3: Present<number> = Present.of<number>(-1);
@@ -49,8 +45,6 @@ describe('Present', () => {
 
   describe('isAbsent', () => {
     it('always returns false', () => {
-      expect.assertions(7);
-
       const present1: Present<number> = Present.of<number>(1);
       const present2: Present<number> = Present.of<number>(0);
       const present3: Present<number> = Present.of<number>(-1);
@@ -71,8 +65,6 @@ describe('Present', () => {
 
   describe('isLost', () => {
     it('always returns false', () => {
-      expect.assertions(7);
-
       const present1: Present<number> = Present.of<number>(1);
       const present2: Present<number> = Present.of<number>(0);
       const present3: Present<number> = Present.of<number>(-1);
@@ -93,8 +85,6 @@ describe('Present', () => {
 
   describe('ifPresent', () => {
     it('will be invoked', () => {
-      expect.assertions(2);
-
       const value: number = 1;
 
       const s: SinonSpy = spy();
@@ -112,8 +102,6 @@ describe('Present', () => {
 
   describe('ifAbsent', () => {
     it('will not be invoked', () => {
-      expect.assertions(1);
-
       const value: number = 1;
 
       const s: SinonSpy = spy();
@@ -130,8 +118,6 @@ describe('Present', () => {
 
   describe('ifLost', () => {
     it('will not be invoked', () => {
-      expect.assertions(1);
-
       const value: number = 1;
 
       const s: SinonSpy = spy();
@@ -148,8 +134,6 @@ describe('Present', () => {
 
   describe('toString', () => {
     it('returns Present and its retaining value', () => {
-      expect.assertions(1);
-
       expect(Present.of<boolean>(true).toString()).toBe('Present: true');
     });
   });

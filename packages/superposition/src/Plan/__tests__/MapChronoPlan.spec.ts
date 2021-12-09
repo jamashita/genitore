@@ -7,8 +7,6 @@ import { MapChronoPlan } from '../MapChronoPlan';
 describe('MapChronoPlan', () => {
   describe('onMap', () => {
     it('invokes first callback', () => {
-      expect.assertions(4);
-
       const value: number = -35;
 
       const spy1: SinonSpy = spy();

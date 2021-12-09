@@ -5,8 +5,6 @@ import { CombinedEpoquePlan } from '../CombinedEpoquePlan';
 describe('CombinedEpoquePlan', () => {
   describe('onMap', () => {
     it('invokes first callback', () => {
-      expect.assertions(4);
-
       const value: number = -35;
 
       const spy1: SinonSpy = spy();
@@ -37,8 +35,6 @@ describe('CombinedEpoquePlan', () => {
 
   describe('onRecover', () => {
     it('invokes second callback', () => {
-      expect.assertions(3);
-
       const spy1: SinonSpy = spy();
       const spy2: SinonSpy = spy();
       const spy3: SinonSpy = spy();
@@ -66,8 +62,6 @@ describe('CombinedEpoquePlan', () => {
 
   describe('onDestroy', () => {
     it('invokes third callback', () => {
-      expect.assertions(4);
-
       const value: number = -35;
 
       const spy1: SinonSpy = spy();

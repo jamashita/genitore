@@ -9,8 +9,6 @@ import { AbsentPlan } from '../AbsentPlan';
 describe('AbsentPlan', () => {
   describe('onRecover', () => {
     it('invokes first callback when P given', async () => {
-      expect.assertions(5);
-
       const value: number = 10;
 
       const spy1: SinonSpy = spy();
@@ -55,8 +53,6 @@ describe('AbsentPlan', () => {
     });
 
     it('invokes first callback when Promise<P> given', async () => {
-      expect.assertions(5);
-
       const value: number = 10;
 
       const spy1: SinonSpy = spy();
@@ -101,8 +97,6 @@ describe('AbsentPlan', () => {
     });
 
     it('invokes first callback when Present Unscharferelation given', async () => {
-      expect.assertions(5);
-
       const value: number = 10;
 
       const spy1: SinonSpy = spy();
@@ -147,8 +141,6 @@ describe('AbsentPlan', () => {
     });
 
     it('invokes first callback when Promise<Present Unscharferelation> given', async () => {
-      expect.assertions(5);
-
       const value: number = 10;
 
       const spy1: SinonSpy = spy();
@@ -195,8 +187,6 @@ describe('AbsentPlan', () => {
     });
 
     it('invokes second callback when null given', async () => {
-      expect.assertions(4);
-
       const spy1: SinonSpy = spy();
       const spy2: SinonSpy = spy();
       const spy3: SinonSpy = spy();
@@ -238,8 +228,6 @@ describe('AbsentPlan', () => {
     });
 
     it('invokes second callback when undefined given', async () => {
-      expect.assertions(4);
-
       const spy1: SinonSpy = spy();
       const spy2: SinonSpy = spy();
       const spy3: SinonSpy = spy();
@@ -281,8 +269,6 @@ describe('AbsentPlan', () => {
     });
 
     it('invokes second callback when Promise<null> given', async () => {
-      expect.assertions(4);
-
       const spy1: SinonSpy = spy();
       const spy2: SinonSpy = spy();
       const spy3: SinonSpy = spy();
@@ -324,8 +310,6 @@ describe('AbsentPlan', () => {
     });
 
     it('invokes second callback when Promise<undefined> given', async () => {
-      expect.assertions(4);
-
       const spy1: SinonSpy = spy();
       const spy2: SinonSpy = spy();
       const spy3: SinonSpy = spy();
@@ -367,8 +351,6 @@ describe('AbsentPlan', () => {
     });
 
     it('invokes second callback when Absent Unscharferelation given', async () => {
-      expect.assertions(4);
-
       const spy1: SinonSpy = spy();
       const spy2: SinonSpy = spy();
       const spy3: SinonSpy = spy();
@@ -410,8 +392,6 @@ describe('AbsentPlan', () => {
     });
 
     it('invokes second callback when Promise<Absent Unscharferelation> given', async () => {
-      expect.assertions(4);
-
       const spy1: SinonSpy = spy();
       const spy2: SinonSpy = spy();
       const spy3: SinonSpy = spy();
@@ -453,8 +433,6 @@ describe('AbsentPlan', () => {
     });
 
     it('invokes third callback when an unexpected error thrown', async () => {
-      expect.assertions(5);
-
       const error: MockRuntimeError = new MockRuntimeError();
 
       const spy1: SinonSpy = spy();
@@ -499,8 +477,6 @@ describe('AbsentPlan', () => {
     });
 
     it('invokes third callback when an unexpected rejected Promise given', async () => {
-      expect.assertions(5);
-
       const error: MockRuntimeError = new MockRuntimeError();
 
       const spy1: SinonSpy = spy();
@@ -545,8 +521,6 @@ describe('AbsentPlan', () => {
     });
 
     it('invokes third callback when Lost Unscharferelation given', async () => {
-      expect.assertions(5);
-
       const error: MockRuntimeError = new MockRuntimeError();
 
       const spy1: SinonSpy = spy();
@@ -593,8 +567,6 @@ describe('AbsentPlan', () => {
     });
 
     it('invokes third callback when Promise<Lost Unscharferelation> given', async () => {
-      expect.assertions(5);
-
       const error: MockRuntimeError = new MockRuntimeError();
 
       const spy1: SinonSpy = spy();

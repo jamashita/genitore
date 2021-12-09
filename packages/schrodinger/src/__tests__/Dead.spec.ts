@@ -6,8 +6,6 @@ import { Schrodinger } from '../Schrodinger';
 describe('Dead', () => {
   describe('get', () => {
     it('throws the inner error', () => {
-      expect.assertions(1);
-
       const error: MockRuntimeError = new MockRuntimeError();
 
       const dead: Dead<number, MockRuntimeError> = Dead.of<number, MockRuntimeError>(error);
@@ -20,8 +18,6 @@ describe('Dead', () => {
 
   describe('getError', () => {
     it('returns thrown error', () => {
-      expect.assertions(1);
-
       const error: MockRuntimeError = new MockRuntimeError();
       const dead: Dead<number, MockRuntimeError> = Dead.of<number, MockRuntimeError>(error);
 
@@ -31,8 +27,6 @@ describe('Dead', () => {
 
   describe('isAlive', () => {
     it('always returns false', () => {
-      expect.assertions(2);
-
       const dead1: Dead<number, MockRuntimeError> = Dead.of<number, MockRuntimeError>(new MockRuntimeError());
       const dead2: Dead<number, MockRuntimeError> = Dead.of<number, MockRuntimeError>(new MockRuntimeError());
 
@@ -43,8 +37,6 @@ describe('Dead', () => {
 
   describe('isDead', () => {
     it('always returns true', () => {
-      expect.assertions(2);
-
       const dead1: Dead<number, MockRuntimeError> = Dead.of<number, MockRuntimeError>(new MockRuntimeError());
       const dead2: Dead<number, MockRuntimeError> = Dead.of<number, MockRuntimeError>(new MockRuntimeError());
 
@@ -55,8 +47,6 @@ describe('Dead', () => {
 
   describe('isContradiction', () => {
     it('always returns false', () => {
-      expect.assertions(2);
-
       const dead1: Dead<number, MockRuntimeError> = Dead.of<number, MockRuntimeError>(new MockRuntimeError());
       const dead2: Dead<number, MockRuntimeError> = Dead.of<number, MockRuntimeError>(new MockRuntimeError());
 
@@ -67,8 +57,6 @@ describe('Dead', () => {
 
   describe('ifAlive', () => {
     it('will not be invoked', () => {
-      expect.assertions(1);
-
       const error: MockRuntimeError = new MockRuntimeError();
 
       const s: SinonSpy = spy();
@@ -85,8 +73,6 @@ describe('Dead', () => {
 
   describe('ifDead', () => {
     it('will be invoked', () => {
-      expect.assertions(2);
-
       const error: MockRuntimeError = new MockRuntimeError();
 
       const s: SinonSpy = spy();
@@ -104,8 +90,6 @@ describe('Dead', () => {
 
   describe('ifContradiction', () => {
     it('will not be invoked', () => {
-      expect.assertions(1);
-
       const error: MockRuntimeError = new MockRuntimeError();
 
       const s: SinonSpy = spy();
@@ -122,9 +106,7 @@ describe('Dead', () => {
 
   describe('toString', () => {
     it('returns Dead and its retaining error', () => {
-      expect.assertions(1);
-
-      expect(Dead.of<number, Error>(new MockRuntimeError()).toString()).toBe('Dead: MockRuntimeError { noun: \'MockRuntimeError\' }');
+      expect(Dead.of<number, Error>(new MockRuntimeError()).toString()).toBe('Dead: MockRuntimeError {}');
     });
   });
 });

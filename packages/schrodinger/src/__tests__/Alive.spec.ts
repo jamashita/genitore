@@ -6,8 +6,6 @@ import { Schrodinger } from '../Schrodinger';
 describe('Alive', () => {
   describe('get', () => {
     it('returns the inner value', () => {
-      expect.assertions(7);
-
       const alive1: Alive<number, MockRuntimeError> = Alive.of<number, MockRuntimeError>(1);
       const alive2: Alive<number, MockRuntimeError> = Alive.of<number, MockRuntimeError>(0);
       const alive3: Alive<number, MockRuntimeError> = Alive.of<number, MockRuntimeError>(-1);
@@ -28,8 +26,6 @@ describe('Alive', () => {
 
   describe('isAlive', () => {
     it('always returns true', () => {
-      expect.assertions(7);
-
       const alive1: Alive<number, MockRuntimeError> = Alive.of<number, MockRuntimeError>(1);
       const alive2: Alive<number, MockRuntimeError> = Alive.of<number, MockRuntimeError>(0);
       const alive3: Alive<number, MockRuntimeError> = Alive.of<number, MockRuntimeError>(-1);
@@ -50,8 +46,6 @@ describe('Alive', () => {
 
   describe('isDead', () => {
     it('always returns false', () => {
-      expect.assertions(7);
-
       const alive1: Alive<number, MockRuntimeError> = Alive.of<number, MockRuntimeError>(1);
       const alive2: Alive<number, MockRuntimeError> = Alive.of<number, MockRuntimeError>(0);
       const alive3: Alive<number, MockRuntimeError> = Alive.of<number, MockRuntimeError>(-1);
@@ -72,8 +66,6 @@ describe('Alive', () => {
 
   describe('isContradiction', () => {
     it('always returns false', () => {
-      expect.assertions(7);
-
       const alive1: Alive<number, MockRuntimeError> = Alive.of<number, MockRuntimeError>(1);
       const alive2: Alive<number, MockRuntimeError> = Alive.of<number, MockRuntimeError>(0);
       const alive3: Alive<number, MockRuntimeError> = Alive.of<number, MockRuntimeError>(-1);
@@ -94,8 +86,6 @@ describe('Alive', () => {
 
   describe('ifAlive', () => {
     it('will be invoked', () => {
-      expect.assertions(2);
-
       const value: number = 1;
 
       const s: SinonSpy = spy();
@@ -113,8 +103,6 @@ describe('Alive', () => {
 
   describe('ifDead', () => {
     it('will not be invoked', () => {
-      expect.assertions(1);
-
       const value: number = 1;
 
       const s: SinonSpy = spy();
@@ -131,8 +119,6 @@ describe('Alive', () => {
 
   describe('ifContradiction', () => {
     it('will not be invoked', () => {
-      expect.assertions(1);
-
       const value: number = 1;
 
       const s: SinonSpy = spy();
@@ -149,8 +135,6 @@ describe('Alive', () => {
 
   describe('toString', () => {
     it('returns Alive and its retaining value', () => {
-      expect.assertions(1);
-
       expect(Alive.of<boolean, MockRuntimeError>(true).toString()).toBe('Alive: true');
     });
   });

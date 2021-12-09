@@ -5,8 +5,6 @@ import { RecoveryEpoquePlan } from '../RecoveryEpoquePlan';
 describe('RecoveryEpoquePlan', () => {
   describe('onRecover', () => {
     it('invokes second callback', () => {
-      expect.assertions(3);
-
       const spy1: SinonSpy = spy();
       const spy2: SinonSpy = spy();
       const spy3: SinonSpy = spy();
