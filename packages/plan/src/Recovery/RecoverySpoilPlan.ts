@@ -1,11 +1,9 @@
 import { RecoveryPlan } from './RecoveryPlan';
 
-export class RecoverySpoilPlan<R> implements RecoveryPlan<R, 'RecoverySpoilPlan'> {
-  public readonly noun: 'RecoverySpoilPlan' = 'RecoverySpoilPlan';
-
+export class RecoverySpoilPlan<R> implements RecoveryPlan<R> {
   private static readonly INSTANCE: RecoverySpoilPlan<unknown> = new RecoverySpoilPlan<unknown>();
 
-  public static of<RT>(): RecoverySpoilPlan<RT> {
+  public static of<R>(): RecoverySpoilPlan<R> {
     return RecoverySpoilPlan.INSTANCE;
   }
 

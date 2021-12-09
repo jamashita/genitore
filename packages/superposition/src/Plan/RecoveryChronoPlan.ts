@@ -1,12 +1,11 @@
 import { RecoveryPlan } from '@jamashita/genitore-plan';
 import { Chrono } from '../Chrono';
 
-export class RecoveryChronoPlan<A, D extends Error> implements RecoveryPlan<D, 'RecoveryChronoPlan'> {
-  public readonly noun: 'RecoveryChronoPlan' = 'RecoveryChronoPlan';
+export class RecoveryChronoPlan<A, D extends Error> implements RecoveryPlan<D> {
   private readonly chrono: Chrono<A, D>;
 
-  public static of<AT, DT extends Error>(chrono: Chrono<AT, DT>): RecoveryChronoPlan<AT, DT> {
-    return new RecoveryChronoPlan<AT, DT>(chrono);
+  public static of<A, D extends Error>(chrono: Chrono<A, D>): RecoveryChronoPlan<A, D> {
+    return new RecoveryChronoPlan<A, D>(chrono);
   }
 
   protected constructor(chrono: Chrono<A, D>) {

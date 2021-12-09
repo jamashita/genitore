@@ -1,11 +1,9 @@
 import { MapPlan } from './MapPlan';
 
-export class MapSpoilPlan<M> implements MapPlan<M, 'MapSpoilPlan'> {
-  public readonly noun: 'MapSpoilPlan' = 'MapSpoilPlan';
-
+export class MapSpoilPlan<M> implements MapPlan<M> {
   private static readonly INSTANCE: MapSpoilPlan<unknown> = new MapSpoilPlan<unknown>();
 
-  public static of<MT>(): MapSpoilPlan<MT> {
+  public static of<M>(): MapSpoilPlan<M> {
     return MapSpoilPlan.INSTANCE;
   }
 

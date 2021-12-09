@@ -1,7 +1,6 @@
 import { MockRuntimeError } from '@jamashita/anden-error';
 import { Resolve } from '@jamashita/anden-type';
 import { DeadConstructor } from '@jamashita/genitore-schrodinger';
-import { SinonSpy, spy } from 'sinon';
 import { Chrono } from '../../Chrono';
 import { MockChrono } from '../../Mock/MockChrono';
 import { Superposition } from '../../Superposition';
@@ -10,35 +9,33 @@ import { AlivePlan } from '../AlivePlan';
 describe('AlivePlan', () => {
   describe('onMap', () => {
     it('invokes first callback when A given', async () => {
-      expect.assertions(6);
-
       const value: number = 101;
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
-      const spy4: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
+      const fn4: jest.Mock = jest.fn();
 
       await new Promise<void>((resolve: Resolve<void>) => {
         const plan: AlivePlan<number, number, MockRuntimeError> = AlivePlan.of<number, number, MockRuntimeError>((n: number) => {
-          spy1();
+          fn1();
           expect(n).toBe(value);
 
           return n - 1;
         }, new MockChrono<number, MockRuntimeError>(
           (n: number) => {
-            spy2();
+            fn2();
             expect(n).toBe(value - 1);
 
             resolve();
           },
           () => {
-            spy3();
+            fn3();
 
             resolve();
           },
           () => {
-            spy4();
+            fn4();
 
             resolve();
           },
@@ -48,42 +45,40 @@ describe('AlivePlan', () => {
         plan.onMap(value);
       });
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(true);
-      expect(spy3.called).toBe(false);
-      expect(spy4.called).toBe(false);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(1);
+      expect(fn3.mock.calls).toHaveLength(0);
+      expect(fn4.mock.calls).toHaveLength(0);
     });
 
     it('invokes first callback when Promise<A> given', async () => {
-      expect.assertions(6);
-
       const value: number = 101;
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
-      const spy4: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
+      const fn4: jest.Mock = jest.fn();
 
       await new Promise<void>((resolve: Resolve<void>) => {
         const plan: AlivePlan<number, number, MockRuntimeError> = AlivePlan.of<number, number, MockRuntimeError>((n: number) => {
-          spy1();
+          fn1();
           expect(n).toBe(value);
 
           return Promise.resolve<number>(n - 2);
         }, new MockChrono<number, MockRuntimeError>(
           (n: number) => {
-            spy2();
+            fn2();
             expect(n).toBe(value - 2);
 
             resolve();
           },
           () => {
-            spy3();
+            fn3();
 
             resolve();
           },
           () => {
-            spy4();
+            fn4();
 
             resolve();
           },
@@ -93,42 +88,40 @@ describe('AlivePlan', () => {
         plan.onMap(value);
       });
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(true);
-      expect(spy3.called).toBe(false);
-      expect(spy4.called).toBe(false);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(1);
+      expect(fn3.mock.calls).toHaveLength(0);
+      expect(fn4.mock.calls).toHaveLength(0);
     });
 
     it('invokes first callback when Alive Superposition given', async () => {
-      expect.assertions(6);
-
       const value: number = 101;
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
-      const spy4: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
+      const fn4: jest.Mock = jest.fn();
 
       await new Promise<void>((resolve: Resolve<void>) => {
         const plan: AlivePlan<number, number, MockRuntimeError> = AlivePlan.of<number, number, MockRuntimeError>((n: number) => {
-          spy1();
+          fn1();
           expect(n).toBe(value);
 
           return Superposition.alive<number, MockRuntimeError>(n - 3);
         }, new MockChrono<number, MockRuntimeError>(
           (n: number) => {
-            spy2();
+            fn2();
             expect(n).toBe(value - 3);
 
             resolve();
           },
           () => {
-            spy3();
+            fn3();
 
             resolve();
           },
           () => {
-            spy4();
+            fn4();
 
             resolve();
           },
@@ -138,42 +131,40 @@ describe('AlivePlan', () => {
         plan.onMap(value);
       });
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(true);
-      expect(spy3.called).toBe(false);
-      expect(spy4.called).toBe(false);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(1);
+      expect(fn3.mock.calls).toHaveLength(0);
+      expect(fn4.mock.calls).toHaveLength(0);
     });
 
     it('invokes first callback when Promise<Alive Superposition> given', async () => {
-      expect.assertions(6);
-
       const value: number = 101;
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
-      const spy4: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
+      const fn4: jest.Mock = jest.fn();
 
       await new Promise<void>((resolve: Resolve<void>) => {
         const plan: AlivePlan<number, number, MockRuntimeError> = AlivePlan.of<number, number, MockRuntimeError>((n: number) => {
-          spy1();
+          fn1();
           expect(n).toBe(value);
 
           return Promise.resolve<Superposition<number, MockRuntimeError>>(Superposition.alive<number, MockRuntimeError>(n - 3));
         }, new MockChrono<number, MockRuntimeError>(
           (n: number) => {
-            spy2();
+            fn2();
             expect(n).toBe(value - 3);
 
             resolve();
           },
           () => {
-            spy3();
+            fn3();
 
             resolve();
           },
           () => {
-            spy4();
+            fn4();
 
             resolve();
           },
@@ -183,43 +174,41 @@ describe('AlivePlan', () => {
         plan.onMap(value);
       });
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(true);
-      expect(spy3.called).toBe(false);
-      expect(spy4.called).toBe(false);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(1);
+      expect(fn3.mock.calls).toHaveLength(0);
+      expect(fn4.mock.calls).toHaveLength(0);
     });
 
     it('invokes second callback when D thrown', async () => {
-      expect.assertions(6);
-
       const value: number = 101;
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
-      const spy4: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
+      const fn4: jest.Mock = jest.fn();
 
       await new Promise<void>((resolve: Resolve<void>) => {
         const plan: AlivePlan<number, number, MockRuntimeError> = AlivePlan.of<number, number, MockRuntimeError>((n: number) => {
-          spy1();
+          fn1();
           expect(n).toBe(value);
 
           throw error;
         }, new MockChrono<number, MockRuntimeError>(
           () => {
-            spy2();
+            fn2();
 
             resolve();
           },
           (e: MockRuntimeError) => {
-            spy3();
+            fn3();
             expect(e).toBe(error);
 
             resolve();
           },
           () => {
-            spy4();
+            fn4();
 
             resolve();
           },
@@ -229,43 +218,41 @@ describe('AlivePlan', () => {
         plan.onMap(value);
       });
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(false);
-      expect(spy3.called).toBe(true);
-      expect(spy4.called).toBe(false);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(0);
+      expect(fn3.mock.calls).toHaveLength(1);
+      expect(fn4.mock.calls).toHaveLength(0);
     });
 
     it('invokes second callback when rejected Promise<A> given', async () => {
-      expect.assertions(6);
-
       const value: number = 101;
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
-      const spy4: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
+      const fn4: jest.Mock = jest.fn();
 
       await new Promise<void>((resolve: Resolve<void>) => {
         const plan: AlivePlan<number, number, MockRuntimeError> = AlivePlan.of<number, number, MockRuntimeError>((n: number) => {
-          spy1();
+          fn1();
           expect(n).toBe(value);
 
           return Promise.reject<number>(error);
         }, new MockChrono<number, MockRuntimeError>(
           () => {
-            spy2();
+            fn2();
 
             resolve();
           },
           (e: MockRuntimeError) => {
-            spy3();
+            fn3();
             expect(e).toBe(error);
 
             resolve();
           },
           () => {
-            spy4();
+            fn4();
 
             resolve();
           },
@@ -275,43 +262,41 @@ describe('AlivePlan', () => {
         plan.onMap(value);
       });
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(false);
-      expect(spy3.called).toBe(true);
-      expect(spy4.called).toBe(false);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(0);
+      expect(fn3.mock.calls).toHaveLength(1);
+      expect(fn4.mock.calls).toHaveLength(0);
     });
 
     it('invokes second callback when Dead Superposition given', async () => {
-      expect.assertions(6);
-
       const value: number = 101;
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
-      const spy4: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
+      const fn4: jest.Mock = jest.fn();
 
       await new Promise<void>((resolve: Resolve<void>) => {
         const plan: AlivePlan<number, number, MockRuntimeError> = AlivePlan.of<number, number, MockRuntimeError>((n: number) => {
-          spy1();
+          fn1();
           expect(n).toBe(value);
 
           return Superposition.dead<number, MockRuntimeError>(error, MockRuntimeError);
         }, new MockChrono<number, MockRuntimeError>(
           () => {
-            spy2();
+            fn2();
 
             resolve();
           },
           (e: MockRuntimeError) => {
-            spy3();
+            fn3();
             expect(e).toBe(error);
 
             resolve();
           },
           () => {
-            spy4();
+            fn4();
 
             resolve();
           },
@@ -321,43 +306,41 @@ describe('AlivePlan', () => {
         plan.onMap(value);
       });
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(false);
-      expect(spy3.called).toBe(true);
-      expect(spy4.called).toBe(false);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(0);
+      expect(fn3.mock.calls).toHaveLength(1);
+      expect(fn4.mock.calls).toHaveLength(0);
     });
 
     it('invokes second callback when Promise<Dead Superposition> given', async () => {
-      expect.assertions(6);
-
       const value: number = 101;
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
-      const spy4: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
+      const fn4: jest.Mock = jest.fn();
 
       await new Promise<void>((resolve: Resolve<void>) => {
         const plan: AlivePlan<number, number, MockRuntimeError> = AlivePlan.of<number, number, MockRuntimeError>((n: number) => {
-          spy1();
+          fn1();
           expect(n).toBe(value);
 
           return Promise.resolve<Superposition<number, MockRuntimeError>>(Superposition.dead<number, MockRuntimeError>(error, MockRuntimeError));
         }, new MockChrono<number, MockRuntimeError>(
           () => {
-            spy2();
+            fn2();
 
             resolve();
           },
           (e: MockRuntimeError) => {
-            spy3();
+            fn3();
             expect(e).toBe(error);
 
             resolve();
           },
           () => {
-            spy4();
+            fn4();
 
             resolve();
           },
@@ -367,42 +350,40 @@ describe('AlivePlan', () => {
         plan.onMap(value);
       });
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(false);
-      expect(spy3.called).toBe(true);
-      expect(spy4.called).toBe(false);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(0);
+      expect(fn3.mock.calls).toHaveLength(1);
+      expect(fn4.mock.calls).toHaveLength(0);
     });
 
     it('invokes third callback when an unexpected error thrown', async () => {
-      expect.assertions(6);
-
       const value: number = 101;
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
-      const spy4: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
+      const fn4: jest.Mock = jest.fn();
 
       await new Promise<void>((resolve: Resolve<void>) => {
         const plan: AlivePlan<number, number, MockRuntimeError> = AlivePlan.of<number, number, MockRuntimeError>((n: number) => {
-          spy1();
+          fn1();
           expect(n).toBe(value);
 
           throw error;
         }, new MockChrono<number, MockRuntimeError>(
           () => {
-            spy2();
+            fn2();
 
             resolve();
           },
           () => {
-            spy3();
+            fn3();
 
             resolve();
           },
           (e: unknown) => {
-            spy4();
+            fn4();
             expect(e).toBe(error);
 
             resolve();
@@ -413,42 +394,40 @@ describe('AlivePlan', () => {
         plan.onMap(value);
       });
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(false);
-      expect(spy3.called).toBe(false);
-      expect(spy4.called).toBe(true);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(0);
+      expect(fn3.mock.calls).toHaveLength(0);
+      expect(fn4.mock.calls).toHaveLength(1);
     });
 
     it('invokes third callback when an unexpected rejected Promise given', async () => {
-      expect.assertions(6);
-
       const value: number = 101;
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
-      const spy4: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
+      const fn4: jest.Mock = jest.fn();
 
       await new Promise<void>((resolve: Resolve<void>) => {
         const plan: AlivePlan<number, number, MockRuntimeError> = AlivePlan.of<number, number, MockRuntimeError>((n: number) => {
-          spy1();
+          fn1();
           expect(n).toBe(value);
 
           return Promise.reject<number>(error);
         }, new MockChrono<number, MockRuntimeError>(
           () => {
-            spy2();
+            fn2();
 
             resolve();
           },
           () => {
-            spy3();
+            fn3();
 
             resolve();
           },
           (e: unknown) => {
-            spy4();
+            fn4();
             expect(e).toBe(error);
 
             resolve();
@@ -459,25 +438,23 @@ describe('AlivePlan', () => {
         plan.onMap(value);
       });
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(false);
-      expect(spy3.called).toBe(false);
-      expect(spy4.called).toBe(true);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(0);
+      expect(fn3.mock.calls).toHaveLength(0);
+      expect(fn4.mock.calls).toHaveLength(1);
     });
 
     it('invokes third callback when Contradiction Superposition given', () => {
-      expect.assertions(6);
-
       const value: number = 101;
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
-      const spy4: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
+      const fn4: jest.Mock = jest.fn();
 
       const plan: AlivePlan<number, number, MockRuntimeError> = AlivePlan.of<number, number, MockRuntimeError>((n: number) => {
-        spy1();
+        fn1();
         expect(n).toBe(value);
 
         return Superposition.of<number, MockRuntimeError>((c: Chrono<number, MockRuntimeError>) => {
@@ -485,13 +462,13 @@ describe('AlivePlan', () => {
         });
       }, new MockChrono<number, MockRuntimeError>(
         () => {
-          spy2();
+          fn2();
         },
         () => {
-          spy3();
+          fn3();
         },
         (e: unknown) => {
-          spy4();
+          fn4();
           expect(e).toBe(error);
         },
         new Set<DeadConstructor<MockRuntimeError>>()
@@ -499,26 +476,24 @@ describe('AlivePlan', () => {
 
       plan.onMap(value);
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(false);
-      expect(spy3.called).toBe(false);
-      expect(spy4.called).toBe(true);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(0);
+      expect(fn3.mock.calls).toHaveLength(0);
+      expect(fn4.mock.calls).toHaveLength(1);
     });
 
     it('invokes third callback when Promise<Contradiction Superposition> given', async () => {
-      expect.assertions(6);
-
       const value: number = 101;
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const spy1: SinonSpy = spy();
-      const spy2: SinonSpy = spy();
-      const spy3: SinonSpy = spy();
-      const spy4: SinonSpy = spy();
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
+      const fn4: jest.Mock = jest.fn();
 
       await new Promise<void>((resolve: Resolve<void>) => {
         const plan: AlivePlan<number, number, MockRuntimeError> = AlivePlan.of<number, number, MockRuntimeError>((n: number) => {
-          spy1();
+          fn1();
           expect(n).toBe(value);
 
           return Promise.resolve<Superposition<number, MockRuntimeError>>(Superposition.of<number, MockRuntimeError>((c: Chrono<number, MockRuntimeError>) => {
@@ -526,17 +501,17 @@ describe('AlivePlan', () => {
           }));
         }, new MockChrono<number, MockRuntimeError>(
           () => {
-            spy2();
+            fn2();
 
             resolve();
           },
           () => {
-            spy3();
+            fn3();
 
             resolve();
           },
           (e: unknown) => {
-            spy4();
+            fn4();
             expect(e).toBe(error);
 
             resolve();
@@ -547,10 +522,10 @@ describe('AlivePlan', () => {
         plan.onMap(value);
       });
 
-      expect(spy1.called).toBe(true);
-      expect(spy2.called).toBe(false);
-      expect(spy3.called).toBe(false);
-      expect(spy4.called).toBe(true);
+      expect(fn1.mock.calls).toHaveLength(1);
+      expect(fn2.mock.calls).toHaveLength(0);
+      expect(fn3.mock.calls).toHaveLength(0);
+      expect(fn4.mock.calls).toHaveLength(1);
     });
   });
 });

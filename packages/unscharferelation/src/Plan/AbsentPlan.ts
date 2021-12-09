@@ -4,16 +4,15 @@ import { RecoveryPlan } from '@jamashita/genitore-plan';
 import { Epoque } from '../Epoque';
 import { isUnscharferelation, IUnscharferelation, UReturnType } from '../IUnscharferelation';
 
-export class AbsentPlan<P> implements RecoveryPlan<void, 'AbsentPlan'> {
-  public readonly noun: 'AbsentPlan' = 'AbsentPlan';
+export class AbsentPlan<P> implements RecoveryPlan<void> {
   private readonly mapper: Supplier<UReturnType<P>>;
   private readonly epoque: Epoque<P>;
 
-  public static of<PT>(
-    mapper: Supplier<UReturnType<PT>>,
-    epoque: Epoque<PT>
-  ): AbsentPlan<PT> {
-    return new AbsentPlan<PT>(mapper, epoque);
+  public static of<P>(
+    mapper: Supplier<UReturnType<P>>,
+    epoque: Epoque<P>
+  ): AbsentPlan<P> {
+    return new AbsentPlan<P>(mapper, epoque);
   }
 
   protected constructor(
@@ -22,6 +21,28 @@ export class AbsentPlan<P> implements RecoveryPlan<void, 'AbsentPlan'> {
   ) {
     this.mapper = mapper;
     this.epoque = epoque;
+  }
+
+  private forOther(v: Suspicious<Matter<P>>): unknown {
+    if (Kind.isUndefined(v) || Kind.isNull(v)) {
+      return this.epoque.decline();
+    }
+
+    return this.epoque.accept(v);
+  }
+
+  private forUnscharferelation(unscharferelation: IUnscharferelation<P>): unknown {
+    return unscharferelation.pass(
+      (v: Matter<P>) => {
+        return this.epoque.accept(v);
+      },
+      () => {
+        return this.epoque.decline();
+      },
+      (c: unknown) => {
+        return this.epoque.throw(c);
+      }
+    );
   }
 
   public onRecover(): unknown {
@@ -51,27 +72,5 @@ export class AbsentPlan<P> implements RecoveryPlan<void, 'AbsentPlan'> {
     catch (err: unknown) {
       return this.epoque.throw(err);
     }
-  }
-
-  private forOther(v: Suspicious<Matter<P>>): unknown {
-    if (Kind.isUndefined(v) || Kind.isNull(v)) {
-      return this.epoque.decline();
-    }
-
-    return this.epoque.accept(v);
-  }
-
-  private forUnscharferelation(unscharferelation: IUnscharferelation<P>): unknown {
-    return unscharferelation.pass(
-      (v: Matter<P>) => {
-        return this.epoque.accept(v);
-      },
-      () => {
-        return this.epoque.decline();
-      },
-      (c: unknown) => {
-        return this.epoque.throw(c);
-      }
-    );
   }
 }

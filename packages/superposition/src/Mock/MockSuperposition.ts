@@ -1,12 +1,9 @@
 import { UnimplementedError } from '@jamashita/anden-error';
 import { ValueObject } from '@jamashita/anden-object';
 import { DeadConstructor, Detoxicated, Schrodinger } from '@jamashita/genitore-schrodinger';
-import { SuperpositionError } from '../Error/SuperpositionError';
 import { ISuperposition } from '../ISuperposition';
 
-export class MockSuperposition<A, D extends Error> extends ValueObject<'MockSuperposition'> implements ISuperposition<A, D, 'MockSuperposition'> {
-  public readonly noun: 'MockSuperposition' = 'MockSuperposition';
-
+export class MockSuperposition<A, D extends Error> extends ValueObject implements ISuperposition<A, D> {
   public constructor() {
     super();
   }
@@ -60,10 +57,6 @@ export class MockSuperposition<A, D extends Error> extends ValueObject<'MockSupe
   }
 
   public transform<B = A, E extends Error = D>(): ISuperposition<B, E> {
-    throw new UnimplementedError();
-  }
-
-  public filter(): ISuperposition<A, D | SuperpositionError> {
     throw new UnimplementedError();
   }
 }

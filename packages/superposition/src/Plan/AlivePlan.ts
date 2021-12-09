@@ -4,16 +4,15 @@ import { Detoxicated } from '@jamashita/genitore-schrodinger';
 import { Chrono } from '../Chrono';
 import { containsError, isSuperposition, ISuperposition, SReturnType } from '../ISuperposition';
 
-export class AlivePlan<A, B, E extends Error> implements MapPlan<Detoxicated<A>, 'AlivePlan'> {
-  public readonly noun: 'AlivePlan' = 'AlivePlan';
+export class AlivePlan<A, B, E extends Error> implements MapPlan<Detoxicated<A>> {
   private readonly mapper: UnaryFunction<Detoxicated<A>, SReturnType<B, E>>;
   private readonly chrono: Chrono<B, E>;
 
-  public static of<AT, BT, ET extends Error>(
-    mapper: UnaryFunction<Detoxicated<AT>, SReturnType<BT, ET>>,
-    chrono: Chrono<BT, ET>
-  ): AlivePlan<AT, BT, ET> {
-    return new AlivePlan<AT, BT, ET>(mapper, chrono);
+  public static of<A, B, E extends Error>(
+    mapper: UnaryFunction<Detoxicated<A>, SReturnType<B, E>>,
+    chrono: Chrono<B, E>
+  ): AlivePlan<A, B, E> {
+    return new AlivePlan<A, B, E>(mapper, chrono);
   }
 
   protected constructor(
@@ -22,35 +21,6 @@ export class AlivePlan<A, B, E extends Error> implements MapPlan<Detoxicated<A>,
   ) {
     this.mapper = mapper;
     this.chrono = chrono;
-  }
-
-  public onMap(value: Detoxicated<A>): unknown {
-    try {
-      const mapped: SReturnType<B, E> = this.mapper(value);
-
-      if (isSuperposition<B, E>(mapped)) {
-        return this.forSuperposition(mapped);
-      }
-      if (Kind.isPromiseLike<Detoxicated<B> | ISuperposition<B, E>>(mapped)) {
-        return mapped.then<unknown, unknown>(
-          (v: Detoxicated<B> | ISuperposition<B, E>) => {
-            if (isSuperposition<B, E>(v)) {
-              return this.forSuperposition(v);
-            }
-
-            return this.forOther(v);
-          },
-          (e: unknown) => {
-            return this.forError(e);
-          }
-        );
-      }
-
-      return this.forOther(mapped);
-    }
-    catch (err: unknown) {
-      return this.forError(err);
-    }
   }
 
   private forError(e: unknown): unknown {
@@ -83,5 +53,34 @@ export class AlivePlan<A, B, E extends Error> implements MapPlan<Detoxicated<A>,
         return this.chrono.throw(c);
       }
     );
+  }
+
+  public onMap(value: Detoxicated<A>): unknown {
+    try {
+      const mapped: SReturnType<B, E> = this.mapper(value);
+
+      if (isSuperposition<B, E>(mapped)) {
+        return this.forSuperposition(mapped);
+      }
+      if (Kind.isPromiseLike<Detoxicated<B> | ISuperposition<B, E>>(mapped)) {
+        return mapped.then<unknown, unknown>(
+          (v: Detoxicated<B> | ISuperposition<B, E>) => {
+            if (isSuperposition<B, E>(v)) {
+              return this.forSuperposition(v);
+            }
+
+            return this.forOther(v);
+          },
+          (e: unknown) => {
+            return this.forError(e);
+          }
+        );
+      }
+
+      return this.forOther(mapped);
+    }
+    catch (err: unknown) {
+      return this.forError(err);
+    }
   }
 }

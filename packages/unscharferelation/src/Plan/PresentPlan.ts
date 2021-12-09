@@ -4,16 +4,15 @@ import { MapPlan } from '@jamashita/genitore-plan';
 import { Epoque } from '../Epoque';
 import { isUnscharferelation, IUnscharferelation, UReturnType } from '../IUnscharferelation';
 
-export class PresentPlan<P, Q> implements MapPlan<Matter<P>, 'PresentPlan'> {
-  public readonly noun: 'PresentPlan' = 'PresentPlan';
+export class PresentPlan<P, Q> implements MapPlan<Matter<P>> {
   private readonly mapper: UnaryFunction<Matter<P>, UReturnType<Q>>;
   private readonly epoque: Epoque<Q>;
 
-  public static of<PT, QT>(
-    mapper: UnaryFunction<Matter<PT>, UReturnType<QT>>,
-    epoque: Epoque<QT>
-  ): PresentPlan<PT, QT> {
-    return new PresentPlan<PT, QT>(mapper, epoque);
+  public static of<P, Q>(
+    mapper: UnaryFunction<Matter<P>, UReturnType<Q>>,
+    epoque: Epoque<Q>
+  ): PresentPlan<P, Q> {
+    return new PresentPlan<P, Q>(mapper, epoque);
   }
 
   protected constructor(
@@ -22,6 +21,28 @@ export class PresentPlan<P, Q> implements MapPlan<Matter<P>, 'PresentPlan'> {
   ) {
     this.mapper = mapper;
     this.epoque = epoque;
+  }
+
+  private forOther(v: Suspicious<Matter<Q>>): unknown {
+    if (Kind.isUndefined(v) || Kind.isNull(v)) {
+      return this.epoque.decline();
+    }
+
+    return this.epoque.accept(v);
+  }
+
+  private forUnscharferelation(u: IUnscharferelation<Q>): unknown {
+    return u.pass(
+      (v: Matter<Q>) => {
+        return this.epoque.accept(v);
+      },
+      () => {
+        return this.epoque.decline();
+      },
+      (c: unknown) => {
+        return this.epoque.throw(c);
+      }
+    );
   }
 
   public onMap(value: Matter<P>): unknown {
@@ -51,27 +72,5 @@ export class PresentPlan<P, Q> implements MapPlan<Matter<P>, 'PresentPlan'> {
     catch (err: unknown) {
       return this.epoque.throw(err);
     }
-  }
-
-  private forOther(v: Suspicious<Matter<Q>>): unknown {
-    if (Kind.isUndefined(v) || Kind.isNull(v)) {
-      return this.epoque.decline();
-    }
-
-    return this.epoque.accept(v);
-  }
-
-  private forUnscharferelation(u: IUnscharferelation<Q>): unknown {
-    return u.pass(
-      (v: Matter<Q>) => {
-        return this.epoque.accept(v);
-      },
-      () => {
-        return this.epoque.decline();
-      },
-      (c: unknown) => {
-        return this.epoque.throw(c);
-      }
-    );
   }
 }

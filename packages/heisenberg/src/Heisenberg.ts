@@ -1,13 +1,10 @@
-import { Consumer, Noun, Serializable } from '@jamashita/anden-type';
+import { Consumer, Serializable } from '@jamashita/anden-type';
 import { Absent } from './Absent';
-import { HeisenbergType } from './HeisenbergType';
 import { Lost } from './Lost';
 import { Matter } from './Matter';
 import { Present } from './Present';
 
-export interface Heisenberg<P, N extends HeisenbergType = HeisenbergType> extends Serializable, Noun<N> {
-  readonly noun: N;
-
+export interface Heisenberg<P> extends Serializable {
   get(): Matter<P>;
 
   ifAbsent(consumer: Consumer<void>): void;

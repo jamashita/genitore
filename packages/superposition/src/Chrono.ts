@@ -1,7 +1,6 @@
-import { Noun } from '@jamashita/anden-type';
 import { DeadConstructor, Detoxicated } from '@jamashita/genitore-schrodinger';
 
-export interface Chrono<M, R extends Error, N extends string = string> extends Noun<N> {
+export interface Chrono<M, R extends Error> {
   accept(value: Detoxicated<M>): unknown;
 
   catch(errors: Iterable<DeadConstructor<R>>): void;

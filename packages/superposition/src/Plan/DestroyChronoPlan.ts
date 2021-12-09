@@ -1,12 +1,11 @@
 import { DestroyPlan } from '@jamashita/genitore-plan';
 import { Chrono } from '../Chrono';
 
-export class DestroyChronoPlan<A, D extends Error> implements DestroyPlan<'DestroyChronoPlan'> {
-  public readonly noun: 'DestroyChronoPlan' = 'DestroyChronoPlan';
+export class DestroyChronoPlan<A, D extends Error> implements DestroyPlan {
   private readonly chrono: Chrono<A, D>;
 
-  public static of<AT, DT extends Error>(chrono: Chrono<AT, DT>): DestroyChronoPlan<AT, DT> {
-    return new DestroyChronoPlan<AT, DT>(chrono);
+  public static of<A, D extends Error>(chrono: Chrono<A, D>): DestroyChronoPlan<A, D> {
+    return new DestroyChronoPlan<A, D>(chrono);
   }
 
   protected constructor(chrono: Chrono<A, D>) {

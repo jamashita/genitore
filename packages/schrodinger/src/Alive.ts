@@ -5,12 +5,11 @@ import { Dead } from './Dead';
 import { Detoxicated } from './Detoxicated';
 import { Schrodinger } from './Schrodinger';
 
-export class Alive<A, D extends Error> implements Schrodinger<A, D, 'Alive'> {
-  public readonly noun: 'Alive' = 'Alive';
+export class Alive<A, D extends Error> implements Schrodinger<A, D> {
   private readonly value: Detoxicated<A>;
 
-  public static of<AT, DT extends Error>(value: Detoxicated<AT>): Alive<AT, DT> {
-    return new Alive<AT, DT>(value);
+  public static of<A, D extends Error>(value: Detoxicated<A>): Alive<A, D> {
+    return new Alive<A, D>(value);
   }
 
   protected constructor(value: Detoxicated<A>) {

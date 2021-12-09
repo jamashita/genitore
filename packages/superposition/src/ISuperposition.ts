@@ -1,9 +1,9 @@
-import { Consumer, Kind, Noun, Peek, Serializable, SyncAsync, UnaryFunction } from '@jamashita/anden-type';
+import { Consumer, Kind, Peek, Serializable, SyncAsync, UnaryFunction } from '@jamashita/anden-type';
 import { DeadConstructor, Detoxicated, Schrodinger } from '@jamashita/genitore-schrodinger';
 
 export type SReturnType<B, E extends Error> = SyncAsync<Detoxicated<B> | ISuperposition<B, E>>;
 
-export interface ISuperposition<A, D extends Error, N extends string = string> extends Serializable, Noun<N> {
+export interface ISuperposition<A, D extends Error> extends Serializable {
   get(): Promise<Detoxicated<A>>;
 
   getErrors(): Set<DeadConstructor<D>>;
