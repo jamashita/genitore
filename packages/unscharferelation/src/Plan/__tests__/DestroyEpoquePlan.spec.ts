@@ -10,7 +10,7 @@ describe('DestroyEpoquePlan', () => {
       const fn2: jest.Mock = jest.fn();
       const fn3: jest.Mock = jest.fn();
 
-      const epoque: MockEpoque<number> = new MockEpoque<number>(
+      const epoque: MockEpoque<number> = new MockEpoque(
         () => {
           fn1();
         },
@@ -22,7 +22,7 @@ describe('DestroyEpoquePlan', () => {
           expect(v).toBe(value);
         }
       );
-      const plan: DestroyEpoquePlan<number> = DestroyEpoquePlan.of<number>(epoque);
+      const plan: DestroyEpoquePlan<number> = DestroyEpoquePlan.of(epoque);
 
       plan.onDestroy(value);
 

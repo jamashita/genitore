@@ -11,7 +11,7 @@ describe('CombinedChronoPlan', () => {
       const fn2: jest.Mock = jest.fn();
       const fn3: jest.Mock = jest.fn();
 
-      const pass: PassThroughPlan<number, MockRuntimeError> = PassThroughPlan.of<number, MockRuntimeError>(
+      const pass: PassThroughPlan<number, MockRuntimeError> = PassThroughPlan.of(
         (v: number) => {
           fn1();
           expect(v).toBe(value);
@@ -23,7 +23,7 @@ describe('CombinedChronoPlan', () => {
           fn3();
         }
       );
-      const plan: CombinedChronoPlan<number, MockRuntimeError> = CombinedChronoPlan.of<number, MockRuntimeError>(pass, pass, pass);
+      const plan: CombinedChronoPlan<number, MockRuntimeError> = CombinedChronoPlan.of(pass, pass, pass);
 
       plan.onMap(value);
 
@@ -41,7 +41,7 @@ describe('CombinedChronoPlan', () => {
       const fn2: jest.Mock = jest.fn();
       const fn3: jest.Mock = jest.fn();
 
-      const pass: PassThroughPlan<number, MockRuntimeError> = PassThroughPlan.of<number, MockRuntimeError>(
+      const pass: PassThroughPlan<number, MockRuntimeError> = PassThroughPlan.of(
         () => {
           fn1();
         },
@@ -53,7 +53,7 @@ describe('CombinedChronoPlan', () => {
           fn3();
         }
       );
-      const plan: CombinedChronoPlan<number, MockRuntimeError> = CombinedChronoPlan.of<number, MockRuntimeError>(pass, pass, pass);
+      const plan: CombinedChronoPlan<number, MockRuntimeError> = CombinedChronoPlan.of(pass, pass, pass);
 
       plan.onRecover(value);
 
@@ -71,7 +71,7 @@ describe('CombinedChronoPlan', () => {
       const fn2: jest.Mock = jest.fn();
       const fn3: jest.Mock = jest.fn();
 
-      const pass: PassThroughPlan<number, MockRuntimeError> = PassThroughPlan.of<number, MockRuntimeError>(
+      const pass: PassThroughPlan<number, MockRuntimeError> = PassThroughPlan.of(
         () => {
           fn1();
         },
@@ -83,7 +83,7 @@ describe('CombinedChronoPlan', () => {
           expect(v).toBe(value);
         }
       );
-      const plan: CombinedChronoPlan<number, MockRuntimeError> = CombinedChronoPlan.of<number, MockRuntimeError>(pass, pass, pass);
+      const plan: CombinedChronoPlan<number, MockRuntimeError> = CombinedChronoPlan.of(pass, pass, pass);
 
       plan.onDestroy(value);
 

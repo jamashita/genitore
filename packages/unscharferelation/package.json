@@ -22,8 +22,7 @@
     "build:esm": "tsc -b tsconfig.esm.json",
     "clean": "concurrently \"npm:clean:*\"",
     "clean:coverage": "rimraf coverage",
-    "clean:dist": "rimraf dist",
-    "clean:others": "rimraf *.log && rimraf tsconfig.build.tsbuildinfo"
+    "clean:dist": "rimraf dist"
   },
   "dependencies": {
     "@jamashita/anden-error": "2.3.0",

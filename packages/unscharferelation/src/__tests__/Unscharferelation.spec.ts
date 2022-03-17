@@ -1,9 +1,9 @@
 import { MockRuntimeError } from '@jamashita/anden-error';
 import { Absent, Heisenberg, HeisenbergError, Lost, Present, Uncertain } from '@jamashita/genitore-heisenberg';
 import { Epoque } from '../Epoque';
-import { UnscharferelationError } from '../Error/UnscharferelationError';
 import { MockUnscharferelation } from '../Mock/MockUnscharferelation';
 import { Unscharferelation } from '../Unscharferelation';
+import { UnscharferelationError } from '../UnscharferelationError';
 
 describe('Unscharferelation', () => {
   describe('all', () => {

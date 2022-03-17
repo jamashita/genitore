@@ -59,13 +59,13 @@ export class DeadPlan<B, D extends Error, E extends Error> implements RecoveryPl
     try {
       const mapped: SReturnType<B, E> = this.mapper(value);
 
-      if (isSuperposition<B, E>(mapped)) {
+      if (isSuperposition(mapped)) {
         return this.forSuperposition(mapped);
       }
       if (Kind.isPromiseLike<Detoxicated<B> | ISuperposition<B, E>>(mapped)) {
         return mapped.then<unknown, unknown>(
           (v: Detoxicated<B> | ISuperposition<B, E>) => {
-            if (isSuperposition<B, E>(v)) {
+            if (isSuperposition(v)) {
               return this.forSuperposition(v);
             }
 

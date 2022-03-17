@@ -7,19 +7,19 @@ import { SuperpositionInternal } from '../SuperpositionInternal';
 describe('SuperpositionInternal', () => {
   describe('toString', () => {
     it('returns its retaining Schrodinger string', () => {
-      const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.accept(-1);
         },
         [MockRuntimeError]
       );
-      const superposition2: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition2: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.decline(new MockRuntimeError());
         },
         [MockRuntimeError]
       );
-      const superposition3: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition3: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.throw(null);
         },
@@ -36,11 +36,11 @@ describe('SuperpositionInternal', () => {
     it('does nothing if done once', async () => {
       const value: number = -35;
       const fn: jest.Mock = jest.fn();
-      const plans: Set<Plan<Detoxicated<number>, MockRuntimeError>> = new Set<Plan<Detoxicated<number>, MockRuntimeError>>();
+      const plans: Set<Plan<Detoxicated<number>, MockRuntimeError>> = new Set();
 
       plans.forEach = fn;
 
-      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.accept(value);
         },
@@ -69,7 +69,7 @@ describe('SuperpositionInternal', () => {
       const fn1: jest.Mock = jest.fn();
       const fn2: jest.Mock = jest.fn();
 
-      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.accept(value);
         },
@@ -99,11 +99,11 @@ describe('SuperpositionInternal', () => {
     it('does nothing if done once', async () => {
       const error: MockRuntimeError = new MockRuntimeError();
       const fn: jest.Mock = jest.fn();
-      const plans: Set<Plan<Detoxicated<number>, MockRuntimeError>> = new Set<Plan<Detoxicated<number>, MockRuntimeError>>();
+      const plans: Set<Plan<Detoxicated<number>, MockRuntimeError>> = new Set();
 
       plans.forEach = fn;
 
-      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.decline(error);
         },
@@ -131,7 +131,7 @@ describe('SuperpositionInternal', () => {
       const fn1: jest.Mock = jest.fn();
       const fn2: jest.Mock = jest.fn();
 
-      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.decline(error);
         },
@@ -159,11 +159,11 @@ describe('SuperpositionInternal', () => {
     it('does nothing if done once', async () => {
       const error: MockRuntimeError = new MockRuntimeError();
       const fn: jest.Mock = jest.fn();
-      const plans: Set<Plan<Detoxicated<number>, void>> = new Set<Plan<Detoxicated<number>, void>>();
+      const plans: Set<Plan<Detoxicated<number>, void>> = new Set();
 
       plans.forEach = fn;
 
-      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.throw(error);
         },
@@ -196,7 +196,7 @@ describe('SuperpositionInternal', () => {
       const fn3: jest.Mock = jest.fn();
       const fn4: jest.Mock = jest.fn();
 
-      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.throw(error);
         },
@@ -239,19 +239,19 @@ describe('SuperpositionInternal', () => {
       const value: number = -149;
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.accept(value);
         },
         [MockRuntimeError]
       );
-      const superposition2: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition2: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.decline(error);
         },
         [MockRuntimeError]
       );
-      const superposition3: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition3: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.throw(error);
         },
@@ -269,19 +269,19 @@ describe('SuperpositionInternal', () => {
       const value: number = -149;
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const alive: Schrodinger<number, MockRuntimeError> = await SuperpositionInternal.of<number, MockRuntimeError>(
+      const alive: Schrodinger<number, MockRuntimeError> = await SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.accept(value);
         },
         [MockRuntimeError]
       ).terminate();
-      const dead: Schrodinger<number, MockRuntimeError> = await SuperpositionInternal.of<number, MockRuntimeError>(
+      const dead: Schrodinger<number, MockRuntimeError> = await SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.decline(error);
         },
         [MockRuntimeError]
       ).terminate();
-      const contradiction: Schrodinger<number, MockRuntimeError> = await SuperpositionInternal.of<number, MockRuntimeError>(
+      const contradiction: Schrodinger<number, MockRuntimeError> = await SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.throw(error);
         },
@@ -305,7 +305,7 @@ describe('SuperpositionInternal', () => {
     it('invokes callbacks unless it is not Dead nor Contradiction', async () => {
       const value: number = 2;
 
-      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.accept(value);
         },
@@ -341,7 +341,7 @@ describe('SuperpositionInternal', () => {
     it('invokes callbacks unless it is not Dead nor Contradiction, even if the return value is Promise', async () => {
       const value: number = 2;
 
-      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.accept(value);
         },
@@ -379,19 +379,19 @@ describe('SuperpositionInternal', () => {
       const value2: number = 200;
       const value3: number = 20000;
 
-      const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.accept(value1);
         },
         [MockRuntimeError]
       );
-      const superposition2: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition2: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.accept(value2);
         },
         [MockRuntimeError]
       );
-      const superposition3: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition3: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.accept(value3);
         },
@@ -428,19 +428,19 @@ describe('SuperpositionInternal', () => {
       const value2: number = 200;
       const value3: number = 20000;
 
-      const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.accept(value1);
         },
         [MockRuntimeError]
       );
-      const superposition2: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition2: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.accept(value2);
         },
         [MockRuntimeError]
       );
-      const superposition3: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition3: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.accept(value3);
         },
@@ -476,7 +476,7 @@ describe('SuperpositionInternal', () => {
       const value: number = 2;
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.accept(value);
         },
@@ -511,7 +511,7 @@ describe('SuperpositionInternal', () => {
       const value: number = 2;
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.accept(value);
         },
@@ -546,19 +546,19 @@ describe('SuperpositionInternal', () => {
       const value: number = 2;
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.accept(value);
         },
         [MockRuntimeError]
       );
-      const superposition2: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition2: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.decline(error);
         },
         [MockRuntimeError]
       );
-      const superposition3: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition3: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.decline(error);
         },
@@ -593,19 +593,19 @@ describe('SuperpositionInternal', () => {
       const value: number = 2;
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.accept(value);
         },
         [MockRuntimeError]
       );
-      const superposition2: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition2: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.decline(error);
         },
         [MockRuntimeError]
       );
-      const superposition3: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition3: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.decline(error);
         },
@@ -640,7 +640,7 @@ describe('SuperpositionInternal', () => {
       const value: number = 2;
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.accept(value);
         },
@@ -681,7 +681,7 @@ describe('SuperpositionInternal', () => {
       const value: number = 2;
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.accept(value);
         },
@@ -724,25 +724,25 @@ describe('SuperpositionInternal', () => {
       const error2: MockRuntimeError = new MockRuntimeError();
       const error3: MockRuntimeError = new MockRuntimeError();
 
-      const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.accept(value);
         },
         [MockRuntimeError]
       );
-      const superposition2: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition2: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.throw(error1);
         },
         [MockRuntimeError]
       );
-      const superposition3: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition3: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.throw(error2);
         },
         [MockRuntimeError]
       );
-      const superposition4: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition4: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.throw(error3);
         },
@@ -785,25 +785,25 @@ describe('SuperpositionInternal', () => {
       const error2: MockRuntimeError = new MockRuntimeError();
       const error3: MockRuntimeError = new MockRuntimeError();
 
-      const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.accept(value);
         },
         [MockRuntimeError]
       );
-      const superposition2: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition2: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.throw(error1);
         },
         [MockRuntimeError]
       );
-      const superposition3: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition3: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.throw(error2);
         },
         [MockRuntimeError]
       );
-      const superposition4: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition4: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.throw(error3);
         },
@@ -844,13 +844,13 @@ describe('SuperpositionInternal', () => {
       const value1: number = 2;
       const value2: number = 20;
 
-      const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.accept(value1);
         },
         [MockRuntimeError]
       );
-      const superposition2: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition2: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.accept(value2);
         },
@@ -887,13 +887,13 @@ describe('SuperpositionInternal', () => {
       const value: number = 2;
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.accept(value);
         },
         [MockRuntimeError]
       );
-      const superposition2: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition2: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.decline(error);
         },
@@ -928,13 +928,13 @@ describe('SuperpositionInternal', () => {
       const value: number = 2;
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.accept(value);
         },
         [MockRuntimeError]
       );
-      const superposition2: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition2: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.throw(error);
         },
@@ -972,7 +972,7 @@ describe('SuperpositionInternal', () => {
       const value: number = -201;
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.decline(error);
         },
@@ -1008,7 +1008,7 @@ describe('SuperpositionInternal', () => {
       const value: number = -201;
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.decline(error);
         },
@@ -1045,19 +1045,19 @@ describe('SuperpositionInternal', () => {
       const value2: number = 20;
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.decline(error);
         },
         [MockRuntimeError]
       );
-      const superposition2: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition2: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.accept(value1);
         },
         [MockRuntimeError]
       );
-      const superposition3: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition3: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.accept(value2);
         },
@@ -1094,19 +1094,19 @@ describe('SuperpositionInternal', () => {
       const value2: number = 20;
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.decline(error);
         },
         [MockRuntimeError]
       );
-      const superposition2: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition2: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.accept(value1);
         },
         [MockRuntimeError]
       );
-      const superposition3: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition3: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.accept(value2);
         },
@@ -1143,7 +1143,7 @@ describe('SuperpositionInternal', () => {
       const error1: MockRuntimeError = new MockRuntimeError();
       const error2: MockRuntimeError = new MockRuntimeError();
 
-      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.decline(error1);
         },
@@ -1181,7 +1181,7 @@ describe('SuperpositionInternal', () => {
       const error1: MockRuntimeError = new MockRuntimeError();
       const error2: MockRuntimeError = new MockRuntimeError();
 
-      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.decline(error1);
         },
@@ -1219,19 +1219,19 @@ describe('SuperpositionInternal', () => {
       const error1: MockRuntimeError = new MockRuntimeError();
       const error2: MockRuntimeError = new MockRuntimeError();
 
-      const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.accept(value);
         },
         [MockRuntimeError]
       );
-      const superposition2: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition2: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.decline(error1);
         },
         [MockRuntimeError]
       );
-      const superposition3: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition3: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.decline(error2);
         },
@@ -1269,19 +1269,19 @@ describe('SuperpositionInternal', () => {
       const error1: MockRuntimeError = new MockRuntimeError();
       const error2: MockRuntimeError = new MockRuntimeError();
 
-      const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.accept(value);
         },
         [MockRuntimeError]
       );
-      const superposition2: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition2: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.decline(error1);
         },
         [MockRuntimeError]
       );
-      const superposition3: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition3: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.decline(error2);
         },
@@ -1318,7 +1318,7 @@ describe('SuperpositionInternal', () => {
       const value: number = 2;
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.accept(value);
         },
@@ -1359,7 +1359,7 @@ describe('SuperpositionInternal', () => {
       const value: number = 2;
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.accept(value);
         },
@@ -1402,25 +1402,25 @@ describe('SuperpositionInternal', () => {
       const error2: MockRuntimeError = new MockRuntimeError();
       const error3: MockRuntimeError = new MockRuntimeError();
 
-      const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.accept(value);
         },
         [MockRuntimeError]
       );
-      const superposition2: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition2: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.throw(error1);
         },
         [MockRuntimeError]
       );
-      const superposition3: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition3: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.throw(error2);
         },
         [MockRuntimeError]
       );
-      const superposition4: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition4: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.throw(error3);
         },
@@ -1459,25 +1459,25 @@ describe('SuperpositionInternal', () => {
       const error2: MockRuntimeError = new MockRuntimeError();
       const error3: MockRuntimeError = new MockRuntimeError();
 
-      const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.accept(value);
         },
         [MockRuntimeError]
       );
-      const superposition2: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition2: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.throw(error1);
         },
         [MockRuntimeError]
       );
-      const superposition3: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition3: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.throw(error2);
         },
         [MockRuntimeError]
       );
-      const superposition4: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition4: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.throw(error3);
         },
@@ -1514,13 +1514,13 @@ describe('SuperpositionInternal', () => {
       const value1: number = 2;
       const value2: number = 2;
 
-      const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.accept(value1);
         },
         [MockRuntimeError]
       );
-      const superposition2: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition2: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.accept(value1);
         },
@@ -1557,13 +1557,13 @@ describe('SuperpositionInternal', () => {
       const value: number = 2;
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.accept(value);
         },
         [MockRuntimeError]
       );
-      const superposition2: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition2: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.decline(error);
         },
@@ -1600,13 +1600,13 @@ describe('SuperpositionInternal', () => {
       const value: number = 2;
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.accept(value);
         },
         [MockRuntimeError]
       );
-      const superposition2: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition2: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.throw(error);
         },
@@ -1646,7 +1646,7 @@ describe('SuperpositionInternal', () => {
       const value2: number = 20;
       const value3: number = 200;
 
-      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.accept(value1);
         },
@@ -1697,7 +1697,7 @@ describe('SuperpositionInternal', () => {
       const value2: number = 20;
       const value3: number = 200;
 
-      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.accept(value1);
         },
@@ -1748,19 +1748,19 @@ describe('SuperpositionInternal', () => {
       const value2: number = 20;
       const value3: number = 200;
 
-      const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.accept(value1);
         },
         [MockRuntimeError]
       );
-      const superposition2: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition2: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.accept(value2);
         },
         [MockRuntimeError]
       );
-      const superposition3: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition3: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.accept(value3);
         },
@@ -1811,19 +1811,19 @@ describe('SuperpositionInternal', () => {
       const value2: number = 20;
       const value3: number = 200;
 
-      const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.accept(value1);
         },
         [MockRuntimeError]
       );
-      const superposition2: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition2: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.accept(value2);
         },
         [MockRuntimeError]
       );
-      const superposition3: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition3: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.accept(value3);
         },
@@ -1874,7 +1874,7 @@ describe('SuperpositionInternal', () => {
       const error2: MockRuntimeError = new MockRuntimeError();
       const error3: MockRuntimeError = new MockRuntimeError();
 
-      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.decline(error1);
         },
@@ -1923,7 +1923,7 @@ describe('SuperpositionInternal', () => {
       const error2: MockRuntimeError = new MockRuntimeError();
       const error3: MockRuntimeError = new MockRuntimeError();
 
-      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.decline(error1);
         },
@@ -1974,19 +1974,19 @@ describe('SuperpositionInternal', () => {
       const error2: MockRuntimeError = new MockRuntimeError();
       const error3: MockRuntimeError = new MockRuntimeError();
 
-      const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.decline(error1);
         },
         [MockRuntimeError]
       );
-      const superposition2: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition2: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.decline(error2);
         },
         [MockRuntimeError]
       );
-      const superposition3: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition3: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.decline(error3);
         },
@@ -2037,19 +2037,19 @@ describe('SuperpositionInternal', () => {
       const error2: MockRuntimeError = new MockRuntimeError();
       const error3: MockRuntimeError = new MockRuntimeError();
 
-      const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.decline(error1);
         },
         [MockRuntimeError]
       );
-      const superposition2: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition2: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.decline(error2);
         },
         [MockRuntimeError]
       );
-      const superposition3: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition3: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.decline(error3);
         },
@@ -2099,13 +2099,13 @@ describe('SuperpositionInternal', () => {
       const value1: number = 2;
       const value2: number = 2;
 
-      const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.accept(value1);
         },
         [MockRuntimeError]
       );
-      const superposition2: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition2: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.accept(value2);
         },
@@ -2172,13 +2172,13 @@ describe('SuperpositionInternal', () => {
       const error1: MockRuntimeError = new MockRuntimeError();
       const error2: MockRuntimeError = new MockRuntimeError();
 
-      const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.decline(error1);
         },
         [MockRuntimeError]
       );
-      const superposition2: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition2: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.decline(error2);
         },
@@ -2245,13 +2245,13 @@ describe('SuperpositionInternal', () => {
       const error1: MockRuntimeError = new MockRuntimeError();
       const error2: MockRuntimeError = new MockRuntimeError();
 
-      const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.throw(error1);
         },
         [MockRuntimeError]
       );
-      const superposition2: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition2: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.throw(error2);
         },
@@ -2316,7 +2316,7 @@ describe('SuperpositionInternal', () => {
     it('invokes callback if Superposition is Alive', async () => {
       const value: number = -201;
 
-      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.accept(value);
         }, [MockRuntimeError]
@@ -2336,7 +2336,7 @@ describe('SuperpositionInternal', () => {
     it('does not invoke callback if Superposition is Dead', async () => {
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.decline(error);
         }, [MockRuntimeError]
@@ -2355,7 +2355,7 @@ describe('SuperpositionInternal', () => {
     it('does not invoke callback if Superposition is Contradiction', async () => {
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.throw(error);
         }, [MockRuntimeError]
@@ -2376,7 +2376,7 @@ describe('SuperpositionInternal', () => {
     it('does not invoke callback if Superposition is Alive', async () => {
       const value: number = -201;
 
-      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.accept(value);
         }, [MockRuntimeError]
@@ -2395,7 +2395,7 @@ describe('SuperpositionInternal', () => {
     it('invokes callback if Superposition is Dead', async () => {
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.decline(error);
         }, [MockRuntimeError]
@@ -2415,7 +2415,7 @@ describe('SuperpositionInternal', () => {
     it('does not invoke callback if Superposition is Contradiction', async () => {
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.throw(error);
         }, [MockRuntimeError]
@@ -2436,7 +2436,7 @@ describe('SuperpositionInternal', () => {
     it('does not invoke callback if Superposition is Alive', async () => {
       const value: number = -201;
 
-      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.accept(value);
         }, [MockRuntimeError]
@@ -2455,7 +2455,7 @@ describe('SuperpositionInternal', () => {
     it('does not invoke callback if Superposition is Dead', async () => {
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.decline(error);
         }, [MockRuntimeError]
@@ -2474,7 +2474,7 @@ describe('SuperpositionInternal', () => {
     it('invokes callback if Superposition is Contradiction', async () => {
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.throw(error);
         }, [MockRuntimeError]
@@ -2496,7 +2496,7 @@ describe('SuperpositionInternal', () => {
     it('invokes first callback if Superposition is Alive', () => {
       const value: number = 2;
 
-      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.accept(value);
         },
@@ -2528,7 +2528,7 @@ describe('SuperpositionInternal', () => {
     it('invokes second callback if Superposition is Dead', () => {
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.decline(error);
         },
@@ -2560,7 +2560,7 @@ describe('SuperpositionInternal', () => {
     it('invokes third callback if Superposition is Contradiction', () => {
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.throw(error);
         },
@@ -2594,7 +2594,7 @@ describe('SuperpositionInternal', () => {
     it('invokes first callback if Superposition is Alive', () => {
       const value: number = 2;
 
-      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.accept(value);
         },
@@ -2613,7 +2613,7 @@ describe('SuperpositionInternal', () => {
     it('invokes second callback if Superposition is Dead', () => {
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.decline(error);
         },
@@ -2632,7 +2632,7 @@ describe('SuperpositionInternal', () => {
     it('invokes third callback if Superposition is Contradiction', () => {
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of<number, MockRuntimeError>(
+      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.throw(error);
         },

@@ -49,13 +49,13 @@ export class AbsentPlan<P> implements RecoveryPlan<void> {
     try {
       const mapped: UReturnType<P> = this.mapper();
 
-      if (isUnscharferelation<P>(mapped)) {
+      if (isUnscharferelation(mapped)) {
         return this.forUnscharferelation(mapped);
       }
       if (Kind.isPromiseLike<IUnscharferelation<P> | Suspicious<Matter<P>>>(mapped)) {
         return mapped.then<unknown, unknown>(
           (v: IUnscharferelation<P> | Suspicious<Matter<P>>) => {
-            if (isUnscharferelation<P>(v)) {
+            if (isUnscharferelation(v)) {
               return this.forUnscharferelation(v);
             }
 

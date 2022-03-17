@@ -8,7 +8,7 @@ describe('RecoveryEpoquePlan', () => {
       const fn2: jest.Mock = jest.fn();
       const fn3: jest.Mock = jest.fn();
 
-      const epoque: MockEpoque<number> = new MockEpoque<number>(
+      const epoque: MockEpoque<number> = new MockEpoque(
         () => {
           fn1();
         },
@@ -19,7 +19,7 @@ describe('RecoveryEpoquePlan', () => {
           fn3();
         }
       );
-      const plan: RecoveryEpoquePlan<number> = RecoveryEpoquePlan.of<number>(epoque);
+      const plan: RecoveryEpoquePlan<number> = RecoveryEpoquePlan.of(epoque);
 
       plan.onRecover();
 

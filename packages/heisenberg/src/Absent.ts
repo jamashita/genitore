@@ -1,6 +1,6 @@
 import { Consumer } from '@jamashita/anden-type';
-import { HeisenbergError } from './Error/HeisenbergError';
 import { Heisenberg } from './Heisenberg';
+import { HeisenbergError } from './HeisenbergError';
 import { Lost } from './Lost';
 import { Present } from './Present';
 
@@ -8,7 +8,7 @@ export class Absent<P> implements Heisenberg<P> {
   private static readonly INSTANCE: Absent<unknown> = new Absent<unknown>();
 
   public static of<P>(): Absent<P> {
-    return (Absent.INSTANCE as unknown) as Absent<P>;
+    return Absent.INSTANCE as Absent<P>;
   }
 
   private constructor() {
