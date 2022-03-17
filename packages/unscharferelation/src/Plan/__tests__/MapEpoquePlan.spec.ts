@@ -1,4 +1,4 @@
-import { MockEpoque } from '../../Mock/MockEpoque';
+import { MockEpoque } from '../../mock/MockEpoque';
 import { MapEpoquePlan } from '../MapEpoquePlan';
 
 describe('MapEpoquePlan', () => {

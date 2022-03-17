@@ -1,7 +1,7 @@
 import { MockRuntimeError } from '@jamashita/anden-error';
 import { Resolve } from '@jamashita/anden-type';
 import { Epoque } from '../../Epoque';
-import { MockEpoque } from '../../Mock/MockEpoque';
+import { MockEpoque } from '../../mock/MockEpoque';
 import { Unscharferelation } from '../../Unscharferelation';
 import { AbsentPlan } from '../AbsentPlan';
 

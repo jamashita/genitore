@@ -1,6 +1,6 @@
 import { MockRuntimeError } from '@jamashita/anden-error';
 import { DeadConstructor } from '@jamashita/genitore-schrodinger';
-import { MockChrono } from '../../Mock/MockChrono';
+import { MockChrono } from '../../mock/MockChrono';
 import { DestroyChronoPlan } from '../DestroyChronoPlan';
 
 describe('DestroyChronoPlan', () => {

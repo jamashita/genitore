@@ -1,7 +1,7 @@
 import { MockRuntimeError } from '@jamashita/anden-error';
 import { Alive, Contradiction, Dead, Schrodinger, Still } from '@jamashita/genitore-schrodinger';
 import { Chrono } from '../Chrono';
-import { MockSuperposition } from '../Mock/MockSuperposition';
+import { MockSuperposition } from '../mock/MockSuperposition';
 import { Superposition } from '../Superposition';
 import { SuperpositionError } from '../SuperpositionError';
 

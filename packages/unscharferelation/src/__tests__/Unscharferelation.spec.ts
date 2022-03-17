@@ -1,7 +1,7 @@
 import { MockRuntimeError } from '@jamashita/anden-error';
 import { Absent, Heisenberg, HeisenbergError, Lost, Present, Uncertain } from '@jamashita/genitore-heisenberg';
 import { Epoque } from '../Epoque';
-import { MockUnscharferelation } from '../Mock/MockUnscharferelation';
+import { MockUnscharferelation } from '../mock/MockUnscharferelation';
 import { Unscharferelation } from '../Unscharferelation';
 import { UnscharferelationError } from '../UnscharferelationError';
 
