@@ -29,8 +29,8 @@
     "@jamashita/anden-error": "2.3.0",
     "@jamashita/anden-object": "2.6.0",
     "@jamashita/anden-type": "2.3.0",
-    "@jamashita/genitore-plan": "^2.3.0",
-    "@jamashita/genitore-schrodinger": "^2.3.0"
+    "@jamashita/genitore-plan": "^2.4.0",
+    "@jamashita/genitore-schrodinger": "^2.4.0"
   },
   "engines": {
     "node": ">=14.0.0",
