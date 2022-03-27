@@ -1,6 +1,6 @@
-export * from './Error/HeisenbergError';
 export * from './Absent';
 export * from './Heisenberg';
+export * from './HeisenbergError';
 export * from './Lost';
 export * from './Matter';
 export * from './Nihil';

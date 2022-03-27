@@ -49,13 +49,13 @@ export class PresentPlan<P, Q> implements MapPlan<Matter<P>> {
     try {
       const mapped: UReturnType<Q> = this.mapper(value);
 
-      if (isUnscharferelation<Q>(mapped)) {
+      if (isUnscharferelation(mapped)) {
         return this.forUnscharferelation(mapped);
       }
       if (Kind.isPromiseLike<IUnscharferelation<Q> | Suspicious<Matter<Q>>>(mapped)) {
         return mapped.then<unknown, unknown>(
           (v: IUnscharferelation<Q> | Suspicious<Matter<Q>>) => {
-            if (isUnscharferelation<Q>(v)) {
+            if (isUnscharferelation(v)) {
               return this.forUnscharferelation(v);
             }
 
