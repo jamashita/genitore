@@ -2,7 +2,7 @@ import { MockRuntimeError } from '@jamashita/anden-error';
 import { Resolve } from '@jamashita/anden-type';
 import { DeadConstructor } from '@jamashita/genitore-schrodinger';
 import { Chrono } from '../../Chrono';
-import { MockChrono } from '../../Mock/MockChrono';
+import { MockChrono } from '../../mock/MockChrono';
 import { Superposition } from '../../Superposition';
 import { AlivePlan } from '../AlivePlan';
 

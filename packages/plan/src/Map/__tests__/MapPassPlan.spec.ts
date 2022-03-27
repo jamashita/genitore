@@ -7,7 +7,7 @@ describe('MapPassPlan', () => {
 
       const fn: jest.Mock = jest.fn();
 
-      const plan: MapPassPlan<number> = MapPassPlan.of<number>(
+      const plan: MapPassPlan<number> = MapPassPlan.of(
         (v: number) => {
           fn();
           expect(v).toBe(value);

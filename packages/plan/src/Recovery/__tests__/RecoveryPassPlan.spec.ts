@@ -7,14 +7,14 @@ describe('RecoveryPassPlan', () => {
 
       const fn: jest.Mock = jest.fn();
 
-      const epoque: RecoveryPassPlan<number> = RecoveryPassPlan.of<number>(
+      const plan: RecoveryPassPlan<number> = RecoveryPassPlan.of(
         (v: number) => {
           fn();
           expect(v).toBe(value);
         }
       );
 
-      epoque.onRecover(value);
+      plan.onRecover(value);
 
       expect(fn.mock.calls).toHaveLength(1);
     });

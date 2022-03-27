@@ -1,3 +1,12 @@
+# [@jamashita/genitore-heisenberg-v2.4.0](https://github.com/jamashita/genitore/compare/@jamashita/genitore-heisenberg-v2.3.0...@jamashita/genitore-heisenberg-v2.4.0) (2021-12-09)
+
+
+### Features
+
+* 🎸 packages updated ([4ac1416](https://github.com/jamashita/genitore/commit/4ac1416e79a5cd28e1fd95ce3d127961621d3a07))
+* 🎸 removed sinon ([779bea5](https://github.com/jamashita/genitore/commit/779bea5241f07269c4dc1bfdeb9c5f2210a15a04))
+* 🎸 support node version ([d04faf0](https://github.com/jamashita/genitore/commit/d04faf013a1d4b90b366b7a7ad54e2c5a85e2648))
+
 # [@jamashita/genitore-heisenberg-v2.3.0](https://github.com/jamashita/genitore/compare/@jamashita/genitore-heisenberg-v2.2.0...@jamashita/genitore-heisenberg-v2.3.0) (2021-11-01)
 
 ### Features

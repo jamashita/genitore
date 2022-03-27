@@ -1,8 +1,8 @@
 import { Consumer, Kind, Nullable, Peek, Supplier, SyncAsync, UnaryFunction } from '@jamashita/anden-type';
 import { Dead, DeadConstructor, Detoxicated, Schrodinger } from '@jamashita/genitore-schrodinger';
 import { Chrono } from './Chrono';
-import { SuperpositionError } from './Error/SuperpositionError';
 import { containsError, ISuperposition, SReturnType } from './ISuperposition';
+import { SuperpositionError } from './SuperpositionError';
 import { SuperpositionInternal } from './SuperpositionInternal';
 
 export class Superposition<A, D extends Error> implements ISuperposition<A, D> {
@@ -32,7 +32,7 @@ export class Superposition<A, D extends Error> implements ISuperposition<A, D> {
       return Superposition.alive<Array<A>, D>([]);
     }
 
-    const promises: Array<Promise<Schrodinger<A, D>>> = ss.map<Promise<Schrodinger<A, D>>>((s: Superposition<A, D>) => {
+    const promises: Array<Promise<Schrodinger<A, D>>> = ss.map((s: Superposition<A, D>): Promise<Schrodinger<A, D>> => {
       return s.terminate();
     });
 
@@ -41,7 +41,7 @@ export class Superposition<A, D extends Error> implements ISuperposition<A, D> {
         chrono.catch(s.getErrors());
       });
 
-      return Promise.all<Schrodinger<A, D>>(promises).then<unknown, unknown>(
+      return Promise.all<Schrodinger<A, D>>(promises).then(
         (schrodingers: Array<Schrodinger<A, D>>) => {
           const arr: Array<A> = [];
           let dead: Nullable<Dead<A, D>> = null;
@@ -71,7 +71,7 @@ export class Superposition<A, D extends Error> implements ISuperposition<A, D> {
   }
 
   public static anyway<A, D extends Error>(superpositions: Iterable<Superposition<A, D>>): Promise<Array<Schrodinger<A, D>>> {
-    const promises: Array<Promise<Schrodinger<A, D>>> = [...superpositions].map<Promise<Schrodinger<A, D>>>((s: Superposition<A, D>) => {
+    const promises: Array<Promise<Schrodinger<A, D>>> = [...superpositions].map((s: Superposition<A, D>): Promise<Schrodinger<A, D>> => {
       return s.terminate();
     });
 
@@ -81,7 +81,7 @@ export class Superposition<A, D extends Error> implements ISuperposition<A, D> {
   public static dead<A, D extends Error>(error: D | PromiseLike<Detoxicated<A>>, ...errors: ReadonlyArray<DeadConstructor<D>>): Superposition<A, D> {
     return Superposition.of<A, D>((chrono: Chrono<A, D>) => {
       if (Kind.isPromiseLike<Detoxicated<A>>(error)) {
-        return error.then<unknown, unknown>(
+        return error.then(
           () => {
             return chrono.throw(new SuperpositionError('NOT REJECTED'));
           },
@@ -103,7 +103,7 @@ export class Superposition<A, D extends Error> implements ISuperposition<A, D> {
   }
 
   public static of<A, D extends Error>(func: UnaryFunction<Chrono<A, D>, unknown>, ...errors: ReadonlyArray<DeadConstructor<D>>): Superposition<A, D> {
-    return Superposition.ofSuperposition<A, D>(SuperpositionInternal.of<A, D>(func, errors));
+    return Superposition.ofSuperposition<A, D>(SuperpositionInternal.of(func, errors));
   }
 
   public static ofSchrodinger<A, D extends Error>(schrodinger: Schrodinger<A, D>, ...errors: ReadonlyArray<DeadConstructor<D>>): Superposition<A, D> {
@@ -134,7 +134,7 @@ export class Superposition<A, D extends Error> implements ISuperposition<A, D> {
         const value: SyncAsync<Detoxicated<A>> = supplier();
 
         if (Kind.isPromiseLike<Detoxicated<A>>(value)) {
-          return value.then<unknown, unknown>(
+          return value.then(
             (v: Detoxicated<A>) => {
               return chrono.accept(v);
             },

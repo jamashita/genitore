@@ -1,6 +1,6 @@
 {
   "name": "@jamashita/genitore-plan",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "private": false,
   "repository": {
     "type": "git",
@@ -22,11 +22,10 @@
     "build:esm": "tsc -b tsconfig.esm.json",
     "clean": "concurrently \"npm:clean:*\"",
     "clean:coverage": "rimraf coverage",
-    "clean:dist": "rimraf dist",
-    "clean:others": "rimraf *.log && rimraf tsconfig.build.tsbuildinfo"
+    "clean:dist": "rimraf dist"
   },
   "dependencies": {
-    "@jamashita/anden-type": "2.3.0"
+    "@jamashita/anden-type": "2.4.0"
   },
   "engines": {
     "node": ">=14.0.0",

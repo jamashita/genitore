@@ -7,8 +7,8 @@ describe('Contradiction', () => {
     it('throws given error', () => {
       const error1: MockRuntimeError = new MockRuntimeError();
       const error2: MockRuntimeError = new MockRuntimeError();
-      const contradiction1: Contradiction<number, MockRuntimeError> = Contradiction.of<number, MockRuntimeError>(error1);
-      const contradiction2: Contradiction<number, MockRuntimeError> = Contradiction.of<number, MockRuntimeError>(error2);
+      const contradiction1: Contradiction<number, MockRuntimeError> = Contradiction.of(error1);
+      const contradiction2: Contradiction<number, MockRuntimeError> = Contradiction.of(error2);
 
       expect(() => {
         contradiction1.get();
@@ -23,8 +23,8 @@ describe('Contradiction', () => {
     it('returns thrown error', () => {
       const error1: MockRuntimeError = new MockRuntimeError();
       const error2: MockRuntimeError = new MockRuntimeError();
-      const contradiction1: Contradiction<number, MockRuntimeError> = Contradiction.of<number, MockRuntimeError>(error1);
-      const contradiction2: Contradiction<number, MockRuntimeError> = Contradiction.of<number, MockRuntimeError>(error2);
+      const contradiction1: Contradiction<number, MockRuntimeError> = Contradiction.of(error1);
+      const contradiction2: Contradiction<number, MockRuntimeError> = Contradiction.of(error2);
 
       expect(contradiction1.getCause()).toBe(error1);
       expect(contradiction2.getCause()).toBe(error2);
@@ -34,7 +34,7 @@ describe('Contradiction', () => {
   describe('isAlive', () => {
     it('always returns false', () => {
       const error: MockRuntimeError = new MockRuntimeError();
-      const contradiction: Contradiction<number, MockRuntimeError> = Contradiction.of<number, MockRuntimeError>(error);
+      const contradiction: Contradiction<number, MockRuntimeError> = Contradiction.of(error);
 
       expect(contradiction.isAlive()).toBe(false);
     });
@@ -43,7 +43,7 @@ describe('Contradiction', () => {
   describe('isDead', () => {
     it('always returns false', () => {
       const error: MockRuntimeError = new MockRuntimeError();
-      const contradiction: Contradiction<number, MockRuntimeError> = Contradiction.of<number, MockRuntimeError>(error);
+      const contradiction: Contradiction<number, MockRuntimeError> = Contradiction.of(error);
 
       expect(contradiction.isDead()).toBe(false);
     });
@@ -52,7 +52,7 @@ describe('Contradiction', () => {
   describe('isContradiction', () => {
     it('always returns true', () => {
       const error: MockRuntimeError = new MockRuntimeError();
-      const contradiction: Contradiction<number, MockRuntimeError> = Contradiction.of<number, MockRuntimeError>(error);
+      const contradiction: Contradiction<number, MockRuntimeError> = Contradiction.of(error);
 
       expect(contradiction.isContradiction()).toBe(true);
     });
@@ -64,7 +64,7 @@ describe('Contradiction', () => {
 
       const fn: jest.Mock = jest.fn();
 
-      const contradiction: Schrodinger<number, MockRuntimeError> = Contradiction.of<number, MockRuntimeError>(value);
+      const contradiction: Schrodinger<number, MockRuntimeError> = Contradiction.of(value);
 
       contradiction.ifAlive(() => {
         fn();
@@ -80,7 +80,7 @@ describe('Contradiction', () => {
 
       const fn: jest.Mock = jest.fn();
 
-      const contradiction: Schrodinger<number, MockRuntimeError> = Contradiction.of<number, MockRuntimeError>(value);
+      const contradiction: Schrodinger<number, MockRuntimeError> = Contradiction.of(value);
 
       contradiction.ifDead(() => {
         fn();
@@ -96,7 +96,7 @@ describe('Contradiction', () => {
 
       const fn: jest.Mock = jest.fn();
 
-      const contradiction: Schrodinger<number, MockRuntimeError> = Contradiction.of<number, MockRuntimeError>(value);
+      const contradiction: Schrodinger<number, MockRuntimeError> = Contradiction.of(value);
 
       contradiction.ifContradiction((v: unknown) => {
         fn();
@@ -109,7 +109,7 @@ describe('Contradiction', () => {
 
   describe('toString', () => {
     it('returns Contradiction and its retaining cause', () => {
-      expect(Contradiction.of<number, MockRuntimeError>(null).toString()).toBe('Contradiction: null');
+      expect(Contradiction.of(null).toString()).toBe('Contradiction: null');
     });
   });
 });

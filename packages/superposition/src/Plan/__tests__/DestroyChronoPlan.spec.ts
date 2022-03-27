@@ -1,6 +1,6 @@
 import { MockRuntimeError } from '@jamashita/anden-error';
 import { DeadConstructor } from '@jamashita/genitore-schrodinger';
-import { MockChrono } from '../../Mock/MockChrono';
+import { MockChrono } from '../../mock/MockChrono';
 import { DestroyChronoPlan } from '../DestroyChronoPlan';
 
 describe('DestroyChronoPlan', () => {
@@ -12,7 +12,7 @@ describe('DestroyChronoPlan', () => {
       const fn2: jest.Mock = jest.fn();
       const fn3: jest.Mock = jest.fn();
 
-      const chrono: MockChrono<number, MockRuntimeError> = new MockChrono<number, MockRuntimeError>(
+      const chrono: MockChrono<number, MockRuntimeError> = new MockChrono(
         () => {
           fn1();
         },
@@ -25,7 +25,7 @@ describe('DestroyChronoPlan', () => {
         },
         new Set<DeadConstructor<MockRuntimeError>>()
       );
-      const plan: DestroyChronoPlan<number, MockRuntimeError> = DestroyChronoPlan.of<number, MockRuntimeError>(chrono);
+      const plan: DestroyChronoPlan<number, MockRuntimeError> = DestroyChronoPlan.of(chrono);
 
       plan.onDestroy(value);
 
