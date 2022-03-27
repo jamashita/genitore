@@ -1,3 +1,10 @@
+# [@jamashita/genitore-plan-v2.5.0](https://github.com/jamashita/genitore/compare/@jamashita/genitore-plan-v2.4.0...@jamashita/genitore-plan-v2.5.0) (2022-03-27)
+
+
+### Features
+
+* 🎸 updated ([3fd330e](https://github.com/jamashita/genitore/commit/3fd330ecec287fb1409a3e775163d97c944cadad))
+
 # [@jamashita/genitore-plan-v2.4.0](https://github.com/jamashita/genitore/compare/@jamashita/genitore-plan-v2.3.0...@jamashita/genitore-plan-v2.4.0) (2021-12-09)
 
 
