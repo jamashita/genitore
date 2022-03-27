@@ -9,7 +9,7 @@ describe('PassThroughPlan', () => {
       const fn2: jest.Mock = jest.fn();
       const fn3: jest.Mock = jest.fn();
 
-      const epoque: PassThroughPlan<number, string> = PassThroughPlan.of<number, string>(
+      const plan: PassThroughPlan<number, string> = PassThroughPlan.of(
         (v: number) => {
           fn1();
           expect(v).toBe(value);
@@ -22,7 +22,7 @@ describe('PassThroughPlan', () => {
         }
       );
 
-      epoque.onMap(value);
+      plan.onMap(value);
 
       expect(fn1.mock.calls).toHaveLength(1);
       expect(fn2.mock.calls).toHaveLength(0);
@@ -38,7 +38,7 @@ describe('PassThroughPlan', () => {
       const fn2: jest.Mock = jest.fn();
       const fn3: jest.Mock = jest.fn();
 
-      const epoque: PassThroughPlan<number, string> = PassThroughPlan.of<number, string>(
+      const plan: PassThroughPlan<number, string> = PassThroughPlan.of(
         () => {
           fn1();
         },
@@ -51,7 +51,7 @@ describe('PassThroughPlan', () => {
         }
       );
 
-      epoque.onRecover(value);
+      plan.onRecover(value);
 
       expect(fn1.mock.calls).toHaveLength(0);
       expect(fn2.mock.calls).toHaveLength(1);
@@ -67,7 +67,7 @@ describe('PassThroughPlan', () => {
       const fn2: jest.Mock = jest.fn();
       const fn3: jest.Mock = jest.fn();
 
-      const epoque: PassThroughPlan<number, string> = PassThroughPlan.of<number, string>(
+      const plan: PassThroughPlan<number, string> = PassThroughPlan.of(
         () => {
           fn1();
         },
@@ -80,7 +80,7 @@ describe('PassThroughPlan', () => {
         }
       );
 
-      epoque.onDestroy(value);
+      plan.onDestroy(value);
 
       expect(fn1.mock.calls).toHaveLength(0);
       expect(fn2.mock.calls).toHaveLength(0);

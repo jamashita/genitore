@@ -5,13 +5,13 @@ import { Schrodinger } from '../Schrodinger';
 describe('Alive', () => {
   describe('get', () => {
     it('returns the inner value', () => {
-      const alive1: Alive<number, MockRuntimeError> = Alive.of<number, MockRuntimeError>(1);
-      const alive2: Alive<number, MockRuntimeError> = Alive.of<number, MockRuntimeError>(0);
-      const alive3: Alive<number, MockRuntimeError> = Alive.of<number, MockRuntimeError>(-1);
-      const alive4: Alive<string, MockRuntimeError> = Alive.of<string, MockRuntimeError>('');
-      const alive5: Alive<string, MockRuntimeError> = Alive.of<string, MockRuntimeError>('1');
-      const alive6: Alive<boolean, MockRuntimeError> = Alive.of<boolean, MockRuntimeError>(true);
-      const alive7: Alive<boolean, MockRuntimeError> = Alive.of<boolean, MockRuntimeError>(false);
+      const alive1: Alive<number, MockRuntimeError> = Alive.of(1);
+      const alive2: Alive<number, MockRuntimeError> = Alive.of(0);
+      const alive3: Alive<number, MockRuntimeError> = Alive.of(-1);
+      const alive4: Alive<string, MockRuntimeError> = Alive.of('');
+      const alive5: Alive<string, MockRuntimeError> = Alive.of('1');
+      const alive6: Alive<boolean, MockRuntimeError> = Alive.of(true);
+      const alive7: Alive<boolean, MockRuntimeError> = Alive.of(false);
 
       expect(alive1.get()).toBe(1);
       expect(alive2.get()).toBe(0);
@@ -25,13 +25,13 @@ describe('Alive', () => {
 
   describe('isAlive', () => {
     it('always returns true', () => {
-      const alive1: Alive<number, MockRuntimeError> = Alive.of<number, MockRuntimeError>(1);
-      const alive2: Alive<number, MockRuntimeError> = Alive.of<number, MockRuntimeError>(0);
-      const alive3: Alive<number, MockRuntimeError> = Alive.of<number, MockRuntimeError>(-1);
-      const alive4: Alive<string, MockRuntimeError> = Alive.of<string, MockRuntimeError>('');
-      const alive5: Alive<string, MockRuntimeError> = Alive.of<string, MockRuntimeError>('1');
-      const alive6: Alive<boolean, MockRuntimeError> = Alive.of<boolean, MockRuntimeError>(true);
-      const alive7: Alive<boolean, MockRuntimeError> = Alive.of<boolean, MockRuntimeError>(false);
+      const alive1: Alive<number, MockRuntimeError> = Alive.of(1);
+      const alive2: Alive<number, MockRuntimeError> = Alive.of(0);
+      const alive3: Alive<number, MockRuntimeError> = Alive.of(-1);
+      const alive4: Alive<string, MockRuntimeError> = Alive.of('');
+      const alive5: Alive<string, MockRuntimeError> = Alive.of('1');
+      const alive6: Alive<boolean, MockRuntimeError> = Alive.of(true);
+      const alive7: Alive<boolean, MockRuntimeError> = Alive.of(false);
 
       expect(alive1.isAlive()).toBe(true);
       expect(alive2.isAlive()).toBe(true);
@@ -45,13 +45,13 @@ describe('Alive', () => {
 
   describe('isDead', () => {
     it('always returns false', () => {
-      const alive1: Alive<number, MockRuntimeError> = Alive.of<number, MockRuntimeError>(1);
-      const alive2: Alive<number, MockRuntimeError> = Alive.of<number, MockRuntimeError>(0);
-      const alive3: Alive<number, MockRuntimeError> = Alive.of<number, MockRuntimeError>(-1);
-      const alive4: Alive<string, MockRuntimeError> = Alive.of<string, MockRuntimeError>('');
-      const alive5: Alive<string, MockRuntimeError> = Alive.of<string, MockRuntimeError>('1');
-      const alive6: Alive<boolean, MockRuntimeError> = Alive.of<boolean, MockRuntimeError>(true);
-      const alive7: Alive<boolean, MockRuntimeError> = Alive.of<boolean, MockRuntimeError>(false);
+      const alive1: Alive<number, MockRuntimeError> = Alive.of(1);
+      const alive2: Alive<number, MockRuntimeError> = Alive.of(0);
+      const alive3: Alive<number, MockRuntimeError> = Alive.of(-1);
+      const alive4: Alive<string, MockRuntimeError> = Alive.of('');
+      const alive5: Alive<string, MockRuntimeError> = Alive.of('1');
+      const alive6: Alive<boolean, MockRuntimeError> = Alive.of(true);
+      const alive7: Alive<boolean, MockRuntimeError> = Alive.of(false);
 
       expect(alive1.isDead()).toBe(false);
       expect(alive2.isDead()).toBe(false);
@@ -65,13 +65,13 @@ describe('Alive', () => {
 
   describe('isContradiction', () => {
     it('always returns false', () => {
-      const alive1: Alive<number, MockRuntimeError> = Alive.of<number, MockRuntimeError>(1);
-      const alive2: Alive<number, MockRuntimeError> = Alive.of<number, MockRuntimeError>(0);
-      const alive3: Alive<number, MockRuntimeError> = Alive.of<number, MockRuntimeError>(-1);
-      const alive4: Alive<string, MockRuntimeError> = Alive.of<string, MockRuntimeError>('');
-      const alive5: Alive<string, MockRuntimeError> = Alive.of<string, MockRuntimeError>('1');
-      const alive6: Alive<boolean, MockRuntimeError> = Alive.of<boolean, MockRuntimeError>(true);
-      const alive7: Alive<boolean, MockRuntimeError> = Alive.of<boolean, MockRuntimeError>(false);
+      const alive1: Alive<number, MockRuntimeError> = Alive.of(1);
+      const alive2: Alive<number, MockRuntimeError> = Alive.of(0);
+      const alive3: Alive<number, MockRuntimeError> = Alive.of(-1);
+      const alive4: Alive<string, MockRuntimeError> = Alive.of('');
+      const alive5: Alive<string, MockRuntimeError> = Alive.of('1');
+      const alive6: Alive<boolean, MockRuntimeError> = Alive.of(true);
+      const alive7: Alive<boolean, MockRuntimeError> = Alive.of(false);
 
       expect(alive1.isContradiction()).toBe(false);
       expect(alive2.isContradiction()).toBe(false);
@@ -89,7 +89,7 @@ describe('Alive', () => {
 
       const fn: jest.Mock = jest.fn();
 
-      const alive: Schrodinger<number, MockRuntimeError> = Alive.of<number, MockRuntimeError>(value);
+      const alive: Schrodinger<number, MockRuntimeError> = Alive.of(value);
 
       alive.ifAlive((v: number) => {
         fn();
@@ -106,7 +106,7 @@ describe('Alive', () => {
 
       const fn: jest.Mock = jest.fn();
 
-      const alive: Schrodinger<number, MockRuntimeError> = Alive.of<number, MockRuntimeError>(value);
+      const alive: Schrodinger<number, MockRuntimeError> = Alive.of(value);
 
       alive.ifDead(() => {
         fn();
@@ -122,7 +122,7 @@ describe('Alive', () => {
 
       const fn: jest.Mock = jest.fn();
 
-      const alive: Schrodinger<number, MockRuntimeError> = Alive.of<number, MockRuntimeError>(value);
+      const alive: Schrodinger<number, MockRuntimeError> = Alive.of(value);
 
       alive.ifContradiction(() => {
         fn();
@@ -134,7 +134,7 @@ describe('Alive', () => {
 
   describe('toString', () => {
     it('returns Alive and its retaining value', () => {
-      expect(Alive.of<boolean, MockRuntimeError>(true).toString()).toBe('Alive: true');
+      expect(Alive.of(true).toString()).toBe('Alive: true');
     });
   });
 });

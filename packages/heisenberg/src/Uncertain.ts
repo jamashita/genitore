@@ -1,6 +1,6 @@
 import { Absent } from './Absent';
-import { HeisenbergError } from './Error/HeisenbergError';
 import { Heisenberg } from './Heisenberg';
+import { HeisenbergError } from './HeisenbergError';
 import { Lost } from './Lost';
 import { Present } from './Present';
 
@@ -8,7 +8,7 @@ export class Uncertain<P> implements Heisenberg<P> {
   private static readonly INSTANCE: Uncertain<unknown> = new Uncertain<unknown>();
 
   public static of<P>(): Uncertain<P> {
-    return (Uncertain.INSTANCE as unknown) as Uncertain<P>;
+    return Uncertain.INSTANCE as Uncertain<P>;
   }
 
   private constructor() {

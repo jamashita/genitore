@@ -1,8 +1,8 @@
 import { Consumer, Kind, Peek, Supplier, Suspicious, SyncAsync, UnaryFunction } from '@jamashita/anden-type';
 import { Heisenberg, Matter, Nihil } from '@jamashita/genitore-heisenberg';
 import { Epoque } from './Epoque';
-import { UnscharferelationError } from './Error/UnscharferelationError';
 import { IUnscharferelation, UReturnType } from './IUnscharferelation';
+import { UnscharferelationError } from './UnscharferelationError';
 import { UnscharferelationInternal } from './UnscharferelationInternal';
 
 export class Unscharferelation<P> implements IUnscharferelation<P> {
@@ -14,7 +14,7 @@ export class Unscharferelation<P> implements IUnscharferelation<P> {
         return epoque.decline();
       }
       if (Kind.isPromiseLike<Nihil>(value)) {
-        return value.then<unknown, unknown>(
+        return value.then(
           () => {
             return epoque.decline();
           },
@@ -35,7 +35,7 @@ export class Unscharferelation<P> implements IUnscharferelation<P> {
       return Unscharferelation.present<Array<P>>([]);
     }
 
-    const promises: Array<Promise<Heisenberg<P>>> = us.map<Promise<Heisenberg<P>>>((u: Unscharferelation<P>) => {
+    const promises: Array<Promise<Heisenberg<P>>> = us.map((u: Unscharferelation<P>): Promise<Heisenberg<P>> => {
       return u.terminate();
     });
 
@@ -70,7 +70,7 @@ export class Unscharferelation<P> implements IUnscharferelation<P> {
   }
 
   public static anyway<P>(unscharferelations: Iterable<Unscharferelation<P>>): Promise<Array<Heisenberg<P>>> {
-    const promises: Array<Promise<Heisenberg<P>>> = [...unscharferelations].map<Promise<Heisenberg<P>>>((u: Unscharferelation<P>) => {
+    const promises: Array<Promise<Heisenberg<P>>> = [...unscharferelations].map((u: Unscharferelation<P>): Promise<Heisenberg<P>> => {
       return u.terminate();
     });
 
@@ -83,7 +83,7 @@ export class Unscharferelation<P> implements IUnscharferelation<P> {
         return epoque.decline();
       }
       if (Kind.isPromiseLike<Suspicious<Matter<P>>>(value)) {
-        return value.then<unknown, unknown>(
+        return value.then(
           (v: Suspicious<Matter<P>>) => {
             if (Kind.isUndefined(v) || Kind.isNull(v)) {
               return epoque.decline();
@@ -131,7 +131,7 @@ export class Unscharferelation<P> implements IUnscharferelation<P> {
         return epoque.throw(new UnscharferelationError('IMPOSSIBLE'));
       }
       if (Kind.isPromiseLike<Matter<P>>(value)) {
-        return value.then<unknown, unknown>(
+        return value.then(
           (v: Matter<P>) => {
             return epoque.accept(v);
           },

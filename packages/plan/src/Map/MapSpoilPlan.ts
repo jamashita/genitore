@@ -4,7 +4,7 @@ export class MapSpoilPlan<M> implements MapPlan<M> {
   private static readonly INSTANCE: MapSpoilPlan<unknown> = new MapSpoilPlan<unknown>();
 
   public static of<M>(): MapSpoilPlan<M> {
-    return MapSpoilPlan.INSTANCE;
+    return MapSpoilPlan.INSTANCE as MapSpoilPlan<M>;
   }
 
   protected constructor() {

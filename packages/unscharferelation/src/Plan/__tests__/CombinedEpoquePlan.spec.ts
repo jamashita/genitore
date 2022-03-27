@@ -10,7 +10,7 @@ describe('CombinedEpoquePlan', () => {
       const fn2: jest.Mock = jest.fn();
       const fn3: jest.Mock = jest.fn();
 
-      const pass: PassThroughPlan<number, void> = PassThroughPlan.of<number, void>(
+      const pass: PassThroughPlan<number, void> = PassThroughPlan.of(
         (v: number) => {
           fn1();
           expect(v).toBe(value);
@@ -22,7 +22,7 @@ describe('CombinedEpoquePlan', () => {
           fn3();
         }
       );
-      const plan: CombinedEpoquePlan<number> = CombinedEpoquePlan.of<number>(pass, pass, pass);
+      const plan: CombinedEpoquePlan<number> = CombinedEpoquePlan.of(pass, pass, pass);
 
       plan.onMap(value);
 
@@ -38,7 +38,7 @@ describe('CombinedEpoquePlan', () => {
       const fn2: jest.Mock = jest.fn();
       const fn3: jest.Mock = jest.fn();
 
-      const pass: PassThroughPlan<number, void> = PassThroughPlan.of<number, void>(
+      const pass: PassThroughPlan<number, void> = PassThroughPlan.of(
         () => {
           fn1();
         },
@@ -49,7 +49,7 @@ describe('CombinedEpoquePlan', () => {
           fn3();
         }
       );
-      const plan: CombinedEpoquePlan<number> = CombinedEpoquePlan.of<number>(pass, pass, pass);
+      const plan: CombinedEpoquePlan<number> = CombinedEpoquePlan.of(pass, pass, pass);
 
       plan.onRecover();
 
@@ -67,7 +67,7 @@ describe('CombinedEpoquePlan', () => {
       const fn2: jest.Mock = jest.fn();
       const fn3: jest.Mock = jest.fn();
 
-      const pass: PassThroughPlan<number, void> = PassThroughPlan.of<number, void>(
+      const pass: PassThroughPlan<number, void> = PassThroughPlan.of(
         () => {
           fn1();
         },
@@ -79,7 +79,7 @@ describe('CombinedEpoquePlan', () => {
           expect(v).toBe(value);
         }
       );
-      const plan: CombinedEpoquePlan<number> = CombinedEpoquePlan.of<number>(pass, pass, pass);
+      const plan: CombinedEpoquePlan<number> = CombinedEpoquePlan.of(pass, pass, pass);
 
       plan.onDestroy(value);
 

@@ -1,11 +1,11 @@
-import { HeisenbergError } from '../Error/HeisenbergError';
 import { Heisenberg } from '../Heisenberg';
+import { HeisenbergError } from '../HeisenbergError';
 import { Uncertain } from '../Uncertain';
 
 describe('Uncertain', () => {
   describe('get', () => {
     it('throws HeisenbergError', () => {
-      const uncertain: Uncertain<number> = Uncertain.of<number>();
+      const uncertain: Uncertain<number> = Uncertain.of();
 
       expect(() => {
         uncertain.get();
@@ -15,7 +15,7 @@ describe('Uncertain', () => {
 
   describe('isPresent', () => {
     it('always returns false', () => {
-      const uncertain: Uncertain<number> = Uncertain.of<number>();
+      const uncertain: Uncertain<number> = Uncertain.of();
 
       expect(uncertain.isPresent()).toBe(false);
     });
@@ -23,7 +23,7 @@ describe('Uncertain', () => {
 
   describe('isAbsent', () => {
     it('always returns false', () => {
-      const uncertain: Uncertain<number> = Uncertain.of<number>();
+      const uncertain: Uncertain<number> = Uncertain.of();
 
       expect(uncertain.isAbsent()).toBe(false);
     });
@@ -31,7 +31,7 @@ describe('Uncertain', () => {
 
   describe('isLost', () => {
     it('always returns false', () => {
-      const uncertain: Uncertain<number> = Uncertain.of<number>();
+      const uncertain: Uncertain<number> = Uncertain.of();
 
       expect(uncertain.isLost()).toBe(false);
     });
@@ -41,7 +41,7 @@ describe('Uncertain', () => {
     it('will not be invoked', () => {
       const fn: jest.Mock = jest.fn();
 
-      const uncertain: Heisenberg<number> = Uncertain.of<number>();
+      const uncertain: Heisenberg<number> = Uncertain.of();
 
       uncertain.ifPresent(() => {
         fn();
@@ -55,7 +55,7 @@ describe('Uncertain', () => {
     it('will not be invoked', () => {
       const fn: jest.Mock = jest.fn();
 
-      const uncertain: Heisenberg<number> = Uncertain.of<number>();
+      const uncertain: Heisenberg<number> = Uncertain.of();
 
       uncertain.ifAbsent(() => {
         fn();
@@ -69,7 +69,7 @@ describe('Uncertain', () => {
     it('will not be invoked', () => {
       const fn: jest.Mock = jest.fn();
 
-      const uncertain: Heisenberg<number> = Uncertain.of<number>();
+      const uncertain: Heisenberg<number> = Uncertain.of();
 
       uncertain.ifLost(() => {
         fn();
@@ -81,7 +81,7 @@ describe('Uncertain', () => {
 
   describe('toString', () => {
     it('returns Uncertain', () => {
-      expect(Uncertain.of<number>().toString()).toBe('Uncertain');
+      expect(Uncertain.of().toString()).toBe('Uncertain');
     });
   });
 });

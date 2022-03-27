@@ -1,12 +1,12 @@
 import { MockRuntimeError } from '@jamashita/anden-error';
-import { SchrodingerError } from '../Error/SchrodingerError';
 import { Schrodinger } from '../Schrodinger';
+import { SchrodingerError } from '../SchrodingerError';
 import { Still } from '../Still';
 
 describe('Still', () => {
   describe('get', () => {
     it('throws SchrodingerError', () => {
-      const still: Still<number, MockRuntimeError> = Still.of<number, MockRuntimeError>();
+      const still: Still<number, MockRuntimeError> = Still.of();
 
       expect(() => {
         still.get();
@@ -16,7 +16,7 @@ describe('Still', () => {
 
   describe('isAlive', () => {
     it('always returns false', () => {
-      const still: Still<number, MockRuntimeError> = Still.of<number, MockRuntimeError>();
+      const still: Still<number, MockRuntimeError> = Still.of();
 
       expect(still.isAlive()).toBe(false);
     });
@@ -24,7 +24,7 @@ describe('Still', () => {
 
   describe('isDead', () => {
     it('always returns false', () => {
-      const still: Still<number, MockRuntimeError> = Still.of<number, MockRuntimeError>();
+      const still: Still<number, MockRuntimeError> = Still.of();
 
       expect(still.isDead()).toBe(false);
     });
@@ -32,7 +32,7 @@ describe('Still', () => {
 
   describe('isContradiction', () => {
     it('always returns false', () => {
-      const still: Still<number, MockRuntimeError> = Still.of<number, MockRuntimeError>();
+      const still: Still<number, MockRuntimeError> = Still.of();
 
       expect(still.isContradiction()).toBe(false);
     });
@@ -42,7 +42,7 @@ describe('Still', () => {
     it('will not be invoked', () => {
       const fn: jest.Mock = jest.fn();
 
-      const still: Schrodinger<number, MockRuntimeError> = Still.of<number, MockRuntimeError>();
+      const still: Schrodinger<number, MockRuntimeError> = Still.of();
 
       still.ifAlive(() => {
         fn();
@@ -56,7 +56,7 @@ describe('Still', () => {
     it('will not be invoked', () => {
       const fn: jest.Mock = jest.fn();
 
-      const still: Schrodinger<number, MockRuntimeError> = Still.of<number, MockRuntimeError>();
+      const still: Schrodinger<number, MockRuntimeError> = Still.of();
 
       still.ifDead(() => {
         fn();
@@ -70,7 +70,7 @@ describe('Still', () => {
     it('will not be invoked', () => {
       const fn: jest.Mock = jest.fn();
 
-      const still: Schrodinger<number, MockRuntimeError> = Still.of<number, MockRuntimeError>();
+      const still: Schrodinger<number, MockRuntimeError> = Still.of();
 
       still.ifContradiction(() => {
         fn();
@@ -82,7 +82,7 @@ describe('Still', () => {
 
   describe('toString', () => {
     it('returns Still', () => {
-      expect(Still.of<number, MockRuntimeError>().toString()).toBe('Still');
+      expect(Still.of().toString()).toBe('Still');
     });
   });
 });

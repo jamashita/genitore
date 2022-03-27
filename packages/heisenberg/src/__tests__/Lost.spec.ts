@@ -7,8 +7,8 @@ describe('Lost', () => {
     it('throws given error', () => {
       const error1: MockRuntimeError = new MockRuntimeError();
       const error2: MockRuntimeError = new MockRuntimeError();
-      const lost1: Lost<void> = Lost.of<void>(error1);
-      const lost2: Lost<number> = Lost.of<number>(error2);
+      const lost1: Lost<void> = Lost.of(error1);
+      const lost2: Lost<number> = Lost.of(error2);
 
       expect(() => {
         lost1.get();
@@ -23,8 +23,8 @@ describe('Lost', () => {
     it('returns thrown error', () => {
       const error1: MockRuntimeError = new MockRuntimeError();
       const error2: MockRuntimeError = new MockRuntimeError();
-      const lost1: Lost<void> = Lost.of<void>(error1);
-      const lost2: Lost<number> = Lost.of<number>(error2);
+      const lost1: Lost<void> = Lost.of(error1);
+      const lost2: Lost<number> = Lost.of(error2);
 
       expect(lost1.getCause()).toBe(error1);
       expect(lost2.getCause()).toBe(error2);
@@ -34,7 +34,7 @@ describe('Lost', () => {
   describe('isPresent', () => {
     it('always returns false', () => {
       const error: MockRuntimeError = new MockRuntimeError();
-      const lost: Lost<void> = Lost.of<void>(error);
+      const lost: Lost<void> = Lost.of(error);
 
       expect(lost.isPresent()).toBe(false);
     });
@@ -42,7 +42,7 @@ describe('Lost', () => {
   describe('isAbsent', () => {
     it('always returns false', () => {
       const error: MockRuntimeError = new MockRuntimeError();
-      const lost: Lost<void> = Lost.of<void>(error);
+      const lost: Lost<void> = Lost.of(error);
 
       expect(lost.isAbsent()).toBe(false);
     });
@@ -51,7 +51,7 @@ describe('Lost', () => {
   describe('isLost', () => {
     it('always returns true', () => {
       const error: MockRuntimeError = new MockRuntimeError();
-      const lost: Lost<void> = Lost.of<void>(error);
+      const lost: Lost<void> = Lost.of(error);
 
       expect(lost.isLost()).toBe(true);
     });
@@ -63,7 +63,7 @@ describe('Lost', () => {
 
       const fn: jest.Mock = jest.fn();
 
-      const lost: Heisenberg<number> = Lost.of<number>(error);
+      const lost: Heisenberg<number> = Lost.of(error);
 
       lost.ifPresent(() => {
         fn();
@@ -79,7 +79,7 @@ describe('Lost', () => {
 
       const fn: jest.Mock = jest.fn();
 
-      const lost: Heisenberg<number> = Lost.of<number>(error);
+      const lost: Heisenberg<number> = Lost.of(error);
 
       lost.ifAbsent(() => {
         fn();
@@ -95,7 +95,7 @@ describe('Lost', () => {
 
       const fn: jest.Mock = jest.fn();
 
-      const lost: Heisenberg<number> = Lost.of<number>(error);
+      const lost: Heisenberg<number> = Lost.of(error);
 
       lost.ifLost(() => {
         fn();
@@ -107,7 +107,7 @@ describe('Lost', () => {
 
   describe('toString', () => {
     it('returns Lost and its retaining cause', () => {
-      expect(Lost.of<number>(null).toString()).toBe('Lost: null');
+      expect(Lost.of(null).toString()).toBe('Lost: null');
     });
   });
 });
