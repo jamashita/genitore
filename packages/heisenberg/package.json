@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "@jamashita/anden-error": "2.6.0",
-    "@jamashita/anden-object": "2.9.0",
+    "@jamashita/anden-object": "2.10.0",
     "@jamashita/anden-type": "2.5.0"
   },
   "engines": {
