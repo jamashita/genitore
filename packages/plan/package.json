@@ -28,8 +28,7 @@
     "@jamashita/anden-type": "2.5.0"
   },
   "engines": {
-    "node": ">=14.0.0",
-    "npm": "npm is not supported"
+    "node": ">=14.0.0"
   },
   "engineStrict": true,
   "publishConfig": {
