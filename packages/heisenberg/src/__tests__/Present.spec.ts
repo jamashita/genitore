@@ -22,23 +22,52 @@ describe('Present', () => {
     });
   });
 
-  describe('isPresent', () => {
-    it('always returns true', () => {
-      const present1: Present<number> = Present.of(1);
-      const present2: Present<number> = Present.of(0);
-      const present3: Present<number> = Present.of(-1);
-      const present4: Present<string> = Present.of('');
-      const present5: Present<string> = Present.of('1');
-      const present6: Present<boolean> = Present.of(true);
-      const present7: Present<boolean> = Present.of(false);
+  describe('ifAbsent', () => {
+    it('will not be invoked', () => {
+      const value: number = 1;
 
-      expect(present1.isPresent()).toBe(true);
-      expect(present2.isPresent()).toBe(true);
-      expect(present3.isPresent()).toBe(true);
-      expect(present4.isPresent()).toBe(true);
-      expect(present5.isPresent()).toBe(true);
-      expect(present6.isPresent()).toBe(true);
-      expect(present7.isPresent()).toBe(true);
+      const fn: jest.Mock = jest.fn();
+
+      const present: Heisenberg<number> = Present.of(value);
+
+      present.ifAbsent(() => {
+        fn();
+      });
+
+      expect(fn.mock.calls).toHaveLength(0);
+    });
+  });
+
+  describe('ifLost', () => {
+    it('will not be invoked', () => {
+      const value: number = 1;
+
+      const fn: jest.Mock = jest.fn();
+
+      const present: Heisenberg<number> = Present.of(value);
+
+      present.ifLost(() => {
+        fn();
+      });
+
+      expect(fn.mock.calls).toHaveLength(0);
+    });
+  });
+
+  describe('ifPresent', () => {
+    it('will be invoked', () => {
+      const value: number = 1;
+
+      const fn: jest.Mock = jest.fn();
+
+      const present: Heisenberg<number> = Present.of(value);
+
+      present.ifPresent((v: number) => {
+        fn();
+        expect(v).toBe(value);
+      });
+
+      expect(fn.mock.calls).toHaveLength(1);
     });
   });
 
@@ -82,52 +111,23 @@ describe('Present', () => {
     });
   });
 
-  describe('ifPresent', () => {
-    it('will be invoked', () => {
-      const value: number = 1;
+  describe('isPresent', () => {
+    it('always returns true', () => {
+      const present1: Present<number> = Present.of(1);
+      const present2: Present<number> = Present.of(0);
+      const present3: Present<number> = Present.of(-1);
+      const present4: Present<string> = Present.of('');
+      const present5: Present<string> = Present.of('1');
+      const present6: Present<boolean> = Present.of(true);
+      const present7: Present<boolean> = Present.of(false);
 
-      const fn: jest.Mock = jest.fn();
-
-      const present: Heisenberg<number> = Present.of(value);
-
-      present.ifPresent((v: number) => {
-        fn();
-        expect(v).toBe(value);
-      });
-
-      expect(fn.mock.calls).toHaveLength(1);
-    });
-  });
-
-  describe('ifAbsent', () => {
-    it('will not be invoked', () => {
-      const value: number = 1;
-
-      const fn: jest.Mock = jest.fn();
-
-      const present: Heisenberg<number> = Present.of(value);
-
-      present.ifAbsent(() => {
-        fn();
-      });
-
-      expect(fn.mock.calls).toHaveLength(0);
-    });
-  });
-
-  describe('ifLost', () => {
-    it('will not be invoked', () => {
-      const value: number = 1;
-
-      const fn: jest.Mock = jest.fn();
-
-      const present: Heisenberg<number> = Present.of(value);
-
-      present.ifLost(() => {
-        fn();
-      });
-
-      expect(fn.mock.calls).toHaveLength(0);
+      expect(present1.isPresent()).toBe(true);
+      expect(present2.isPresent()).toBe(true);
+      expect(present3.isPresent()).toBe(true);
+      expect(present4.isPresent()).toBe(true);
+      expect(present5.isPresent()).toBe(true);
+      expect(present6.isPresent()).toBe(true);
+      expect(present7.isPresent()).toBe(true);
     });
   });
 

@@ -14,30 +14,6 @@ describe('Still', () => {
     });
   });
 
-  describe('isAlive', () => {
-    it('always returns false', () => {
-      const still: Still<number, MockRuntimeError> = Still.of();
-
-      expect(still.isAlive()).toBe(false);
-    });
-  });
-
-  describe('isDead', () => {
-    it('always returns false', () => {
-      const still: Still<number, MockRuntimeError> = Still.of();
-
-      expect(still.isDead()).toBe(false);
-    });
-  });
-
-  describe('isContradiction', () => {
-    it('always returns false', () => {
-      const still: Still<number, MockRuntimeError> = Still.of();
-
-      expect(still.isContradiction()).toBe(false);
-    });
-  });
-
   describe('ifAlive', () => {
     it('will not be invoked', () => {
       const fn: jest.Mock = jest.fn();
@@ -45,6 +21,20 @@ describe('Still', () => {
       const still: Schrodinger<number, MockRuntimeError> = Still.of();
 
       still.ifAlive(() => {
+        fn();
+      });
+
+      expect(fn.mock.calls).toHaveLength(0);
+    });
+  });
+
+  describe('ifContradiction', () => {
+    it('will not be invoked', () => {
+      const fn: jest.Mock = jest.fn();
+
+      const still: Schrodinger<number, MockRuntimeError> = Still.of();
+
+      still.ifContradiction(() => {
         fn();
       });
 
@@ -66,17 +56,27 @@ describe('Still', () => {
     });
   });
 
-  describe('ifContradiction', () => {
-    it('will not be invoked', () => {
-      const fn: jest.Mock = jest.fn();
+  describe('isAlive', () => {
+    it('always returns false', () => {
+      const still: Still<number, MockRuntimeError> = Still.of();
 
-      const still: Schrodinger<number, MockRuntimeError> = Still.of();
+      expect(still.isAlive()).toBe(false);
+    });
+  });
 
-      still.ifContradiction(() => {
-        fn();
-      });
+  describe('isContradiction', () => {
+    it('always returns false', () => {
+      const still: Still<number, MockRuntimeError> = Still.of();
 
-      expect(fn.mock.calls).toHaveLength(0);
+      expect(still.isContradiction()).toBe(false);
+    });
+  });
+
+  describe('isDead', () => {
+    it('always returns false', () => {
+      const still: Still<number, MockRuntimeError> = Still.of();
+
+      expect(still.isDead()).toBe(false);
     });
   });
 
