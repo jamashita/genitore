@@ -524,27 +524,27 @@
   resolved "https://registry.yarnpkg.com/@istanbuljs/schema/-/schema-0.1.3.tgz#e45e384e4b8ec16bce2fd903af78450f6bf7ec98"
   integrity sha512-ZXRY4jNvVgSVQ8DL3LTcakaAtXwTVUxE81hslsyD2AtoXW/wVob10HkOJ1X/pAlcI7D+2YoZKg5do8G/w6RYgA==
 
-"@jamashita/anden-error@2.7.0", "@jamashita/anden-error@^2.6.0":
-  version "2.7.0"
-  resolved "https://registry.yarnpkg.com/@jamashita/anden-error/-/anden-error-2.7.0.tgz#65971c73bb9b3edeaebbc27b437068560cdd7fb4"
-  integrity sha512-o0LVmLRW5jw83oU14KUcuiVuqWOX64xXqZPAQRVLLpqrV5S3Qsa7TXQW7WWD6TaGvkow/d1iFsr8mo8lkGtUYw==
+"@jamashita/anden-error@2.8.0", "@jamashita/anden-error@^2.7.0":
+  version "2.8.0"
+  resolved "https://registry.yarnpkg.com/@jamashita/anden-error/-/anden-error-2.8.0.tgz#4b36b74dcc7b7376fd3e77f4edfd1bd12cd03495"
+  integrity sha512-nmVkSvdn8H9xOPKZcmlWrZNHKivnghJF5MHzXBjEFo7SU7liqUhg8IhgVNfH3IEoEb2BPeXdd0FULUW3FxwJig==
   dependencies:
-    "@jamashita/anden-type" "^2.5.0"
+    "@jamashita/anden-type" "^2.6.1"
     make-error-cause "2.3.0"
 
-"@jamashita/anden-object@2.11.0":
-  version "2.11.0"
-  resolved "https://registry.yarnpkg.com/@jamashita/anden-object/-/anden-object-2.11.0.tgz#0cc7978e0670630e587b2fa3a0c7535524288db7"
-  integrity sha512-Zmb6Z52UDJ5LHFRrYjWlQgl2A/JTY3DGpGQXsGedmAyMaS0QHQrhqezre48x/a8WZWdJVy7vXpBoQNPmF/94LQ==
+"@jamashita/anden-object@2.12.0":
+  version "2.12.0"
+  resolved "https://registry.yarnpkg.com/@jamashita/anden-object/-/anden-object-2.12.0.tgz#d00d653f3fe8e37486a574f88628fb79d370a2dd"
+  integrity sha512-R7jgWQAwTddhCEj545/ky+JtSYse55BdUm200JgfzSHFkOkzuPY4ITnmvN0JGcjDOP70klvo15lBWN3mctCXDg==
   dependencies:
-    "@jamashita/anden-error" "^2.6.0"
-    "@jamashita/anden-type" "^2.5.0"
+    "@jamashita/anden-error" "^2.7.0"
+    "@jamashita/anden-type" "^2.6.1"
     object-hash "3.0.0"
 
-"@jamashita/anden-type@2.6.1", "@jamashita/anden-type@^2.5.0":
-  version "2.6.1"
-  resolved "https://registry.yarnpkg.com/@jamashita/anden-type/-/anden-type-2.6.1.tgz#f51da5f6a8c1a9c87aac759aaab16b599b10af43"
-  integrity sha512-8XFLoQVu/bjdhL9Jvd14NazzIuWT+T13STXTtHkFKsEu3Jf6EU0pS35SWPtXz/Jc7jUibmrDVsa0sleFDH0N1Q==
+"@jamashita/anden-type@2.7.0", "@jamashita/anden-type@^2.6.1":
+  version "2.7.0"
+  resolved "https://registry.yarnpkg.com/@jamashita/anden-type/-/anden-type-2.7.0.tgz#bdc889b1374a3ceeea47f0912589ce5c3ad69bd5"
+  integrity sha512-UeTAdA9M5blEAIKsZYmn1fjb7QeKaYMcFSYjef9pIKNdi4lOsPvlrXigxN0u5x9FUW5vRmvkt/CvO3mM1pdqsA==
   dependencies:
     reflect-metadata "0.1.13"
 
@@ -3563,9 +3563,9 @@ ecc-jsbn@~0.1.1:
     safer-buffer "^2.1.0"
 
 electron-to-chromium@^1.4.84:
-  version "1.4.104"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.104.tgz#60973b0a7d398efa877196e8ccb0c93d48b918d8"
-  integrity sha512-2kjoAyiG7uMyGRM9mx25s3HAzmQG2ayuYXxsFmYugHSDcwxREgLtscZvbL1JcW9S/OemeQ3f/SG6JhDwpnCclQ==
+  version "1.4.105"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.105.tgz#30de5e4ba020140b698539b2d366cd9c3a337ec7"
+  integrity sha512-6w2bmoQBSUgCQjbSjiVv9IS1lXwW2aQABlUJ1vlE8Vci/sVXxUNQrHLQa5N1ioc82Py+a36DlUA5KvrAlHMMeA==
 
 emittery@^0.8.1:
   version "0.8.1"
