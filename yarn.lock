@@ -541,10 +541,10 @@
     "@jamashita/anden-type" "^2.6.1"
     object-hash "3.0.0"
 
-"@jamashita/anden-type@2.7.0", "@jamashita/anden-type@^2.6.1":
-  version "2.7.0"
-  resolved "https://registry.yarnpkg.com/@jamashita/anden-type/-/anden-type-2.7.0.tgz#bdc889b1374a3ceeea47f0912589ce5c3ad69bd5"
-  integrity sha512-UeTAdA9M5blEAIKsZYmn1fjb7QeKaYMcFSYjef9pIKNdi4lOsPvlrXigxN0u5x9FUW5vRmvkt/CvO3mM1pdqsA==
+"@jamashita/anden-type@2.8.0", "@jamashita/anden-type@^2.6.1":
+  version "2.8.0"
+  resolved "https://registry.yarnpkg.com/@jamashita/anden-type/-/anden-type-2.8.0.tgz#4a3ce5c69859a2e7247ef2c81abe7fbfa2430263"
+  integrity sha512-pIW1zgX71+cFwUcplr+f0YsYbGUcJSRx4FeaIc+80FLw/Hi+Q7GK9WvddH3NXtMU2++61aJ466LFFFPtAYqvFg==
   dependencies:
     reflect-metadata "0.1.13"
 
@@ -3563,9 +3563,9 @@ ecc-jsbn@~0.1.1:
     safer-buffer "^2.1.0"
 
 electron-to-chromium@^1.4.84:
-  version "1.4.105"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.105.tgz#30de5e4ba020140b698539b2d366cd9c3a337ec7"
-  integrity sha512-6w2bmoQBSUgCQjbSjiVv9IS1lXwW2aQABlUJ1vlE8Vci/sVXxUNQrHLQa5N1ioc82Py+a36DlUA5KvrAlHMMeA==
+  version "1.4.106"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.106.tgz#e7a3bfa9d745dd9b9e597616cb17283cc349781a"
+  integrity sha512-ZYfpVLULm67K7CaaGP7DmjyeMY4naxsbTy+syVVxT6QHI1Ww8XbJjmr9fDckrhq44WzCrcC5kH3zGpdusxwwqg==
 
 emittery@^0.8.1:
   version "0.8.1"
