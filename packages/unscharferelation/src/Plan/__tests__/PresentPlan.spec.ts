@@ -16,7 +16,7 @@ describe('PresentPlan', () => {
       const fn4: jest.Mock = jest.fn();
 
       await new Promise((resolve: Resolve<void>) => {
-        const plan: PresentPlan<number, number> = PresentPlan.of<number, number>(
+        const plan: PresentPlan<number, number> = PresentPlan.of(
           (n: number) => {
             fn1();
             expect(n).toBe(value);
@@ -61,7 +61,7 @@ describe('PresentPlan', () => {
       const fn4: jest.Mock = jest.fn();
 
       await new Promise((resolve: Resolve<void>) => {
-        const plan: PresentPlan<number, number> = PresentPlan.of<number, number>(
+        const plan: PresentPlan<number, number> = PresentPlan.of(
           (n: number) => {
             fn1();
             expect(n).toBe(value);
@@ -106,7 +106,7 @@ describe('PresentPlan', () => {
       const fn4: jest.Mock = jest.fn();
 
       await new Promise((resolve: Resolve<void>) => {
-        const plan: PresentPlan<number, number> = PresentPlan.of<number, number>(
+        const plan: PresentPlan<number, number> = PresentPlan.of(
           (n: number) => {
             fn1();
             expect(n).toBe(value);
@@ -151,12 +151,12 @@ describe('PresentPlan', () => {
       const fn4: jest.Mock = jest.fn();
 
       await new Promise((resolve: Resolve<void>) => {
-        const plan: PresentPlan<number, number> = PresentPlan.of<number, number>(
+        const plan: PresentPlan<number, number> = PresentPlan.of(
           (n: number) => {
             fn1();
             expect(n).toBe(value);
 
-            return Promise.resolve<Unscharferelation<number>>(Unscharferelation.present<number>(value - 6));
+            return Promise.resolve(Unscharferelation.present(value - 6));
           },
           new MockEpoque(
             (n: number) => {
@@ -196,7 +196,7 @@ describe('PresentPlan', () => {
       const fn4: jest.Mock = jest.fn();
 
       await new Promise((resolve: Resolve<void>) => {
-        const plan: PresentPlan<number, number> = PresentPlan.of<number, number>(
+        const plan: PresentPlan<number, number> = PresentPlan.of(
           (n: number) => {
             fn1();
             expect(n).toBe(value);
@@ -240,7 +240,7 @@ describe('PresentPlan', () => {
       const fn4: jest.Mock = jest.fn();
 
       await new Promise((resolve: Resolve<void>) => {
-        const plan: PresentPlan<number, number> = PresentPlan.of<number, number>(
+        const plan: PresentPlan<number, number> = PresentPlan.of(
           (n: number) => {
             fn1();
             expect(n).toBe(value);
@@ -289,7 +289,7 @@ describe('PresentPlan', () => {
             fn1();
             expect(n).toBe(value);
 
-            return Promise.resolve<null>(null);
+            return Promise.resolve(null);
           },
           new MockEpoque(
             () => {
@@ -332,7 +332,7 @@ describe('PresentPlan', () => {
           () => {
             fn1();
 
-            return Promise.resolve<undefined>(undefined);
+            return Promise.resolve(undefined);
           },
           new MockEpoque(
             () => {
@@ -371,12 +371,12 @@ describe('PresentPlan', () => {
       const fn4: jest.Mock = jest.fn();
 
       await new Promise((resolve: Resolve<void>) => {
-        const plan: PresentPlan<number, number> = PresentPlan.of<number, number>(
+        const plan: PresentPlan<number, number> = PresentPlan.of(
           (n: number) => {
             fn1();
             expect(n).toBe(value);
 
-            return Unscharferelation.absent<number>();
+            return Unscharferelation.absent();
           },
           new MockEpoque(
             () => {
@@ -415,12 +415,12 @@ describe('PresentPlan', () => {
       const fn4: jest.Mock = jest.fn();
 
       await new Promise((resolve: Resolve<void>) => {
-        const plan: PresentPlan<number, number> = PresentPlan.of<number, number>(
+        const plan: PresentPlan<number, number> = PresentPlan.of(
           (n: number) => {
             fn1();
             expect(n).toBe(value);
 
-            return Promise.resolve<Unscharferelation<number>>(Unscharferelation.absent<number>());
+            return Promise.resolve(Unscharferelation.absent());
           },
           new MockEpoque(
             () => {
@@ -460,7 +460,7 @@ describe('PresentPlan', () => {
       const fn4: jest.Mock = jest.fn();
 
       await new Promise((resolve: Resolve<void>) => {
-        const plan: PresentPlan<number, number> = PresentPlan.of<number, number>(
+        const plan: PresentPlan<number, number> = PresentPlan.of(
           (n: number) => {
             fn1();
             expect(n).toBe(value);
@@ -506,7 +506,7 @@ describe('PresentPlan', () => {
       const fn4: jest.Mock = jest.fn();
 
       await new Promise((resolve: Resolve<void>) => {
-        const plan: PresentPlan<number, number> = PresentPlan.of<number, number>(
+        const plan: PresentPlan<number, number> = PresentPlan.of(
           (n: number) => {
             fn1();
             expect(n).toBe(value);
@@ -552,12 +552,12 @@ describe('PresentPlan', () => {
       const fn4: jest.Mock = jest.fn();
 
       await new Promise((resolve: Resolve<void>) => {
-        const plan: PresentPlan<number, number> = PresentPlan.of<number, number>(
+        const plan: PresentPlan<number, number> = PresentPlan.of(
           (n: number) => {
             fn1();
             expect(n).toBe(value);
 
-            return Unscharferelation.of<number>((e: Epoque<number>) => {
+            return Unscharferelation.of((e: Epoque<number>) => {
               return e.throw(error);
             });
           },
@@ -600,12 +600,12 @@ describe('PresentPlan', () => {
       const fn4: jest.Mock = jest.fn();
 
       await new Promise((resolve: Resolve<void>) => {
-        const plan: PresentPlan<number, number> = PresentPlan.of<number, number>(
+        const plan: PresentPlan<number, number> = PresentPlan.of(
           (n: number) => {
             fn1();
             expect(n).toBe(value);
 
-            return Promise.resolve<Unscharferelation<number>>(Unscharferelation.of<number>((e: Epoque<number>) => {
+            return Promise.resolve(Unscharferelation.of((e: Epoque<number>) => {
               return e.throw(error);
             }));
           },

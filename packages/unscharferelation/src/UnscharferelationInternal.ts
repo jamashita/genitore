@@ -28,11 +28,11 @@ export class UnscharferelationInternal<P> implements IUnscharferelation<P>, Epoq
   private heisenberg: Heisenberg<P>;
   private readonly plans: Set<Plan<Matter<P>, void>>;
 
-  public static of<P>(func: UnaryFunction<Epoque<P>, unknown>): UnscharferelationInternal<P> {
+  public static of<P>(func: Consumer<Epoque<P>>): UnscharferelationInternal<P> {
     return new UnscharferelationInternal(func);
   }
 
-  protected constructor(func: UnaryFunction<Epoque<P>, unknown>) {
+  protected constructor(func: Consumer<Epoque<P>>) {
     this.heisenberg = Uncertain.of();
     this.plans = new Set();
     func(this);

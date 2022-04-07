@@ -32,17 +32,16 @@ export class Unscharferelation<P> implements IUnscharferelation<P> {
     const us: Array<Unscharferelation<P>> = [...unscharferelations];
 
     if (us.length === 0) {
-      return Unscharferelation.present<Array<P>>([]);
+      return Unscharferelation.present([]);
     }
 
     const promises: Array<Promise<Heisenberg<P>>> = us.map((u: Unscharferelation<P>): Promise<Heisenberg<P>> => {
       return u.terminate();
     });
 
-    return Unscharferelation.of<Array<P>>((epoque: Epoque<Array<P>>) => {
+    return Unscharferelation.of((epoque: Epoque<Array<P>>) => {
       return Promise.all(promises).then<unknown, unknown>((heisenbergs: Array<Heisenberg<P>>) => {
         const arr: Array<P> = [];
-        let absent: boolean = false;
 
         for (const heisenberg of heisenbergs) {
           if (heisenberg.isLost()) {
@@ -54,12 +53,8 @@ export class Unscharferelation<P> implements IUnscharferelation<P> {
             continue;
           }
           if (heisenberg.isAbsent()) {
-            absent = true;
+            return epoque.decline();
           }
-        }
-
-        if (absent) {
-          return epoque.decline();
         }
 
         return epoque.accept(arr);
@@ -72,7 +67,7 @@ export class Unscharferelation<P> implements IUnscharferelation<P> {
       return u.terminate();
     });
 
-    return Promise.all<Heisenberg<P>>(promises);
+    return Promise.all(promises);
   }
 
   public static maybe<P>(value: SyncAsync<Nihil | P>): Unscharferelation<Sync<P>> {
