@@ -1,7 +1,5 @@
-import { Matter } from '@jamashita/genitore-heisenberg';
-
 export interface Epoque<M> {
-  accept(value: Matter<M>): unknown;
+  accept(value: M): unknown;
 
   decline(): unknown;
 

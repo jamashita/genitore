@@ -14,12 +14,14 @@ import {
 } from '@jamashita/genitore-plan';
 import { Epoque } from './Epoque';
 import { IUnscharferelation, UReturnType } from './IUnscharferelation';
-import { AbsentPlan } from './Plan/AbsentPlan';
-import { CombinedEpoquePlan } from './Plan/CombinedEpoquePlan';
-import { DestroyEpoquePlan } from './Plan/DestroyEpoquePlan';
-import { MapEpoquePlan } from './Plan/MapEpoquePlan';
-import { PresentPlan } from './Plan/PresentPlan';
-import { RecoveryEpoquePlan } from './Plan/RecoveryEpoquePlan';
+import {
+  AbsentPlan,
+  CombinedEpoquePlan,
+  DestroyEpoquePlan,
+  MapEpoquePlan,
+  PresentPlan,
+  RecoveryEpoquePlan
+} from './Plan';
 import { UnscharferelationError } from './UnscharferelationError';
 
 export class UnscharferelationInternal<P> implements IUnscharferelation<P>, Epoque<P> {
@@ -27,7 +29,7 @@ export class UnscharferelationInternal<P> implements IUnscharferelation<P>, Epoq
   private readonly plans: Set<Plan<Matter<P>, void>>;
 
   public static of<P>(func: UnaryFunction<Epoque<P>, unknown>): UnscharferelationInternal<P> {
-    return new UnscharferelationInternal<P>(func);
+    return new UnscharferelationInternal(func);
   }
 
   protected constructor(func: UnaryFunction<Epoque<P>, unknown>) {
@@ -44,7 +46,7 @@ export class UnscharferelationInternal<P> implements IUnscharferelation<P>, Epoq
     this.heisenberg = Present.of(value);
 
     this.plans.forEach((plan: MapPlan<Matter<P>>) => {
-      return plan.onMap(value);
+      plan.onMap(value);
     });
   }
 
@@ -56,12 +58,12 @@ export class UnscharferelationInternal<P> implements IUnscharferelation<P>, Epoq
     this.heisenberg = Absent.of();
 
     this.plans.forEach((plan: RecoveryPlan<void>) => {
-      return plan.onRecover();
+      plan.onRecover();
     });
   }
 
   public get(): Promise<Matter<P>> {
-    return new Promise<Matter<P>>((resolve: Resolve<Matter<P>>, reject: Reject<UnscharferelationError | unknown>) => {
+    return new Promise((resolve: Resolve<Matter<P>>, reject: Reject) => {
       this.pass(
         (value: Matter<P>) => {
           resolve(value);
@@ -109,7 +111,7 @@ export class UnscharferelationInternal<P> implements IUnscharferelation<P>, Epoq
   }
 
   public map<Q = P>(mapper: UnaryFunction<Matter<P>, UReturnType<Q>>): UnscharferelationInternal<Q> {
-    return UnscharferelationInternal.of<Q>((epoque: Epoque<Q>) => {
+    return UnscharferelationInternal.of((epoque: Epoque<Q>) => {
       return this.handle(PresentPlan.of(mapper, epoque), RecoveryEpoquePlan.of(epoque), DestroyEpoquePlan.of(epoque));
     });
   }
@@ -127,7 +129,7 @@ export class UnscharferelationInternal<P> implements IUnscharferelation<P>, Epoq
   }
 
   public recover<Q = P>(mapper: Supplier<UReturnType<Q>>): UnscharferelationInternal<P | Q> {
-    return UnscharferelationInternal.of<P | Q>((epoque: Epoque<P | Q>) => {
+    return UnscharferelationInternal.of((epoque: Epoque<P | Q>) => {
       return this.handle(MapEpoquePlan.of(epoque), AbsentPlan.of(mapper, epoque), DestroyEpoquePlan.of(epoque));
     });
   }
@@ -137,11 +139,11 @@ export class UnscharferelationInternal<P> implements IUnscharferelation<P>, Epoq
   }
 
   private settled(): boolean {
-    return this.heisenberg instanceof Present || this.heisenberg instanceof Lost || this.heisenberg instanceof Absent;
+    return this.heisenberg.isPresent() || this.heisenberg.isAbsent() || this.heisenberg.isLost();
   }
 
   public terminate(): Promise<Heisenberg<P>> {
-    return new Promise<Heisenberg<P>>((resolve: Resolve<Heisenberg<P>>) => {
+    return new Promise((resolve: Resolve<Heisenberg<P>>) => {
       this.peek(() => {
         resolve(this.heisenberg);
       });
@@ -156,7 +158,7 @@ export class UnscharferelationInternal<P> implements IUnscharferelation<P>, Epoq
     this.heisenberg = Lost.of(cause);
 
     this.plans.forEach((plan: DestroyPlan) => {
-      return plan.onDestroy(cause);
+      plan.onDestroy(cause);
     });
   }
 
