@@ -15,14 +15,14 @@ describe('AbsentPlan', () => {
       const fn3: jest.Mock = jest.fn();
       const fn4: jest.Mock = jest.fn();
 
-      await new Promise<void>((resolve: Resolve<void>) => {
+      await new Promise((resolve: Resolve<void>) => {
         const plan: AbsentPlan<number> = AbsentPlan.of<number>(
           () => {
             fn1();
 
             return value - 6;
           },
-          new MockEpoque<number>(
+          new MockEpoque(
             (n: number) => {
               fn2();
               expect(n).toBe(value - 6);
@@ -59,14 +59,14 @@ describe('AbsentPlan', () => {
       const fn3: jest.Mock = jest.fn();
       const fn4: jest.Mock = jest.fn();
 
-      await new Promise<void>((resolve: Resolve<void>) => {
+      await new Promise((resolve: Resolve<void>) => {
         const plan: AbsentPlan<number> = AbsentPlan.of<number>(
           () => {
             fn1();
 
             return Promise.resolve<number>(value - 6);
           },
-          new MockEpoque<number>(
+          new MockEpoque(
             (n: number) => {
               fn2();
               expect(n).toBe(value - 6);
@@ -103,14 +103,14 @@ describe('AbsentPlan', () => {
       const fn3: jest.Mock = jest.fn();
       const fn4: jest.Mock = jest.fn();
 
-      await new Promise<void>((resolve: Resolve<void>) => {
+      await new Promise((resolve: Resolve<void>) => {
         const plan: AbsentPlan<number> = AbsentPlan.of<number>(
           () => {
             fn1();
 
             return Unscharferelation.present<number>(value - 6);
           },
-          new MockEpoque<number>(
+          new MockEpoque(
             (n: number) => {
               fn2();
               expect(n).toBe(value - 6);
@@ -147,7 +147,7 @@ describe('AbsentPlan', () => {
       const fn3: jest.Mock = jest.fn();
       const fn4: jest.Mock = jest.fn();
 
-      await new Promise<void>((resolve: Resolve<void>) => {
+      await new Promise((resolve: Resolve<void>) => {
         const plan: AbsentPlan<number> = AbsentPlan.of<number>(
           () => {
             fn1();
@@ -156,7 +156,7 @@ describe('AbsentPlan', () => {
               return e.accept(value - 6);
             }));
           },
-          new MockEpoque<number>(
+          new MockEpoque(
             (n: number) => {
               fn2();
               expect(n).toBe(value - 6);
@@ -191,14 +191,14 @@ describe('AbsentPlan', () => {
       const fn3: jest.Mock = jest.fn();
       const fn4: jest.Mock = jest.fn();
 
-      await new Promise<void>((resolve: Resolve<void>) => {
+      await new Promise((resolve: Resolve<void>) => {
         const plan: AbsentPlan<number> = AbsentPlan.of<number>(
           () => {
             fn1();
 
             return null;
           },
-          new MockEpoque<number>(
+          new MockEpoque(
             () => {
               fn2();
 
@@ -232,14 +232,14 @@ describe('AbsentPlan', () => {
       const fn3: jest.Mock = jest.fn();
       const fn4: jest.Mock = jest.fn();
 
-      await new Promise<void>((resolve: Resolve<void>) => {
+      await new Promise((resolve: Resolve<void>) => {
         const plan: AbsentPlan<number> = AbsentPlan.of<number>(
           () => {
             fn1();
 
             return undefined;
           },
-          new MockEpoque<number>(
+          new MockEpoque(
             () => {
               fn2();
 
@@ -273,14 +273,14 @@ describe('AbsentPlan', () => {
       const fn3: jest.Mock = jest.fn();
       const fn4: jest.Mock = jest.fn();
 
-      await new Promise<void>((resolve: Resolve<void>) => {
+      await new Promise((resolve: Resolve<void>) => {
         const plan: AbsentPlan<number> = AbsentPlan.of<number>(
           () => {
             fn1();
 
             return Promise.resolve<null>(null);
           },
-          new MockEpoque<number>(
+          new MockEpoque(
             () => {
               fn2();
 
@@ -314,14 +314,14 @@ describe('AbsentPlan', () => {
       const fn3: jest.Mock = jest.fn();
       const fn4: jest.Mock = jest.fn();
 
-      await new Promise<void>((resolve: Resolve<void>) => {
+      await new Promise((resolve: Resolve<void>) => {
         const plan: AbsentPlan<number> = AbsentPlan.of<number>(
           () => {
             fn1();
 
             return Promise.resolve<undefined>(undefined);
           },
-          new MockEpoque<number>(
+          new MockEpoque(
             () => {
               fn2();
 
@@ -355,14 +355,14 @@ describe('AbsentPlan', () => {
       const fn3: jest.Mock = jest.fn();
       const fn4: jest.Mock = jest.fn();
 
-      await new Promise<void>((resolve: Resolve<void>) => {
+      await new Promise((resolve: Resolve<void>) => {
         const plan: AbsentPlan<number> = AbsentPlan.of<number>(
           () => {
             fn1();
 
             return Unscharferelation.absent<number>();
           },
-          new MockEpoque<number>(
+          new MockEpoque(
             () => {
               fn2();
 
@@ -396,14 +396,14 @@ describe('AbsentPlan', () => {
       const fn3: jest.Mock = jest.fn();
       const fn4: jest.Mock = jest.fn();
 
-      await new Promise<void>((resolve: Resolve<void>) => {
+      await new Promise((resolve: Resolve<void>) => {
         const plan: AbsentPlan<number> = AbsentPlan.of<number>(
           () => {
             fn1();
 
             return Promise.resolve<Unscharferelation<number>>(Unscharferelation.absent<number>());
           },
-          new MockEpoque<number>(
+          new MockEpoque(
             () => {
               fn2();
 
@@ -439,14 +439,14 @@ describe('AbsentPlan', () => {
       const fn3: jest.Mock = jest.fn();
       const fn4: jest.Mock = jest.fn();
 
-      await new Promise<void>((resolve: Resolve<void>) => {
+      await new Promise((resolve: Resolve<void>) => {
         const plan: AbsentPlan<number> = AbsentPlan.of<number>(
           () => {
             fn1();
 
             throw error;
           },
-          new MockEpoque<number>(
+          new MockEpoque(
             () => {
               fn2();
 
@@ -483,14 +483,14 @@ describe('AbsentPlan', () => {
       const fn3: jest.Mock = jest.fn();
       const fn4: jest.Mock = jest.fn();
 
-      await new Promise<void>((resolve: Resolve<void>) => {
+      await new Promise((resolve: Resolve<void>) => {
         const plan: AbsentPlan<number> = AbsentPlan.of<number>(
           () => {
             fn1();
 
-            return Promise.reject<number>(error);
+            return Promise.reject(error);
           },
-          new MockEpoque<number>(
+          new MockEpoque(
             () => {
               fn2();
 
@@ -527,7 +527,7 @@ describe('AbsentPlan', () => {
       const fn3: jest.Mock = jest.fn();
       const fn4: jest.Mock = jest.fn();
 
-      await new Promise<void>((resolve: Resolve<void>) => {
+      await new Promise((resolve: Resolve<void>) => {
         const plan: AbsentPlan<number> = AbsentPlan.of<number>(
           () => {
             fn1();
@@ -536,7 +536,7 @@ describe('AbsentPlan', () => {
               return e.throw(error);
             });
           },
-          new MockEpoque<number>(
+          new MockEpoque(
             () => {
               fn2();
 
@@ -573,7 +573,7 @@ describe('AbsentPlan', () => {
       const fn3: jest.Mock = jest.fn();
       const fn4: jest.Mock = jest.fn();
 
-      await new Promise<void>((resolve: Resolve<void>) => {
+      await new Promise((resolve: Resolve<void>) => {
         const plan: AbsentPlan<number> = AbsentPlan.of<number>(
           () => {
             fn1();
@@ -582,7 +582,7 @@ describe('AbsentPlan', () => {
               return e.throw(error);
             }));
           },
-          new MockEpoque<number>(
+          new MockEpoque(
             () => {
               fn2();
 

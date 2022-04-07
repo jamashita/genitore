@@ -12,7 +12,7 @@ export class AbsentPlan<P> implements RecoveryPlan<void> {
     mapper: Supplier<UReturnType<P>>,
     epoque: Epoque<P>
   ): AbsentPlan<P> {
-    return new AbsentPlan<P>(mapper, epoque);
+    return new AbsentPlan(mapper, epoque);
   }
 
   protected constructor(

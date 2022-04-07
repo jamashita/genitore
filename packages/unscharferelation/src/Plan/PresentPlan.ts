@@ -12,7 +12,7 @@ export class PresentPlan<P, Q> implements MapPlan<Matter<P>> {
     mapper: UnaryFunction<Matter<P>, UReturnType<Q>>,
     epoque: Epoque<Q>
   ): PresentPlan<P, Q> {
-    return new PresentPlan<P, Q>(mapper, epoque);
+    return new PresentPlan(mapper, epoque);
   }
 
   protected constructor(
