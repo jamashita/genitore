@@ -31,48 +31,6 @@ describe('Lost', () => {
     });
   });
 
-  describe('isPresent', () => {
-    it('always returns false', () => {
-      const error: MockRuntimeError = new MockRuntimeError();
-      const lost: Lost<void> = Lost.of(error);
-
-      expect(lost.isPresent()).toBe(false);
-    });
-  });
-  describe('isAbsent', () => {
-    it('always returns false', () => {
-      const error: MockRuntimeError = new MockRuntimeError();
-      const lost: Lost<void> = Lost.of(error);
-
-      expect(lost.isAbsent()).toBe(false);
-    });
-  });
-
-  describe('isLost', () => {
-    it('always returns true', () => {
-      const error: MockRuntimeError = new MockRuntimeError();
-      const lost: Lost<void> = Lost.of(error);
-
-      expect(lost.isLost()).toBe(true);
-    });
-  });
-
-  describe('ifPresent', () => {
-    it('will not be invoked', () => {
-      const error: MockRuntimeError = new MockRuntimeError();
-
-      const fn: jest.Mock = jest.fn();
-
-      const lost: Heisenberg<number> = Lost.of(error);
-
-      lost.ifPresent(() => {
-        fn();
-      });
-
-      expect(fn.mock.calls).toHaveLength(0);
-    });
-  });
-
   describe('ifAbsent', () => {
     it('will not be invoked', () => {
       const error: MockRuntimeError = new MockRuntimeError();
@@ -102,6 +60,49 @@ describe('Lost', () => {
       });
 
       expect(fn.mock.calls).toHaveLength(1);
+    });
+  });
+
+  describe('ifPresent', () => {
+    it('will not be invoked', () => {
+      const error: MockRuntimeError = new MockRuntimeError();
+
+      const fn: jest.Mock = jest.fn();
+
+      const lost: Heisenberg<number> = Lost.of(error);
+
+      lost.ifPresent(() => {
+        fn();
+      });
+
+      expect(fn.mock.calls).toHaveLength(0);
+    });
+  });
+
+  describe('isAbsent', () => {
+    it('always returns false', () => {
+      const error: MockRuntimeError = new MockRuntimeError();
+      const lost: Lost<void> = Lost.of(error);
+
+      expect(lost.isAbsent()).toBe(false);
+    });
+  });
+
+  describe('isLost', () => {
+    it('always returns true', () => {
+      const error: MockRuntimeError = new MockRuntimeError();
+      const lost: Lost<void> = Lost.of(error);
+
+      expect(lost.isLost()).toBe(true);
+    });
+  });
+
+  describe('isPresent', () => {
+    it('always returns false', () => {
+      const error: MockRuntimeError = new MockRuntimeError();
+      const lost: Lost<void> = Lost.of(error);
+
+      expect(lost.isPresent()).toBe(false);
     });
   });
 

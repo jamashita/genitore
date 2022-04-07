@@ -1,7 +1,7 @@
-import { DeadConstructor, Detoxicated } from '@jamashita/genitore-schrodinger';
+import { DeadConstructor } from '@jamashita/genitore-schrodinger';
 
 export interface Chrono<M, R extends Error> {
-  accept(value: Detoxicated<M>): unknown;
+  accept(value: M): unknown;
 
   catch(errors: Iterable<DeadConstructor<R>>): void;
 

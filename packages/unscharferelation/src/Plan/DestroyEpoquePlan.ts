@@ -5,7 +5,7 @@ export class DestroyEpoquePlan<P> implements DestroyPlan {
   private readonly epoque: Epoque<P>;
 
   public static of<P>(epoque: Epoque<P>): DestroyEpoquePlan<P> {
-    return new DestroyEpoquePlan<P>(epoque);
+    return new DestroyEpoquePlan(epoque);
   }
 
   protected constructor(epoque: Epoque<P>) {

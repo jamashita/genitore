@@ -13,50 +13,6 @@ describe('Absent', () => {
     });
   });
 
-  describe('isPresent', () => {
-    it('always returns false', () => {
-      const absent1: Absent<void> = Absent.of();
-      const absent2: Absent<number> = Absent.of();
-
-      expect(absent1.isPresent()).toBe(false);
-      expect(absent2.isPresent()).toBe(false);
-    });
-  });
-
-  describe('isAbsent', () => {
-    it('always returns true', () => {
-      const absent1: Absent<void> = Absent.of();
-      const absent2: Absent<number> = Absent.of();
-
-      expect(absent1.isAbsent()).toBe(true);
-      expect(absent2.isAbsent()).toBe(true);
-    });
-  });
-
-  describe('isLost', () => {
-    it('always returns false', () => {
-      const absent1: Absent<void> = Absent.of();
-      const absent2: Absent<number> = Absent.of();
-
-      expect(absent1.isLost()).toBe(false);
-      expect(absent2.isLost()).toBe(false);
-    });
-  });
-
-  describe('ifPresent', () => {
-    it('will not be invoked', () => {
-      const fn: jest.Mock = jest.fn();
-
-      const absent: Heisenberg<number> = Absent.of();
-
-      absent.ifPresent(() => {
-        fn();
-      });
-
-      expect(fn.mock.calls).toHaveLength(0);
-    });
-  });
-
   describe('ifAbsent', () => {
     it('will be invoked', () => {
       const fn: jest.Mock = jest.fn();
@@ -82,6 +38,50 @@ describe('Absent', () => {
       });
 
       expect(fn.mock.calls).toHaveLength(0);
+    });
+  });
+
+  describe('ifPresent', () => {
+    it('will not be invoked', () => {
+      const fn: jest.Mock = jest.fn();
+
+      const absent: Heisenberg<number> = Absent.of();
+
+      absent.ifPresent(() => {
+        fn();
+      });
+
+      expect(fn.mock.calls).toHaveLength(0);
+    });
+  });
+
+  describe('isAbsent', () => {
+    it('always returns true', () => {
+      const absent1: Absent<void> = Absent.of();
+      const absent2: Absent<number> = Absent.of();
+
+      expect(absent1.isAbsent()).toBe(true);
+      expect(absent2.isAbsent()).toBe(true);
+    });
+  });
+
+  describe('isLost', () => {
+    it('always returns false', () => {
+      const absent1: Absent<void> = Absent.of();
+      const absent2: Absent<number> = Absent.of();
+
+      expect(absent1.isLost()).toBe(false);
+      expect(absent2.isLost()).toBe(false);
+    });
+  });
+
+  describe('isPresent', () => {
+    it('always returns false', () => {
+      const absent1: Absent<void> = Absent.of();
+      const absent2: Absent<number> = Absent.of();
+
+      expect(absent1.isPresent()).toBe(false);
+      expect(absent2.isPresent()).toBe(false);
     });
   });
 

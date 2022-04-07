@@ -9,7 +9,7 @@ export class Present<P> implements Heisenberg<P> {
   private readonly value: Matter<P>;
 
   public static of<P>(value: Matter<P>): Present<P> {
-    return new Present<P>(value);
+    return new Present(value);
   }
 
   private constructor(value: Matter<P>) {

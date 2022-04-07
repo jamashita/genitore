@@ -7,7 +7,7 @@ export class CombinedChronoPlan<A, D extends Error> implements Plan<Detoxicated<
   private readonly destroy: DestroyPlan;
 
   public static of<A, D extends Error>(map: MapPlan<Detoxicated<A>>, recover: RecoveryPlan<D>, destroy: DestroyPlan): CombinedChronoPlan<A, D> {
-    return new CombinedChronoPlan<A, D>(map, recover, destroy);
+    return new CombinedChronoPlan(map, recover, destroy);
   }
 
   protected constructor(map: MapPlan<Detoxicated<A>>, recover: RecoveryPlan<D>, destroy: DestroyPlan) {

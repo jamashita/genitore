@@ -8,7 +8,7 @@ export class Dead<A, D extends Error> implements Schrodinger<A, D> {
   private readonly error: D;
 
   public static of<A, D extends Error>(error: D): Dead<A, D> {
-    return new Dead<A, D>(error);
+    return new Dead(error);
   }
 
   protected constructor(error: D) {

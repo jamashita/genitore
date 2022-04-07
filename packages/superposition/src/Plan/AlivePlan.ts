@@ -12,7 +12,7 @@ export class AlivePlan<A, B, E extends Error> implements MapPlan<Detoxicated<A>>
     mapper: UnaryFunction<Detoxicated<A>, SReturnType<B, E>>,
     chrono: Chrono<B, E>
   ): AlivePlan<A, B, E> {
-    return new AlivePlan<A, B, E>(mapper, chrono);
+    return new AlivePlan(mapper, chrono);
   }
 
   protected constructor(
@@ -24,7 +24,7 @@ export class AlivePlan<A, B, E extends Error> implements MapPlan<Detoxicated<A>>
   }
 
   private forError(e: unknown): unknown {
-    if (containsError<E>(e, this.chrono.getErrors())) {
+    if (containsError(e, this.chrono.getErrors())) {
       return this.chrono.decline(e);
     }
 
@@ -63,7 +63,7 @@ export class AlivePlan<A, B, E extends Error> implements MapPlan<Detoxicated<A>>
         return this.forSuperposition(mapped);
       }
       if (Kind.isPromiseLike<Detoxicated<B> | ISuperposition<B, E>>(mapped)) {
-        return mapped.then<unknown, unknown>(
+        return mapped.then(
           (v: Detoxicated<B> | ISuperposition<B, E>) => {
             if (isSuperposition(v)) {
               return this.forSuperposition(v);

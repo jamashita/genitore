@@ -1,5 +1,4 @@
 import { MockRuntimeError } from '@jamashita/anden-error';
-import { DeadConstructor } from '@jamashita/genitore-schrodinger';
 import { Chrono } from '../Chrono';
 import { containsError, isSuperposition } from '../ISuperposition';
 import { Superposition } from '../Superposition';
@@ -280,19 +279,19 @@ describe('ISuperposition', () => {
     it('returns true if the very class is included', () => {
       const error: MockRuntimeError = new MockRuntimeError();
 
-      expect(containsError<Error>(error, new Set<DeadConstructor>([TypeError, SyntaxError, MockRuntimeError]))).toBe(true);
+      expect(containsError<Error>(error, new Set([TypeError, SyntaxError, MockRuntimeError]))).toBe(true);
     });
 
     it('returns false if the class is not included', () => {
       const error: MockRuntimeError = new MockRuntimeError();
 
-      expect(containsError<Error>(error, new Set<DeadConstructor>([TypeError, SyntaxError]))).toBe(false);
+      expect(containsError<Error>(error, new Set([TypeError, SyntaxError]))).toBe(false);
     });
 
     it('returns true if super class of the class is included', () => {
       const error: MockRuntimeError = new MockRuntimeError();
 
-      expect(containsError<Error>(error, new Set<DeadConstructor>([TypeError, SyntaxError, Error]))).toBe(true);
+      expect(containsError<Error>(error, new Set([TypeError, SyntaxError, Error]))).toBe(true);
     });
   });
 });
