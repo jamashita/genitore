@@ -8,7 +8,7 @@ export class Contradiction<A, D extends Error> implements Schrodinger<A, D> {
   private readonly cause: unknown;
 
   public static of<A, D extends Error>(cause: unknown): Contradiction<A, D> {
-    return new Contradiction<A, D>(cause);
+    return new Contradiction(cause);
   }
 
   protected constructor(cause: unknown) {

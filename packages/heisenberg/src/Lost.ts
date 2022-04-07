@@ -8,7 +8,7 @@ export class Lost<P> implements Heisenberg<P> {
   private readonly cause: unknown;
 
   public static of<P>(cause: unknown): Lost<P> {
-    return new Lost<P>(cause);
+    return new Lost(cause);
   }
 
   private constructor(cause: unknown) {

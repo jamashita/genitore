@@ -9,7 +9,7 @@ export class Alive<A, D extends Error> implements Schrodinger<A, D> {
   private readonly value: Detoxicated<A>;
 
   public static of<A, D extends Error>(value: Detoxicated<A>): Alive<A, D> {
-    return new Alive<A, D>(value);
+    return new Alive(value);
   }
 
   protected constructor(value: Detoxicated<A>) {

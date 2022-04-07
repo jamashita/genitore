@@ -5,7 +5,7 @@ import { Lost } from './Lost';
 import { Present } from './Present';
 
 export class Absent<P> implements Heisenberg<P> {
-  private static readonly INSTANCE: Absent<unknown> = new Absent<unknown>();
+  private static readonly INSTANCE: Absent<unknown> = new Absent();
 
   public static of<P>(): Absent<P> {
     return Absent.INSTANCE as Absent<P>;
