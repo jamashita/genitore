@@ -42,6 +42,7 @@ export class Unscharferelation<P> implements IUnscharferelation<P> {
     return Unscharferelation.of((epoque: Epoque<Array<P>>) => {
       return Promise.all(promises).then<unknown, unknown>((heisenbergs: Array<Heisenberg<P>>) => {
         const arr: Array<P> = [];
+        let absent: boolean = false;
 
         for (const heisenberg of heisenbergs) {
           if (heisenberg.isLost()) {
@@ -53,8 +54,12 @@ export class Unscharferelation<P> implements IUnscharferelation<P> {
             continue;
           }
           if (heisenberg.isAbsent()) {
-            return epoque.decline();
+            absent = true;
           }
+        }
+
+        if (absent) {
+          return epoque.decline();
         }
 
         return epoque.accept(arr);
