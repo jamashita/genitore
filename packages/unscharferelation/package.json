@@ -1,6 +1,6 @@
 {
   "name": "@jamashita/genitore-unscharferelation",
-  "version": "2.4.0",
+  "version": "2.5.0",
   "private": false,
   "repository": {
     "type": "git",
@@ -25,15 +25,14 @@
     "clean:dist": "rimraf dist"
   },
   "dependencies": {
-    "@jamashita/anden-error": "2.4.0",
-    "@jamashita/anden-object": "2.7.0",
-    "@jamashita/anden-type": "2.4.0",
-    "@jamashita/genitore-heisenberg": "^2.4.0",
-    "@jamashita/genitore-plan": "^2.4.0"
+    "@jamashita/anden-error": "2.8.0",
+    "@jamashita/anden-object": "2.12.0",
+    "@jamashita/anden-type": "2.8.0",
+    "@jamashita/genitore-heisenberg": "^2.5.0",
+    "@jamashita/genitore-plan": "^2.5.0"
   },
   "engines": {
-    "node": ">=14.0.0",
-    "npm": "npm is not supported"
+    "node": ">=14.0.0"
   },
   "engineStrict": true,
   "publishConfig": {

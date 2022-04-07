@@ -1,5 +1,4 @@
 import { MockRuntimeError } from '@jamashita/anden-error';
-import { DeadConstructor } from '@jamashita/genitore-schrodinger';
 import { MockChrono } from '../../mock/MockChrono';
 import { MapChronoPlan } from '../MapChronoPlan';
 
@@ -23,7 +22,7 @@ describe('MapChronoPlan', () => {
         () => {
           fn3();
         },
-        new Set<DeadConstructor<MockRuntimeError>>()
+        new Set()
       );
       const plan: MapChronoPlan<number, MockRuntimeError> = MapChronoPlan.of(chrono);
 

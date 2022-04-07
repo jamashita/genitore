@@ -5,7 +5,7 @@ import { Schrodinger } from './Schrodinger';
 import { SchrodingerError } from './SchrodingerError';
 
 export class Still<A, D extends Error> implements Schrodinger<A, D> {
-  private static readonly INSTANCE: Still<unknown, Error> = new Still<unknown, Error>();
+  private static readonly INSTANCE: Still<unknown, Error> = new Still();
 
   public static of<A, D extends Error>(): Still<A, D> {
     return Still.INSTANCE as Still<A, D>;

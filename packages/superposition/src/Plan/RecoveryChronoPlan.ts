@@ -5,7 +5,7 @@ export class RecoveryChronoPlan<A, D extends Error> implements RecoveryPlan<D> {
   private readonly chrono: Chrono<A, D>;
 
   public static of<A, D extends Error>(chrono: Chrono<A, D>): RecoveryChronoPlan<A, D> {
-    return new RecoveryChronoPlan<A, D>(chrono);
+    return new RecoveryChronoPlan(chrono);
   }
 
   protected constructor(chrono: Chrono<A, D>) {

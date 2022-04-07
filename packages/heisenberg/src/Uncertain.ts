@@ -5,7 +5,7 @@ import { Lost } from './Lost';
 import { Present } from './Present';
 
 export class Uncertain<P> implements Heisenberg<P> {
-  private static readonly INSTANCE: Uncertain<unknown> = new Uncertain<unknown>();
+  private static readonly INSTANCE: Uncertain<unknown> = new Uncertain();
 
   public static of<P>(): Uncertain<P> {
     return Uncertain.INSTANCE as Uncertain<P>;

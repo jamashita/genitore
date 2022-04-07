@@ -5,7 +5,7 @@ export class RecoveryPassPlan<R> implements RecoveryPlan<R> {
   private readonly recover: Consumer<R>;
 
   public static of<R>(recover: Consumer<R>): RecoveryPassPlan<R> {
-    return new RecoveryPassPlan<R>(recover);
+    return new RecoveryPassPlan(recover);
   }
 
   protected constructor(recover: Consumer<R>) {

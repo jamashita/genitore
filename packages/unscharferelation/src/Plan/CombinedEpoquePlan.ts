@@ -7,7 +7,7 @@ export class CombinedEpoquePlan<P> implements Plan<Matter<P>, void> {
   private readonly destroy: DestroyPlan;
 
   public static of<P>(map: MapPlan<Matter<P>>, recover: RecoveryPlan<void>, destroy: DestroyPlan): CombinedEpoquePlan<P> {
-    return new CombinedEpoquePlan<P>(map, recover, destroy);
+    return new CombinedEpoquePlan(map, recover, destroy);
   }
 
   protected constructor(map: MapPlan<Matter<P>>, recover: RecoveryPlan<void>, destroy: DestroyPlan) {

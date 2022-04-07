@@ -1,16 +1,7 @@
-import {
-  Consumer,
-  Kind,
-  Peek,
-  Serializable,
-  Supplier,
-  Suspicious,
-  SyncAsync,
-  UnaryFunction
-} from '@jamashita/anden-type';
-import { Heisenberg, Matter } from '@jamashita/genitore-heisenberg';
+import { Consumer, Kind, Peek, Serializable, Supplier, SyncAsync, UnaryFunction } from '@jamashita/anden-type';
+import { Heisenberg, Matter, Nihil } from '@jamashita/genitore-heisenberg';
 
-export type UReturnType<Q> = SyncAsync<IUnscharferelation<Q> | Suspicious<Matter<Q>>>;
+export type UReturnType<T> = SyncAsync<IUnscharferelation<T> | Nihil | T>;
 
 export interface IUnscharferelation<P> extends Serializable {
   get(): Promise<Matter<P>>;

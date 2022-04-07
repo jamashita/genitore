@@ -1,5 +1,4 @@
-export * from './mock/MockChrono';
-export * from './mock/MockSuperposition';
+export * from './mock/index';
 export * from './Plan/index';
 export * from './Chrono';
 export * from './ISuperposition';

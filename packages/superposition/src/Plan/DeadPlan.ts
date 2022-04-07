@@ -12,7 +12,7 @@ export class DeadPlan<B, D extends Error, E extends Error> implements RecoveryPl
     mapper: UnaryFunction<D, SReturnType<B, E>>,
     chrono: Chrono<B, E>
   ): DeadPlan<B, D, E> {
-    return new DeadPlan<B, D, E>(mapper, chrono);
+    return new DeadPlan(mapper, chrono);
   }
 
   protected constructor(
@@ -24,7 +24,7 @@ export class DeadPlan<B, D extends Error, E extends Error> implements RecoveryPl
   }
 
   private forError(e: unknown): unknown {
-    if (containsError<E>(e, this.chrono.getErrors())) {
+    if (containsError(e, this.chrono.getErrors())) {
       return this.chrono.decline(e);
     }
 
@@ -63,7 +63,7 @@ export class DeadPlan<B, D extends Error, E extends Error> implements RecoveryPl
         return this.forSuperposition(mapped);
       }
       if (Kind.isPromiseLike<Detoxicated<B> | ISuperposition<B, E>>(mapped)) {
-        return mapped.then<unknown, unknown>(
+        return mapped.then(
           (v: Detoxicated<B> | ISuperposition<B, E>) => {
             if (isSuperposition(v)) {
               return this.forSuperposition(v);

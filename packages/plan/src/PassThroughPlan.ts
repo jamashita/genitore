@@ -7,7 +7,7 @@ export class PassThroughPlan<M, R> implements Plan<M, R> {
   private readonly destroy: Consumer<unknown>;
 
   public static of<M, R>(map: Consumer<M>, recover: Consumer<R>, destroy: Consumer<unknown>): PassThroughPlan<M, R> {
-    return new PassThroughPlan<M, R>(map, recover, destroy);
+    return new PassThroughPlan(map, recover, destroy);
   }
 
   protected constructor(map: Consumer<M>, recover: Consumer<R>, destroy: Consumer<unknown>) {

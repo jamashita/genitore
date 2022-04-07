@@ -5,7 +5,7 @@ export class RecoveryEpoquePlan<P> implements RecoveryPlan<void> {
   private readonly epoque: Epoque<P>;
 
   public static of<P>(epoque: Epoque<P>): RecoveryEpoquePlan<P> {
-    return new RecoveryEpoquePlan<P>(epoque);
+    return new RecoveryEpoquePlan(epoque);
   }
 
   protected constructor(epoque: Epoque<P>) {

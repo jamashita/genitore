@@ -1,6 +1,35 @@
 import { PassThroughPlan } from '../PassThroughPlan';
 
 describe('PassThroughPlan', () => {
+  describe('onDestroy', () => {
+    it('invokes third callback when onDestroy() called', () => {
+      const value: number = -35;
+
+      const fn1: jest.Mock = jest.fn();
+      const fn2: jest.Mock = jest.fn();
+      const fn3: jest.Mock = jest.fn();
+
+      const plan: PassThroughPlan<number, string> = PassThroughPlan.of(
+        () => {
+          fn1();
+        },
+        () => {
+          fn2();
+        },
+        (n: unknown) => {
+          fn3();
+          expect(n).toBe(value);
+        }
+      );
+
+      plan.onDestroy(value);
+
+      expect(fn1.mock.calls).toHaveLength(0);
+      expect(fn2.mock.calls).toHaveLength(0);
+      expect(fn3.mock.calls).toHaveLength(1);
+    });
+  });
+
   describe('onMap', () => {
     it('invokes first callback when onMap() called', () => {
       const value: number = -35;
@@ -56,35 +85,6 @@ describe('PassThroughPlan', () => {
       expect(fn1.mock.calls).toHaveLength(0);
       expect(fn2.mock.calls).toHaveLength(1);
       expect(fn3.mock.calls).toHaveLength(0);
-    });
-  });
-
-  describe('onDestroy', () => {
-    it('invokes third callback when onDestroy() called', () => {
-      const value: number = -35;
-
-      const fn1: jest.Mock = jest.fn();
-      const fn2: jest.Mock = jest.fn();
-      const fn3: jest.Mock = jest.fn();
-
-      const plan: PassThroughPlan<number, string> = PassThroughPlan.of(
-        () => {
-          fn1();
-        },
-        () => {
-          fn2();
-        },
-        (n: unknown) => {
-          fn3();
-          expect(n).toBe(value);
-        }
-      );
-
-      plan.onDestroy(value);
-
-      expect(fn1.mock.calls).toHaveLength(0);
-      expect(fn2.mock.calls).toHaveLength(0);
-      expect(fn3.mock.calls).toHaveLength(1);
     });
   });
 });
