@@ -4,7 +4,6 @@ import { Heisenberg, Matter } from '@jamashita/genitore-heisenberg';
 import { IUnscharferelation } from '../IUnscharferelation';
 
 export class MockUnscharferelation<P> extends ValueObject implements IUnscharferelation<P> {
-
   public constructor() {
     super();
   }

@@ -1,6 +1,5 @@
 import { MockRuntimeError } from '@jamashita/anden-error';
 import { Resolve } from '@jamashita/anden-type';
-import { DeadConstructor } from '@jamashita/genitore-schrodinger';
 import { Chrono } from '../../Chrono';
 import { MockChrono } from '../../mock/MockChrono';
 import { Superposition } from '../../Superposition';
@@ -17,7 +16,7 @@ describe('DeadPlan', () => {
       const fn3: jest.Mock = jest.fn();
       const fn4: jest.Mock = jest.fn();
 
-      await new Promise<void>((resolve: Resolve<void>) => {
+      await new Promise((resolve: Resolve<void>) => {
         const plan: DeadPlan<number, MockRuntimeError, MockRuntimeError> = DeadPlan.of<number, MockRuntimeError, MockRuntimeError>(
           (e: MockRuntimeError) => {
             fn1();
@@ -25,7 +24,7 @@ describe('DeadPlan', () => {
 
             return value;
           },
-          new MockChrono<number, MockRuntimeError>(
+          new MockChrono(
             (n: number) => {
               fn2();
               expect(n).toBe(value);
@@ -42,7 +41,7 @@ describe('DeadPlan', () => {
 
               resolve();
             },
-            new Set<DeadConstructor<MockRuntimeError>>([MockRuntimeError])
+            new Set([MockRuntimeError])
           )
         );
 
@@ -64,7 +63,7 @@ describe('DeadPlan', () => {
       const fn3: jest.Mock = jest.fn();
       const fn4: jest.Mock = jest.fn();
 
-      await new Promise<void>((resolve: Resolve<void>) => {
+      await new Promise((resolve: Resolve<void>) => {
         const plan: DeadPlan<number, MockRuntimeError, MockRuntimeError> = DeadPlan.of<number, MockRuntimeError, MockRuntimeError>(
           (e: MockRuntimeError) => {
             fn1();
@@ -72,7 +71,7 @@ describe('DeadPlan', () => {
 
             return Promise.resolve<number>(value);
           },
-          new MockChrono<number, MockRuntimeError>(
+          new MockChrono(
             (n: number) => {
               fn2();
               expect(n).toBe(value);
@@ -89,7 +88,7 @@ describe('DeadPlan', () => {
 
               resolve();
             },
-            new Set<DeadConstructor<MockRuntimeError>>([MockRuntimeError])
+            new Set([MockRuntimeError])
           )
         );
 
@@ -111,7 +110,7 @@ describe('DeadPlan', () => {
       const fn3: jest.Mock = jest.fn();
       const fn4: jest.Mock = jest.fn();
 
-      await new Promise<void>((resolve: Resolve<void>) => {
+      await new Promise((resolve: Resolve<void>) => {
         const plan: DeadPlan<number, MockRuntimeError, MockRuntimeError> = DeadPlan.of<number, MockRuntimeError, MockRuntimeError>(
           (e: MockRuntimeError) => {
             fn1();
@@ -119,7 +118,7 @@ describe('DeadPlan', () => {
 
             return Superposition.alive<number, MockRuntimeError>(value);
           },
-          new MockChrono<number, MockRuntimeError>(
+          new MockChrono(
             (n: number) => {
               fn2();
               expect(n).toBe(value);
@@ -136,7 +135,7 @@ describe('DeadPlan', () => {
 
               resolve();
             },
-            new Set<DeadConstructor<MockRuntimeError>>([MockRuntimeError])
+            new Set([MockRuntimeError])
           )
         );
 
@@ -158,7 +157,7 @@ describe('DeadPlan', () => {
       const fn3: jest.Mock = jest.fn();
       const fn4: jest.Mock = jest.fn();
 
-      await new Promise<void>((resolve: Resolve<void>) => {
+      await new Promise((resolve: Resolve<void>) => {
         const plan: DeadPlan<number, MockRuntimeError, MockRuntimeError> = DeadPlan.of<number, MockRuntimeError, MockRuntimeError>(
           (e: MockRuntimeError) => {
             fn1();
@@ -166,7 +165,7 @@ describe('DeadPlan', () => {
 
             return Promise.resolve<Superposition<number, MockRuntimeError>>(Superposition.alive<number, MockRuntimeError>(value));
           },
-          new MockChrono<number, MockRuntimeError>(
+          new MockChrono(
             (n: number) => {
               fn2();
               expect(n).toBe(value);
@@ -183,7 +182,7 @@ describe('DeadPlan', () => {
 
               resolve();
             },
-            new Set<DeadConstructor<MockRuntimeError>>([MockRuntimeError])
+            new Set([MockRuntimeError])
           )
         );
 
@@ -204,7 +203,7 @@ describe('DeadPlan', () => {
       const fn3: jest.Mock = jest.fn();
       const fn4: jest.Mock = jest.fn();
 
-      await new Promise<void>((resolve: Resolve<void>) => {
+      await new Promise((resolve: Resolve<void>) => {
         const plan: DeadPlan<number, MockRuntimeError, MockRuntimeError> = DeadPlan.of<number, MockRuntimeError, MockRuntimeError>(
           (e: MockRuntimeError) => {
             fn1();
@@ -212,7 +211,7 @@ describe('DeadPlan', () => {
 
             throw error;
           },
-          new MockChrono<number, MockRuntimeError>(
+          new MockChrono(
             () => {
               fn2();
 
@@ -229,7 +228,7 @@ describe('DeadPlan', () => {
 
               resolve();
             },
-            new Set<DeadConstructor<MockRuntimeError>>([MockRuntimeError])
+            new Set([MockRuntimeError])
           )
         );
 
@@ -250,7 +249,7 @@ describe('DeadPlan', () => {
       const fn3: jest.Mock = jest.fn();
       const fn4: jest.Mock = jest.fn();
 
-      await new Promise<void>((resolve: Resolve<void>) => {
+      await new Promise((resolve: Resolve<void>) => {
         const plan: DeadPlan<number, MockRuntimeError, MockRuntimeError> = DeadPlan.of<number, MockRuntimeError, MockRuntimeError>(
           (e: MockRuntimeError) => {
             fn1();
@@ -258,7 +257,7 @@ describe('DeadPlan', () => {
 
             return Promise.reject<number>(error);
           },
-          new MockChrono<number, MockRuntimeError>(
+          new MockChrono(
             () => {
               fn2();
 
@@ -275,7 +274,7 @@ describe('DeadPlan', () => {
 
               resolve();
             },
-            new Set<DeadConstructor<MockRuntimeError>>([MockRuntimeError])
+            new Set([MockRuntimeError])
           )
         );
 
@@ -296,7 +295,7 @@ describe('DeadPlan', () => {
       const fn3: jest.Mock = jest.fn();
       const fn4: jest.Mock = jest.fn();
 
-      await new Promise<void>((resolve: Resolve<void>) => {
+      await new Promise((resolve: Resolve<void>) => {
         const plan: DeadPlan<number, MockRuntimeError, MockRuntimeError> = DeadPlan.of<number, MockRuntimeError, MockRuntimeError>(
           (e: MockRuntimeError) => {
             fn1();
@@ -304,7 +303,7 @@ describe('DeadPlan', () => {
 
             return Superposition.dead<number, MockRuntimeError>(error, MockRuntimeError);
           },
-          new MockChrono<number, MockRuntimeError>(
+          new MockChrono(
             () => {
               fn2();
 
@@ -321,7 +320,7 @@ describe('DeadPlan', () => {
 
               resolve();
             },
-            new Set<DeadConstructor<MockRuntimeError>>([MockRuntimeError])
+            new Set([MockRuntimeError])
           )
         );
 
@@ -342,7 +341,7 @@ describe('DeadPlan', () => {
       const fn3: jest.Mock = jest.fn();
       const fn4: jest.Mock = jest.fn();
 
-      await new Promise<void>((resolve: Resolve<void>) => {
+      await new Promise((resolve: Resolve<void>) => {
         const plan: DeadPlan<number, MockRuntimeError, MockRuntimeError> = DeadPlan.of<number, MockRuntimeError, MockRuntimeError>(
           (e: MockRuntimeError) => {
             fn1();
@@ -350,7 +349,7 @@ describe('DeadPlan', () => {
 
             return Promise.resolve<Superposition<number, MockRuntimeError>>(Superposition.dead<number, MockRuntimeError>(error, MockRuntimeError));
           },
-          new MockChrono<number, MockRuntimeError>(
+          new MockChrono(
             () => {
               fn2();
 
@@ -367,7 +366,7 @@ describe('DeadPlan', () => {
 
               resolve();
             },
-            new Set<DeadConstructor<MockRuntimeError>>([MockRuntimeError])
+            new Set([MockRuntimeError])
           )
         );
 
@@ -388,7 +387,7 @@ describe('DeadPlan', () => {
       const fn3: jest.Mock = jest.fn();
       const fn4: jest.Mock = jest.fn();
 
-      await new Promise<void>((resolve: Resolve<void>) => {
+      await new Promise((resolve: Resolve<void>) => {
         const plan: DeadPlan<number, MockRuntimeError, MockRuntimeError> = DeadPlan.of<number, MockRuntimeError, MockRuntimeError>(
           (e: MockRuntimeError) => {
             fn1();
@@ -396,7 +395,7 @@ describe('DeadPlan', () => {
 
             throw error;
           },
-          new MockChrono<number, MockRuntimeError>(
+          new MockChrono(
             () => {
               fn2();
 
@@ -412,7 +411,7 @@ describe('DeadPlan', () => {
 
               resolve();
             },
-            new Set<DeadConstructor<MockRuntimeError>>()
+            new Set()
           )
         );
 
@@ -433,7 +432,7 @@ describe('DeadPlan', () => {
       const fn3: jest.Mock = jest.fn();
       const fn4: jest.Mock = jest.fn();
 
-      await new Promise<void>((resolve: Resolve<void>) => {
+      await new Promise((resolve: Resolve<void>) => {
         const plan: DeadPlan<number, MockRuntimeError, MockRuntimeError> = DeadPlan.of<number, MockRuntimeError, MockRuntimeError>(
           (e: MockRuntimeError) => {
             fn1();
@@ -441,7 +440,7 @@ describe('DeadPlan', () => {
 
             return Promise.reject<number>(error);
           },
-          new MockChrono<number, MockRuntimeError>(
+          new MockChrono(
             () => {
               fn2();
 
@@ -457,7 +456,7 @@ describe('DeadPlan', () => {
 
               resolve();
             },
-            new Set<DeadConstructor<MockRuntimeError>>()
+            new Set()
           )
         );
 
@@ -487,7 +486,7 @@ describe('DeadPlan', () => {
             return c.throw(error);
           });
         },
-        new MockChrono<number, MockRuntimeError>(
+        new MockChrono(
           () => {
             fn2();
           },
@@ -497,7 +496,7 @@ describe('DeadPlan', () => {
           () => {
             fn4();
           },
-          new Set<DeadConstructor<MockRuntimeError>>()
+          new Set()
         )
       );
 
@@ -517,7 +516,7 @@ describe('DeadPlan', () => {
       const fn3: jest.Mock = jest.fn();
       const fn4: jest.Mock = jest.fn();
 
-      await new Promise<void>((resolve: Resolve<void>) => {
+      await new Promise((resolve: Resolve<void>) => {
         const plan: DeadPlan<number, MockRuntimeError, MockRuntimeError> = DeadPlan.of<number, MockRuntimeError, MockRuntimeError>(
           (e: MockRuntimeError) => {
             fn1();
@@ -527,7 +526,7 @@ describe('DeadPlan', () => {
               return c.throw(error);
             }));
           },
-          new MockChrono<number, MockRuntimeError>(
+          new MockChrono(
             () => {
               fn2();
 
@@ -543,7 +542,7 @@ describe('DeadPlan', () => {
 
               resolve();
             },
-            new Set<DeadConstructor<MockRuntimeError>>()
+            new Set()
           )
         );
 

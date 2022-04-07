@@ -23,6 +23,55 @@ describe('Alive', () => {
     });
   });
 
+  describe('ifAlive', () => {
+    it('will be invoked', () => {
+      const value: number = 1;
+
+      const fn: jest.Mock = jest.fn();
+
+      const alive: Schrodinger<number, MockRuntimeError> = Alive.of(value);
+
+      alive.ifAlive((v: number) => {
+        fn();
+        expect(v).toBe(value);
+      });
+
+      expect(fn.mock.calls).toHaveLength(1);
+    });
+  });
+
+  describe('ifContradiction', () => {
+    it('will not be invoked', () => {
+      const value: number = 1;
+
+      const fn: jest.Mock = jest.fn();
+
+      const alive: Schrodinger<number, MockRuntimeError> = Alive.of(value);
+
+      alive.ifContradiction(() => {
+        fn();
+      });
+
+      expect(fn.mock.calls).toHaveLength(0);
+    });
+  });
+
+  describe('ifDead', () => {
+    it('will not be invoked', () => {
+      const value: number = 1;
+
+      const fn: jest.Mock = jest.fn();
+
+      const alive: Schrodinger<number, MockRuntimeError> = Alive.of(value);
+
+      alive.ifDead(() => {
+        fn();
+      });
+
+      expect(fn.mock.calls).toHaveLength(0);
+    });
+  });
+
   describe('isAlive', () => {
     it('always returns true', () => {
       const alive1: Alive<number, MockRuntimeError> = Alive.of(1);
@@ -40,26 +89,6 @@ describe('Alive', () => {
       expect(alive5.isAlive()).toBe(true);
       expect(alive6.isAlive()).toBe(true);
       expect(alive7.isAlive()).toBe(true);
-    });
-  });
-
-  describe('isDead', () => {
-    it('always returns false', () => {
-      const alive1: Alive<number, MockRuntimeError> = Alive.of(1);
-      const alive2: Alive<number, MockRuntimeError> = Alive.of(0);
-      const alive3: Alive<number, MockRuntimeError> = Alive.of(-1);
-      const alive4: Alive<string, MockRuntimeError> = Alive.of('');
-      const alive5: Alive<string, MockRuntimeError> = Alive.of('1');
-      const alive6: Alive<boolean, MockRuntimeError> = Alive.of(true);
-      const alive7: Alive<boolean, MockRuntimeError> = Alive.of(false);
-
-      expect(alive1.isDead()).toBe(false);
-      expect(alive2.isDead()).toBe(false);
-      expect(alive3.isDead()).toBe(false);
-      expect(alive4.isDead()).toBe(false);
-      expect(alive5.isDead()).toBe(false);
-      expect(alive6.isDead()).toBe(false);
-      expect(alive7.isDead()).toBe(false);
     });
   });
 
@@ -83,52 +112,23 @@ describe('Alive', () => {
     });
   });
 
-  describe('ifAlive', () => {
-    it('will be invoked', () => {
-      const value: number = 1;
+  describe('isDead', () => {
+    it('always returns false', () => {
+      const alive1: Alive<number, MockRuntimeError> = Alive.of(1);
+      const alive2: Alive<number, MockRuntimeError> = Alive.of(0);
+      const alive3: Alive<number, MockRuntimeError> = Alive.of(-1);
+      const alive4: Alive<string, MockRuntimeError> = Alive.of('');
+      const alive5: Alive<string, MockRuntimeError> = Alive.of('1');
+      const alive6: Alive<boolean, MockRuntimeError> = Alive.of(true);
+      const alive7: Alive<boolean, MockRuntimeError> = Alive.of(false);
 
-      const fn: jest.Mock = jest.fn();
-
-      const alive: Schrodinger<number, MockRuntimeError> = Alive.of(value);
-
-      alive.ifAlive((v: number) => {
-        fn();
-        expect(v).toBe(value);
-      });
-
-      expect(fn.mock.calls).toHaveLength(1);
-    });
-  });
-
-  describe('ifDead', () => {
-    it('will not be invoked', () => {
-      const value: number = 1;
-
-      const fn: jest.Mock = jest.fn();
-
-      const alive: Schrodinger<number, MockRuntimeError> = Alive.of(value);
-
-      alive.ifDead(() => {
-        fn();
-      });
-
-      expect(fn.mock.calls).toHaveLength(0);
-    });
-  });
-
-  describe('ifContradiction', () => {
-    it('will not be invoked', () => {
-      const value: number = 1;
-
-      const fn: jest.Mock = jest.fn();
-
-      const alive: Schrodinger<number, MockRuntimeError> = Alive.of(value);
-
-      alive.ifContradiction(() => {
-        fn();
-      });
-
-      expect(fn.mock.calls).toHaveLength(0);
+      expect(alive1.isDead()).toBe(false);
+      expect(alive2.isDead()).toBe(false);
+      expect(alive3.isDead()).toBe(false);
+      expect(alive4.isDead()).toBe(false);
+      expect(alive5.isDead()).toBe(false);
+      expect(alive6.isDead()).toBe(false);
+      expect(alive7.isDead()).toBe(false);
     });
   });
 

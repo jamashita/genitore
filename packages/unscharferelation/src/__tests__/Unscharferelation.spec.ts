@@ -18,9 +18,9 @@ describe('Unscharferelation', () => {
 
     it('returns Present Unscharferelation when Present Unscharferelations given', async () => {
       const unscharferelations: Array<Unscharferelation<number>> = [
-        Unscharferelation.present<number>(0),
-        Unscharferelation.present<number>(1),
-        Unscharferelation.present<number>(2)
+        Unscharferelation.present(0),
+        Unscharferelation.present(1),
+        Unscharferelation.present(2)
       ];
 
       const heisenberg: Heisenberg<Array<number>> = await Unscharferelation.all<number>(unscharferelations).terminate();
@@ -42,12 +42,12 @@ describe('Unscharferelation', () => {
 
     it('returns Absent Unscharferelation sync Unscharferelations which first one is Absent given', async () => {
       const unscharferelations: Array<Unscharferelation<number>> = [
-        Unscharferelation.absent<number>(),
-        Unscharferelation.present<number>(1),
-        Unscharferelation.present<number>(2)
+        Unscharferelation.absent(),
+        Unscharferelation.present(1),
+        Unscharferelation.present(2)
       ];
 
-      const unscharferelation: Unscharferelation<Array<number>> = Unscharferelation.all<number>(unscharferelations);
+      const unscharferelation: Unscharferelation<Array<number>> = Unscharferelation.all(unscharferelations);
 
       const heisenberg: Heisenberg<Array<number>> = await unscharferelation.terminate();
 
@@ -59,12 +59,12 @@ describe('Unscharferelation', () => {
 
     it('returns Absent Unscharferelation with sync Unscharferelations which second one is Absent given', async () => {
       const unscharferelations: Array<Unscharferelation<number>> = [
-        Unscharferelation.present<number>(1),
-        Unscharferelation.absent<number>(),
-        Unscharferelation.present<number>(2)
+        Unscharferelation.present(1),
+        Unscharferelation.absent(),
+        Unscharferelation.present(2)
       ];
 
-      const unscharferelation: Unscharferelation<Array<number>> = Unscharferelation.all<number>(unscharferelations);
+      const unscharferelation: Unscharferelation<Array<number>> = Unscharferelation.all(unscharferelations);
 
       const heisenberg: Heisenberg<Array<number>> = await unscharferelation.terminate();
 
@@ -76,12 +76,12 @@ describe('Unscharferelation', () => {
 
     it('returns Absent Unscharferelation with sync Unscharferelations which last one is Absent given', async () => {
       const unscharferelations: Array<Unscharferelation<number>> = [
-        Unscharferelation.present<number>(0),
-        Unscharferelation.present<number>(1),
-        Unscharferelation.absent<number>()
+        Unscharferelation.present(0),
+        Unscharferelation.present(1),
+        Unscharferelation.absent()
       ];
 
-      const unscharferelation: Unscharferelation<Array<number>> = Unscharferelation.all<number>(unscharferelations);
+      const unscharferelation: Unscharferelation<Array<number>> = Unscharferelation.all(unscharferelations);
 
       const heisenberg: Heisenberg<Array<number>> = await unscharferelation.terminate();
 
@@ -95,14 +95,14 @@ describe('Unscharferelation', () => {
       const error: MockRuntimeError = new MockRuntimeError();
 
       const unscharferelations: Array<Unscharferelation<number>> = [
-        Unscharferelation.present<number>(0),
+        Unscharferelation.present(0),
         Unscharferelation.of((epoque: Epoque<number>) => {
           epoque.throw(error);
         }),
-        Unscharferelation.present<number>(2)
+        Unscharferelation.present(2)
       ];
 
-      const unscharferelation: Unscharferelation<Array<number>> = Unscharferelation.all<number>(unscharferelations);
+      const unscharferelation: Unscharferelation<Array<number>> = Unscharferelation.all(unscharferelations);
 
       const heisenberg: Heisenberg<Array<number>> = await unscharferelation.terminate();
 
@@ -116,14 +116,14 @@ describe('Unscharferelation', () => {
       const error: MockRuntimeError = new MockRuntimeError();
 
       const unscharferelations: Array<Unscharferelation<number>> = [
-        Unscharferelation.absent<number>(),
+        Unscharferelation.absent(),
         Unscharferelation.of((epoque: Epoque<number>) => {
           epoque.throw(error);
         }),
-        Unscharferelation.absent<number>()
+        Unscharferelation.absent()
       ];
 
-      const unscharferelation: Unscharferelation<Array<number>> = Unscharferelation.all<number>(unscharferelations);
+      const unscharferelation: Unscharferelation<Array<number>> = Unscharferelation.all(unscharferelations);
 
       const heisenberg: Heisenberg<Array<number>> = await unscharferelation.terminate();
 
@@ -135,12 +135,12 @@ describe('Unscharferelation', () => {
 
     it('returns Present Unscharferelation when async Present Unscharferelations given', async () => {
       const unscharferelations: Array<Unscharferelation<number>> = [
-        Unscharferelation.present<number>(Promise.resolve<number>(0)),
-        Unscharferelation.present<number>(Promise.resolve<number>(1)),
-        Unscharferelation.present<number>(Promise.resolve<number>(2))
+        Unscharferelation.present(Promise.resolve(0)),
+        Unscharferelation.present(Promise.resolve(1)),
+        Unscharferelation.present(Promise.resolve(2))
       ];
 
-      const heisenberg: Heisenberg<Array<number>> = await Unscharferelation.all<number>(unscharferelations).terminate();
+      const heisenberg: Heisenberg<Array<number>> = await Unscharferelation.all(unscharferelations).terminate();
 
       expect(heisenberg.isPresent()).toBe(true);
 
@@ -159,12 +159,12 @@ describe('Unscharferelation', () => {
 
     it('returns Absent Unscharferelation when async Unscharferelations which first one is Absent given', async () => {
       const unscharferelations: Array<Unscharferelation<number>> = [
-        Unscharferelation.absent<number>(Promise.resolve<void>(undefined)),
-        Unscharferelation.present<number>(Promise.resolve<number>(1)),
-        Unscharferelation.present<number>(Promise.resolve<number>(2))
+        Unscharferelation.absent(Promise.resolve(undefined)),
+        Unscharferelation.present(Promise.resolve(1)),
+        Unscharferelation.present(Promise.resolve(2))
       ];
 
-      const unscharferelation: Unscharferelation<Array<number>> = Unscharferelation.all<number>(unscharferelations);
+      const unscharferelation: Unscharferelation<Array<number>> = Unscharferelation.all(unscharferelations);
 
       const heisenberg: Heisenberg<Array<number>> = await unscharferelation.terminate();
 
@@ -176,12 +176,12 @@ describe('Unscharferelation', () => {
 
     it('returns Absent Unscharferelation when async Unscharferelations which second one is Absent given', async () => {
       const unscharferelations: Array<Unscharferelation<number>> = [
-        Unscharferelation.present<number>(Promise.resolve<number>(0)),
-        Unscharferelation.absent<number>(Promise.resolve<void>(undefined)),
-        Unscharferelation.present<number>(Promise.resolve<number>(2))
+        Unscharferelation.present(Promise.resolve(0)),
+        Unscharferelation.absent(Promise.resolve(undefined)),
+        Unscharferelation.present(Promise.resolve(2))
       ];
 
-      const unscharferelation: Unscharferelation<Array<number>> = Unscharferelation.all<number>(unscharferelations);
+      const unscharferelation: Unscharferelation<Array<number>> = Unscharferelation.all(unscharferelations);
 
       const heisenberg: Heisenberg<Array<number>> = await unscharferelation.terminate();
 
@@ -193,12 +193,12 @@ describe('Unscharferelation', () => {
 
     it('returns Absent Unscharferelation when async Unscharferelations which last one is Absent given', async () => {
       const unscharferelations: Array<Unscharferelation<number>> = [
-        Unscharferelation.present<number>(Promise.resolve<number>(0)),
-        Unscharferelation.present<number>(Promise.resolve<number>(1)),
-        Unscharferelation.absent<number>(Promise.resolve<void>(undefined))
+        Unscharferelation.present(Promise.resolve(0)),
+        Unscharferelation.present(Promise.resolve(1)),
+        Unscharferelation.absent(Promise.resolve<void>(undefined))
       ];
 
-      const unscharferelation: Unscharferelation<Array<number>> = Unscharferelation.all<number>(unscharferelations);
+      const unscharferelation: Unscharferelation<Array<number>> = Unscharferelation.all(unscharferelations);
 
       const heisenberg: Heisenberg<Array<number>> = await unscharferelation.terminate();
 
@@ -210,12 +210,12 @@ describe('Unscharferelation', () => {
 
     it('returns Lost Unscharferelation when async Unscharferelations which contains Lost given', async () => {
       const unscharferelations: Array<Unscharferelation<number>> = [
-        Unscharferelation.absent<number>(Promise.resolve<void>(undefined)),
-        Unscharferelation.absent<number>(Promise.resolve<void>(undefined)),
-        Unscharferelation.present<number>(Promise.resolve<number>(2))
+        Unscharferelation.absent(Promise.resolve(undefined)),
+        Unscharferelation.absent(Promise.resolve(undefined)),
+        Unscharferelation.present(Promise.resolve(2))
       ];
 
-      const unscharferelation: Unscharferelation<Array<number>> = Unscharferelation.all<number>(unscharferelations);
+      const unscharferelation: Unscharferelation<Array<number>> = Unscharferelation.all(unscharferelations);
 
       const heisenberg: Heisenberg<Array<number>> = await unscharferelation.terminate();
 
@@ -227,12 +227,12 @@ describe('Unscharferelation', () => {
 
     it('returns Lost Unscharferelation when async Unscharferelations which contains Lost given even if all of others are Absent', async () => {
       const unscharferelations: Array<Unscharferelation<number>> = [
-        Unscharferelation.absent<number>(Promise.resolve<void>(undefined)),
-        Unscharferelation.present<number>(Promise.resolve<number>(1)),
-        Unscharferelation.absent<number>(Promise.resolve<void>(undefined))
+        Unscharferelation.absent(Promise.resolve(undefined)),
+        Unscharferelation.present(Promise.resolve(1)),
+        Unscharferelation.absent(Promise.resolve(undefined))
       ];
 
-      const unscharferelation: Unscharferelation<Array<number>> = Unscharferelation.all<number>(unscharferelations);
+      const unscharferelation: Unscharferelation<Array<number>> = Unscharferelation.all(unscharferelations);
 
       const heisenberg: Heisenberg<Array<number>> = await unscharferelation.terminate();
 
@@ -246,14 +246,14 @@ describe('Unscharferelation', () => {
       const error: MockRuntimeError = new MockRuntimeError();
 
       const unscharferelations: Array<Unscharferelation<number>> = [
-        Unscharferelation.of<number>((epoque: Epoque<number>) => {
+        Unscharferelation.of((epoque: Epoque<number>) => {
           epoque.throw(error);
         }),
-        Unscharferelation.absent<number>(Promise.resolve<void>(undefined)),
-        Unscharferelation.present<number>(Promise.resolve<number>(2))
+        Unscharferelation.absent(Promise.resolve(undefined)),
+        Unscharferelation.present(Promise.resolve(2))
       ];
 
-      const unscharferelation: Unscharferelation<Array<number>> = Unscharferelation.all<number>(unscharferelations);
+      const unscharferelation: Unscharferelation<Array<number>> = Unscharferelation.all(unscharferelations);
 
       const heisenberg: Heisenberg<Array<number>> = await unscharferelation.terminate();
 
@@ -267,16 +267,16 @@ describe('Unscharferelation', () => {
       const error: MockRuntimeError = new MockRuntimeError();
 
       const unscharferelations: Array<Unscharferelation<number>> = [
-        Unscharferelation.absent<number>(Promise.resolve<void>(undefined)),
-        Unscharferelation.of<number>((epoque: Epoque<number>) => {
+        Unscharferelation.absent(Promise.resolve(undefined)),
+        Unscharferelation.of((epoque: Epoque<number>) => {
           setImmediate(() => {
             epoque.throw(error);
           });
         }),
-        Unscharferelation.present<number>(Promise.resolve<number>(2))
+        Unscharferelation.present(Promise.resolve(2))
       ];
 
-      const unscharferelation: Unscharferelation<Array<number>> = Unscharferelation.all<number>(unscharferelations);
+      const unscharferelation: Unscharferelation<Array<number>> = Unscharferelation.all(unscharferelations);
 
       const heisenberg: Heisenberg<Array<number>> = await unscharferelation.terminate();
 
@@ -289,12 +289,12 @@ describe('Unscharferelation', () => {
 
   describe('anyway', () => {
     it('returns Present Heisenbergs', async () => {
-      const unscharferelation1: Unscharferelation<number> = Unscharferelation.present<number>(-1);
-      const unscharferelation2: Unscharferelation<number> = Unscharferelation.present<number>(0);
-      const unscharferelation3: Unscharferelation<number> = Unscharferelation.present<number>(1);
+      const unscharferelation1: Unscharferelation<number> = Unscharferelation.present(-1);
+      const unscharferelation2: Unscharferelation<number> = Unscharferelation.present(0);
+      const unscharferelation3: Unscharferelation<number> = Unscharferelation.present(1);
       const unscharferelations: Array<Unscharferelation<number>> = [unscharferelation1, unscharferelation2, unscharferelation3];
 
-      const heisenbergs: Array<Heisenberg<number>> = await Unscharferelation.anyway<number>(unscharferelations);
+      const heisenbergs: Array<Heisenberg<number>> = await Unscharferelation.anyway(unscharferelations);
 
       expect(heisenbergs).toHaveLength(unscharferelations.length);
       for (let i: number = 0; i < unscharferelations.length; i++) {
@@ -308,12 +308,12 @@ describe('Unscharferelation', () => {
     });
 
     it('returns Absent Heisenbergs', async () => {
-      const unscharferelation1: Unscharferelation<number> = Unscharferelation.absent<number>();
-      const unscharferelation2: Unscharferelation<number> = Unscharferelation.absent<number>();
-      const unscharferelation3: Unscharferelation<number> = Unscharferelation.absent<number>();
+      const unscharferelation1: Unscharferelation<number> = Unscharferelation.absent();
+      const unscharferelation2: Unscharferelation<number> = Unscharferelation.absent();
+      const unscharferelation3: Unscharferelation<number> = Unscharferelation.absent();
       const unscharferelations: Array<Unscharferelation<number>> = [unscharferelation1, unscharferelation2, unscharferelation3];
 
-      const heisenbergs: Array<Heisenberg<number>> = await Unscharferelation.anyway<number>(unscharferelations);
+      const heisenbergs: Array<Heisenberg<number>> = await Unscharferelation.anyway(unscharferelations);
 
       expect(heisenbergs).toHaveLength(unscharferelations.length);
       for (let i: number = 0; i < unscharferelations.length; i++) {
@@ -335,18 +335,18 @@ describe('Unscharferelation', () => {
         NaN
       ];
 
-      const unscharferelation1: Unscharferelation<number> = Unscharferelation.of<number>((epoque: Epoque<number>) => {
+      const unscharferelation1: Unscharferelation<number> = Unscharferelation.of((epoque: Epoque<number>) => {
         epoque.throw(null);
       });
-      const unscharferelation2: Unscharferelation<number> = Unscharferelation.of<number>((epoque: Epoque<number>) => {
+      const unscharferelation2: Unscharferelation<number> = Unscharferelation.of((epoque: Epoque<number>) => {
         epoque.throw(undefined);
       });
-      const unscharferelation3: Unscharferelation<number> = Unscharferelation.of<number>((epoque: Epoque<number>) => {
+      const unscharferelation3: Unscharferelation<number> = Unscharferelation.of((epoque: Epoque<number>) => {
         epoque.throw(NaN);
       });
       const unscharferelations: Array<Unscharferelation<number>> = [unscharferelation1, unscharferelation2, unscharferelation3];
 
-      const heisenbergs: Array<Heisenberg<number>> = await Unscharferelation.anyway<number>(unscharferelations);
+      const heisenbergs: Array<Heisenberg<number>> = await Unscharferelation.anyway(unscharferelations);
 
       expect(heisenbergs).toHaveLength(unscharferelations.length);
       for (let i: number = 0; i < unscharferelations.length; i++) {
@@ -362,14 +362,14 @@ describe('Unscharferelation', () => {
     });
 
     it('returns All Settled Heisenbergs', async () => {
-      const unscharferelation1: Unscharferelation<number> = Unscharferelation.of<number>((epoque: Epoque<number>) => {
+      const unscharferelation1: Unscharferelation<number> = Unscharferelation.of((epoque: Epoque<number>) => {
         epoque.throw(null);
       });
-      const unscharferelation2: Unscharferelation<number> = Unscharferelation.absent<number>();
-      const unscharferelation3: Unscharferelation<number> = Unscharferelation.present<number>(1);
+      const unscharferelation2: Unscharferelation<number> = Unscharferelation.absent();
+      const unscharferelation3: Unscharferelation<number> = Unscharferelation.present(1);
       const unscharferelations: Array<Unscharferelation<number>> = [unscharferelation1, unscharferelation2, unscharferelation3];
 
-      const heisenbergs: Array<Heisenberg<number>> = await Unscharferelation.anyway<number>(unscharferelations);
+      const heisenbergs: Array<Heisenberg<number>> = await Unscharferelation.anyway(unscharferelations);
 
       expect(heisenbergs).toHaveLength(unscharferelations.length);
       for (let i: number = 0; i < unscharferelations.length; i++) {
@@ -449,9 +449,9 @@ describe('Unscharferelation', () => {
   describe('ofHeisenberg', () => {
     it('constructs from Present Unscharferelation', async () => {
       const value: number = 2;
-      const present: Present<number> = Present.of<number>(value);
+      const present: Present<number> = Present.of(value);
 
-      const unscharferelation: Unscharferelation<number> = Unscharferelation.ofHeisenberg<number>(present);
+      const unscharferelation: Unscharferelation<number> = Unscharferelation.ofHeisenberg(present);
 
       const heisenberg: Heisenberg<number> = await unscharferelation.terminate();
 
@@ -461,9 +461,9 @@ describe('Unscharferelation', () => {
     });
 
     it('constructs from Absent Unscharferelation', async () => {
-      const absent: Absent<number> = Absent.of<number>();
+      const absent: Absent<number> = Absent.of();
 
-      const unscharferelation: Unscharferelation<number> = Unscharferelation.ofHeisenberg<number>(absent);
+      const unscharferelation: Unscharferelation<number> = Unscharferelation.ofHeisenberg(absent);
 
       const heisenberg: Heisenberg<number> = await unscharferelation.terminate();
 
@@ -471,9 +471,9 @@ describe('Unscharferelation', () => {
     });
 
     it('constructs from Lost Unscharferelation', async () => {
-      const lost: Lost<number> = Lost.of<number>(null);
+      const lost: Lost<number> = Lost.of(null);
 
-      const unscharferelation: Unscharferelation<number> = Unscharferelation.ofHeisenberg<number>(lost);
+      const unscharferelation: Unscharferelation<number> = Unscharferelation.ofHeisenberg(lost);
 
       const heisenberg: Heisenberg<number> = await unscharferelation.terminate();
 
@@ -485,9 +485,9 @@ describe('Unscharferelation', () => {
     });
 
     it('constructs from Uncertain Unscharferelation', async () => {
-      const uncertain: Uncertain<number> = Uncertain.of<number>();
+      const uncertain: Uncertain<number> = Uncertain.of();
 
-      const unscharferelation: Unscharferelation<number> = Unscharferelation.ofHeisenberg<number>(uncertain);
+      const unscharferelation: Unscharferelation<number> = Unscharferelation.ofHeisenberg(uncertain);
 
       const heisenberg: Heisenberg<number> = await unscharferelation.terminate();
 
@@ -502,7 +502,7 @@ describe('Unscharferelation', () => {
     it('constructs from sync value', async () => {
       const value: number = -8;
 
-      const present: Unscharferelation<number> = Unscharferelation.present<number>(value);
+      const present: Unscharferelation<number> = Unscharferelation.present(value);
       const heisenberg: Heisenberg<number> = await present.terminate();
 
       expect(heisenberg.isPresent()).toBe(true);
@@ -512,7 +512,7 @@ describe('Unscharferelation', () => {
     it('constructs from async value', async () => {
       const value: number = -8;
 
-      const present: Unscharferelation<number> = Unscharferelation.present<number>(Promise.resolve<number>(value));
+      const present: Unscharferelation<number> = Unscharferelation.present(Promise.resolve(value));
       const heisenberg: Heisenberg<number> = await present.terminate();
 
       expect(heisenberg.isPresent()).toBe(true);
@@ -522,7 +522,7 @@ describe('Unscharferelation', () => {
     it('returns Lost Unscharferelation if rejected Promise given', async () => {
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const present: Unscharferelation<number> = Unscharferelation.present<number>(Promise.reject<number>(error));
+      const present: Unscharferelation<number> = Unscharferelation.present(Promise.reject<number>(error));
       const heisenberg: Heisenberg<number> = await present.terminate();
 
       expect(heisenberg.isLost()).toBe(true);
@@ -534,7 +534,7 @@ describe('Unscharferelation', () => {
 
   describe('absent', () => {
     it('constructs from sync null or undefined', async () => {
-      const absent: Unscharferelation<number> = Unscharferelation.absent<number>();
+      const absent: Unscharferelation<number> = Unscharferelation.absent();
       const heisenberg: Heisenberg<number> = await absent.terminate();
 
       expect(heisenberg.isAbsent()).toBe(true);
@@ -544,7 +544,7 @@ describe('Unscharferelation', () => {
     });
 
     it('constructs from async null or undefined', async () => {
-      const absent: Unscharferelation<number> = Unscharferelation.absent<number>(Promise.resolve<null>(null));
+      const absent: Unscharferelation<number> = Unscharferelation.absent(Promise.resolve(null));
       const heisenberg: Heisenberg<number> = await absent.terminate();
 
       expect(heisenberg.isAbsent()).toBe(true);
@@ -556,7 +556,7 @@ describe('Unscharferelation', () => {
     it('returns Lost Unscharferelation if an unexpected rejected Promise given', async () => {
       const error: MockRuntimeError = new MockRuntimeError();
 
-      const absent: Unscharferelation<number> = Unscharferelation.absent<number>(Promise.reject<null>(error));
+      const absent: Unscharferelation<number> = Unscharferelation.absent(Promise.reject(error));
       const heisenberg: Heisenberg<number> = await absent.terminate();
 
       expect(heisenberg.isLost()).toBe(true);
@@ -568,9 +568,9 @@ describe('Unscharferelation', () => {
 
   describe('toString', () => {
     it('returns its retaining Heisenberg string', () => {
-      const unscharferelation1: Unscharferelation<number> = Unscharferelation.present<number>(-1);
-      const unscharferelation2: Unscharferelation<number> = Unscharferelation.absent<number>();
-      const unscharferelation3: Unscharferelation<number> = Unscharferelation.of<number>(
+      const unscharferelation1: Unscharferelation<number> = Unscharferelation.present(-1);
+      const unscharferelation2: Unscharferelation<number> = Unscharferelation.absent();
+      const unscharferelation3: Unscharferelation<number> = Unscharferelation.of(
         (epoque: Epoque<number>) => {
           epoque.throw(null);
         }
@@ -584,13 +584,13 @@ describe('Unscharferelation', () => {
 
   describe('get', () => {
     it('delegates inner Unscharferelation', async () => {
-      const mock: MockUnscharferelation<number> = new MockUnscharferelation<number>();
+      const mock: MockUnscharferelation<number> = new MockUnscharferelation();
 
       const fn: jest.Mock = jest.fn();
 
       mock.get = fn;
 
-      const unscharferelation: Unscharferelation<number> = Unscharferelation.ofUnscharferelation<number>(mock);
+      const unscharferelation: Unscharferelation<number> = Unscharferelation.ofUnscharferelation(mock);
 
       await unscharferelation.get();
 
@@ -600,13 +600,13 @@ describe('Unscharferelation', () => {
 
   describe('terminate', () => {
     it('delegates inner Unscharferelation', async () => {
-      const mock: MockUnscharferelation<number> = new MockUnscharferelation<number>();
+      const mock: MockUnscharferelation<number> = new MockUnscharferelation();
 
       const fn: jest.Mock = jest.fn();
 
       mock.terminate = fn;
 
-      const unscharferelation: Unscharferelation<number> = Unscharferelation.ofUnscharferelation<number>(mock);
+      const unscharferelation: Unscharferelation<number> = Unscharferelation.ofUnscharferelation(mock);
 
       await unscharferelation.terminate();
 
@@ -616,13 +616,13 @@ describe('Unscharferelation', () => {
 
   describe('map', () => {
     it('delegates inner Unscharferelation', () => {
-      const mock: MockUnscharferelation<number> = new MockUnscharferelation<number>();
+      const mock: MockUnscharferelation<number> = new MockUnscharferelation();
 
       const fn: jest.Mock = jest.fn();
 
       mock.map = fn;
 
-      const unscharferelation: Unscharferelation<number> = Unscharferelation.ofUnscharferelation<number>(mock);
+      const unscharferelation: Unscharferelation<number> = Unscharferelation.ofUnscharferelation(mock);
 
       unscharferelation.map<number>((v: number) => {
         return v + 2;
@@ -634,13 +634,13 @@ describe('Unscharferelation', () => {
 
   describe('recover', () => {
     it('delegates inner Unscharferelation', () => {
-      const mock: MockUnscharferelation<number> = new MockUnscharferelation<number>();
+      const mock: MockUnscharferelation<number> = new MockUnscharferelation();
 
       const fn: jest.Mock = jest.fn();
 
       mock.recover = fn;
 
-      const unscharferelation: Unscharferelation<number> = Unscharferelation.ofUnscharferelation<number>(mock);
+      const unscharferelation: Unscharferelation<number> = Unscharferelation.ofUnscharferelation(mock);
 
       unscharferelation.recover(() => {
         return 2;
@@ -652,13 +652,13 @@ describe('Unscharferelation', () => {
 
   describe('ifPresent', () => {
     it('delegates inner Unscharferelation', () => {
-      const mock: MockUnscharferelation<number> = new MockUnscharferelation<number>();
+      const mock: MockUnscharferelation<number> = new MockUnscharferelation();
 
       const fn: jest.Mock = jest.fn();
 
       mock.ifPresent = fn;
 
-      const unscharferelation: Unscharferelation<number> = Unscharferelation.ofUnscharferelation<number>(mock);
+      const unscharferelation: Unscharferelation<number> = Unscharferelation.ofUnscharferelation(mock);
 
       unscharferelation.ifPresent(() => {
         // NOOP
@@ -670,13 +670,13 @@ describe('Unscharferelation', () => {
 
   describe('ifAbsent', () => {
     it('delegates inner Unscharferelation', () => {
-      const mock: MockUnscharferelation<number> = new MockUnscharferelation<number>();
+      const mock: MockUnscharferelation<number> = new MockUnscharferelation();
 
       const fn: jest.Mock = jest.fn();
 
       mock.ifAbsent = fn;
 
-      const unscharferelation: Unscharferelation<number> = Unscharferelation.ofUnscharferelation<number>(mock);
+      const unscharferelation: Unscharferelation<number> = Unscharferelation.ofUnscharferelation(mock);
 
       unscharferelation.ifAbsent(() => {
         // NOOP
@@ -687,13 +687,13 @@ describe('Unscharferelation', () => {
   });
   describe('ifLost', () => {
     it('delegates inner Unscharferelation', () => {
-      const mock: MockUnscharferelation<number> = new MockUnscharferelation<number>();
+      const mock: MockUnscharferelation<number> = new MockUnscharferelation();
 
       const fn: jest.Mock = jest.fn();
 
       mock.ifLost = fn;
 
-      const unscharferelation: Unscharferelation<number> = Unscharferelation.ofUnscharferelation<number>(mock);
+      const unscharferelation: Unscharferelation<number> = Unscharferelation.ofUnscharferelation(mock);
 
       unscharferelation.ifLost(() => {
         // NOOP
@@ -705,13 +705,13 @@ describe('Unscharferelation', () => {
 
   describe('pass', () => {
     it('delegates inner Unscharferelation', () => {
-      const mock: MockUnscharferelation<number> = new MockUnscharferelation<number>();
+      const mock: MockUnscharferelation<number> = new MockUnscharferelation();
 
       const fn: jest.Mock = jest.fn();
 
       mock.pass = fn;
 
-      const unscharferelation: Unscharferelation<number> = Unscharferelation.ofUnscharferelation<number>(mock);
+      const unscharferelation: Unscharferelation<number> = Unscharferelation.ofUnscharferelation(mock);
 
       unscharferelation.pass(
         () => {
@@ -731,13 +731,13 @@ describe('Unscharferelation', () => {
 
   describe('peek', () => {
     it('delegates inner Unscharferelation', () => {
-      const mock: MockUnscharferelation<number> = new MockUnscharferelation<number>();
+      const mock: MockUnscharferelation<number> = new MockUnscharferelation();
 
       const fn: jest.Mock = jest.fn();
 
       mock.peek = fn;
 
-      const unscharferelation: Unscharferelation<number> = Unscharferelation.ofUnscharferelation<number>(mock);
+      const unscharferelation: Unscharferelation<number> = Unscharferelation.ofUnscharferelation(mock);
 
       unscharferelation.peek(() => {
         // NOOP

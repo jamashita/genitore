@@ -1,5 +1,5 @@
-import { Kind, Supplier, Suspicious } from '@jamashita/anden-type';
-import { Matter } from '@jamashita/genitore-heisenberg';
+import { Kind, Supplier } from '@jamashita/anden-type';
+import { Matter, Nihil } from '@jamashita/genitore-heisenberg';
 import { RecoveryPlan } from '@jamashita/genitore-plan';
 import { Epoque } from '../Epoque';
 import { isUnscharferelation, IUnscharferelation, UReturnType } from '../IUnscharferelation';
@@ -12,7 +12,7 @@ export class AbsentPlan<P> implements RecoveryPlan<void> {
     mapper: Supplier<UReturnType<P>>,
     epoque: Epoque<P>
   ): AbsentPlan<P> {
-    return new AbsentPlan<P>(mapper, epoque);
+    return new AbsentPlan(mapper, epoque);
   }
 
   protected constructor(
@@ -23,8 +23,8 @@ export class AbsentPlan<P> implements RecoveryPlan<void> {
     this.epoque = epoque;
   }
 
-  private forOther(v: Suspicious<Matter<P>>): unknown {
-    if (Kind.isUndefined(v) || Kind.isNull(v)) {
+  private forOther(v: Nihil | P): unknown {
+    if (Kind.isNone(v)) {
       return this.epoque.decline();
     }
 
@@ -52,9 +52,9 @@ export class AbsentPlan<P> implements RecoveryPlan<void> {
       if (isUnscharferelation(mapped)) {
         return this.forUnscharferelation(mapped);
       }
-      if (Kind.isPromiseLike<IUnscharferelation<P> | Suspicious<Matter<P>>>(mapped)) {
-        return mapped.then<unknown, unknown>(
-          (v: IUnscharferelation<P> | Suspicious<Matter<P>>) => {
+      if (Kind.isPromiseLike<IUnscharferelation<P> | Nihil | P>(mapped)) {
+        return mapped.then(
+          (v: IUnscharferelation<P> | Nihil | P) => {
             if (isUnscharferelation(v)) {
               return this.forUnscharferelation(v);
             }

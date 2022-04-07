@@ -74,14 +74,14 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      await unscharferelation.map<number>((v: number) => {
+      await unscharferelation.map((v: number) => {
         fn1();
         expect(v).toBe(value);
 
         return v + 4;
       }).terminate();
 
-      await unscharferelation.map<number>((v: number) => {
+      await unscharferelation.map((v: number) => {
         fn2();
         expect(v).toBe(value);
 
@@ -132,13 +132,13 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      await unscharferelation.recover<number>(() => {
+      await unscharferelation.recover(() => {
         fn1();
 
         return 4;
       }).terminate();
 
-      await unscharferelation.recover<number>(() => {
+      await unscharferelation.recover(() => {
         fn2();
 
         return 3;
@@ -197,25 +197,25 @@ describe('UnscharferelationInternal', () => {
         }
       );
 
-      await unscharferelation.map<number>(() => {
+      await unscharferelation.map(() => {
         fn1();
 
         return 4;
       }).terminate();
 
-      await unscharferelation.recover<number>(() => {
+      await unscharferelation.recover(() => {
         fn2();
 
         return 3;
       }).terminate();
 
-      await unscharferelation.map<number>(() => {
+      await unscharferelation.map(() => {
         fn3();
 
         return 2;
       }).terminate();
 
-      await unscharferelation.recover<number>(() => {
+      await unscharferelation.recover(() => {
         fn4();
 
         return 1;
@@ -297,17 +297,17 @@ describe('UnscharferelationInternal', () => {
       const fn2: jest.Mock = jest.fn();
       const fn3: jest.Mock = jest.fn();
 
-      await unscharferelation.map<number>((v: number) => {
+      await unscharferelation.map((v: number) => {
         fn1();
         expect(v).toBe(value);
 
         return v + 1;
-      }).map<number>((v: number) => {
+      }).map((v: number) => {
         fn2();
         expect(v).toBe(value + 1);
 
         return v + 1;
-      }).map<number>((v: number) => {
+      }).map((v: number) => {
         fn3();
         expect(v).toBe(value + 2);
 
@@ -332,21 +332,21 @@ describe('UnscharferelationInternal', () => {
       const fn2: jest.Mock = jest.fn();
       const fn3: jest.Mock = jest.fn();
 
-      await unscharferelation.map<number>((v: number) => {
+      await unscharferelation.map((v: number) => {
         fn1();
         expect(v).toBe(value);
 
-        return Promise.resolve<number>(v + 1);
-      }).map<number>((v: number) => {
+        return Promise.resolve(v + 1);
+      }).map((v: number) => {
         fn2();
         expect(v).toBe(value + 1);
 
-        return Promise.resolve<number>(v + 1);
-      }).map<number>((v: number) => {
+        return Promise.resolve(v + 1);
+      }).map((v: number) => {
         fn3();
         expect(v).toBe(value + 2);
 
-        return Promise.resolve<number>(v + 1);
+        return Promise.resolve(v + 1);
       }).terminate();
 
       expect(fn1.mock.calls).toHaveLength(1);
@@ -379,17 +379,17 @@ describe('UnscharferelationInternal', () => {
       const fn2: jest.Mock = jest.fn();
       const fn3: jest.Mock = jest.fn();
 
-      await unscharferelation1.map<number>((v: number) => {
+      await unscharferelation1.map((v: number) => {
         fn1();
         expect(v).toBe(value1);
 
         return unscharferelation2;
-      }).map<number>((v: number) => {
+      }).map((v: number) => {
         fn2();
         expect(v).toBe(value2);
 
         return unscharferelation3;
-      }).map<number>((v: number) => {
+      }).map((v: number) => {
         fn3();
         expect(v).toBe(value3);
 
@@ -426,21 +426,21 @@ describe('UnscharferelationInternal', () => {
       const fn2: jest.Mock = jest.fn();
       const fn3: jest.Mock = jest.fn();
 
-      await unscharferelation1.map<number>((v: number) => {
+      await unscharferelation1.map((v: number) => {
         fn1();
         expect(v).toBe(value1);
 
-        return Promise.resolve<UnscharferelationInternal<number>>(unscharferelation2);
-      }).map<number>((v: number) => {
+        return Promise.resolve(unscharferelation2);
+      }).map((v: number) => {
         fn2();
         expect(v).toBe(value2);
 
-        return Promise.resolve<UnscharferelationInternal<number>>(unscharferelation3);
-      }).map<number>((v: number) => {
+        return Promise.resolve(unscharferelation3);
+      }).map((v: number) => {
         fn3();
         expect(v).toBe(value3);
 
-        return Promise.resolve<UnscharferelationInternal<number>>(unscharferelation3);
+        return Promise.resolve(unscharferelation3);
       }).terminate();
 
       expect(fn1.mock.calls).toHaveLength(1);
@@ -461,16 +461,16 @@ describe('UnscharferelationInternal', () => {
       const fn2: jest.Mock = jest.fn();
       const fn3: jest.Mock = jest.fn();
 
-      await unscharferelation.map<number>((v: number) => {
+      await unscharferelation.map((v: number) => {
         fn1();
         expect(v).toBe(value);
 
         return null;
-      }).map<number>(() => {
+      }).map(() => {
         fn2();
 
         return null;
-      }).map<number>(() => {
+      }).map(() => {
         fn3();
 
         return null;
@@ -494,19 +494,19 @@ describe('UnscharferelationInternal', () => {
       const fn2: jest.Mock = jest.fn();
       const fn3: jest.Mock = jest.fn();
 
-      await unscharferelation.map<number>((v: number) => {
+      await unscharferelation.map((v: number) => {
         fn1();
         expect(v).toBe(value);
 
-        return Promise.resolve<null>(null);
-      }).map<number>(() => {
+        return Promise.resolve(null);
+      }).map(() => {
         fn2();
 
-        return Promise.resolve<null>(null);
-      }).map<number>(() => {
+        return Promise.resolve(null);
+      }).map(() => {
         fn3();
 
-        return Promise.resolve<null>(null);
+        return Promise.resolve(null);
       }).terminate();
 
       expect(fn1.mock.calls).toHaveLength(1);
@@ -537,16 +537,16 @@ describe('UnscharferelationInternal', () => {
       const fn2: jest.Mock = jest.fn();
       const fn3: jest.Mock = jest.fn();
 
-      await unscharferelation1.map<number>((v: number) => {
+      await unscharferelation1.map((v: number) => {
         fn1();
         expect(v).toBe(value);
 
         return unscharferelation2;
-      }).map<number>(() => {
+      }).map(() => {
         fn2();
 
         return unscharferelation3;
-      }).map<number>(() => {
+      }).map(() => {
         fn3();
 
         return unscharferelation3;
@@ -580,19 +580,19 @@ describe('UnscharferelationInternal', () => {
       const fn2: jest.Mock = jest.fn();
       const fn3: jest.Mock = jest.fn();
 
-      await unscharferelation1.map<number>((v: number) => {
+      await unscharferelation1.map((v: number) => {
         fn1();
         expect(v).toBe(value);
 
-        return Promise.resolve<UnscharferelationInternal<number>>(unscharferelation2);
-      }).map<number>(() => {
+        return Promise.resolve(unscharferelation2);
+      }).map(() => {
         fn2();
 
-        return Promise.resolve<UnscharferelationInternal<number>>(unscharferelation3);
-      }).map<number>(() => {
+        return Promise.resolve(unscharferelation3);
+      }).map(() => {
         fn3();
 
-        return Promise.resolve<UnscharferelationInternal<number>>(unscharferelation3);
+        return Promise.resolve(unscharferelation3);
       }).terminate();
 
       expect(fn1.mock.calls).toHaveLength(1);
@@ -615,20 +615,20 @@ describe('UnscharferelationInternal', () => {
       const fn3: jest.Mock = jest.fn();
       const fn4: jest.Mock = jest.fn();
 
-      await unscharferelation.map<number>((v: number) => {
+      await unscharferelation.map((v: number) => {
         fn1();
         expect(v).toBe(value);
 
         throw error;
-      }).map<number>(() => {
+      }).map(() => {
         fn2();
 
         throw error;
-      }).map<number>(() => {
+      }).map(() => {
         fn3();
 
         throw error;
-      }).recover<number>(() => {
+      }).recover(() => {
         fn4();
 
         throw error;
@@ -655,23 +655,23 @@ describe('UnscharferelationInternal', () => {
       const fn3: jest.Mock = jest.fn();
       const fn4: jest.Mock = jest.fn();
 
-      await unscharferelation.map<number>((v: number) => {
+      await unscharferelation.map((v: number) => {
         fn1();
         expect(v).toBe(value);
 
-        return Promise.reject<null>(error);
-      }).map<number>(() => {
+        return Promise.reject(error);
+      }).map(() => {
         fn2();
 
-        return Promise.reject<null>(error);
-      }).map<number>(() => {
+        return Promise.reject(error);
+      }).map(() => {
         fn3();
 
-        return Promise.reject<null>(error);
-      }).recover<number>(() => {
+        return Promise.reject(error);
+      }).recover(() => {
         fn4();
 
-        return Promise.reject<null>(error);
+        return Promise.reject(error);
       }).terminate();
 
       expect(fn1.mock.calls).toHaveLength(1);
@@ -712,20 +712,20 @@ describe('UnscharferelationInternal', () => {
       const fn3: jest.Mock = jest.fn();
       const fn4: jest.Mock = jest.fn();
 
-      await unscharferelation1.map<number>((v: number) => {
+      await unscharferelation1.map((v: number) => {
         fn1();
         expect(v).toBe(value);
 
         return unscharferelation2;
-      }).map<number>(() => {
+      }).map(() => {
         fn2();
 
         return unscharferelation3;
-      }).map<number>(() => {
+      }).map(() => {
         fn3();
 
         return unscharferelation4;
-      }).recover<number>(() => {
+      }).recover(() => {
         fn4();
 
         return unscharferelation4;
@@ -756,17 +756,17 @@ describe('UnscharferelationInternal', () => {
       const fn2: jest.Mock = jest.fn();
       const fn3: jest.Mock = jest.fn();
 
-      await unscharferelation1.map<number>((v: number) => {
+      await unscharferelation1.map((v: number) => {
         fn1();
         expect(v).toBe(value1);
 
         return unscharferelation2;
-      }).map<number>((v: number) => {
+      }).map((v: number) => {
         fn2();
         expect(v).toBe(value2);
 
         return unscharferelation2;
-      }).map<number>((v: number) => {
+      }).map((v: number) => {
         fn3();
         expect(v).toBe(value2);
 
@@ -797,17 +797,17 @@ describe('UnscharferelationInternal', () => {
       const fn2: jest.Mock = jest.fn();
       const fn3: jest.Mock = jest.fn();
 
-      await unscharferelation1.map<number>((v: number) => {
+      await unscharferelation1.map((v: number) => {
         fn1();
         expect(v).toBe(value1);
 
         return unscharferelation2;
-      }).map<number>((v: number) => {
+      }).map((v: number) => {
         fn2();
         expect(v).toBe(value2);
 
         return unscharferelation2;
-      }).map<number>((v: number) => {
+      }).map((v: number) => {
         fn3();
         expect(v).toBe(value2);
 
@@ -837,16 +837,16 @@ describe('UnscharferelationInternal', () => {
       const fn2: jest.Mock = jest.fn();
       const fn3: jest.Mock = jest.fn();
 
-      await unscharferelation1.map<number>((v: number) => {
+      await unscharferelation1.map((v: number) => {
         fn1();
         expect(v).toBe(value);
 
         return unscharferelation2;
-      }).recover<number>(() => {
+      }).recover(() => {
         fn2();
 
         return unscharferelation2;
-      }).recover<number>(() => {
+      }).recover(() => {
         fn3();
 
         return unscharferelation2;
@@ -876,16 +876,16 @@ describe('UnscharferelationInternal', () => {
       const fn2: jest.Mock = jest.fn();
       const fn3: jest.Mock = jest.fn();
 
-      await unscharferelation1.map<number>((v: number) => {
+      await unscharferelation1.map((v: number) => {
         fn1();
         expect(v).toBe(value);
 
         return unscharferelation2;
-      }).recover<number>(() => {
+      }).recover(() => {
         fn2();
 
         return unscharferelation2;
-      }).map<number>(() => {
+      }).map(() => {
         fn3();
 
         return unscharferelation2;
@@ -911,15 +911,15 @@ describe('UnscharferelationInternal', () => {
       const fn2: jest.Mock = jest.fn();
       const fn3: jest.Mock = jest.fn();
 
-      await unscharferelation.map<number>((v: number) => {
+      await unscharferelation.map((v: number) => {
         fn1();
 
         return v + 1;
-      }).recover<number>(() => {
+      }).recover(() => {
         fn2();
 
         return value + 23;
-      }).map<number>((v: number) => {
+      }).map((v: number) => {
         fn3();
         expect(v).toBe(value + 23);
 
@@ -944,19 +944,19 @@ describe('UnscharferelationInternal', () => {
       const fn2: jest.Mock = jest.fn();
       const fn3: jest.Mock = jest.fn();
 
-      await unscharferelation.map<number>((v: number) => {
+      await unscharferelation.map((v: number) => {
         fn1();
 
-        return Promise.resolve<number>(v + 23);
-      }).recover<number>(() => {
+        return Promise.resolve(v + 23);
+      }).recover(() => {
         fn2();
 
-        return Promise.resolve<number>(value + 23);
-      }).map<number>((v: number) => {
+        return Promise.resolve(value + 23);
+      }).map((v: number) => {
         fn3();
         expect(v).toBe(value + 23);
 
-        return Promise.resolve<number>(value + 23);
+        return Promise.resolve(value + 23);
       }).terminate();
 
       expect(fn1.mock.calls).toHaveLength(0);
@@ -988,15 +988,15 @@ describe('UnscharferelationInternal', () => {
       const fn2: jest.Mock = jest.fn();
       const fn3: jest.Mock = jest.fn();
 
-      await unscharferelation1.map<number>(() => {
+      await unscharferelation1.map(() => {
         fn1();
 
         return unscharferelation2;
-      }).recover<number>(() => {
+      }).recover(() => {
         fn2();
 
         return unscharferelation3;
-      }).map<number>((v: number) => {
+      }).map((v: number) => {
         fn3();
         expect(v).toBe(value2);
 
@@ -1032,19 +1032,19 @@ describe('UnscharferelationInternal', () => {
       const fn2: jest.Mock = jest.fn();
       const fn3: jest.Mock = jest.fn();
 
-      await unscharferelation1.map<number>(() => {
+      await unscharferelation1.map(() => {
         fn1();
 
-        return Promise.resolve<UnscharferelationInternal<number>>(unscharferelation2);
-      }).recover<number>(() => {
+        return Promise.resolve(unscharferelation2);
+      }).recover(() => {
         fn2();
 
-        return Promise.resolve<UnscharferelationInternal<number>>(unscharferelation3);
-      }).map<number>((v: number) => {
+        return Promise.resolve(unscharferelation3);
+      }).map((v: number) => {
         fn3();
         expect(v).toBe(value2);
 
-        return Promise.resolve<UnscharferelationInternal<number>>(unscharferelation3);
+        return Promise.resolve(unscharferelation3);
       }).terminate();
 
       expect(fn1.mock.calls).toHaveLength(0);
@@ -1065,15 +1065,15 @@ describe('UnscharferelationInternal', () => {
       const fn2: jest.Mock = jest.fn();
       const fn3: jest.Mock = jest.fn();
 
-      await unscharferelation.recover<number>(() => {
+      await unscharferelation.recover(() => {
         fn1();
 
         return null;
-      }).recover<number>(() => {
+      }).recover(() => {
         fn2();
 
         return value + 23;
-      }).map<number>((v: number) => {
+      }).map((v: number) => {
         fn3();
         expect(v).toBe(value + 23);
 
@@ -1098,15 +1098,15 @@ describe('UnscharferelationInternal', () => {
       const fn2: jest.Mock = jest.fn();
       const fn3: jest.Mock = jest.fn();
 
-      await unscharferelation.recover<number>(() => {
+      await unscharferelation.recover(() => {
         fn1();
 
-        return Promise.resolve<null>(null);
-      }).recover<number>(() => {
+        return Promise.resolve(null);
+      }).recover(() => {
         fn2();
 
         return value + 23;
-      }).map<number>((v: number) => {
+      }).map((v: number) => {
         fn3();
         expect(v).toBe(value + 23);
 
@@ -1141,16 +1141,16 @@ describe('UnscharferelationInternal', () => {
       const fn2: jest.Mock = jest.fn();
       const fn3: jest.Mock = jest.fn();
 
-      await unscharferelation1.map<number>((v: number) => {
+      await unscharferelation1.map((v: number) => {
         fn1();
         expect(v).toBe(value);
 
         return unscharferelation2;
-      }).recover<number>(() => {
+      }).recover(() => {
         fn2();
 
         return unscharferelation3;
-      }).map<number>(() => {
+      }).map(() => {
         fn3();
 
         return unscharferelation3;
@@ -1184,19 +1184,19 @@ describe('UnscharferelationInternal', () => {
       const fn2: jest.Mock = jest.fn();
       const fn3: jest.Mock = jest.fn();
 
-      await unscharferelation1.map<number>((v: number) => {
+      await unscharferelation1.map((v: number) => {
         fn1();
         expect(v).toBe(value);
 
-        return Promise.resolve<UnscharferelationInternal<number>>(unscharferelation2);
-      }).recover<number>(() => {
+        return Promise.resolve(unscharferelation2);
+      }).recover(() => {
         fn2();
 
-        return Promise.resolve<UnscharferelationInternal<number>>(unscharferelation3);
-      }).map<number>(() => {
+        return Promise.resolve(unscharferelation3);
+      }).map(() => {
         fn3();
 
-        return Promise.resolve<UnscharferelationInternal<number>>(unscharferelation3);
+        return Promise.resolve(unscharferelation3);
       }).terminate();
 
       expect(fn1.mock.calls).toHaveLength(1);
@@ -1219,20 +1219,20 @@ describe('UnscharferelationInternal', () => {
       const fn3: jest.Mock = jest.fn();
       const fn4: jest.Mock = jest.fn();
 
-      await unscharferelation.map<number>((v: number) => {
+      await unscharferelation.map((v: number) => {
         fn1();
         expect(v).toBe(value);
 
         throw error;
-      }).recover<number>(() => {
+      }).recover(() => {
         fn2();
 
         throw error;
-      }).map<number>(() => {
+      }).map(() => {
         fn3();
 
         throw error;
-      }).recover<number>(() => {
+      }).recover(() => {
         fn4();
 
         throw error;
@@ -1259,20 +1259,20 @@ describe('UnscharferelationInternal', () => {
       const fn3: jest.Mock = jest.fn();
       const fn4: jest.Mock = jest.fn();
 
-      await unscharferelation.map<number>((v: number) => {
+      await unscharferelation.map((v: number) => {
         fn1();
         expect(v).toBe(value);
 
-        return Promise.reject<null>(error);
-      }).recover<number>(() => {
+        return Promise.reject(error);
+      }).recover(() => {
         fn2();
 
-        return Promise.reject<null>(error);
-      }).map<number>(() => {
+        return Promise.reject(error);
+      }).map(() => {
         fn3();
 
-        return Promise.reject<null>(error);
-      }).recover<number>(() => {
+        return Promise.reject(error);
+      }).recover(() => {
         fn4();
 
         throw error;
@@ -1316,20 +1316,20 @@ describe('UnscharferelationInternal', () => {
       const fn3: jest.Mock = jest.fn();
       const fn4: jest.Mock = jest.fn();
 
-      await unscharferelation1.map<number>((v: number) => {
+      await unscharferelation1.map((v: number) => {
         fn1();
         expect(v).toBe(value);
 
         return unscharferelation2;
-      }).recover<number>(() => {
+      }).recover(() => {
         fn2();
 
         return unscharferelation3;
-      }).map<number>(() => {
+      }).map(() => {
         fn3();
 
         return unscharferelation4;
-      }).recover<number>(() => {
+      }).recover(() => {
         fn4();
 
         return unscharferelation4;
@@ -1373,20 +1373,20 @@ describe('UnscharferelationInternal', () => {
       const fn3: jest.Mock = jest.fn();
       const fn4: jest.Mock = jest.fn();
 
-      await unscharferelation1.map<number>((v: number) => {
+      await unscharferelation1.map((v: number) => {
         fn1();
         expect(v).toBe(value);
 
-        return Promise.resolve<UnscharferelationInternal<number>>(unscharferelation2);
-      }).recover<number>(() => {
+        return Promise.resolve(unscharferelation2);
+      }).recover(() => {
         fn2();
 
-        return Promise.resolve<UnscharferelationInternal<number>>(unscharferelation3);
-      }).map<number>(() => {
+        return Promise.resolve(unscharferelation3);
+      }).map(() => {
         fn3();
 
-        return Promise.resolve<UnscharferelationInternal<number>>(unscharferelation3);
-      }).recover<number>(() => {
+        return Promise.resolve(unscharferelation3);
+      }).recover(() => {
         fn4();
 
         return unscharferelation4;
@@ -1417,17 +1417,17 @@ describe('UnscharferelationInternal', () => {
       const fn2: jest.Mock = jest.fn();
       const fn3: jest.Mock = jest.fn();
 
-      await unscharferelation1.map<number>((v: number) => {
+      await unscharferelation1.map((v: number) => {
         fn1();
         expect(v).toBe(value1);
 
         return unscharferelation2;
-      }).map<number>((v: number) => {
+      }).map((v: number) => {
         fn2();
         expect(v).toBe(value2);
 
         return unscharferelation2;
-      }).map<number>((v: number) => {
+      }).map((v: number) => {
         fn3();
         expect(v).toBe(value2);
 
@@ -1457,16 +1457,16 @@ describe('UnscharferelationInternal', () => {
       const fn2: jest.Mock = jest.fn();
       const fn3: jest.Mock = jest.fn();
 
-      await unscharferelation1.map<number>((v: number) => {
+      await unscharferelation1.map((v: number) => {
         fn1();
         expect(v).toBe(value);
 
         return unscharferelation2;
-      }).recover<number>(() => {
+      }).recover(() => {
         fn2();
 
         return unscharferelation2;
-      }).recover<number>(() => {
+      }).recover(() => {
         fn3();
 
         return unscharferelation2;
@@ -1496,16 +1496,16 @@ describe('UnscharferelationInternal', () => {
       const fn2: jest.Mock = jest.fn();
       const fn3: jest.Mock = jest.fn();
 
-      await unscharferelation1.map<number>((v: number) => {
+      await unscharferelation1.map((v: number) => {
         fn1();
         expect(v).toBe(value);
 
         return unscharferelation2;
-      }).recover<number>(() => {
+      }).recover(() => {
         fn2();
 
         return unscharferelation2;
-      }).map<number>(() => {
+      }).map(() => {
         fn3();
 
         return unscharferelation2;

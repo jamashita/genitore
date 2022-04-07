@@ -24,36 +24,6 @@ describe('Dead', () => {
     });
   });
 
-  describe('isAlive', () => {
-    it('always returns false', () => {
-      const dead1: Dead<number, MockRuntimeError> = Dead.of(new MockRuntimeError());
-      const dead2: Dead<number, MockRuntimeError> = Dead.of(new MockRuntimeError());
-
-      expect(dead1.isAlive()).toBe(false);
-      expect(dead2.isAlive()).toBe(false);
-    });
-  });
-
-  describe('isDead', () => {
-    it('always returns true', () => {
-      const dead1: Dead<number, MockRuntimeError> = Dead.of(new MockRuntimeError());
-      const dead2: Dead<number, MockRuntimeError> = Dead.of(new MockRuntimeError());
-
-      expect(dead1.isDead()).toBe(true);
-      expect(dead2.isDead()).toBe(true);
-    });
-  });
-
-  describe('isContradiction', () => {
-    it('always returns false', () => {
-      const dead1: Dead<number, MockRuntimeError> = Dead.of(new MockRuntimeError());
-      const dead2: Dead<number, MockRuntimeError> = Dead.of(new MockRuntimeError());
-
-      expect(dead1.isContradiction()).toBe(false);
-      expect(dead2.isContradiction()).toBe(false);
-    });
-  });
-
   describe('ifAlive', () => {
     it('will not be invoked', () => {
       const error: MockRuntimeError = new MockRuntimeError();
@@ -63,6 +33,22 @@ describe('Dead', () => {
       const dead: Schrodinger<number, MockRuntimeError> = Dead.of(error);
 
       dead.ifAlive(() => {
+        fn();
+      });
+
+      expect(fn.mock.calls).toHaveLength(0);
+    });
+  });
+
+  describe('ifContradiction', () => {
+    it('will not be invoked', () => {
+      const error: MockRuntimeError = new MockRuntimeError();
+
+      const fn: jest.Mock = jest.fn();
+
+      const dead: Schrodinger<number, MockRuntimeError> = Dead.of(error);
+
+      dead.ifContradiction(() => {
         fn();
       });
 
@@ -87,19 +73,33 @@ describe('Dead', () => {
     });
   });
 
-  describe('ifContradiction', () => {
-    it('will not be invoked', () => {
-      const error: MockRuntimeError = new MockRuntimeError();
+  describe('isAlive', () => {
+    it('always returns false', () => {
+      const dead1: Dead<number, MockRuntimeError> = Dead.of(new MockRuntimeError());
+      const dead2: Dead<number, MockRuntimeError> = Dead.of(new MockRuntimeError());
 
-      const fn: jest.Mock = jest.fn();
+      expect(dead1.isAlive()).toBe(false);
+      expect(dead2.isAlive()).toBe(false);
+    });
+  });
 
-      const dead: Schrodinger<number, MockRuntimeError> = Dead.of(error);
+  describe('isContradiction', () => {
+    it('always returns false', () => {
+      const dead1: Dead<number, MockRuntimeError> = Dead.of(new MockRuntimeError());
+      const dead2: Dead<number, MockRuntimeError> = Dead.of(new MockRuntimeError());
 
-      dead.ifContradiction(() => {
-        fn();
-      });
+      expect(dead1.isContradiction()).toBe(false);
+      expect(dead2.isContradiction()).toBe(false);
+    });
+  });
 
-      expect(fn.mock.calls).toHaveLength(0);
+  describe('isDead', () => {
+    it('always returns true', () => {
+      const dead1: Dead<number, MockRuntimeError> = Dead.of(new MockRuntimeError());
+      const dead2: Dead<number, MockRuntimeError> = Dead.of(new MockRuntimeError());
+
+      expect(dead1.isDead()).toBe(true);
+      expect(dead2.isDead()).toBe(true);
     });
   });
 

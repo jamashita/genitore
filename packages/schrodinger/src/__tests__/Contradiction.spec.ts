@@ -31,33 +31,6 @@ describe('Contradiction', () => {
     });
   });
 
-  describe('isAlive', () => {
-    it('always returns false', () => {
-      const error: MockRuntimeError = new MockRuntimeError();
-      const contradiction: Contradiction<number, MockRuntimeError> = Contradiction.of(error);
-
-      expect(contradiction.isAlive()).toBe(false);
-    });
-  });
-
-  describe('isDead', () => {
-    it('always returns false', () => {
-      const error: MockRuntimeError = new MockRuntimeError();
-      const contradiction: Contradiction<number, MockRuntimeError> = Contradiction.of(error);
-
-      expect(contradiction.isDead()).toBe(false);
-    });
-  });
-
-  describe('isContradiction', () => {
-    it('always returns true', () => {
-      const error: MockRuntimeError = new MockRuntimeError();
-      const contradiction: Contradiction<number, MockRuntimeError> = Contradiction.of(error);
-
-      expect(contradiction.isContradiction()).toBe(true);
-    });
-  });
-
   describe('ifAlive', () => {
     it('will not be invoked', () => {
       const value: number = 1;
@@ -67,22 +40,6 @@ describe('Contradiction', () => {
       const contradiction: Schrodinger<number, MockRuntimeError> = Contradiction.of(value);
 
       contradiction.ifAlive(() => {
-        fn();
-      });
-
-      expect(fn.mock.calls).toHaveLength(0);
-    });
-  });
-
-  describe('ifDead', () => {
-    it('will not be invoked', () => {
-      const value: number = 1;
-
-      const fn: jest.Mock = jest.fn();
-
-      const contradiction: Schrodinger<number, MockRuntimeError> = Contradiction.of(value);
-
-      contradiction.ifDead(() => {
         fn();
       });
 
@@ -104,6 +61,49 @@ describe('Contradiction', () => {
       });
 
       expect(fn.mock.calls).toHaveLength(1);
+    });
+  });
+
+  describe('ifDead', () => {
+    it('will not be invoked', () => {
+      const value: number = 1;
+
+      const fn: jest.Mock = jest.fn();
+
+      const contradiction: Schrodinger<number, MockRuntimeError> = Contradiction.of(value);
+
+      contradiction.ifDead(() => {
+        fn();
+      });
+
+      expect(fn.mock.calls).toHaveLength(0);
+    });
+  });
+
+  describe('isAlive', () => {
+    it('always returns false', () => {
+      const error: MockRuntimeError = new MockRuntimeError();
+      const contradiction: Contradiction<number, MockRuntimeError> = Contradiction.of(error);
+
+      expect(contradiction.isAlive()).toBe(false);
+    });
+  });
+
+  describe('isContradiction', () => {
+    it('always returns true', () => {
+      const error: MockRuntimeError = new MockRuntimeError();
+      const contradiction: Contradiction<number, MockRuntimeError> = Contradiction.of(error);
+
+      expect(contradiction.isContradiction()).toBe(true);
+    });
+  });
+
+  describe('isDead', () => {
+    it('always returns false', () => {
+      const error: MockRuntimeError = new MockRuntimeError();
+      const contradiction: Contradiction<number, MockRuntimeError> = Contradiction.of(error);
+
+      expect(contradiction.isDead()).toBe(false);
     });
   });
 

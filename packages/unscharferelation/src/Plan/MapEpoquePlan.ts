@@ -6,7 +6,7 @@ export class MapEpoquePlan<P> implements MapPlan<Matter<P>> {
   private readonly epoque: Epoque<P>;
 
   public static of<P>(epoque: Epoque<P>): MapEpoquePlan<P> {
-    return new MapEpoquePlan<P>(epoque);
+    return new MapEpoquePlan(epoque);
   }
 
   protected constructor(epoque: Epoque<P>) {
