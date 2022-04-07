@@ -22,12 +22,7 @@ import {
 } from '@jamashita/genitore-schrodinger';
 import { Chrono } from './Chrono';
 import { ISuperposition, SReturnType } from './ISuperposition';
-import { AlivePlan } from './Plan/AlivePlan';
-import { CombinedChronoPlan } from './Plan/CombinedChronoPlan';
-import { DeadPlan } from './Plan/DeadPlan';
-import { DestroyChronoPlan } from './Plan/DestroyChronoPlan';
-import { MapChronoPlan } from './Plan/MapChronoPlan';
-import { RecoveryChronoPlan } from './Plan/RecoveryChronoPlan';
+import { AlivePlan, CombinedChronoPlan, DeadPlan, DestroyChronoPlan, MapChronoPlan, RecoveryChronoPlan } from './Plan';
 
 export class SuperpositionInternal<A, D extends Error> implements ISuperposition<A, D>, Chrono<A, D> {
   private schrodinger: Schrodinger<A, D>;
@@ -35,13 +30,13 @@ export class SuperpositionInternal<A, D extends Error> implements ISuperposition
   private readonly errors: Set<DeadConstructor<D>>;
 
   public static of<A, D extends Error>(func: UnaryFunction<Chrono<A, D>, unknown>, errors: Iterable<DeadConstructor<D>>): SuperpositionInternal<A, D> {
-    return new SuperpositionInternal<A, D>(func, errors);
+    return new SuperpositionInternal(func, errors);
   }
 
   protected constructor(func: UnaryFunction<Chrono<A, D>, unknown>, errors: Iterable<DeadConstructor<D>>) {
     this.schrodinger = Still.of();
-    this.plans = new Set<Plan<A, D>>();
-    this.errors = new Set<DeadConstructor<D>>(errors);
+    this.plans = new Set();
+    this.errors = new Set(errors);
     func(this);
   }
 
@@ -76,7 +71,7 @@ export class SuperpositionInternal<A, D extends Error> implements ISuperposition
   }
 
   public get(): Promise<Detoxicated<A>> {
-    return new Promise<Detoxicated<A>>((resolve: Resolve<Detoxicated<A>>, reject: Reject<D | unknown>) => {
+    return new Promise((resolve: Resolve<Detoxicated<A>>, reject: Reject) => {
       this.pass(
         (value: Detoxicated<A>) => {
           resolve(value);
@@ -92,7 +87,7 @@ export class SuperpositionInternal<A, D extends Error> implements ISuperposition
   }
 
   public getErrors(): Set<DeadConstructor<D>> {
-    return new Set<DeadConstructor<D>>(this.errors);
+    return new Set(this.errors);
   }
 
   private handle(map: MapPlan<Detoxicated<A>>, recover: RecoveryPlan<D>, destroy: DestroyPlan): unknown {
@@ -166,7 +161,7 @@ export class SuperpositionInternal<A, D extends Error> implements ISuperposition
   }
 
   public terminate(): Promise<Schrodinger<A, D>> {
-    return new Promise<Schrodinger<A, D>>((resolve: Resolve<Schrodinger<A, D>>) => {
+    return new Promise((resolve: Resolve<Schrodinger<A, D>>) => {
       this.peek(() => {
         resolve(this.schrodinger);
       });

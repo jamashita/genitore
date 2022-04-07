@@ -125,7 +125,7 @@ export class Superposition<A, D extends Error> implements ISuperposition<A, D> {
   }
 
   public static ofSuperposition<A, D extends Error>(superposition: ISuperposition<A, D>): Superposition<A, D> {
-    return new Superposition<A, D>(superposition);
+    return new Superposition(superposition);
   }
 
   public static playground<A, D extends Error>(supplier: Supplier<SyncAsync<Detoxicated<A>>>, ...errors: ReadonlyArray<DeadConstructor<D>>): Superposition<A, D> {

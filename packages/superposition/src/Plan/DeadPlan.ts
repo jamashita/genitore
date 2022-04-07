@@ -12,7 +12,7 @@ export class DeadPlan<B, D extends Error, E extends Error> implements RecoveryPl
     mapper: UnaryFunction<D, SReturnType<B, E>>,
     chrono: Chrono<B, E>
   ): DeadPlan<B, D, E> {
-    return new DeadPlan<B, D, E>(mapper, chrono);
+    return new DeadPlan(mapper, chrono);
   }
 
   protected constructor(
