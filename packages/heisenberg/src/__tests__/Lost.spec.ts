@@ -31,6 +31,12 @@ describe('Lost', () => {
     });
   });
 
+  describe('getState', () => {
+    it('returns LOST', () => {
+      expect(Lost.of('').getState()).toBe('LOST');
+    });
+  });
+
   describe('ifAbsent', () => {
     it('will not be invoked', () => {
       const error: MockRuntimeError = new MockRuntimeError();

@@ -13,6 +13,12 @@ describe('Absent', () => {
     });
   });
 
+  describe('getState', () => {
+    it('returns ABSENT', () => {
+      expect(Absent.of().getState()).toBe('ABSENT');
+    });
+  });
+
   describe('ifAbsent', () => {
     it('will be invoked', () => {
       const fn: jest.Mock = jest.fn();

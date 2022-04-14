@@ -1,5 +1,5 @@
 import { Absent } from './Absent';
-import { Heisenberg } from './Heisenberg';
+import { Heisenberg, HeisenbergState } from './Heisenberg';
 import { HeisenbergError } from './HeisenbergError';
 import { Lost } from './Lost';
 import { Present } from './Present';
@@ -17,6 +17,10 @@ export class Uncertain<P> implements Heisenberg<P> {
 
   public get(): never {
     throw new HeisenbergError('UNCERTAIN');
+  }
+
+  public getState(): HeisenbergState {
+    return 'UNCERTAIN';
   }
 
   public ifAbsent(): void {

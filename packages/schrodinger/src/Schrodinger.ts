@@ -4,8 +4,12 @@ import { Contradiction } from './Contradiction';
 import { Dead } from './Dead';
 import { Detoxicated } from './Detoxicated';
 
+export type SchrodingerState = 'ALIVE' | 'CONTRADICTION' | 'DEAD' | 'STILL';
+
 export interface Schrodinger<A, D extends Error> extends Serializable {
   get(): Detoxicated<A>;
+
+  getState(): SchrodingerState;
 
   ifAlive(consumer: Consumer<A>): void;
 

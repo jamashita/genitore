@@ -31,6 +31,12 @@ describe('Contradiction', () => {
     });
   });
 
+  describe('getState', () => {
+    it('returns CONTRADICTION', () => {
+      expect(Contradiction.of('').getState()).toBe('CONTRADICTION');
+    });
+  });
+
   describe('ifAlive', () => {
     it('will not be invoked', () => {
       const value: number = 1;
