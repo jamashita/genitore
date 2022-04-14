@@ -23,6 +23,12 @@ describe('Alive', () => {
     });
   });
 
+  describe('getState', () => {
+    it('returns ALIVE', () => {
+      expect(Alive.of('').getState()).toBe('ALIVE');
+    });
+  });
+
   describe('ifAlive', () => {
     it('will be invoked', () => {
       const value: number = 1;

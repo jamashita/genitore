@@ -22,6 +22,12 @@ describe('Present', () => {
     });
   });
 
+  describe('getState', () => {
+    it('returns PRESENT', () => {
+      expect(Present.of('').getState()).toBe('PRESENT');
+    });
+  });
+
   describe('ifAbsent', () => {
     it('will not be invoked', () => {
       const value: number = 1;
