@@ -14,6 +14,12 @@ describe('Still', () => {
     });
   });
 
+  describe('getState', () => {
+    it('returns STILL', () => {
+      expect(Still.of().getState()).toBe('STILL');
+    });
+  });
+
   describe('ifAlive', () => {
     it('will not be invoked', () => {
       const fn: jest.Mock = jest.fn();

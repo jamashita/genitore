@@ -1,5 +1,5 @@
 import { Consumer } from '@jamashita/anden-type';
-import { Heisenberg } from './Heisenberg';
+import { Heisenberg, HeisenbergState } from './Heisenberg';
 import { HeisenbergError } from './HeisenbergError';
 import { Lost } from './Lost';
 import { Present } from './Present';
@@ -17,6 +17,10 @@ export class Absent<P> implements Heisenberg<P> {
 
   public get(): never {
     throw new HeisenbergError('ABSENT');
+  }
+
+  public getState(): HeisenbergState {
+    return 'ABSENT';
   }
 
   public ifAbsent(consumer: Consumer<void>): void {

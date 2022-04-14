@@ -1,7 +1,7 @@
 import { Objet } from '@jamashita/anden-object';
 import { Consumer } from '@jamashita/anden-type';
 import { Absent } from './Absent';
-import { Heisenberg } from './Heisenberg';
+import { Heisenberg, HeisenbergState } from './Heisenberg';
 import { Present } from './Present';
 
 export class Lost<P> implements Heisenberg<P> {
@@ -21,6 +21,10 @@ export class Lost<P> implements Heisenberg<P> {
 
   public getCause(): unknown {
     return this.cause;
+  }
+
+  public getState(): HeisenbergState {
+    return 'LOST';
   }
 
   public ifAbsent(): void {

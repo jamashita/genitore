@@ -13,6 +13,12 @@ describe('Uncertain', () => {
     });
   });
 
+  describe('getState', () => {
+    it('returns UNCERTAIN', () => {
+      expect(Uncertain.of().getState()).toBe('UNCERTAIN');
+    });
+  });
+
   describe('ifAbsent', () => {
     it('will not be invoked', () => {
       const fn: jest.Mock = jest.fn();
