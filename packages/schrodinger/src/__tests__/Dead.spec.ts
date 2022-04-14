@@ -105,7 +105,7 @@ describe('Dead', () => {
 
   describe('toString', () => {
     it('returns Dead and its retaining error', () => {
-      expect(Dead.of(new MockRuntimeError()).toString()).toBe('Dead: MockRuntimeError {}');
+      expect(Dead.of(new MockRuntimeError()).toString().includes('Dead: MockRuntimeError')).toBe(true);
     });
   });
 });

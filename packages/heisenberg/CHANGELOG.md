@@ -1,3 +1,20 @@
+# [@jamashita/genitore-heisenberg-v2.6.0](https://github.com/jamashita/genitore/compare/@jamashita/genitore-heisenberg-v2.5.0...@jamashita/genitore-heisenberg-v2.6.0) (2022-04-07)
+
+
+### Bug Fixes
+
+* 🐛 remove npm restriction ([aa54095](https://github.com/jamashita/genitore/commit/aa5409569a323a336f1e06cf1b2b0cf1cf4c5066))
+
+
+### Features
+
+* 🎸 add void ([435d3de](https://github.com/jamashita/genitore/commit/435d3de26dd77057f65269d1606d7b19f631caf2))
+* 🎸 packages updated ([80894a7](https://github.com/jamashita/genitore/commit/80894a746e82816ed3d0c182a68abb809706256b))
+* 🎸 packages updated ([6b744e0](https://github.com/jamashita/genitore/commit/6b744e07d18630ef67bd26a6e5696bf2addb79d1))
+* 🎸 packages updated ([6aef2de](https://github.com/jamashita/genitore/commit/6aef2de861a27a81167300ba60fb4521ef90bb9a))
+* 🎸 packages updated ([83877cc](https://github.com/jamashita/genitore/commit/83877cca257151d92a7f0e389ed6aa1f15c38aeb))
+* 🎸 packages updated ([d6ad559](https://github.com/jamashita/genitore/commit/d6ad559368f1e9c6009a98247b922ced45d56512))
+
 # [@jamashita/genitore-heisenberg-v2.5.0](https://github.com/jamashita/genitore/compare/@jamashita/genitore-heisenberg-v2.4.0...@jamashita/genitore-heisenberg-v2.5.0) (2022-03-27)
 
 
