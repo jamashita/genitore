@@ -24,6 +24,12 @@ describe('Dead', () => {
     });
   });
 
+  describe('getState', () => {
+    it('returns DEAD', () => {
+      expect(Dead.of(new Error()).getState()).toBe('DEAD');
+    });
+  });
+
   describe('ifAlive', () => {
     it('will not be invoked', () => {
       const error: MockRuntimeError = new MockRuntimeError();

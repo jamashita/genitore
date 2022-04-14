@@ -1,3 +1,10 @@
+# [@jamashita/genitore-schrodinger-v2.8.0](https://github.com/jamashita/genitore/compare/@jamashita/genitore-schrodinger-v2.7.0...@jamashita/genitore-schrodinger-v2.8.0) (2022-04-14)
+
+
+### Features
+
+* 🎸 getState ([4187d62](https://github.com/jamashita/genitore/commit/4187d62bc5b123fd067a9d09cb7cb6ab81b611fe))
+
 # [@jamashita/genitore-schrodinger-v2.7.0](https://github.com/jamashita/genitore/compare/@jamashita/genitore-schrodinger-v2.6.0...@jamashita/genitore-schrodinger-v2.7.0) (2022-04-14)
 
 

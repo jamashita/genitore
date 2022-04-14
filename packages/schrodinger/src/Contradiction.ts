@@ -2,7 +2,7 @@ import { Objet } from '@jamashita/anden-object';
 import { Consumer } from '@jamashita/anden-type';
 import { Alive } from './Alive';
 import { Dead } from './Dead';
-import { Schrodinger } from './Schrodinger';
+import { Schrodinger, SchrodingerState } from './Schrodinger';
 
 export class Contradiction<A, D extends Error> implements Schrodinger<A, D> {
   private readonly cause: unknown;
@@ -21,6 +21,10 @@ export class Contradiction<A, D extends Error> implements Schrodinger<A, D> {
 
   public getCause(): unknown {
     return this.cause;
+  }
+
+  public getState(): SchrodingerState {
+    return 'CONTRADICTION';
   }
 
   public ifAlive(): void {

@@ -3,7 +3,7 @@ import { Consumer } from '@jamashita/anden-type';
 import { Contradiction } from './Contradiction';
 import { Dead } from './Dead';
 import { Detoxicated } from './Detoxicated';
-import { Schrodinger } from './Schrodinger';
+import { Schrodinger, SchrodingerState } from './Schrodinger';
 
 export class Alive<A, D extends Error> implements Schrodinger<A, D> {
   private readonly value: Detoxicated<A>;
@@ -18,6 +18,10 @@ export class Alive<A, D extends Error> implements Schrodinger<A, D> {
 
   public get(): Detoxicated<A> {
     return this.value;
+  }
+
+  public getState(): SchrodingerState {
+    return 'ALIVE';
   }
 
   public ifAlive(consumer: Consumer<A>): void {

@@ -53,7 +53,7 @@ export class PresentPlan<P, Q> implements MapPlan<Matter<P>> {
         return this.forUnscharferelation(mapped);
       }
       if (Kind.isPromiseLike<IUnscharferelation<Q> | Nihil | Q>(mapped)) {
-        return mapped.then<unknown, unknown>(
+        return mapped.then(
           (v: IUnscharferelation<Q> | Nihil | Q) => {
             if (isUnscharferelation(v)) {
               return this.forUnscharferelation(v);

@@ -1,7 +1,7 @@
 import { Alive } from './Alive';
 import { Contradiction } from './Contradiction';
 import { Dead } from './Dead';
-import { Schrodinger } from './Schrodinger';
+import { Schrodinger, SchrodingerState } from './Schrodinger';
 import { SchrodingerError } from './SchrodingerError';
 
 export class Still<A, D extends Error> implements Schrodinger<A, D> {
@@ -17,6 +17,10 @@ export class Still<A, D extends Error> implements Schrodinger<A, D> {
 
   public get(): never {
     throw new SchrodingerError('STILL');
+  }
+
+  public getState(): SchrodingerState {
+    return 'STILL';
   }
 
   public ifAlive(): void {

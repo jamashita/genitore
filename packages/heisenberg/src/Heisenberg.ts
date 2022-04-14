@@ -4,8 +4,12 @@ import { Lost } from './Lost';
 import { Matter } from './Matter';
 import { Present } from './Present';
 
+export type HeisenbergState = 'ABSENT' | 'LOST' | 'PRESENT' | 'UNCERTAIN';
+
 export interface Heisenberg<P> extends Serializable {
   get(): Matter<P>;
+
+  getState(): HeisenbergState;
 
   ifAbsent(consumer: Consumer<void>): void;
 
