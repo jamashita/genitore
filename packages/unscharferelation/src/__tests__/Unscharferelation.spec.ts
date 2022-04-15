@@ -92,7 +92,7 @@ describe('Unscharferelation', () => {
     });
 
     it('returns Lost Unscharferelation when sync Unscharferelations which contains Lost given', async () => {
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const unscharferelations: Array<Unscharferelation<number>> = [
         Unscharferelation.present(0),
@@ -113,7 +113,7 @@ describe('Unscharferelation', () => {
     });
 
     it('returns Lost Unscharferelation when sync Unscharferelations which contains Lost given even if all of others are Absent', async () => {
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const unscharferelations: Array<Unscharferelation<number>> = [
         Unscharferelation.absent(),
@@ -243,7 +243,7 @@ describe('Unscharferelation', () => {
     });
 
     it('returns Lost Unscharferelation if includes at least one Lost comes faster than Absent', async () => {
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const unscharferelations: Array<Unscharferelation<number>> = [
         Unscharferelation.of((epoque: Epoque<number>) => {
@@ -264,7 +264,7 @@ describe('Unscharferelation', () => {
     });
 
     it('returns Lost Unscharferelation if includes at least one Lost comes later than Absent', async () => {
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const unscharferelations: Array<Unscharferelation<number>> = [
         Unscharferelation.absent(Promise.resolve(undefined)),
@@ -442,7 +442,7 @@ describe('Unscharferelation', () => {
     });
 
     it('returns Lost Unscharferelation if an unexpected rejected Promise is returned', async () => {
-      expect(await Unscharferelation.maybe(Promise.reject(new MockRuntimeError())).terminate()).toBeInstanceOf(Lost);
+      expect(await Unscharferelation.maybe(Promise.reject(new MockRuntimeError(''))).terminate()).toBeInstanceOf(Lost);
     });
   });
 
@@ -520,7 +520,7 @@ describe('Unscharferelation', () => {
     });
 
     it('returns Lost Unscharferelation if rejected Promise given', async () => {
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const present: Unscharferelation<number> = Unscharferelation.present(Promise.reject<number>(error));
       const heisenberg: Heisenberg<number> = await present.terminate();
@@ -554,7 +554,7 @@ describe('Unscharferelation', () => {
     });
 
     it('returns Lost Unscharferelation if an unexpected rejected Promise given', async () => {
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const absent: Unscharferelation<number> = Unscharferelation.absent(Promise.reject(error));
       const heisenberg: Heisenberg<number> = await absent.terminate();

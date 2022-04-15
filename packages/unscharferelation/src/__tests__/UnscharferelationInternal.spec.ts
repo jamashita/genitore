@@ -151,7 +151,7 @@ describe('UnscharferelationInternal', () => {
 
   describe('throw', () => {
     it('does nothing if done once', async () => {
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const fn: jest.Mock = jest.fn();
 
@@ -184,7 +184,7 @@ describe('UnscharferelationInternal', () => {
     });
 
     it('invokes all maps', async () => {
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const fn1: jest.Mock = jest.fn();
       const fn2: jest.Mock = jest.fn();
@@ -231,7 +231,7 @@ describe('UnscharferelationInternal', () => {
   describe('get', () => {
     it('returns inner value', async () => {
       const value: number = -201;
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const unscharferelation1: UnscharferelationInternal<number> = UnscharferelationInternal.of(
         (epoque: Epoque<number>) => {
@@ -258,7 +258,7 @@ describe('UnscharferelationInternal', () => {
   describe('terminate', () => {
     it('returns Heisenberg subclass instance', async () => {
       const value: number = -201;
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const present: Heisenberg<number> = await UnscharferelationInternal.of((epoque: Epoque<number>) => {
         epoque.accept(value);
@@ -602,7 +602,7 @@ describe('UnscharferelationInternal', () => {
 
     it('will not invoke callbacks when a callback throws unexpected error', async () => {
       const value: number = -201;
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of(
         (epoque: Epoque<number>) => {
@@ -642,7 +642,7 @@ describe('UnscharferelationInternal', () => {
 
     it('will not invoke callbacks when a callback returns unexpected rejected Promise', async () => {
       const value: number = -201;
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of(
         (epoque: Epoque<number>) => {
@@ -682,9 +682,9 @@ describe('UnscharferelationInternal', () => {
 
     it('will not invoke callbacks when a callback returns Lost Unscharferelation', async () => {
       const value: number = -201;
-      const error1: MockRuntimeError = new MockRuntimeError();
-      const error2: MockRuntimeError = new MockRuntimeError();
-      const error3: MockRuntimeError = new MockRuntimeError();
+      const error1: MockRuntimeError = new MockRuntimeError('');
+      const error2: MockRuntimeError = new MockRuntimeError('');
+      const error3: MockRuntimeError = new MockRuntimeError('');
 
       const unscharferelation1: UnscharferelationInternal<number> = UnscharferelationInternal.of(
         (epoque: Epoque<number>) => {
@@ -859,7 +859,7 @@ describe('UnscharferelationInternal', () => {
 
     it('instantly throws once declined Unscharferelation', async () => {
       const value: number = -201;
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const unscharferelation1: UnscharferelationInternal<number> = UnscharferelationInternal.of(
         (epoque: Epoque<number>) => {
@@ -1206,7 +1206,7 @@ describe('UnscharferelationInternal', () => {
 
     it('will not invoke callbacks with a callback throws unexpected error', async () => {
       const value: number = -201;
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of(
         (epoque: Epoque<number>) => {
@@ -1246,7 +1246,7 @@ describe('UnscharferelationInternal', () => {
 
     it('will not invoke callbacks with a callback throws unexpected rejected Promise', async () => {
       const value: number = -201;
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of(
         (epoque: Epoque<number>) => {
@@ -1286,9 +1286,9 @@ describe('UnscharferelationInternal', () => {
 
     it('will not invoke callbacks with a callback returns Lost Unscharferelation', async () => {
       const value: number = -201;
-      const error1: MockRuntimeError = new MockRuntimeError();
-      const error2: MockRuntimeError = new MockRuntimeError();
-      const error3: MockRuntimeError = new MockRuntimeError();
+      const error1: MockRuntimeError = new MockRuntimeError('');
+      const error2: MockRuntimeError = new MockRuntimeError('');
+      const error3: MockRuntimeError = new MockRuntimeError('');
 
       const unscharferelation1: UnscharferelationInternal<number> = UnscharferelationInternal.of(
         (epoque: Epoque<number>) => {
@@ -1343,9 +1343,9 @@ describe('UnscharferelationInternal', () => {
 
     it('will not invoke callbacks with a callback returns Promise<Lost Unscharferelation>', async () => {
       const value: number = -201;
-      const error1: MockRuntimeError = new MockRuntimeError();
-      const error2: MockRuntimeError = new MockRuntimeError();
-      const error3: MockRuntimeError = new MockRuntimeError();
+      const error1: MockRuntimeError = new MockRuntimeError('');
+      const error2: MockRuntimeError = new MockRuntimeError('');
+      const error3: MockRuntimeError = new MockRuntimeError('');
 
       const unscharferelation1: UnscharferelationInternal<number> = UnscharferelationInternal.of(
         (epoque: Epoque<number>) => {
@@ -1479,7 +1479,7 @@ describe('UnscharferelationInternal', () => {
 
     it('instantly throws once thrown Unscharferelation', async () => {
       const value: number = -201;
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const unscharferelation1: UnscharferelationInternal<number> = UnscharferelationInternal.of(
         (epoque: Epoque<number>) => {
@@ -1556,7 +1556,7 @@ describe('UnscharferelationInternal', () => {
     });
 
     it('does not invoke callback if Unscharferelation is Lost', async () => {
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of(
         (epoque: Epoque<number>) => {
@@ -1614,7 +1614,7 @@ describe('UnscharferelationInternal', () => {
     });
 
     it('does not invoke callback if Unscharferelation is Lost', async () => {
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of(
         (epoque: Epoque<number>) => {
@@ -1672,7 +1672,7 @@ describe('UnscharferelationInternal', () => {
     });
 
     it('invokes callback if Unscharferelation is Lost', async () => {
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of(
         (epoque: Epoque<number>) => {
@@ -1753,7 +1753,7 @@ describe('UnscharferelationInternal', () => {
     });
 
     it('invokes third callback if Unscharferelation is Lost', () => {
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of(
         (epoque: Epoque<number>) => {
@@ -1820,7 +1820,7 @@ describe('UnscharferelationInternal', () => {
     });
 
     it('invokes third callback if Unscharferelation is Lost', () => {
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of(
         (epoque: Epoque<number>) => {
