@@ -15,7 +15,7 @@ describe('SuperpositionInternal', () => {
       );
       const superposition2: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
-          chrono.decline(new MockRuntimeError());
+          chrono.decline(new MockRuntimeError(''));
         },
         [MockRuntimeError]
       );
@@ -97,7 +97,7 @@ describe('SuperpositionInternal', () => {
 
   describe('decline', () => {
     it('does nothing if done once', async () => {
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
       const fn: jest.Mock = jest.fn();
       const plans: Set<Plan<Detoxicated<number>, MockRuntimeError>> = new Set();
 
@@ -126,7 +126,7 @@ describe('SuperpositionInternal', () => {
     });
 
     it('invokes all recovers', async () => {
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const fn1: jest.Mock = jest.fn();
       const fn2: jest.Mock = jest.fn();
@@ -157,7 +157,7 @@ describe('SuperpositionInternal', () => {
 
   describe('throw', () => {
     it('does nothing if done once', async () => {
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
       const fn: jest.Mock = jest.fn();
       const plans: Set<Plan<Detoxicated<number>, void>> = new Set();
 
@@ -189,7 +189,7 @@ describe('SuperpositionInternal', () => {
     });
 
     it('invokes all throws', async () => {
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const fn1: jest.Mock = jest.fn();
       const fn2: jest.Mock = jest.fn();
@@ -237,7 +237,7 @@ describe('SuperpositionInternal', () => {
   describe('get', () => {
     it('returns inner value', async () => {
       const value: number = -149;
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
@@ -267,7 +267,7 @@ describe('SuperpositionInternal', () => {
   describe('terminate', () => {
     it('returns Schrodinger subclass instance', async () => {
       const value: number = -149;
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const alive: Schrodinger<number, MockRuntimeError> = await SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
@@ -474,7 +474,7 @@ describe('SuperpositionInternal', () => {
 
     it('will not invoke callbacks when a callback throws Dead error', async () => {
       const value: number = 2;
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
@@ -509,7 +509,7 @@ describe('SuperpositionInternal', () => {
 
     it('will not invoke callbacks when a callback returns rejected Promise Dead', async () => {
       const value: number = 2;
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
@@ -544,7 +544,7 @@ describe('SuperpositionInternal', () => {
 
     it('will not invoke callbacks when a callback returns Dead Superposition', async () => {
       const value: number = 2;
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
@@ -591,7 +591,7 @@ describe('SuperpositionInternal', () => {
 
     it('will not invoke callbacks when a callback returns Promise<Dead Superposition>', async () => {
       const value: number = 2;
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
@@ -638,7 +638,7 @@ describe('SuperpositionInternal', () => {
 
     it('will not invoke callbacks when a callback throws unexpected error', async () => {
       const value: number = 2;
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
@@ -679,7 +679,7 @@ describe('SuperpositionInternal', () => {
 
     it('will not invoke callbacks when a callback returns unexpected rejected Promise', async () => {
       const value: number = 2;
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
@@ -720,9 +720,9 @@ describe('SuperpositionInternal', () => {
 
     it('will not invoke callbacks when a callback returns Contradiction Superposition', async () => {
       const value: number = 2;
-      const error1: MockRuntimeError = new MockRuntimeError();
-      const error2: MockRuntimeError = new MockRuntimeError();
-      const error3: MockRuntimeError = new MockRuntimeError();
+      const error1: MockRuntimeError = new MockRuntimeError('');
+      const error2: MockRuntimeError = new MockRuntimeError('');
+      const error3: MockRuntimeError = new MockRuntimeError('');
 
       const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
@@ -781,9 +781,9 @@ describe('SuperpositionInternal', () => {
 
     it('will not invoke callbacks when a callback returns Promise<Contradiction Superposition>', async () => {
       const value: number = 2;
-      const error1: MockRuntimeError = new MockRuntimeError();
-      const error2: MockRuntimeError = new MockRuntimeError();
-      const error3: MockRuntimeError = new MockRuntimeError();
+      const error1: MockRuntimeError = new MockRuntimeError('');
+      const error2: MockRuntimeError = new MockRuntimeError('');
+      const error3: MockRuntimeError = new MockRuntimeError('');
 
       const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
@@ -885,7 +885,7 @@ describe('SuperpositionInternal', () => {
 
     it('instantly declines once declined Superposition', async () => {
       const value: number = 2;
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
@@ -926,7 +926,7 @@ describe('SuperpositionInternal', () => {
 
     it('instantly throws once thrown Superposition', async () => {
       const value: number = 2;
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
@@ -970,7 +970,7 @@ describe('SuperpositionInternal', () => {
   describe('recover', () => {
     it('invokes callbacks unless it is not Alive nor Contradiction', async () => {
       const value: number = -201;
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
@@ -1006,7 +1006,7 @@ describe('SuperpositionInternal', () => {
 
     it('invokes callbacks unless it is not Alive nor Contradiction, even if the return value is Promise', async () => {
       const value: number = -201;
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
@@ -1043,7 +1043,7 @@ describe('SuperpositionInternal', () => {
     it('invokes callbacks unless it is not Alive nor Contradiction, even if the return value is Alive Superposition', async () => {
       const value1: number = 2;
       const value2: number = 20;
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
@@ -1092,7 +1092,7 @@ describe('SuperpositionInternal', () => {
     it('invokes callbacks unless it is not Alive nor Contradiction, even if the return value is Promise<Alive Superposition>', async () => {
       const value1: number = 2;
       const value2: number = 20;
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
@@ -1140,8 +1140,8 @@ describe('SuperpositionInternal', () => {
 
     it('will not invoke callbacks when a callback throws Dead error', async () => {
       const value: number = 2;
-      const error1: MockRuntimeError = new MockRuntimeError();
-      const error2: MockRuntimeError = new MockRuntimeError();
+      const error1: MockRuntimeError = new MockRuntimeError('');
+      const error2: MockRuntimeError = new MockRuntimeError('');
 
       const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
@@ -1178,8 +1178,8 @@ describe('SuperpositionInternal', () => {
 
     it('will not invoke callbacks when a callback returns rejected Promise Dead', async () => {
       const value: number = 2;
-      const error1: MockRuntimeError = new MockRuntimeError();
-      const error2: MockRuntimeError = new MockRuntimeError();
+      const error1: MockRuntimeError = new MockRuntimeError('');
+      const error2: MockRuntimeError = new MockRuntimeError('');
 
       const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
@@ -1216,8 +1216,8 @@ describe('SuperpositionInternal', () => {
 
     it('will not invoke callbacks when a callback returns Dead Superposition', async () => {
       const value: number = 2;
-      const error1: MockRuntimeError = new MockRuntimeError();
-      const error2: MockRuntimeError = new MockRuntimeError();
+      const error1: MockRuntimeError = new MockRuntimeError('');
+      const error2: MockRuntimeError = new MockRuntimeError('');
 
       const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
@@ -1266,8 +1266,8 @@ describe('SuperpositionInternal', () => {
 
     it('will not invoke callbacks when a callback returns Promise<Dead Superposition>', async () => {
       const value: number = 2;
-      const error1: MockRuntimeError = new MockRuntimeError();
-      const error2: MockRuntimeError = new MockRuntimeError();
+      const error1: MockRuntimeError = new MockRuntimeError('');
+      const error2: MockRuntimeError = new MockRuntimeError('');
 
       const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
@@ -1316,7 +1316,7 @@ describe('SuperpositionInternal', () => {
 
     it('will not invoke callbacks when a callback throws unexpected error', async () => {
       const value: number = 2;
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
@@ -1357,7 +1357,7 @@ describe('SuperpositionInternal', () => {
 
     it('will not invoke callbacks when a callback returns unexpected rejected Promise', async () => {
       const value: number = 2;
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
@@ -1398,9 +1398,9 @@ describe('SuperpositionInternal', () => {
 
     it('will not invoke callbacks when a callback returns Contradiction Superposition', async () => {
       const value: number = 2;
-      const error1: MockRuntimeError = new MockRuntimeError();
-      const error2: MockRuntimeError = new MockRuntimeError();
-      const error3: MockRuntimeError = new MockRuntimeError();
+      const error1: MockRuntimeError = new MockRuntimeError('');
+      const error2: MockRuntimeError = new MockRuntimeError('');
+      const error3: MockRuntimeError = new MockRuntimeError('');
 
       const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
@@ -1455,9 +1455,9 @@ describe('SuperpositionInternal', () => {
 
     it('will not invoke callbacks when a callback returns Promise<Contradiction Superposition>', async () => {
       const value: number = 2;
-      const error1: MockRuntimeError = new MockRuntimeError();
-      const error2: MockRuntimeError = new MockRuntimeError();
-      const error3: MockRuntimeError = new MockRuntimeError();
+      const error1: MockRuntimeError = new MockRuntimeError('');
+      const error2: MockRuntimeError = new MockRuntimeError('');
+      const error3: MockRuntimeError = new MockRuntimeError('');
 
       const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
@@ -1555,7 +1555,7 @@ describe('SuperpositionInternal', () => {
 
     it('instantly declines once declined Superposition', async () => {
       const value: number = 2;
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
@@ -1598,7 +1598,7 @@ describe('SuperpositionInternal', () => {
 
     it('instantly throws once thrown Superposition', async () => {
       const value: number = 2;
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
@@ -1870,9 +1870,9 @@ describe('SuperpositionInternal', () => {
     });
 
     it('invokes second callback when Superposition is Dead', async () => {
-      const error1: MockRuntimeError = new MockRuntimeError();
-      const error2: MockRuntimeError = new MockRuntimeError();
-      const error3: MockRuntimeError = new MockRuntimeError();
+      const error1: MockRuntimeError = new MockRuntimeError('');
+      const error2: MockRuntimeError = new MockRuntimeError('');
+      const error3: MockRuntimeError = new MockRuntimeError('');
 
       const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
@@ -1919,9 +1919,9 @@ describe('SuperpositionInternal', () => {
     });
 
     it('invokes second callback when Superposition is Dead even if the return value is rejected Promise', async () => {
-      const error1: MockRuntimeError = new MockRuntimeError();
-      const error2: MockRuntimeError = new MockRuntimeError();
-      const error3: MockRuntimeError = new MockRuntimeError();
+      const error1: MockRuntimeError = new MockRuntimeError('');
+      const error2: MockRuntimeError = new MockRuntimeError('');
+      const error3: MockRuntimeError = new MockRuntimeError('');
 
       const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
@@ -1970,9 +1970,9 @@ describe('SuperpositionInternal', () => {
     });
 
     it('invokes second callback when Superposition is Dead even if the return value is Dead Superposition', async () => {
-      const error1: MockRuntimeError = new MockRuntimeError();
-      const error2: MockRuntimeError = new MockRuntimeError();
-      const error3: MockRuntimeError = new MockRuntimeError();
+      const error1: MockRuntimeError = new MockRuntimeError('');
+      const error2: MockRuntimeError = new MockRuntimeError('');
+      const error3: MockRuntimeError = new MockRuntimeError('');
 
       const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
@@ -2033,9 +2033,9 @@ describe('SuperpositionInternal', () => {
     });
 
     it('invokes second callback when Superposition is Dead even if the return value is Promise<Dead Superposition>', async () => {
-      const error1: MockRuntimeError = new MockRuntimeError();
-      const error2: MockRuntimeError = new MockRuntimeError();
-      const error3: MockRuntimeError = new MockRuntimeError();
+      const error1: MockRuntimeError = new MockRuntimeError('');
+      const error2: MockRuntimeError = new MockRuntimeError('');
+      const error3: MockRuntimeError = new MockRuntimeError('');
 
       const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
@@ -2169,8 +2169,8 @@ describe('SuperpositionInternal', () => {
     });
 
     it('instantly declines once declined Superposition', async () => {
-      const error1: MockRuntimeError = new MockRuntimeError();
-      const error2: MockRuntimeError = new MockRuntimeError();
+      const error1: MockRuntimeError = new MockRuntimeError('');
+      const error2: MockRuntimeError = new MockRuntimeError('');
 
       const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
@@ -2242,8 +2242,8 @@ describe('SuperpositionInternal', () => {
     });
 
     it('instantly throws once thrown Superposition', async () => {
-      const error1: MockRuntimeError = new MockRuntimeError();
-      const error2: MockRuntimeError = new MockRuntimeError();
+      const error1: MockRuntimeError = new MockRuntimeError('');
+      const error2: MockRuntimeError = new MockRuntimeError('');
 
       const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
@@ -2334,7 +2334,7 @@ describe('SuperpositionInternal', () => {
     });
 
     it('does not invoke callback if Superposition is Dead', async () => {
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
@@ -2353,7 +2353,7 @@ describe('SuperpositionInternal', () => {
     });
 
     it('does not invoke callback if Superposition is Contradiction', async () => {
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
@@ -2393,7 +2393,7 @@ describe('SuperpositionInternal', () => {
     });
 
     it('invokes callback if Superposition is Dead', async () => {
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
@@ -2413,7 +2413,7 @@ describe('SuperpositionInternal', () => {
     });
 
     it('does not invoke callback if Superposition is Contradiction', async () => {
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
@@ -2453,7 +2453,7 @@ describe('SuperpositionInternal', () => {
     });
 
     it('does not invoke callback if Superposition is Dead', async () => {
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
@@ -2472,7 +2472,7 @@ describe('SuperpositionInternal', () => {
     });
 
     it('invokes callback if Superposition is Contradiction', async () => {
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
@@ -2526,7 +2526,7 @@ describe('SuperpositionInternal', () => {
     });
 
     it('invokes second callback if Superposition is Dead', () => {
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
@@ -2558,7 +2558,7 @@ describe('SuperpositionInternal', () => {
     });
 
     it('invokes third callback if Superposition is Contradiction', () => {
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
@@ -2611,7 +2611,7 @@ describe('SuperpositionInternal', () => {
     });
 
     it('invokes second callback if Superposition is Dead', () => {
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
@@ -2630,7 +2630,7 @@ describe('SuperpositionInternal', () => {
     });
 
     it('invokes third callback if Superposition is Contradiction', () => {
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {

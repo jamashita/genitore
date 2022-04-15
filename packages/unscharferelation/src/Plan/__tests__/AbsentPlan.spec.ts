@@ -432,7 +432,7 @@ describe('AbsentPlan', () => {
     });
 
     it('invokes third callback when an unexpected error thrown', async () => {
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const fn1: jest.Mock = jest.fn();
       const fn2: jest.Mock = jest.fn();
@@ -476,7 +476,7 @@ describe('AbsentPlan', () => {
     });
 
     it('invokes third callback when an unexpected rejected Promise given', async () => {
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const fn1: jest.Mock = jest.fn();
       const fn2: jest.Mock = jest.fn();
@@ -520,7 +520,7 @@ describe('AbsentPlan', () => {
     });
 
     it('invokes third callback when Lost Unscharferelation given', async () => {
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const fn1: jest.Mock = jest.fn();
       const fn2: jest.Mock = jest.fn();
@@ -566,7 +566,7 @@ describe('AbsentPlan', () => {
     });
 
     it('invokes third callback when Promise<Lost Unscharferelation> given', async () => {
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const fn1: jest.Mock = jest.fn();
       const fn2: jest.Mock = jest.fn();

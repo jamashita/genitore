@@ -131,9 +131,9 @@ export class Superposition<A, D extends Error> implements ISuperposition<A, D> {
   public static playground<A, D extends Error>(supplier: Supplier<SyncAsync<Detoxicated<A>>>, ...errors: ReadonlyArray<DeadConstructor<D>>): Superposition<Sync<A>, D> {
     return Superposition.of((chrono: Chrono<Sync<A>, D>) => {
       try {
-        const value: SyncAsync<Detoxicated<A>> = supplier();
+        const value: SyncAsync<A> = supplier();
 
-        if (Kind.isPromiseLike<Detoxicated<A>>(value)) {
+        if (Kind.isPromiseLike<A>(value)) {
           return value.then(
             (v: A) => {
               return chrono.accept(v as Sync<A>);

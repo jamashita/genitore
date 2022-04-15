@@ -1,3 +1,11 @@
+# [@jamashita/genitore-unscharferelation-v2.8.0](https://github.com/jamashita/genitore/compare/@jamashita/genitore-unscharferelation-v2.7.0...@jamashita/genitore-unscharferelation-v2.8.0) (2022-04-15)
+
+
+### Features
+
+* 🎸 no constructor ([07e1168](https://github.com/jamashita/genitore/commit/07e1168c638fea3e5ed6d7e477bd351a6101a23f))
+* 🎸 packages updated ([dfa727d](https://github.com/jamashita/genitore/commit/dfa727d8df515bfbafdb1248f131671f634247d5))
+
 # [@jamashita/genitore-unscharferelation-v2.7.0](https://github.com/jamashita/genitore/compare/@jamashita/genitore-unscharferelation-v2.6.0...@jamashita/genitore-unscharferelation-v2.7.0) (2022-04-14)
 
 

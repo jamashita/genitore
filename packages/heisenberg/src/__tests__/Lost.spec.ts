@@ -5,8 +5,8 @@ import { Lost } from '../Lost';
 describe('Lost', () => {
   describe('get', () => {
     it('throws given error', () => {
-      const error1: MockRuntimeError = new MockRuntimeError();
-      const error2: MockRuntimeError = new MockRuntimeError();
+      const error1: MockRuntimeError = new MockRuntimeError('');
+      const error2: MockRuntimeError = new MockRuntimeError('');
       const lost1: Lost<void> = Lost.of(error1);
       const lost2: Lost<number> = Lost.of(error2);
 
@@ -21,8 +21,8 @@ describe('Lost', () => {
 
   describe('getCause', () => {
     it('returns thrown error', () => {
-      const error1: MockRuntimeError = new MockRuntimeError();
-      const error2: MockRuntimeError = new MockRuntimeError();
+      const error1: MockRuntimeError = new MockRuntimeError('');
+      const error2: MockRuntimeError = new MockRuntimeError('');
       const lost1: Lost<void> = Lost.of(error1);
       const lost2: Lost<number> = Lost.of(error2);
 
@@ -39,7 +39,7 @@ describe('Lost', () => {
 
   describe('ifAbsent', () => {
     it('will not be invoked', () => {
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const fn: jest.Mock = jest.fn();
 
@@ -55,7 +55,7 @@ describe('Lost', () => {
 
   describe('ifLost', () => {
     it('will be invoked', () => {
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const fn: jest.Mock = jest.fn();
 
@@ -71,7 +71,7 @@ describe('Lost', () => {
 
   describe('ifPresent', () => {
     it('will not be invoked', () => {
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const fn: jest.Mock = jest.fn();
 
@@ -87,7 +87,7 @@ describe('Lost', () => {
 
   describe('isAbsent', () => {
     it('always returns false', () => {
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
       const lost: Lost<void> = Lost.of(error);
 
       expect(lost.isAbsent()).toBe(false);
@@ -96,7 +96,7 @@ describe('Lost', () => {
 
   describe('isLost', () => {
     it('always returns true', () => {
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
       const lost: Lost<void> = Lost.of(error);
 
       expect(lost.isLost()).toBe(true);
@@ -105,7 +105,7 @@ describe('Lost', () => {
 
   describe('isPresent', () => {
     it('always returns false', () => {
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
       const lost: Lost<void> = Lost.of(error);
 
       expect(lost.isPresent()).toBe(false);
