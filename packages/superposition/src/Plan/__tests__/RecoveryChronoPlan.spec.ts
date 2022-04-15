@@ -5,7 +5,7 @@ import { RecoveryChronoPlan } from '../RecoveryChronoPlan';
 describe('RecoveryChronoPlan', () => {
   describe('onRecover', () => {
     it('invokes second callback', () => {
-      const value: MockRuntimeError = new MockRuntimeError();
+      const value: MockRuntimeError = new MockRuntimeError('');
 
       const fn1: jest.Mock = jest.fn();
       const fn2: jest.Mock = jest.fn();
