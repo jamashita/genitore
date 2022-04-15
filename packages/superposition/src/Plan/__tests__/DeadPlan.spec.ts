@@ -9,7 +9,7 @@ describe('DeadPlan', () => {
   describe('onRecover', () => {
     it('invokes first callback when A given', async () => {
       const value: number = 101;
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const fn1: jest.Mock = jest.fn();
       const fn2: jest.Mock = jest.fn();
@@ -56,7 +56,7 @@ describe('DeadPlan', () => {
 
     it('invokes first callback when Promise<A> given', async () => {
       const value: number = 101;
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const fn1: jest.Mock = jest.fn();
       const fn2: jest.Mock = jest.fn();
@@ -103,7 +103,7 @@ describe('DeadPlan', () => {
 
     it('invokes first callback when Alive Superposition given', async () => {
       const value: number = 101;
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const fn1: jest.Mock = jest.fn();
       const fn2: jest.Mock = jest.fn();
@@ -150,7 +150,7 @@ describe('DeadPlan', () => {
 
     it('invokes first callback when Promise<Alive Superposition> given', async () => {
       const value: number = 101;
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const fn1: jest.Mock = jest.fn();
       const fn2: jest.Mock = jest.fn();
@@ -196,7 +196,7 @@ describe('DeadPlan', () => {
     });
 
     it('invokes second callback when D thrown', async () => {
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const fn1: jest.Mock = jest.fn();
       const fn2: jest.Mock = jest.fn();
@@ -242,7 +242,7 @@ describe('DeadPlan', () => {
     });
 
     it('invokes second callback when rejected Promise<A> given', async () => {
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const fn1: jest.Mock = jest.fn();
       const fn2: jest.Mock = jest.fn();
@@ -288,7 +288,7 @@ describe('DeadPlan', () => {
     });
 
     it('invokes second callback when Dead Superposition given', async () => {
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const fn1: jest.Mock = jest.fn();
       const fn2: jest.Mock = jest.fn();
@@ -334,7 +334,7 @@ describe('DeadPlan', () => {
     });
 
     it('invokes second callback when Promise<Dead Superposition given', async () => {
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const fn1: jest.Mock = jest.fn();
       const fn2: jest.Mock = jest.fn();
@@ -380,7 +380,7 @@ describe('DeadPlan', () => {
     });
 
     it('invokes third callback when an unexpected error thrown', async () => {
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const fn1: jest.Mock = jest.fn();
       const fn2: jest.Mock = jest.fn();
@@ -425,7 +425,7 @@ describe('DeadPlan', () => {
     });
 
     it('invokes third callback when an unexpected rejected Promise given', async () => {
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const fn1: jest.Mock = jest.fn();
       const fn2: jest.Mock = jest.fn();
@@ -470,7 +470,7 @@ describe('DeadPlan', () => {
     });
 
     it('invokes third callback when Contradiction Superposition given', () => {
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const fn1: jest.Mock = jest.fn();
       const fn2: jest.Mock = jest.fn();
@@ -509,7 +509,7 @@ describe('DeadPlan', () => {
     });
 
     it('invokes third callback when Promise<Contradiction Superposition> given', async () => {
-      const error: MockRuntimeError = new MockRuntimeError();
+      const error: MockRuntimeError = new MockRuntimeError('');
 
       const fn1: jest.Mock = jest.fn();
       const fn2: jest.Mock = jest.fn();
