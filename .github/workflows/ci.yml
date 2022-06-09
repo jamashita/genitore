@@ -2,12 +2,8 @@ name: 'CI'
 on:
   pull_request:
     branches:
-      - 'main'
+      - main
       - 'develop'
-    types:
-      - 'opened'
-      - 'reopened'
-      - 'synchronize'
 jobs:
   ci:
     runs-on: 'ubuntu-latest'
