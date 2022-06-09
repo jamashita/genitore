@@ -1,7 +1,7 @@
 import { Consumer } from '@jamashita/anden-type';
 import { Plan } from './Plan';
 
-export class PassThroughPlan<M, R> implements Plan<M, R> {
+export class PassThroughPlan<in out M, in out R> implements Plan<M, R> {
   private readonly map: Consumer<M>;
   private readonly recover: Consumer<R>;
   private readonly destroy: Consumer<unknown>;

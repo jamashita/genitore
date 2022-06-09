@@ -4,7 +4,7 @@ import { Alive } from './Alive';
 import { Contradiction } from './Contradiction';
 import { Schrodinger, SchrodingerState } from './Schrodinger';
 
-export class Dead<A, D extends Error> implements Schrodinger<A, D> {
+export class Dead<in out A, in out D extends Error> implements Schrodinger<A, D> {
   private readonly error: D;
 
   public static of<A, D extends Error>(error: D): Dead<A, D> {

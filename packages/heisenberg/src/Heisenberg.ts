@@ -1,13 +1,12 @@
 import { Consumer, Serializable } from '@jamashita/anden-type';
 import { Absent } from './Absent';
 import { Lost } from './Lost';
-import { Matter } from './Matter';
 import { Present } from './Present';
 
 export type HeisenbergState = 'ABSENT' | 'LOST' | 'PRESENT' | 'UNCERTAIN';
 
-export interface Heisenberg<P> extends Serializable {
-  get(): Matter<P>;
+export interface Heisenberg<in out P> extends Serializable {
+  get(): Exclude<P, null | undefined | void>;
 
   getState(): HeisenbergState;
 
@@ -15,7 +14,7 @@ export interface Heisenberg<P> extends Serializable {
 
   ifLost(consumer: Consumer<unknown>): void;
 
-  ifPresent(consumer: Consumer<P>): void;
+  ifPresent(consumer: Consumer<Exclude<P, null | undefined | void>>): void;
 
   isAbsent(): this is Absent<P>;
 

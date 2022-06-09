@@ -3,20 +3,19 @@ import { Consumer } from '@jamashita/anden-type';
 import { Absent } from './Absent';
 import { Heisenberg, HeisenbergState } from './Heisenberg';
 import { Lost } from './Lost';
-import { Matter } from './Matter';
 
-export class Present<P> implements Heisenberg<P> {
-  private readonly value: Matter<P>;
+export class Present<in out P> implements Heisenberg<P> {
+  private readonly value: Exclude<P, null | undefined | void>;
 
-  public static of<P>(value: Matter<P>): Present<P> {
+  public static of<P>(value: Exclude<P, null | undefined | void>): Present<P> {
     return new Present(value);
   }
 
-  private constructor(value: Matter<P>) {
+  private constructor(value: Exclude<P, null | undefined | void>) {
     this.value = value;
   }
 
-  public get(): Matter<P> {
+  public get(): Exclude<P, null | undefined | void> {
     return this.value;
   }
 
@@ -32,7 +31,7 @@ export class Present<P> implements Heisenberg<P> {
     // NOOP
   }
 
-  public ifPresent(consumer: Consumer<P>): void {
+  public ifPresent(consumer: Consumer<Exclude<P, null | undefined | void>>): void {
     consumer(this.value);
   }
 

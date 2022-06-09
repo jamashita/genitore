@@ -1,7 +1,7 @@
 import { Consumer } from '@jamashita/anden-type';
 import { MapPlan } from './MapPlan';
 
-export class MapPassPlan<M> implements MapPlan<M> {
+export class MapPassPlan<in out M> implements MapPlan<M> {
   private readonly map: Consumer<M>;
 
   public static of<M>(map: Consumer<M>): MapPassPlan<M> {

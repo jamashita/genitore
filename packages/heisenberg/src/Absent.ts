@@ -4,7 +4,7 @@ import { HeisenbergError } from './HeisenbergError';
 import { Lost } from './Lost';
 import { Present } from './Present';
 
-export class Absent<P> implements Heisenberg<P> {
+export class Absent<in out P> implements Heisenberg<P> {
   private static readonly INSTANCE: Absent<unknown> = new Absent();
 
   public static of<P>(): Absent<P> {
