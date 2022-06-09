@@ -25,9 +25,9 @@
     "clean:dist": "rimraf dist"
   },
   "dependencies": {
-    "@jamashita/anden-error": "2.15.0",
-    "@jamashita/anden-object": "2.18.0",
-    "@jamashita/anden-type": "2.9.0",
+    "@jamashita/anden-error": "2.16.0",
+    "@jamashita/anden-object": "2.19.0",
+    "@jamashita/anden-type": "2.10.0",
     "@jamashita/genitore-plan": "^2.6.0",
     "@jamashita/genitore-schrodinger": "^2.9.0"
   },
