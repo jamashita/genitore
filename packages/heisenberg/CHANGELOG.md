@@ -1,3 +1,14 @@
+# [@jamashita/genitore-heisenberg-v2.10.0](https://github.com/jamashita/genitore/compare/@jamashita/genitore-heisenberg-v2.9.0...@jamashita/genitore-heisenberg-v2.10.0) (2022-06-10)
+
+
+### Features
+
+* 🎸 packages updated ([8b9fd4b](https://github.com/jamashita/genitore/commit/8b9fd4be9c42bb43af7c7fa699168ca708972938))
+* 🎸 packages updated ([75a1c17](https://github.com/jamashita/genitore/commit/75a1c1714d2b0c021e7f4933586210801674b235))
+* 🎸 uns and heisenberg and plan ([2a66f3e](https://github.com/jamashita/genitore/commit/2a66f3e029b9961889f1d3b28a370cd5f017ad70))
+* 🎸 variance ([2b2f6e0](https://github.com/jamashita/genitore/commit/2b2f6e0a84d492091d68517bb2791dfa90ada528))
+* 🎸 variance installed ([b5608ee](https://github.com/jamashita/genitore/commit/b5608ee04eaf0b2b697c027d04a5bd6be2b4c776))
+
 # [@jamashita/genitore-heisenberg-v2.9.0](https://github.com/jamashita/genitore/compare/@jamashita/genitore-heisenberg-v2.8.0...@jamashita/genitore-heisenberg-v2.9.0) (2022-04-15)
 
 
