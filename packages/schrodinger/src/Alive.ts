@@ -2,21 +2,20 @@ import { Objet } from '@jamashita/anden-object';
 import { Consumer } from '@jamashita/anden-type';
 import { Contradiction } from './Contradiction';
 import { Dead } from './Dead';
-import { Detoxicated } from './Detoxicated';
 import { Schrodinger, SchrodingerState } from './Schrodinger';
 
-export class Alive<A, D extends Error> implements Schrodinger<A, D> {
-  private readonly value: Detoxicated<A>;
+export class Alive<out A, out D extends Error> implements Schrodinger<A, D> {
+  private readonly value: Exclude<A, Error>;
 
-  public static of<A, D extends Error>(value: Detoxicated<A>): Alive<A, D> {
+  public static of<A, D extends Error>(value: Exclude<A, Error>): Alive<A, D> {
     return new Alive(value);
   }
 
-  protected constructor(value: Detoxicated<A>) {
+  protected constructor(value: Exclude<A, Error>) {
     this.value = value;
   }
 
-  public get(): Detoxicated<A> {
+  public get(): Exclude<A, Error> {
     return this.value;
   }
 
@@ -24,7 +23,7 @@ export class Alive<A, D extends Error> implements Schrodinger<A, D> {
     return 'ALIVE';
   }
 
-  public ifAlive(consumer: Consumer<A>): void {
+  public ifAlive(consumer: Consumer<Exclude<A, Error>>): void {
     consumer(this.value);
   }
 

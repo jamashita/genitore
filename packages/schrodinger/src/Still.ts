@@ -4,7 +4,7 @@ import { Dead } from './Dead';
 import { Schrodinger, SchrodingerState } from './Schrodinger';
 import { SchrodingerError } from './SchrodingerError';
 
-export class Still<A, D extends Error> implements Schrodinger<A, D> {
+export class Still<out A, out D extends Error> implements Schrodinger<A, D> {
   private static readonly INSTANCE: Still<unknown, Error> = new Still();
 
   public static of<A, D extends Error>(): Still<A, D> {

@@ -1,25 +1,26 @@
-import { Consumer, Kind, Peek, Serializable, SyncAsync, UnaryFunction } from '@jamashita/anden-type';
-import { DeadConstructor, Detoxicated, Schrodinger } from '@jamashita/genitore-schrodinger';
+import { Consumer, Kind, Peek, Serializable, UnaryFunction } from '@jamashita/anden-type';
+import { DeadConstructor, Schrodinger } from '@jamashita/genitore-schrodinger';
 
-export type SReturnType<B, E extends Error> = SyncAsync<Detoxicated<B> | ISuperposition<B, E>>;
+export type SReturnType<B, E extends Error> =
+  Exclude<B, Error> | ISuperposition<B, E> | PromiseLike<Exclude<B, Error>> | PromiseLike<ISuperposition<B, E>>;
 
-export interface ISuperposition<A, D extends Error> extends Serializable {
-  get(): Promise<Detoxicated<A>>;
+export interface ISuperposition<out A, out D extends Error> extends Serializable {
+  get(): Promise<Exclude<A, Error>>;
 
   getErrors(): Set<DeadConstructor<D>>;
 
-  ifAlive(consumer: Consumer<Detoxicated<A>>): this;
+  ifAlive(consumer: Consumer<Exclude<A, Error>>): this;
 
   ifContradiction(consumer: Consumer<unknown>): this;
 
   ifDead(consumer: Consumer<D>): this;
 
   map<B = A, E extends Error = D>(
-    mapper: UnaryFunction<Detoxicated<A>, SReturnType<B, E>>,
+    mapper: UnaryFunction<Exclude<A, Error>, SReturnType<B, E>>,
     ...errors: Array<DeadConstructor<E>>
   ): ISuperposition<B, D | E>;
 
-  pass(accepted: Consumer<Detoxicated<A>>, declined: Consumer<D>, thrown: Consumer<unknown>): this;
+  pass(accepted: Consumer<Exclude<A, Error>>, declined: Consumer<D>, thrown: Consumer<unknown>): this;
 
   peek(peek: Peek): this;
 
@@ -31,7 +32,7 @@ export interface ISuperposition<A, D extends Error> extends Serializable {
   terminate(): Promise<Schrodinger<A, D>>;
 
   transform<B = A, E extends Error = D>(
-    alive: UnaryFunction<Detoxicated<A>, SReturnType<B, E>>,
+    alive: UnaryFunction<Exclude<A, Error>, SReturnType<B, E>>,
     dead: UnaryFunction<D, SReturnType<B, E>>,
     ...errors: Array<DeadConstructor<E>>
   ): ISuperposition<B, E>;

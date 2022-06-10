@@ -1,5 +1,6 @@
 import { MockRuntimeError } from '@jamashita/anden-error';
 import { Resolve } from '@jamashita/anden-type';
+import { Absent, Present } from '@jamashita/genitore-heisenberg';
 import { Epoque } from '../../Epoque';
 import { MockEpoque } from '../../mock/MockEpoque';
 import { Unscharferelation } from '../../Unscharferelation';
@@ -111,7 +112,7 @@ describe('PresentPlan', () => {
             fn1();
             expect(n).toBe(value);
 
-            return Unscharferelation.present<number>(value - 6);
+            return Unscharferelation.ofHeisenberg(Present.of(value - 6));
           },
           new MockEpoque(
             (n: number) => {
@@ -156,7 +157,7 @@ describe('PresentPlan', () => {
             fn1();
             expect(n).toBe(value);
 
-            return Promise.resolve(Unscharferelation.present(value - 6));
+            return Promise.resolve(Unscharferelation.ofHeisenberg(Present.of(value - 6)));
           },
           new MockEpoque(
             (n: number) => {
@@ -196,7 +197,7 @@ describe('PresentPlan', () => {
       const fn4: jest.Mock = jest.fn();
 
       await new Promise((resolve: Resolve<void>) => {
-        const plan: PresentPlan<number, number> = PresentPlan.of(
+        const plan: PresentPlan<number, number> = PresentPlan.of<number, number>(
           (n: number) => {
             fn1();
             expect(n).toBe(value);
@@ -240,7 +241,7 @@ describe('PresentPlan', () => {
       const fn4: jest.Mock = jest.fn();
 
       await new Promise((resolve: Resolve<void>) => {
-        const plan: PresentPlan<number, number> = PresentPlan.of(
+        const plan: PresentPlan<number, number> = PresentPlan.of<number, number>(
           (n: number) => {
             fn1();
             expect(n).toBe(value);
@@ -376,7 +377,7 @@ describe('PresentPlan', () => {
             fn1();
             expect(n).toBe(value);
 
-            return Unscharferelation.absent();
+            return Unscharferelation.ofHeisenberg(Absent.of());
           },
           new MockEpoque(
             () => {
@@ -420,7 +421,7 @@ describe('PresentPlan', () => {
             fn1();
             expect(n).toBe(value);
 
-            return Promise.resolve(Unscharferelation.absent());
+            return Promise.resolve(Unscharferelation.ofHeisenberg(Absent.of()));
           },
           new MockEpoque(
             () => {

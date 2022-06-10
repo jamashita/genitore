@@ -1,21 +1,21 @@
 import { Consumer } from '@jamashita/anden-type';
-import { DeadConstructor, Detoxicated } from '@jamashita/genitore-schrodinger';
+import { DeadConstructor } from '@jamashita/genitore-schrodinger';
 import { Chrono } from '../Chrono';
 
-export class MockChrono<M, R extends Error> implements Chrono<M, R> {
-  private readonly map: Consumer<Detoxicated<M>>;
+export class MockChrono<in out M, in out R extends Error> implements Chrono<M, R> {
+  private readonly map: Consumer<Exclude<M, Error>>;
   private readonly recover: Consumer<R>;
   private readonly destroy: Consumer<unknown>;
   private readonly errors: Set<DeadConstructor<R>>;
 
-  public constructor(map: Consumer<Detoxicated<M>>, recover: Consumer<R>, destroy: Consumer<unknown>, errors: Set<DeadConstructor<R>>) {
+  public constructor(map: Consumer<Exclude<M, Error>>, recover: Consumer<R>, destroy: Consumer<unknown>, errors: Set<DeadConstructor<R>>) {
     this.map = map;
     this.recover = recover;
     this.destroy = destroy;
     this.errors = errors;
   }
 
-  public accept(value: Detoxicated<M>): unknown {
+  public accept(value: Exclude<M, Error>): unknown {
     return this.map(value);
   }
 

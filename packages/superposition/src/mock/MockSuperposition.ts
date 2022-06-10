@@ -1,9 +1,9 @@
 import { UnimplementedError } from '@jamashita/anden-error';
 import { ValueObject } from '@jamashita/anden-object';
-import { DeadConstructor, Detoxicated, Schrodinger } from '@jamashita/genitore-schrodinger';
+import { DeadConstructor, Schrodinger } from '@jamashita/genitore-schrodinger';
 import { ISuperposition } from '../ISuperposition';
 
-export class MockSuperposition<A, D extends Error> extends ValueObject implements ISuperposition<A, D> {
+export class MockSuperposition<out A, out D extends Error> extends ValueObject implements ISuperposition<A, D> {
   public constructor() {
     super();
   }
@@ -12,7 +12,7 @@ export class MockSuperposition<A, D extends Error> extends ValueObject implement
     throw new UnimplementedError();
   }
 
-  public get(): Promise<Detoxicated<A>> {
+  public get(): Promise<Exclude<A, Error>> {
     throw new UnimplementedError();
   }
 

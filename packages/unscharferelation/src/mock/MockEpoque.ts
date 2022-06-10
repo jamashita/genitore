@@ -1,19 +1,18 @@
 import { Consumer } from '@jamashita/anden-type';
-import { Matter } from '@jamashita/genitore-heisenberg';
 import { Epoque } from '../Epoque';
 
-export class MockEpoque<M> implements Epoque<M> {
-  private readonly map: Consumer<Matter<M>>;
+export class MockEpoque<in out M> implements Epoque<M> {
+  private readonly map: Consumer<Exclude<M, null | undefined | void>>;
   private readonly recover: Consumer<void>;
   private readonly destroy: Consumer<unknown>;
 
-  public constructor(map: Consumer<Matter<M>>, recover: Consumer<void>, destroy: Consumer<unknown>) {
+  public constructor(map: Consumer<Exclude<M, null | undefined | void>>, recover: Consumer<void>, destroy: Consumer<unknown>) {
     this.map = map;
     this.recover = recover;
     this.destroy = destroy;
   }
 
-  public accept(value: Matter<M>): unknown {
+  public accept(value: Exclude<M, null | undefined | void>): unknown {
     return this.map(value);
   }
 

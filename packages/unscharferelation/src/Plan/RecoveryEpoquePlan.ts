@@ -1,7 +1,7 @@
 import { RecoveryPlan } from '@jamashita/genitore-plan';
 import { Epoque } from '../Epoque';
 
-export class RecoveryEpoquePlan<P> implements RecoveryPlan<void> {
+export class RecoveryEpoquePlan<out P> implements RecoveryPlan<void> {
   private readonly epoque: Epoque<P>;
 
   public static of<P>(epoque: Epoque<P>): RecoveryEpoquePlan<P> {

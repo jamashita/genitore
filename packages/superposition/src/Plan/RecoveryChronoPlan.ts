@@ -1,7 +1,7 @@
 import { RecoveryPlan } from '@jamashita/genitore-plan';
 import { Chrono } from '../Chrono';
 
-export class RecoveryChronoPlan<A, D extends Error> implements RecoveryPlan<D> {
+export class RecoveryChronoPlan<out A, out D extends Error> implements RecoveryPlan<D> {
   private readonly chrono: Chrono<A, D>;
 
   public static of<A, D extends Error>(chrono: Chrono<A, D>): RecoveryChronoPlan<A, D> {

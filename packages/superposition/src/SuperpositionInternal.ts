@@ -2,31 +2,21 @@ import { Consumer, Peek, Reject, Resolve, UnaryFunction } from '@jamashita/anden
 import {
   DestroyPassPlan,
   DestroyPlan,
-  DestroySpoilPlan,
   MapPassPlan,
   MapPlan,
-  MapSpoilPlan,
   Plan,
   RecoveryPassPlan,
   RecoveryPlan,
-  RecoverySpoilPlan
+  SpoilPlan
 } from '@jamashita/genitore-plan';
-import {
-  Alive,
-  Contradiction,
-  Dead,
-  DeadConstructor,
-  Detoxicated,
-  Schrodinger,
-  Still
-} from '@jamashita/genitore-schrodinger';
+import { Alive, Contradiction, Dead, DeadConstructor, Schrodinger, Still } from '@jamashita/genitore-schrodinger';
 import { Chrono } from './Chrono';
 import { ISuperposition, SReturnType } from './ISuperposition';
 import { AlivePlan, CombinedChronoPlan, DeadPlan, DestroyChronoPlan, MapChronoPlan, RecoveryChronoPlan } from './Plan';
 
-export class SuperpositionInternal<A, D extends Error> implements ISuperposition<A, D>, Chrono<A, D> {
+export class SuperpositionInternal<out A, out D extends Error> implements ISuperposition<A, D>, Chrono<A, D> {
   private schrodinger: Schrodinger<A, D>;
-  private readonly plans: Set<Plan<Detoxicated<A>, D>>;
+  private readonly plans: Set<Plan<Exclude<A, Error>, D>>;
   private readonly errors: Set<DeadConstructor<D>>;
 
   public static of<A, D extends Error>(func: Consumer<Chrono<A, D>>, errors: Iterable<DeadConstructor<D>>): SuperpositionInternal<A, D> {
@@ -40,14 +30,14 @@ export class SuperpositionInternal<A, D extends Error> implements ISuperposition
     func(this);
   }
 
-  public accept(value: Detoxicated<A>): void {
+  public accept(value: Exclude<A, Error>): void {
     if (this.settled()) {
       return;
     }
 
     this.schrodinger = Alive.of(value);
 
-    this.plans.forEach((plan: MapPlan<Detoxicated<A>>) => {
+    this.plans.forEach((plan: MapPlan<Exclude<A, Error>>) => {
       plan.onMap(value);
     });
   }
@@ -70,10 +60,10 @@ export class SuperpositionInternal<A, D extends Error> implements ISuperposition
     });
   }
 
-  public get(): Promise<Detoxicated<A>> {
-    return new Promise((resolve: Resolve<Detoxicated<A>>, reject: Reject) => {
+  public get(): Promise<Exclude<A, Error>> {
+    return new Promise((resolve: Resolve<Exclude<A, Error>>, reject: Reject) => {
       this.pass(
-        (value: Detoxicated<A>) => {
+        (value: Exclude<A, Error>) => {
           resolve(value);
         },
         (value: D) => {
@@ -90,7 +80,7 @@ export class SuperpositionInternal<A, D extends Error> implements ISuperposition
     return new Set(this.errors);
   }
 
-  private handle(map: MapPlan<Detoxicated<A>>, recover: RecoveryPlan<D>, destroy: DestroyPlan): unknown {
+  private handle(map: MapPlan<Exclude<A, Error>>, recover: RecoveryPlan<D>, destroy: DestroyPlan): unknown {
     if (this.schrodinger.isAlive()) {
       return map.onMap(this.schrodinger.get());
     }
@@ -104,26 +94,26 @@ export class SuperpositionInternal<A, D extends Error> implements ISuperposition
     return this.plans.add(CombinedChronoPlan.of(map, recover, destroy));
   }
 
-  public ifAlive(consumer: Consumer<Detoxicated<A>>): this {
-    this.handle(MapPassPlan.of(consumer), RecoverySpoilPlan.of(), DestroySpoilPlan.of());
+  public ifAlive(consumer: Consumer<Exclude<A, Error>>): this {
+    this.handle(MapPassPlan.of(consumer), SpoilPlan.of(), SpoilPlan.of());
 
     return this;
   }
 
   public ifContradiction(consumer: Consumer<unknown>): this {
-    this.handle(MapSpoilPlan.of(), RecoverySpoilPlan.of(), DestroyPassPlan.of(consumer));
+    this.handle(SpoilPlan.of(), SpoilPlan.of(), DestroyPassPlan.of(consumer));
 
     return this;
   }
 
   public ifDead(consumer: Consumer<D>): this {
-    this.handle(MapSpoilPlan.of(), RecoveryPassPlan.of(consumer), DestroySpoilPlan.of());
+    this.handle(SpoilPlan.of(), RecoveryPassPlan.of(consumer), SpoilPlan.of());
 
     return this;
   }
 
   public map<B = A, E extends Error = D>(
-    mapper: UnaryFunction<Detoxicated<A>, SReturnType<B, E>>,
+    mapper: UnaryFunction<Exclude<A, Error>, SReturnType<B, E>>,
     ...errors: Array<DeadConstructor<E>>
   ): SuperpositionInternal<B, D | E> {
     return SuperpositionInternal.of<B, D | E>((chrono: Chrono<B, D | E>) => {
@@ -131,7 +121,7 @@ export class SuperpositionInternal<A, D extends Error> implements ISuperposition
     }, [...this.errors, ...errors]);
   }
 
-  public pass(accepted: Consumer<Detoxicated<A>>, declined: Consumer<D>, thrown: Consumer<unknown>): this {
+  public pass(accepted: Consumer<Exclude<A, Error>>, declined: Consumer<D>, thrown: Consumer<unknown>): this {
     this.handle(MapPassPlan.of(accepted), RecoveryPassPlan.of(declined), DestroyPassPlan.of(thrown));
 
     return this;
@@ -185,7 +175,7 @@ export class SuperpositionInternal<A, D extends Error> implements ISuperposition
   }
 
   public transform<B = A, E extends Error = D>(
-    alive: UnaryFunction<Detoxicated<A>, SReturnType<B, E>>,
+    alive: UnaryFunction<Exclude<A, Error>, SReturnType<B, E>>,
     dead: UnaryFunction<D, SReturnType<B, E>>,
     ...errors: Array<DeadConstructor<E>>
   ): SuperpositionInternal<B, E> {

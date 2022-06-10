@@ -1,4 +1,4 @@
-import { PassThroughPlan } from '@jamashita/genitore-plan';
+import { PassPlan } from '@jamashita/genitore-plan';
 import { CombinedEpoquePlan } from '../CombinedEpoquePlan';
 
 describe('CombinedEpoquePlan', () => {
@@ -10,7 +10,7 @@ describe('CombinedEpoquePlan', () => {
       const fn2: jest.Mock = jest.fn();
       const fn3: jest.Mock = jest.fn();
 
-      const pass: PassThroughPlan<number, void> = PassThroughPlan.of(
+      const pass: PassPlan<number, void> = PassPlan.of(
         (v: number) => {
           fn1();
           expect(v).toBe(value);
@@ -38,7 +38,7 @@ describe('CombinedEpoquePlan', () => {
       const fn2: jest.Mock = jest.fn();
       const fn3: jest.Mock = jest.fn();
 
-      const pass: PassThroughPlan<number, void> = PassThroughPlan.of(
+      const pass: PassPlan<number, void> = PassPlan.of(
         () => {
           fn1();
         },
@@ -67,7 +67,7 @@ describe('CombinedEpoquePlan', () => {
       const fn2: jest.Mock = jest.fn();
       const fn3: jest.Mock = jest.fn();
 
-      const pass: PassThroughPlan<number, void> = PassThroughPlan.of(
+      const pass: PassPlan<number, void> = PassPlan.of(
         () => {
           fn1();
         },

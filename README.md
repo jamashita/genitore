@@ -12,10 +12,10 @@ This package contains Optional monad and Result monad that support asynchronousl
 
 ```
 > node -v
-v16.6.0
+v18.0.0
 
 > npm -v
-7.19.1
+8.6.0
 
 > yarn -v
 1.22.18
