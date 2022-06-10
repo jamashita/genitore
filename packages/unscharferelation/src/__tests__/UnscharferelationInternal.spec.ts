@@ -1,5 +1,5 @@
 import { MockRuntimeError } from '@jamashita/anden-error';
-import { Heisenberg, HeisenbergError, Matter } from '@jamashita/genitore-heisenberg';
+import { Heisenberg, HeisenbergError } from '@jamashita/genitore-heisenberg';
 import { Plan } from '@jamashita/genitore-plan';
 import { Epoque } from '../Epoque';
 import { UnscharferelationError } from '../UnscharferelationError';
@@ -36,7 +36,7 @@ describe('UnscharferelationInternal', () => {
 
       const fn: jest.Mock = jest.fn();
 
-      const plans: Set<Plan<Matter<number>, void>> = new Set();
+      const plans: Set<Plan<Exclude<number, null | undefined | void>, void>> = new Set();
 
       plans.forEach = fn;
 
@@ -97,7 +97,7 @@ describe('UnscharferelationInternal', () => {
     it('does nothing if done once', async () => {
       const fn: jest.Mock = jest.fn();
 
-      const plans: Set<Plan<Matter<number>, void>> = new Set();
+      const plans: Set<Plan<Exclude<number, null | undefined | void>, void>> = new Set();
 
       plans.forEach = fn;
 
@@ -155,7 +155,7 @@ describe('UnscharferelationInternal', () => {
 
       const fn: jest.Mock = jest.fn();
 
-      const plans: Set<Plan<Matter<number>, void>> = new Set();
+      const plans: Set<Plan<Exclude<number, null | undefined | void>, void>> = new Set();
 
       plans.forEach = fn;
 

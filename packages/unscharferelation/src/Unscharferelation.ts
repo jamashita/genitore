@@ -1,5 +1,5 @@
-import { Consumer, Kind, Peek, Supplier, Sync, UnaryFunction } from '@jamashita/anden-type';
-import { Heisenberg } from '@jamashita/genitore-heisenberg';
+import { Consumer, Kind, Peek, Supplier, UnaryFunction } from '@jamashita/anden-type';
+import { Heisenberg, Present } from '@jamashita/genitore-heisenberg';
 import { Epoque } from './Epoque';
 import { IUnscharferelation, UReturnType } from './IUnscharferelation';
 import { UnscharferelationError } from './UnscharferelationError';
@@ -8,28 +8,11 @@ import { UnscharferelationInternal } from './UnscharferelationInternal';
 export class Unscharferelation<out P> implements IUnscharferelation<P> {
   private readonly internal: IUnscharferelation<P>;
 
-  // FIXME DELETE
-  public static absent<P>(value: PromiseLike<null | undefined | void> | null | undefined | void): Unscharferelation<Sync<P>> {
-    return Unscharferelation.of((epoque: Epoque<Sync<P>>) => {
-      if (Kind.isPromiseLike<null | undefined | void>(value)) {
-        return value.then(
-          () => {
-            return epoque.decline();
-          },
-          (e: unknown) => {
-            return epoque.throw(e);
-          }
-        );
-      }
-      return epoque.decline();
-    });
-  }
-
   public static all<P>(unscharferelations: Iterable<Unscharferelation<P>>): Unscharferelation<Array<P>> {
     const us: Array<Unscharferelation<P>> = [...unscharferelations];
 
     if (us.length === 0) {
-      return Unscharferelation.present([]);
+      return Unscharferelation.ofHeisenberg(Present.of([]));
     }
 
     const promises: Array<Promise<Heisenberg<P>>> = us.map((u: Unscharferelation<P>): Promise<Heisenberg<P>> => {
@@ -72,8 +55,8 @@ export class Unscharferelation<out P> implements IUnscharferelation<P> {
     return Promise.all(promises);
   }
 
-  public static maybe<P>(value: P | PromiseLike<P>): Unscharferelation<Sync<P>> {
-    return Unscharferelation.of((epoque: Epoque<Sync<P>>) => {
+  public static maybe<P>(value: P | PromiseLike<null | undefined | void> | PromiseLike<P> | null | undefined | void): Unscharferelation<Awaited<P>> {
+    return Unscharferelation.of((epoque: Epoque<Awaited<P>>) => {
       if (Kind.isNone(value)) {
         return epoque.decline();
       }
@@ -85,7 +68,7 @@ export class Unscharferelation<out P> implements IUnscharferelation<P> {
               return epoque.decline();
             }
 
-            return epoque.accept(v as Exclude<Sync<P>, null | undefined | void>);
+            return epoque.accept(v as Exclude<Awaited<P>, null | undefined | void>);
           },
           () => {
             return epoque.throw(new UnscharferelationError('REJECTED'));
@@ -93,16 +76,16 @@ export class Unscharferelation<out P> implements IUnscharferelation<P> {
         );
       }
 
-      return epoque.accept(value as Exclude<Sync<P>, null | undefined | void>);
+      return epoque.accept(value as Exclude<Awaited<P>, null | undefined | void>);
     });
   }
 
-  public static of<P>(func: Consumer<Epoque<Sync<P>>>): Unscharferelation<Sync<P>> {
+  public static of<P>(func: Consumer<Epoque<Awaited<P>>>): Unscharferelation<Awaited<P>> {
     return Unscharferelation.ofUnscharferelation(UnscharferelationInternal.of(func));
   }
 
-  public static ofHeisenberg<P>(heisenberg: Heisenberg<Sync<P>>): Unscharferelation<Sync<P>> {
-    return Unscharferelation.of((epoque: Epoque<Sync<P>>) => {
+  public static ofHeisenberg<P>(heisenberg: Heisenberg<Awaited<P>>): Unscharferelation<Awaited<P>> {
+    return Unscharferelation.of((epoque: Epoque<Awaited<P>>) => {
       if (heisenberg.isPresent()) {
         return epoque.accept(heisenberg.get());
       }
@@ -119,24 +102,6 @@ export class Unscharferelation<out P> implements IUnscharferelation<P> {
 
   public static ofUnscharferelation<P>(unscharferelation: IUnscharferelation<P>): Unscharferelation<P> {
     return new Unscharferelation(unscharferelation);
-  }
-
-  // FIXME DELETE
-  public static present<P>(value: Exclude<P, PromiseLike<null | undefined | void> | null | undefined | void>): Unscharferelation<Sync<P>> {
-    return Unscharferelation.of((epoque: Epoque<Sync<P>>) => {
-      if (Kind.isPromiseLike<P>(value)) {
-        return value.then(
-          (v: P) => {
-            return epoque.accept(v as Exclude<Sync<P>, null | undefined | void>);
-          },
-          (e: unknown) => {
-            return epoque.throw(e);
-          }
-        );
-      }
-
-      return epoque.accept(value as Exclude<Sync<P>, null | undefined | void>);
-    });
   }
 
   protected constructor(internal: IUnscharferelation<P>) {

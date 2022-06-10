@@ -1,5 +1,5 @@
 import { Consumer, Kind, Nullable, Peek, Supplier, Sync, UnaryFunction } from '@jamashita/anden-type';
-import { DeadConstructor, Schrodinger } from '@jamashita/genitore-schrodinger';
+import { Alive, DeadConstructor, Schrodinger } from '@jamashita/genitore-schrodinger';
 import { Chrono } from './Chrono';
 import { containsError, ISuperposition, SReturnType } from './ISuperposition';
 import { SuperpositionError } from './SuperpositionError';
@@ -8,28 +8,11 @@ import { SuperpositionInternal } from './SuperpositionInternal';
 export class Superposition<out A, out D extends Error> implements ISuperposition<A, D> {
   private readonly internal: ISuperposition<A, D>;
 
-  public static alive<A, D extends Error>(value: Exclude<A, Error> | Exclude<PromiseLike<A>, Error>, ...errors: ReadonlyArray<DeadConstructor<D>>): Superposition<Sync<A>, D> {
-    return Superposition.of((chrono: Chrono<Sync<A>, D>) => {
-      if (Kind.isPromiseLike<A>(value)) {
-        return value.then(
-          (v: A) => {
-            return chrono.accept(v as Exclude<Sync<A>, Error>);
-          },
-          (e: unknown) => {
-            return chrono.throw(e);
-          }
-        );
-      }
-
-      return chrono.accept(value as Exclude<Sync<A>, Error>);
-    }, ...errors);
-  }
-
   public static all<A, D extends Error>(superpositions: Iterable<Superposition<A, D>>): Superposition<Array<A>, D> {
     const ss: Array<Superposition<A, D>> = [...superpositions];
 
     if (ss.length === 0) {
-      return Superposition.alive([]);
+      return Superposition.ofSchrodinger(Alive.of([]));
     }
 
     const promises: Array<Promise<Schrodinger<A, D>>> = ss.map((s: Superposition<A, D>): Promise<Schrodinger<A, D>> => {
@@ -76,34 +59,6 @@ export class Superposition<out A, out D extends Error> implements ISuperposition
     });
 
     return Promise.all(promises);
-  }
-
-  public static dead<A, D extends Error>(error: D | PromiseLike<D>, ...errors: ReadonlyArray<DeadConstructor<D>>): Superposition<Sync<A>, D> {
-    return Superposition.of((chrono: Chrono<Sync<A>, D>) => {
-      if (Kind.isPromiseLike<D>(error)) {
-        return error.then(
-          (v: D) => {
-            if (containsError(v, chrono.getErrors())) {
-              return chrono.decline(v);
-            }
-
-            return chrono.throw(new SuperpositionError('NOT REJECTED'));
-          },
-          (e: unknown) => {
-            if (containsError(e, chrono.getErrors())) {
-              return chrono.decline(e);
-            }
-
-            return chrono.throw(e);
-          }
-        );
-      }
-      if (containsError(error, chrono.getErrors())) {
-        return chrono.decline(error);
-      }
-
-      return chrono.throw(error);
-    }, ...errors);
   }
 
   public static of<A, D extends Error>(func: Consumer<Chrono<Sync<A>, D>>, ...errors: ReadonlyArray<DeadConstructor<D>>): Superposition<Sync<A>, D> {

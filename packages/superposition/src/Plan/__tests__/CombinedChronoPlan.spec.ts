@@ -1,5 +1,5 @@
 import { MockRuntimeError } from '@jamashita/anden-error';
-import { PassThroughPlan } from '@jamashita/genitore-plan';
+import { PassPlan } from '@jamashita/genitore-plan';
 import { CombinedChronoPlan } from '../CombinedChronoPlan';
 
 describe('CombinedChronoPlan', () => {
@@ -11,7 +11,7 @@ describe('CombinedChronoPlan', () => {
       const fn2: jest.Mock = jest.fn();
       const fn3: jest.Mock = jest.fn();
 
-      const pass: PassThroughPlan<number, MockRuntimeError> = PassThroughPlan.of(
+      const pass: PassPlan<number, MockRuntimeError> = PassPlan.of(
         (v: number) => {
           fn1();
           expect(v).toBe(value);
@@ -41,7 +41,7 @@ describe('CombinedChronoPlan', () => {
       const fn2: jest.Mock = jest.fn();
       const fn3: jest.Mock = jest.fn();
 
-      const pass: PassThroughPlan<number, MockRuntimeError> = PassThroughPlan.of(
+      const pass: PassPlan<number, MockRuntimeError> = PassPlan.of(
         () => {
           fn1();
         },
@@ -71,7 +71,7 @@ describe('CombinedChronoPlan', () => {
       const fn2: jest.Mock = jest.fn();
       const fn3: jest.Mock = jest.fn();
 
-      const pass: PassThroughPlan<number, MockRuntimeError> = PassThroughPlan.of(
+      const pass: PassPlan<number, MockRuntimeError> = PassPlan.of(
         () => {
           fn1();
         },

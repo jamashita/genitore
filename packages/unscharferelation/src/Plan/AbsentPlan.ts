@@ -58,7 +58,7 @@ export class AbsentPlan<P> implements RecoveryPlan<void> {
               return this.forUnscharferelation(v);
             }
 
-            return this.forOther(v as null | undefined | void);
+            return this.forOther(v);
           },
           (e: unknown) => {
             return this.epoque.throw(e);
@@ -66,7 +66,7 @@ export class AbsentPlan<P> implements RecoveryPlan<void> {
         );
       }
 
-      return this.forOther(mapped as null | undefined | void);
+      return this.forOther(mapped);
     }
     catch (err: unknown) {
       return this.epoque.throw(err);

@@ -1,5 +1,6 @@
 import { MockRuntimeError } from '@jamashita/anden-error';
 import { Resolve } from '@jamashita/anden-type';
+import { Alive, Dead } from '@jamashita/genitore-schrodinger';
 import { Chrono } from '../../Chrono';
 import { MockChrono } from '../../mock/MockChrono';
 import { Superposition } from '../../Superposition';
@@ -17,7 +18,7 @@ describe('DeadPlan', () => {
       const fn4: jest.Mock = jest.fn();
 
       await new Promise((resolve: Resolve<void>) => {
-        const plan: DeadPlan<number, MockRuntimeError, MockRuntimeError> = DeadPlan.of<number, MockRuntimeError, MockRuntimeError>(
+        const plan: DeadPlan<number, MockRuntimeError, MockRuntimeError> = DeadPlan.of(
           (e: MockRuntimeError) => {
             fn1();
             expect(e).toBe(error);
@@ -69,7 +70,7 @@ describe('DeadPlan', () => {
             fn1();
             expect(e).toBe(error);
 
-            return Promise.resolve<number>(value);
+            return Promise.resolve(value);
           },
           new MockChrono(
             (n: number) => {
@@ -111,12 +112,12 @@ describe('DeadPlan', () => {
       const fn4: jest.Mock = jest.fn();
 
       await new Promise((resolve: Resolve<void>) => {
-        const plan: DeadPlan<number, MockRuntimeError, MockRuntimeError> = DeadPlan.of<number, MockRuntimeError, MockRuntimeError>(
+        const plan: DeadPlan<number, MockRuntimeError, MockRuntimeError> = DeadPlan.of(
           (e: MockRuntimeError) => {
             fn1();
             expect(e).toBe(error);
 
-            return Superposition.alive<number, MockRuntimeError>(value);
+            return Superposition.ofSchrodinger(Alive.of(value));
           },
           new MockChrono(
             (n: number) => {
@@ -158,12 +159,12 @@ describe('DeadPlan', () => {
       const fn4: jest.Mock = jest.fn();
 
       await new Promise((resolve: Resolve<void>) => {
-        const plan: DeadPlan<number, MockRuntimeError, MockRuntimeError> = DeadPlan.of<number, MockRuntimeError, MockRuntimeError>(
+        const plan: DeadPlan<number, MockRuntimeError, MockRuntimeError> = DeadPlan.of(
           (e: MockRuntimeError) => {
             fn1();
             expect(e).toBe(error);
 
-            return Promise.resolve<Superposition<number, MockRuntimeError>>(Superposition.alive<number, MockRuntimeError>(value));
+            return Promise.resolve(Superposition.ofSchrodinger(Alive.of(value)));
           },
           new MockChrono(
             (n: number) => {
@@ -204,7 +205,7 @@ describe('DeadPlan', () => {
       const fn4: jest.Mock = jest.fn();
 
       await new Promise((resolve: Resolve<void>) => {
-        const plan: DeadPlan<number, MockRuntimeError, MockRuntimeError> = DeadPlan.of<number, MockRuntimeError, MockRuntimeError>(
+        const plan: DeadPlan<number, MockRuntimeError, MockRuntimeError> = DeadPlan.of(
           (e: MockRuntimeError) => {
             fn1();
             expect(e).toBe(error);
@@ -296,12 +297,12 @@ describe('DeadPlan', () => {
       const fn4: jest.Mock = jest.fn();
 
       await new Promise((resolve: Resolve<void>) => {
-        const plan: DeadPlan<number, MockRuntimeError, MockRuntimeError> = DeadPlan.of<number, MockRuntimeError, MockRuntimeError>(
+        const plan: DeadPlan<number, MockRuntimeError, MockRuntimeError> = DeadPlan.of(
           (e: MockRuntimeError) => {
             fn1();
             expect(e).toBe(error);
 
-            return Superposition.dead<number, MockRuntimeError>(error, MockRuntimeError);
+            return Superposition.ofSchrodinger(Dead.of(error), MockRuntimeError);
           },
           new MockChrono(
             () => {
@@ -342,12 +343,12 @@ describe('DeadPlan', () => {
       const fn4: jest.Mock = jest.fn();
 
       await new Promise((resolve: Resolve<void>) => {
-        const plan: DeadPlan<number, MockRuntimeError, MockRuntimeError> = DeadPlan.of<number, MockRuntimeError, MockRuntimeError>(
+        const plan: DeadPlan<number, MockRuntimeError, MockRuntimeError> = DeadPlan.of(
           (e: MockRuntimeError) => {
             fn1();
             expect(e).toBe(error);
 
-            return Promise.resolve<Superposition<number, MockRuntimeError>>(Superposition.dead<number, MockRuntimeError>(error, MockRuntimeError));
+            return Promise.resolve(Superposition.ofSchrodinger(Dead.of(error), MockRuntimeError));
           },
           new MockChrono(
             () => {
@@ -388,7 +389,7 @@ describe('DeadPlan', () => {
       const fn4: jest.Mock = jest.fn();
 
       await new Promise((resolve: Resolve<void>) => {
-        const plan: DeadPlan<number, MockRuntimeError, MockRuntimeError> = DeadPlan.of<number, MockRuntimeError, MockRuntimeError>(
+        const plan: DeadPlan<number, MockRuntimeError, MockRuntimeError> = DeadPlan.of(
           (e: MockRuntimeError) => {
             fn1();
             expect(e).toBe(error);
@@ -477,12 +478,12 @@ describe('DeadPlan', () => {
       const fn3: jest.Mock = jest.fn();
       const fn4: jest.Mock = jest.fn();
 
-      const plan: DeadPlan<number, MockRuntimeError, MockRuntimeError> = DeadPlan.of<number, MockRuntimeError, MockRuntimeError>(
+      const plan: DeadPlan<number, MockRuntimeError, MockRuntimeError> = DeadPlan.of(
         (e: MockRuntimeError) => {
           fn1();
           expect(e).toBe(error);
 
-          return Superposition.of<number, MockRuntimeError>((c: Chrono<number, MockRuntimeError>) => {
+          return Superposition.of((c: Chrono<number, MockRuntimeError>) => {
             return c.throw(error);
           });
         },
@@ -517,12 +518,12 @@ describe('DeadPlan', () => {
       const fn4: jest.Mock = jest.fn();
 
       await new Promise((resolve: Resolve<void>) => {
-        const plan: DeadPlan<number, MockRuntimeError, MockRuntimeError> = DeadPlan.of<number, MockRuntimeError, MockRuntimeError>(
+        const plan: DeadPlan<number, MockRuntimeError, MockRuntimeError> = DeadPlan.of(
           (e: MockRuntimeError) => {
             fn1();
             expect(e).toBe(error);
 
-            return Promise.resolve<Superposition<number, MockRuntimeError>>(Superposition.of<number, MockRuntimeError>((c: Chrono<number, MockRuntimeError>) => {
+            return Promise.resolve(Superposition.of((c: Chrono<number, MockRuntimeError>) => {
               return c.throw(error);
             }));
           },
