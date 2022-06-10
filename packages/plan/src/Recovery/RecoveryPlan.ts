@@ -1,3 +1,3 @@
-export interface RecoveryPlan<in out R> {
+export interface RecoveryPlan<out R> {
   onRecover(value: R): unknown;
 }

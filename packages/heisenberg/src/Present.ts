@@ -4,7 +4,7 @@ import { Absent } from './Absent';
 import { Heisenberg, HeisenbergState } from './Heisenberg';
 import { Lost } from './Lost';
 
-export class Present<in out P> implements Heisenberg<P> {
+export class Present<out P> implements Heisenberg<P> {
   private readonly value: Exclude<P, null | undefined | void>;
 
   public static of<P>(value: Exclude<P, null | undefined | void>): Present<P> {

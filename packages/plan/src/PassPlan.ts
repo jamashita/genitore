@@ -1,6 +1,7 @@
 import { Consumer } from '@jamashita/anden-type';
 import { Plan } from './Plan';
 
+// FIXME do i need it?
 export class PassPlan<in out M, in out R> implements Plan<M, R> {
   private readonly map: Consumer<M>;
   private readonly recover: Consumer<R>;

@@ -5,7 +5,7 @@ import { Present } from './Present';
 
 export type HeisenbergState = 'ABSENT' | 'LOST' | 'PRESENT' | 'UNCERTAIN';
 
-export interface Heisenberg<in out P> extends Serializable {
+export interface Heisenberg<out P> extends Serializable {
   get(): Exclude<P, null | undefined | void>;
 
   getState(): HeisenbergState;

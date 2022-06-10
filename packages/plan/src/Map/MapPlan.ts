@@ -1,3 +1,3 @@
-export interface MapPlan<in out M> {
+export interface MapPlan<out M> {
   onMap(value: M): unknown;
 }
