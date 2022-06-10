@@ -1,35 +1,18 @@
-import { Consumer, Kind, Nullable, Peek, Supplier, Sync, SyncAsync, UnaryFunction } from '@jamashita/anden-type';
-import { DeadConstructor, Detoxicated, Schrodinger } from '@jamashita/genitore-schrodinger';
+import { Consumer, Kind, Nullable, Peek, Supplier, Sync, UnaryFunction } from '@jamashita/anden-type';
+import { Alive, DeadConstructor, Schrodinger } from '@jamashita/genitore-schrodinger';
 import { Chrono } from './Chrono';
 import { containsError, ISuperposition, SReturnType } from './ISuperposition';
 import { SuperpositionError } from './SuperpositionError';
 import { SuperpositionInternal } from './SuperpositionInternal';
 
-export class Superposition<A, D extends Error> implements ISuperposition<A, D> {
+export class Superposition<out A, out D extends Error> implements ISuperposition<A, D> {
   private readonly internal: ISuperposition<A, D>;
-
-  public static alive<A, D extends Error>(value: SyncAsync<Detoxicated<A>>, ...errors: ReadonlyArray<DeadConstructor<D>>): Superposition<Sync<A>, D> {
-    return Superposition.of((chrono: Chrono<Sync<A>, D>) => {
-      if (Kind.isPromiseLike<A>(value)) {
-        return value.then(
-          (v: A) => {
-            return chrono.accept(v as Sync<A>);
-          },
-          (e: unknown) => {
-            return chrono.throw(e);
-          }
-        );
-      }
-
-      return chrono.accept(value as Sync<A>);
-    }, ...errors);
-  }
 
   public static all<A, D extends Error>(superpositions: Iterable<Superposition<A, D>>): Superposition<Array<A>, D> {
     const ss: Array<Superposition<A, D>> = [...superpositions];
 
     if (ss.length === 0) {
-      return Superposition.alive([]);
+      return Superposition.ofSchrodinger(Alive.of([]));
     }
 
     const promises: Array<Promise<Schrodinger<A, D>>> = ss.map((s: Superposition<A, D>): Promise<Schrodinger<A, D>> => {
@@ -78,30 +61,6 @@ export class Superposition<A, D extends Error> implements ISuperposition<A, D> {
     return Promise.all(promises);
   }
 
-  public static dead<A, D extends Error>(error: D | PromiseLike<Detoxicated<A>>, ...errors: ReadonlyArray<DeadConstructor<D>>): Superposition<Sync<A>, D> {
-    return Superposition.of((chrono: Chrono<Sync<A>, D>) => {
-      if (Kind.isPromiseLike<Detoxicated<A>>(error)) {
-        return error.then(
-          () => {
-            return chrono.throw(new SuperpositionError('NOT REJECTED'));
-          },
-          (e: unknown) => {
-            if (containsError(e, chrono.getErrors())) {
-              return chrono.decline(e);
-            }
-
-            return chrono.throw(e);
-          }
-        );
-      }
-      if (containsError(error, chrono.getErrors())) {
-        return chrono.decline(error);
-      }
-
-      return chrono.throw(error);
-    }, ...errors);
-  }
-
   public static of<A, D extends Error>(func: Consumer<Chrono<Sync<A>, D>>, ...errors: ReadonlyArray<DeadConstructor<D>>): Superposition<Sync<A>, D> {
     return Superposition.ofSuperposition(SuperpositionInternal.of(func, errors));
   }
@@ -128,15 +87,15 @@ export class Superposition<A, D extends Error> implements ISuperposition<A, D> {
     return new Superposition(superposition);
   }
 
-  public static playground<A, D extends Error>(supplier: Supplier<SyncAsync<Detoxicated<A>>>, ...errors: ReadonlyArray<DeadConstructor<D>>): Superposition<Sync<A>, D> {
+  public static playground<A, D extends Error>(supplier: Supplier<Exclude<A, Error> | PromiseLike<Exclude<A, Error>>>, ...errors: ReadonlyArray<DeadConstructor<D>>): Superposition<Sync<A>, D> {
     return Superposition.of((chrono: Chrono<Sync<A>, D>) => {
       try {
-        const value: SyncAsync<A> = supplier();
+        const value: Exclude<A, Error> | PromiseLike<Exclude<A, Error>> = supplier();
 
         if (Kind.isPromiseLike<A>(value)) {
           return value.then(
             (v: A) => {
-              return chrono.accept(v as Sync<A>);
+              return chrono.accept(v as Exclude<Sync<A>, Error>);
             },
             (e: unknown) => {
               if (containsError(e, chrono.getErrors())) {
@@ -148,7 +107,7 @@ export class Superposition<A, D extends Error> implements ISuperposition<A, D> {
           );
         }
 
-        return chrono.accept(value as Sync<A>);
+        return chrono.accept(value as Exclude<Sync<A>, Error>);
       }
       catch (err: unknown) {
         if (containsError(err, chrono.getErrors())) {
@@ -164,7 +123,7 @@ export class Superposition<A, D extends Error> implements ISuperposition<A, D> {
     this.internal = internal;
   }
 
-  public get(): Promise<Detoxicated<A>> {
+  public get(): Promise<Exclude<A, Error>> {
     return this.internal.get();
   }
 
@@ -172,7 +131,7 @@ export class Superposition<A, D extends Error> implements ISuperposition<A, D> {
     return this.internal.getErrors();
   }
 
-  public ifAlive(consumer: Consumer<Detoxicated<A>>): this {
+  public ifAlive(consumer: Consumer<Exclude<A, Error>>): this {
     this.internal.ifAlive(consumer);
 
     return this;
@@ -191,14 +150,14 @@ export class Superposition<A, D extends Error> implements ISuperposition<A, D> {
   }
 
   public map<B = A, E extends Error = D>(
-    mapper: UnaryFunction<Detoxicated<A>, SReturnType<B, E>>,
+    mapper: UnaryFunction<Exclude<A, Error>, SReturnType<B, E>>,
     ...errors: Array<DeadConstructor<E>>
   ): Superposition<B, D | E> {
     return Superposition.ofSuperposition(this.internal.map<B, D | E>(mapper, ...this.internal.getErrors(), ...errors));
   }
 
   public pass(
-    accepted: Consumer<Detoxicated<A>>,
+    accepted: Consumer<Exclude<A, Error>>,
     declined: Consumer<D>,
     thrown: Consumer<unknown>
   ): this {
@@ -233,7 +192,7 @@ export class Superposition<A, D extends Error> implements ISuperposition<A, D> {
   }
 
   public transform<B = A, E extends Error = D>(
-    alive: UnaryFunction<Detoxicated<A>, SReturnType<B, E>>,
+    alive: UnaryFunction<Exclude<A, Error>, SReturnType<B, E>>,
     dead: UnaryFunction<D, SReturnType<B, E>>,
     ...errors: Array<DeadConstructor<E>>
   ): Superposition<B, E> {

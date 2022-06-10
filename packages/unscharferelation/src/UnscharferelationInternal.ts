@@ -1,16 +1,14 @@
 import { Consumer, Peek, Reject, Resolve, Supplier, UnaryFunction } from '@jamashita/anden-type';
-import { Absent, Heisenberg, Lost, Matter, Present, Uncertain } from '@jamashita/genitore-heisenberg';
+import { Absent, Heisenberg, Lost, Present, Uncertain } from '@jamashita/genitore-heisenberg';
 import {
   DestroyPassPlan,
   DestroyPlan,
-  DestroySpoilPlan,
   MapPassPlan,
   MapPlan,
-  MapSpoilPlan,
   Plan,
   RecoveryPassPlan,
   RecoveryPlan,
-  RecoverySpoilPlan
+  SpoilPlan
 } from '@jamashita/genitore-plan';
 import { Epoque } from './Epoque';
 import { IUnscharferelation, UReturnType } from './IUnscharferelation';
@@ -24,9 +22,9 @@ import {
 } from './Plan';
 import { UnscharferelationError } from './UnscharferelationError';
 
-export class UnscharferelationInternal<P> implements IUnscharferelation<P>, Epoque<P> {
+export class UnscharferelationInternal<out P> implements IUnscharferelation<P>, Epoque<P> {
   private heisenberg: Heisenberg<P>;
-  private readonly plans: Set<Plan<Matter<P>, void>>;
+  private readonly plans: Set<Plan<P, void>>;
 
   public static of<P>(func: Consumer<Epoque<P>>): UnscharferelationInternal<P> {
     return new UnscharferelationInternal(func);
@@ -38,14 +36,14 @@ export class UnscharferelationInternal<P> implements IUnscharferelation<P>, Epoq
     func(this);
   }
 
-  public accept(value: Matter<P>): void {
+  public accept(value: Exclude<P, null | undefined | void>): void {
     if (this.settled()) {
       return;
     }
 
     this.heisenberg = Present.of(value);
 
-    this.plans.forEach((plan: MapPlan<Matter<P>>) => {
+    this.plans.forEach((plan: MapPlan<P>) => {
       plan.onMap(value);
     });
   }
@@ -62,10 +60,10 @@ export class UnscharferelationInternal<P> implements IUnscharferelation<P>, Epoq
     });
   }
 
-  public get(): Promise<Matter<P>> {
-    return new Promise((resolve: Resolve<Matter<P>>, reject: Reject) => {
+  public get(): Promise<Exclude<P, null | undefined | void>> {
+    return new Promise((resolve: Resolve<Exclude<P, null | undefined | void>>, reject: Reject) => {
       this.pass(
-        (value: Matter<P>) => {
+        (value: Exclude<P, null | undefined | void>) => {
           resolve(value);
         },
         () => {
@@ -78,7 +76,7 @@ export class UnscharferelationInternal<P> implements IUnscharferelation<P>, Epoq
     });
   }
 
-  private handle(map: MapPlan<Matter<P>>, recover: RecoveryPlan<void>, destroy: DestroyPlan): unknown {
+  private handle(map: MapPlan<Exclude<P, null | undefined | void>>, recover: RecoveryPlan<void>, destroy: DestroyPlan): unknown {
     if (this.heisenberg.isPresent()) {
       return map.onMap(this.heisenberg.get());
     }
@@ -93,30 +91,30 @@ export class UnscharferelationInternal<P> implements IUnscharferelation<P>, Epoq
   }
 
   public ifAbsent(consumer: Consumer<void>): this {
-    this.handle(MapSpoilPlan.of(), RecoveryPassPlan.of(consumer), DestroySpoilPlan.of());
+    this.handle(SpoilPlan.of(), RecoveryPassPlan.of(consumer), SpoilPlan.of());
 
     return this;
   }
 
   public ifLost(consumer: Consumer<unknown>): this {
-    this.handle(MapSpoilPlan.of(), RecoverySpoilPlan.of(), DestroyPassPlan.of(consumer));
+    this.handle(SpoilPlan.of(), SpoilPlan.of(), DestroyPassPlan.of(consumer));
 
     return this;
   }
 
-  public ifPresent(consumer: Consumer<Matter<P>>): this {
-    this.handle(MapPassPlan.of(consumer), RecoverySpoilPlan.of(), DestroySpoilPlan.of());
+  public ifPresent(consumer: Consumer<Exclude<P, null | undefined | void>>): this {
+    this.handle(MapPassPlan.of(consumer), SpoilPlan.of(), SpoilPlan.of());
 
     return this;
   }
 
-  public map<Q = P>(mapper: UnaryFunction<Matter<P>, UReturnType<Q>>): UnscharferelationInternal<Q> {
+  public map<Q = P>(mapper: UnaryFunction<Exclude<P, null | undefined | void>, UReturnType<Q>>): UnscharferelationInternal<Q> {
     return UnscharferelationInternal.of((epoque: Epoque<Q>) => {
       return this.handle(PresentPlan.of(mapper, epoque), RecoveryEpoquePlan.of(epoque), DestroyEpoquePlan.of(epoque));
     });
   }
 
-  public pass(accepted: Consumer<Matter<P>>, declined: Consumer<void>, thrown: Consumer<unknown>): this {
+  public pass(accepted: Consumer<Exclude<P, null | undefined | void>>, declined: Consumer<void>, thrown: Consumer<unknown>): this {
     this.handle(MapPassPlan.of(accepted), RecoveryPassPlan.of(declined), DestroyPassPlan.of(thrown));
 
     return this;
@@ -129,7 +127,7 @@ export class UnscharferelationInternal<P> implements IUnscharferelation<P>, Epoq
   }
 
   public recover<Q = P>(mapper: Supplier<UReturnType<Q>>): UnscharferelationInternal<P | Q> {
-    return UnscharferelationInternal.of((epoque: Epoque<P | Q>) => {
+    return UnscharferelationInternal.of<P | Q>((epoque: Epoque<P | Q>) => {
       return this.handle(MapEpoquePlan.of(epoque), AbsentPlan.of(mapper, epoque), DestroyEpoquePlan.of(epoque));
     });
   }

@@ -1,4 +1,5 @@
 import { MockRuntimeError } from '@jamashita/anden-error';
+import { Alive } from '@jamashita/genitore-schrodinger';
 import { Chrono } from '../Chrono';
 import { containsError, isSuperposition } from '../ISuperposition';
 import { Superposition } from '../Superposition';
@@ -7,7 +8,7 @@ import { SuperpositionInternal } from '../SuperpositionInternal';
 describe('ISuperposition', () => {
   describe('isSuperposition', () => {
     it('returns true if ISuperposition methods the given object have', () => {
-      const superposition1: Superposition<number, MockRuntimeError> = Superposition.alive(4);
+      const superposition1: Superposition<number, MockRuntimeError> = Superposition.ofSchrodinger(Alive.of(4));
       const superposition2: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.decline(new MockRuntimeError(''));

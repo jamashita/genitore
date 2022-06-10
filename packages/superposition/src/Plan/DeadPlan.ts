@@ -1,10 +1,9 @@
 import { Kind, UnaryFunction } from '@jamashita/anden-type';
 import { RecoveryPlan } from '@jamashita/genitore-plan';
-import { Detoxicated } from '@jamashita/genitore-schrodinger';
 import { Chrono } from '../Chrono';
 import { containsError, isSuperposition, ISuperposition, SReturnType } from '../ISuperposition';
 
-export class DeadPlan<B, D extends Error, E extends Error> implements RecoveryPlan<D> {
+export class DeadPlan<out B, in out D extends Error, E extends Error> implements RecoveryPlan<D> {
   private readonly mapper: UnaryFunction<D, SReturnType<B, E>>;
   private readonly chrono: Chrono<B, E>;
 
@@ -31,7 +30,7 @@ export class DeadPlan<B, D extends Error, E extends Error> implements RecoveryPl
     return this.chrono.throw(e);
   }
 
-  private forOther(v: Detoxicated<B>): unknown {
+  private forOther(v: Exclude<B, Error>): unknown {
     if (v instanceof Error) {
       return this.forError(v);
     }
@@ -43,7 +42,7 @@ export class DeadPlan<B, D extends Error, E extends Error> implements RecoveryPl
     this.chrono.catch([...this.chrono.getErrors(), ...superposition.getErrors()]);
 
     return superposition.pass(
-      (v: Detoxicated<B>) => {
+      (v: Exclude<B, Error>) => {
         return this.chrono.accept(v);
       },
       (e: E) => {
@@ -62,9 +61,9 @@ export class DeadPlan<B, D extends Error, E extends Error> implements RecoveryPl
       if (isSuperposition(mapped)) {
         return this.forSuperposition(mapped);
       }
-      if (Kind.isPromiseLike<Detoxicated<B> | ISuperposition<B, E>>(mapped)) {
+      if (Kind.isPromiseLike<Exclude<B, Error> | ISuperposition<B, E>>(mapped)) {
         return mapped.then(
-          (v: Detoxicated<B> | ISuperposition<B, E>) => {
+          (v: Exclude<B, Error> | ISuperposition<B, E>) => {
             if (isSuperposition(v)) {
               return this.forSuperposition(v);
             }

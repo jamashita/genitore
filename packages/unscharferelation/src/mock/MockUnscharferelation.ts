@@ -1,9 +1,9 @@
 import { UnimplementedError } from '@jamashita/anden-error';
 import { ValueObject } from '@jamashita/anden-object';
-import { Heisenberg, Matter } from '@jamashita/genitore-heisenberg';
+import { Heisenberg } from '@jamashita/genitore-heisenberg';
 import { IUnscharferelation } from '../IUnscharferelation';
 
-export class MockUnscharferelation<P> extends ValueObject implements IUnscharferelation<P> {
+export class MockUnscharferelation<out P> extends ValueObject implements IUnscharferelation<P> {
   public constructor() {
     super();
   }
@@ -12,7 +12,7 @@ export class MockUnscharferelation<P> extends ValueObject implements IUnscharfer
     throw new UnimplementedError();
   }
 
-  public get(): Promise<Matter<P>> {
+  public get(): Promise<Exclude<P, null | undefined | void>> {
     throw new UnimplementedError();
   }
 

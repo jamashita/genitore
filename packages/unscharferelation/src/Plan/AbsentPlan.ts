@@ -1,5 +1,4 @@
 import { Kind, Supplier } from '@jamashita/anden-type';
-import { Matter, Nihil } from '@jamashita/genitore-heisenberg';
 import { RecoveryPlan } from '@jamashita/genitore-plan';
 import { Epoque } from '../Epoque';
 import { isUnscharferelation, IUnscharferelation, UReturnType } from '../IUnscharferelation';
@@ -23,17 +22,17 @@ export class AbsentPlan<P> implements RecoveryPlan<void> {
     this.epoque = epoque;
   }
 
-  private forOther(v: Nihil | P): unknown {
+  private forOther(v: P | null | undefined | void): unknown {
     if (Kind.isNone(v)) {
       return this.epoque.decline();
     }
 
-    return this.epoque.accept(v);
+    return this.epoque.accept(v as Exclude<P, null | undefined | void>);
   }
 
   private forUnscharferelation(unscharferelation: IUnscharferelation<P>): unknown {
     return unscharferelation.pass(
-      (v: Matter<P>) => {
+      (v: Exclude<P, null | undefined | void>) => {
         return this.epoque.accept(v);
       },
       () => {
@@ -52,9 +51,9 @@ export class AbsentPlan<P> implements RecoveryPlan<void> {
       if (isUnscharferelation(mapped)) {
         return this.forUnscharferelation(mapped);
       }
-      if (Kind.isPromiseLike<IUnscharferelation<P> | Nihil | P>(mapped)) {
+      if (Kind.isPromiseLike<IUnscharferelation<P> | P | null | undefined | void>(mapped)) {
         return mapped.then(
-          (v: IUnscharferelation<P> | Nihil | P) => {
+          (v: IUnscharferelation<P> | P | null | undefined | void) => {
             if (isUnscharferelation(v)) {
               return this.forUnscharferelation(v);
             }

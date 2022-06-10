@@ -1,6 +1,6 @@
-import { PassThroughPlan } from '../PassThroughPlan';
+import { PassPlan } from '../PassPlan';
 
-describe('PassThroughPlan', () => {
+describe('PassPlan', () => {
   describe('onDestroy', () => {
     it('invokes third callback when onDestroy() called', () => {
       const value: number = -35;
@@ -9,7 +9,7 @@ describe('PassThroughPlan', () => {
       const fn2: jest.Mock = jest.fn();
       const fn3: jest.Mock = jest.fn();
 
-      const plan: PassThroughPlan<number, string> = PassThroughPlan.of(
+      const plan: PassPlan<number, string> = PassPlan.of(
         () => {
           fn1();
         },
@@ -38,7 +38,7 @@ describe('PassThroughPlan', () => {
       const fn2: jest.Mock = jest.fn();
       const fn3: jest.Mock = jest.fn();
 
-      const plan: PassThroughPlan<number, string> = PassThroughPlan.of(
+      const plan: PassPlan<number, string> = PassPlan.of(
         (v: number) => {
           fn1();
           expect(v).toBe(value);
@@ -67,7 +67,7 @@ describe('PassThroughPlan', () => {
       const fn2: jest.Mock = jest.fn();
       const fn3: jest.Mock = jest.fn();
 
-      const plan: PassThroughPlan<number, string> = PassThroughPlan.of(
+      const plan: PassPlan<number, string> = PassPlan.of(
         () => {
           fn1();
         },

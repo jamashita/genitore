@@ -1,22 +1,21 @@
 import { Kind, UnaryFunction } from '@jamashita/anden-type';
 import { MapPlan } from '@jamashita/genitore-plan';
-import { Detoxicated } from '@jamashita/genitore-schrodinger';
 import { Chrono } from '../Chrono';
 import { containsError, isSuperposition, ISuperposition, SReturnType } from '../ISuperposition';
 
-export class AlivePlan<A, B, E extends Error> implements MapPlan<Detoxicated<A>> {
-  private readonly mapper: UnaryFunction<Detoxicated<A>, SReturnType<B, E>>;
+export class AlivePlan<in out A, out B, out E extends Error> implements MapPlan<Exclude<A, Error>> {
+  private readonly mapper: UnaryFunction<Exclude<A, Error>, SReturnType<B, E>>;
   private readonly chrono: Chrono<B, E>;
 
   public static of<A, B, E extends Error>(
-    mapper: UnaryFunction<Detoxicated<A>, SReturnType<B, E>>,
+    mapper: UnaryFunction<Exclude<A, Error>, SReturnType<B, E>>,
     chrono: Chrono<B, E>
   ): AlivePlan<A, B, E> {
     return new AlivePlan(mapper, chrono);
   }
 
   protected constructor(
-    mapper: UnaryFunction<Detoxicated<A>, SReturnType<B, E>>,
+    mapper: UnaryFunction<Exclude<A, Error>, SReturnType<B, E>>,
     chrono: Chrono<B, E>
   ) {
     this.mapper = mapper;
@@ -31,7 +30,7 @@ export class AlivePlan<A, B, E extends Error> implements MapPlan<Detoxicated<A>>
     return this.chrono.throw(e);
   }
 
-  private forOther(v: Detoxicated<B>): unknown {
+  private forOther(v: Exclude<B, Error>): unknown {
     if (v instanceof Error) {
       return this.forError(v);
     }
@@ -43,7 +42,7 @@ export class AlivePlan<A, B, E extends Error> implements MapPlan<Detoxicated<A>>
     this.chrono.catch([...this.chrono.getErrors(), ...superposition.getErrors()]);
 
     return superposition.pass(
-      (v: Detoxicated<B>) => {
+      (v: Exclude<B, Error>) => {
         return this.chrono.accept(v);
       },
       (e: E) => {
@@ -55,16 +54,16 @@ export class AlivePlan<A, B, E extends Error> implements MapPlan<Detoxicated<A>>
     );
   }
 
-  public onMap(value: Detoxicated<A>): unknown {
+  public onMap(value: Exclude<A, Error>): unknown {
     try {
       const mapped: SReturnType<B, E> = this.mapper(value);
 
       if (isSuperposition(mapped)) {
         return this.forSuperposition(mapped);
       }
-      if (Kind.isPromiseLike<Detoxicated<B> | ISuperposition<B, E>>(mapped)) {
+      if (Kind.isPromiseLike<Exclude<B, Error> | ISuperposition<B, E>>(mapped)) {
         return mapped.then(
-          (v: Detoxicated<B> | ISuperposition<B, E>) => {
+          (v: Exclude<B, Error> | ISuperposition<B, E>) => {
             if (isSuperposition(v)) {
               return this.forSuperposition(v);
             }
