@@ -1,7 +1,7 @@
 import { DeadConstructor } from '@jamashita/genitore-schrodinger';
 
-export interface Chrono<M, R extends Error> {
-  accept(value: M): unknown;
+export interface Chrono<out M, out R extends Error> {
+  accept(value: Exclude<M, Error>): unknown;
 
   catch(errors: Iterable<DeadConstructor<R>>): void;
 

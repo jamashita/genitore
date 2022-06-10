@@ -1,5 +1,6 @@
 import { MockRuntimeError } from '@jamashita/anden-error';
 import { Resolve } from '@jamashita/anden-type';
+import { Absent, Present } from '@jamashita/genitore-heisenberg';
 import { Epoque } from '../../Epoque';
 import { MockEpoque } from '../../mock/MockEpoque';
 import { Unscharferelation } from '../../Unscharferelation';
@@ -64,7 +65,7 @@ describe('AbsentPlan', () => {
           () => {
             fn1();
 
-            return Promise.resolve<number>(value - 6);
+            return Promise.resolve(value - 6);
           },
           new MockEpoque(
             (n: number) => {
@@ -108,7 +109,7 @@ describe('AbsentPlan', () => {
           () => {
             fn1();
 
-            return Unscharferelation.present<number>(value - 6);
+            return Unscharferelation.ofHeisenberg(Present.of(value - 6));
           },
           new MockEpoque(
             (n: number) => {
@@ -192,7 +193,7 @@ describe('AbsentPlan', () => {
       const fn4: jest.Mock = jest.fn();
 
       await new Promise((resolve: Resolve<void>) => {
-        const plan: AbsentPlan<number> = AbsentPlan.of(
+        const plan: AbsentPlan<number> = AbsentPlan.of<number>(
           () => {
             fn1();
 
@@ -233,7 +234,7 @@ describe('AbsentPlan', () => {
       const fn4: jest.Mock = jest.fn();
 
       await new Promise((resolve: Resolve<void>) => {
-        const plan: AbsentPlan<number> = AbsentPlan.of(
+        const plan: AbsentPlan<number> = AbsentPlan.of<number>(
           () => {
             fn1();
 
@@ -360,7 +361,7 @@ describe('AbsentPlan', () => {
           () => {
             fn1();
 
-            return Unscharferelation.absent();
+            return Unscharferelation.ofHeisenberg(Absent.of());
           },
           new MockEpoque(
             () => {
@@ -401,7 +402,7 @@ describe('AbsentPlan', () => {
           () => {
             fn1();
 
-            return Promise.resolve(Unscharferelation.absent());
+            return Promise.resolve(Unscharferelation.ofHeisenberg(Absent.of()));
           },
           new MockEpoque(
             () => {
@@ -488,7 +489,7 @@ describe('AbsentPlan', () => {
           () => {
             fn1();
 
-            return Promise.reject(error);
+            return Promise.reject<number>(error);
           },
           new MockEpoque(
             () => {

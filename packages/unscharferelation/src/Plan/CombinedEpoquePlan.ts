@@ -1,16 +1,15 @@
-import { Matter } from '@jamashita/genitore-heisenberg';
 import { DestroyPlan, MapPlan, Plan, RecoveryPlan } from '@jamashita/genitore-plan';
 
-export class CombinedEpoquePlan<P> implements Plan<Matter<P>, void> {
-  private readonly map: MapPlan<Matter<P>>;
+export class CombinedEpoquePlan<out P> implements Plan<Exclude<P, null | undefined | void>, void> {
+  private readonly map: MapPlan<Exclude<P, null | undefined | void>>;
   private readonly recover: RecoveryPlan<void>;
   private readonly destroy: DestroyPlan;
 
-  public static of<P>(map: MapPlan<Matter<P>>, recover: RecoveryPlan<void>, destroy: DestroyPlan): CombinedEpoquePlan<P> {
+  public static of<P>(map: MapPlan<Exclude<P, null | undefined | void>>, recover: RecoveryPlan<void>, destroy: DestroyPlan): CombinedEpoquePlan<P> {
     return new CombinedEpoquePlan(map, recover, destroy);
   }
 
-  protected constructor(map: MapPlan<Matter<P>>, recover: RecoveryPlan<void>, destroy: DestroyPlan) {
+  protected constructor(map: MapPlan<Exclude<P, null | undefined | void>>, recover: RecoveryPlan<void>, destroy: DestroyPlan) {
     this.map = map;
     this.recover = recover;
     this.destroy = destroy;
@@ -20,7 +19,7 @@ export class CombinedEpoquePlan<P> implements Plan<Matter<P>, void> {
     return this.destroy.onDestroy(cause);
   }
 
-  public onMap(value: Matter<P>): unknown {
+  public onMap(value: Exclude<P, null | undefined | void>): unknown {
     return this.map.onMap(value);
   }
 

@@ -1,6 +1,6 @@
 import { MockRuntimeError } from '@jamashita/anden-error';
 import { Plan } from '@jamashita/genitore-plan';
-import { Detoxicated, Schrodinger } from '@jamashita/genitore-schrodinger';
+import { Schrodinger } from '@jamashita/genitore-schrodinger';
 import { Chrono } from '../Chrono';
 import { SuperpositionInternal } from '../SuperpositionInternal';
 
@@ -36,7 +36,7 @@ describe('SuperpositionInternal', () => {
     it('does nothing if done once', async () => {
       const value: number = -35;
       const fn: jest.Mock = jest.fn();
-      const plans: Set<Plan<Detoxicated<number>, MockRuntimeError>> = new Set();
+      const plans: Set<Plan<Exclude<number, Error>, MockRuntimeError>> = new Set();
 
       plans.forEach = fn;
 
@@ -99,7 +99,7 @@ describe('SuperpositionInternal', () => {
     it('does nothing if done once', async () => {
       const error: MockRuntimeError = new MockRuntimeError('');
       const fn: jest.Mock = jest.fn();
-      const plans: Set<Plan<Detoxicated<number>, MockRuntimeError>> = new Set();
+      const plans: Set<Plan<Exclude<number, Error>, MockRuntimeError>> = new Set();
 
       plans.forEach = fn;
 
@@ -159,7 +159,7 @@ describe('SuperpositionInternal', () => {
     it('does nothing if done once', async () => {
       const error: MockRuntimeError = new MockRuntimeError('');
       const fn: jest.Mock = jest.fn();
-      const plans: Set<Plan<Detoxicated<number>, void>> = new Set();
+      const plans: Set<Plan<Exclude<number, Error>, void>> = new Set();
 
       plans.forEach = fn;
 

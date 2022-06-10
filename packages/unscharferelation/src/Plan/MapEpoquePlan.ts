@@ -1,8 +1,7 @@
-import { Matter } from '@jamashita/genitore-heisenberg';
 import { MapPlan } from '@jamashita/genitore-plan';
 import { Epoque } from '../Epoque';
 
-export class MapEpoquePlan<P> implements MapPlan<Matter<P>> {
+export class MapEpoquePlan<out P> implements MapPlan<Exclude<P, null | undefined | void>> {
   private readonly epoque: Epoque<P>;
 
   public static of<P>(epoque: Epoque<P>): MapEpoquePlan<P> {
@@ -13,7 +12,7 @@ export class MapEpoquePlan<P> implements MapPlan<Matter<P>> {
     this.epoque = epoque;
   }
 
-  public onMap(value: Matter<P>): unknown {
+  public onMap(value: Exclude<P, null | undefined | void>): unknown {
     return this.epoque.accept(value);
   }
 }

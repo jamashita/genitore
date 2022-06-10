@@ -1,5 +1,5 @@
-export interface Epoque<M> {
-  accept(value: M): unknown;
+export interface Epoque<out M> {
+  accept(value: Exclude<M, null | undefined | void>): unknown;
 
   decline(): unknown;
 

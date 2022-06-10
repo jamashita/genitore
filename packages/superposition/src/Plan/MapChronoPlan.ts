@@ -1,8 +1,7 @@
 import { MapPlan } from '@jamashita/genitore-plan';
-import { Detoxicated } from '@jamashita/genitore-schrodinger';
 import { Chrono } from '../Chrono';
 
-export class MapChronoPlan<A, D extends Error> implements MapPlan<Detoxicated<A>> {
+export class MapChronoPlan<out A, out D extends Error> implements MapPlan<Exclude<A, Error>> {
   private readonly chrono: Chrono<A, D>;
 
   public static of<A, D extends Error>(chrono: Chrono<A, D>): MapChronoPlan<A, D> {
@@ -13,7 +12,7 @@ export class MapChronoPlan<A, D extends Error> implements MapPlan<Detoxicated<A>
     this.chrono = chrono;
   }
 
-  public onMap(value: Detoxicated<A>): unknown {
+  public onMap(value: Exclude<A, Error>): unknown {
     return this.chrono.accept(value);
   }
 }

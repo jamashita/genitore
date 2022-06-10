@@ -1,7 +1,7 @@
 import { DestroyPlan } from '@jamashita/genitore-plan';
 import { Chrono } from '../Chrono';
 
-export class DestroyChronoPlan<A, D extends Error> implements DestroyPlan {
+export class DestroyChronoPlan<out A, out D extends Error> implements DestroyPlan {
   private readonly chrono: Chrono<A, D>;
 
   public static of<A, D extends Error>(chrono: Chrono<A, D>): DestroyChronoPlan<A, D> {
