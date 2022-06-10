@@ -1,6 +1,6 @@
 import { Plan } from './Plan';
 
-export class SpoilPlan<in out M, in out R> implements Plan<M, R> {
+export class SpoilPlan<out M, out R> implements Plan<M, R> {
   private static readonly INSTANCE: SpoilPlan<unknown, unknown> = new SpoilPlan();
 
   public static of<M, R>(): SpoilPlan<M, R> {

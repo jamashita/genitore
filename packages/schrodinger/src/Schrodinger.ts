@@ -5,7 +5,7 @@ import { Dead } from './Dead';
 
 export type SchrodingerState = 'ALIVE' | 'CONTRADICTION' | 'DEAD' | 'STILL';
 
-export interface Schrodinger<in out A, in out D extends Error> extends Serializable {
+export interface Schrodinger<out A, out D extends Error> extends Serializable {
   get(): Exclude<A, Error>;
 
   getState(): SchrodingerState;
