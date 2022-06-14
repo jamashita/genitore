@@ -9,40 +9,29 @@ export class Unscharferelation<out P> implements IUnscharferelation<P> {
   private readonly internal: IUnscharferelation<P>;
 
   public static all<P>(unscharferelations: Iterable<Unscharferelation<P>>): Unscharferelation<Array<P>> {
-    const us: Array<Unscharferelation<P>> = [...unscharferelations];
+    const hs: Array<Unscharferelation<P>> = [...unscharferelations];
 
-    if (us.length === 0) {
+    if (hs.length === 0) {
       return Unscharferelation.ofHeisenberg(Present.of([]));
     }
 
-    const promises: Array<Promise<Heisenberg<P>>> = us.map((u: Unscharferelation<P>): Promise<Heisenberg<P>> => {
+    const promises: Array<Promise<Heisenberg<P>>> = hs.map((u: Unscharferelation<P>): Promise<Heisenberg<P>> => {
       return u.terminate();
     });
 
     return Unscharferelation.of((epoque: Epoque<Array<P>>) => {
       return Promise.all(promises).then((heisenbergs: Array<Heisenberg<P>>) => {
-        const arr: Array<P> = [];
-        let absent: boolean = false;
+        const h: Heisenberg<Array<P>> = Heisenberg.all(heisenbergs);
 
-        for (const heisenberg of heisenbergs) {
-          if (heisenberg.isLost()) {
-            return epoque.throw(heisenberg.getCause());
-          }
-          if (heisenberg.isPresent()) {
-            arr.push(heisenberg.get());
-
-            continue;
-          }
-          if (heisenberg.isAbsent()) {
-            absent = true;
-          }
-        }
-
-        if (absent) {
-          return epoque.decline();
-        }
-
-        return epoque.accept(arr);
+        h.ifPresent((p: Array<P>) => {
+          epoque.accept(p);
+        });
+        h.ifAbsent(() => {
+          epoque.decline();
+        });
+        h.ifLost((cause: unknown) => {
+          epoque.throw(cause);
+        });
       });
     });
   }
