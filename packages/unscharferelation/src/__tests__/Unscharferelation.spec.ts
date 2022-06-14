@@ -10,7 +10,7 @@ describe('Unscharferelation', () => {
     it('returns Present Unscharferelation with empty array when empty array given', async () => {
       const unscharferelations: Array<Unscharferelation<number>> = [];
 
-      const heisenberg: Heisenberg<Array<number>> = await Unscharferelation.all<number>(unscharferelations).terminate();
+      const heisenberg: Heisenberg<Array<number>> = await Unscharferelation.all(unscharferelations).terminate();
 
       expect(heisenberg.isPresent()).toBe(true);
       expect(heisenberg.get()).toHaveLength(unscharferelations.length);
@@ -23,7 +23,7 @@ describe('Unscharferelation', () => {
         Unscharferelation.maybe(2)
       ];
 
-      const heisenberg: Heisenberg<Array<number>> = await Unscharferelation.all<number>(unscharferelations).terminate();
+      const heisenberg: Heisenberg<Array<number>> = await Unscharferelation.all(unscharferelations).terminate();
 
       expect(heisenberg.isPresent()).toBe(true);
 
