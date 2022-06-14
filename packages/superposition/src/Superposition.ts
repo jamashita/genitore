@@ -1,4 +1,4 @@
-import { Consumer, Kind, Nullable, Peek, Supplier, Sync, UnaryFunction } from '@jamashita/anden-type';
+import { Consumer, Kind, Peek, Supplier, Sync, UnaryFunction } from '@jamashita/anden-type';
 import { Alive, DeadConstructor, Schrodinger } from '@jamashita/genitore-schrodinger';
 import { Chrono } from './Chrono';
 import { containsError, ISuperposition, SReturnType } from './ISuperposition';
@@ -25,30 +25,17 @@ export class Superposition<out A, out D extends Error> implements ISuperposition
       });
 
       return Promise.all(promises).then((schrodingers: Array<Schrodinger<A, D>>) => {
-        const arr: Array<A> = [];
-        let error: Nullable<D> = null;
+        const s: Schrodinger<Array<A>, D> = Schrodinger.all(schrodingers);
 
-        for (const schrodinger of schrodingers) {
-          if (schrodinger.isContradiction()) {
-            return chrono.throw(schrodinger.getCause());
-          }
-          if (schrodinger.isAlive()) {
-            arr.push(schrodinger.get());
-
-            continue;
-          }
-          if (schrodinger.isDead()) {
-            if (Kind.isNull(error)) {
-              error = schrodinger.getError();
-            }
-          }
-        }
-
-        if (!Kind.isNull(error)) {
-          return chrono.decline(error);
-        }
-
-        return chrono.accept(arr);
+        s.ifAlive((a: Array<A>) => {
+          chrono.accept(a);
+        });
+        s.ifDead((err: D) => {
+          chrono.decline(err);
+        });
+        s.ifContradiction((cause: unknown) => {
+          chrono.throw(cause);
+        });
       });
     });
   }
