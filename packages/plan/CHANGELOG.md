@@ -1,3 +1,11 @@
+# [@jamashita/genitore-plan-v2.8.0](https://github.com/jamashita/genitore/compare/@jamashita/genitore-plan-v2.7.0...@jamashita/genitore-plan-v2.8.0) (2022-06-24)
+
+
+### Features
+
+* 🎸 packages updated ([8edfdc1](https://github.com/jamashita/genitore/commit/8edfdc1bb35c9cb4ca0774f5a909168f01682e96))
+* 🎸 remove converage scripts ([8dc74d3](https://github.com/jamashita/genitore/commit/8dc74d38c1df1903da66416e7e062ab98bc1b9bf))
+
 # [@jamashita/genitore-plan-v2.7.0](https://github.com/jamashita/genitore/compare/@jamashita/genitore-plan-v2.6.0...@jamashita/genitore-plan-v2.7.0) (2022-06-10)
 
 
