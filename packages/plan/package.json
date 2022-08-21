@@ -1,6 +1,6 @@
 {
   "name": "@jamashita/genitore-plan",
-  "version": "2.8.0",
+  "version": "2.9.0",
   "private": false,
   "repository": {
     "type": "git",
@@ -23,7 +23,7 @@
     "clean": "rimraf dist"
   },
   "dependencies": {
-    "@jamashita/anden-type": "2.11.0"
+    "@jamashita/anden-type": "2.12.0"
   },
   "engines": {
     "node": ">=16.0.0"
