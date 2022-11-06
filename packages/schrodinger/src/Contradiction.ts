@@ -58,4 +58,8 @@ export class Contradiction<out A, out D extends Error> implements Schrodinger<A,
   public toString(): string {
     return this.serialize();
   }
+
+  public transform<B, E extends Error>(): Contradiction<B, E> {
+    return this as unknown as Contradiction<B, E>;
+  }
 }
