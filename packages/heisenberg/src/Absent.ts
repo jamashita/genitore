@@ -54,4 +54,8 @@ export class Absent<out P> implements Heisenberg<P> {
   public toString(): string {
     return this.serialize();
   }
+
+  public transform<Q>(): Absent<Q> {
+    return this as unknown as Absent<Q>;
+  }
 }
