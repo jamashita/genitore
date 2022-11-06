@@ -1,3 +1,10 @@
+# [@jamashita/genitore-schrodinger-v2.16.0](https://github.com/jamashita/genitore/compare/@jamashita/genitore-schrodinger-v2.15.0...@jamashita/genitore-schrodinger-v2.16.0) (2022-11-06)
+
+
+### Features
+
+* 🎸 transform() ([fe97513](https://github.com/jamashita/genitore/commit/fe97513ce2db2bb84b9ac44bd17244cc3959c7fa))
+
 # [@jamashita/genitore-schrodinger-v2.15.0](https://github.com/jamashita/genitore/compare/@jamashita/genitore-schrodinger-v2.14.0...@jamashita/genitore-schrodinger-v2.15.0) (2022-10-26)
 
 
