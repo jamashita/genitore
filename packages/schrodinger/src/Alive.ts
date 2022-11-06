@@ -54,4 +54,8 @@ export class Alive<out A, out D extends Error> implements Schrodinger<A, D> {
   public toString(): string {
     return this.serialize();
   }
+
+  public transform<E extends Error>(): Alive<A, E> {
+    return this as unknown as Alive<A, E>;
+  }
 }
