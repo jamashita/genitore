@@ -58,4 +58,8 @@ export class Lost<out P> implements Heisenberg<P> {
   public toString(): string {
     return this.serialize();
   }
+
+  public transform<Q>(): Lost<Q> {
+    return this as unknown as Lost<Q>;
+  }
 }

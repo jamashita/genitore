@@ -59,4 +59,8 @@ export class Dead<out A, out D extends Error> implements Schrodinger<A, D> {
   public toString(): string {
     return this.serialize();
   }
+
+  public transform<B>(): Dead<B, D> {
+    return this as unknown as Dead<B, D>;
+  }
 }
