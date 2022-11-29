@@ -1,3 +1,10 @@
+# [@jamashita/genitore-heisenberg-v2.17.0](https://github.com/jamashita/genitore/compare/@jamashita/genitore-heisenberg-v2.16.0...@jamashita/genitore-heisenberg-v2.17.0) (2022-11-29)
+
+
+### Features
+
+* 🎸 packages updated ([9fc4f7e](https://github.com/jamashita/genitore/commit/9fc4f7e8ac19a5df0be5c4ff073fd03e86de127b))
+
 # [@jamashita/genitore-heisenberg-v2.16.0](https://github.com/jamashita/genitore/compare/@jamashita/genitore-heisenberg-v2.15.0...@jamashita/genitore-heisenberg-v2.16.0) (2022-11-06)
 
 
