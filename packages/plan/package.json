@@ -23,7 +23,7 @@
     "clean": "rimraf dist"
   },
   "dependencies": {
-    "@jamashita/anden-type": "2.12.0"
+    "@jamashita/anden-type": "2.12.1"
   },
   "engines": {
     "node": ">=16.0.0"
