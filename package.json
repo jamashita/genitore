@@ -1,6 +1,6 @@
 {
   "name": "@jamashita/genitore",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "private": false,
   "repository": {
     "type": "git",
@@ -12,37 +12,37 @@
   "exports": {
     ".": {
       "import": {
-        "types": "./dist/index.js",
+        "types": "./dist/index.d.ts",
         "default": "./dist/index.js"
       }
     },
     "./heisenberg": {
       "import": {
-        "types": "./dist/heisenberg/index.js",
+        "types": "./dist/heisenberg/index.d.ts",
         "default": "./dist/heisenberg/index.js"
       }
     },
     "./plan": {
       "import": {
-        "types": "./dist/plan/index.js",
+        "types": "./dist/plan/index.d.ts",
         "default": "./dist/plan/index.js"
       }
     },
     "./schrodinger": {
       "import": {
-        "types": "./dist/schrodinger/index.js",
+        "types": "./dist/schrodinger/index.d.ts",
         "default": "./dist/schrodinger/index.js"
       }
     },
     "./superposition": {
       "import": {
-        "types": "./dist/superposition/index.js",
+        "types": "./dist/superposition/index.d.ts",
         "default": "./dist/superposition/index.js"
       }
     },
     "./unscharferelation": {
       "import": {
-        "types": "./dist/unscharferelation/index.js",
+        "types": "./dist/unscharferelation/index.d.ts",
         "default": "./dist/unscharferelation/index.js"
       }
     }
