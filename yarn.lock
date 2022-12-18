@@ -365,10 +365,10 @@
   resolved "https://registry.yarnpkg.com/@isaacs/string-locale-compare/-/string-locale-compare-1.1.0.tgz#291c227e93fd407a96ecd59879a35809120e432b"
   integrity sha512-SQ7Kzhh9+D+ZW9MA0zkYv3VXhIDNx+LzM6EJ+/65I3QY+enU6Itte7E5XX7EWrqLW2FN4n06GWzBnPoC3th2aQ==
 
-"@jamashita/anden@1.1.0":
-  version "1.1.0"
-  resolved "https://npm.pkg.github.com/download/@jamashita/anden/1.1.0/00cd735b9d7c265d22ea3fbecd883f6eaa204f0e#00cd735b9d7c265d22ea3fbecd883f6eaa204f0e"
-  integrity sha512-+j7O84El+dwwQeKfifiPgZzjgDiGbZUsr99jCOTrHAGoR70hjN4eBfUAd1jIrg0h/seSc2hQIV4w6Rw8bikNWQ==
+"@jamashita/anden@1.1.1":
+  version "1.1.1"
+  resolved "https://npm.pkg.github.com/download/@jamashita/anden/1.1.1/1790a7af4906f6572e03c4632eb01a20faec67ad#1790a7af4906f6572e03c4632eb01a20faec67ad"
+  integrity sha512-xlJHIpYv4nJellE09Y4B6keY6dMg0U/hrupMwo7TGOM1HvTbwq4OOVZ3JcAJQsOzf+JrSnu3yK0OniXGNvsLvQ==
   dependencies:
     dayjs "1.11.7"
     object-hash "3.0.0"
@@ -6165,10 +6165,10 @@ validate-npm-package-name@^5.0.0:
   dependencies:
     builtins "^5.0.0"
 
-vite@4.0.1, "vite@^3.0.0 || ^4.0.0":
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/vite/-/vite-4.0.1.tgz#e0a54d818c28ae47fd27bcac6a4a952c6a658502"
-  integrity sha512-kZQPzbDau35iWOhy3CpkrRC7It+HIHtulAzBhMqzGHKRf/4+vmh8rPDDdv98SWQrFWo6//3ozwsRmwQIPZsK9g==
+vite@4.0.2, "vite@^3.0.0 || ^4.0.0":
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/vite/-/vite-4.0.2.tgz#909beb07995048fe5a83b35b5e827d79627457c4"
+  integrity sha512-QJaY3R+tFlTagH0exVqbgkkw45B+/bXVBzF2ZD1KB5Z8RiAoiKo60vSUf6/r4c2Vh9jfGBKM4oBI9b4/1ZJYng==
   dependencies:
     esbuild "^0.16.3"
     postcss "^8.4.20"

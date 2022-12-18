@@ -1,3 +1,10 @@
+## [2.0.1](https://github.com/jamashita/genitore/compare/v2.0.0...v2.0.1) (2022-12-18)
+
+
+### Bug Fixes
+
+* 🐛 file ([8802e34](https://github.com/jamashita/genitore/commit/8802e34070c32b3dd92cfaabefa09b8718ded1e2))
+
 # [2.0.0](https://github.com/jamashita/genitore/compare/v1.4.0...v2.0.0) (2022-12-18)
 
 
