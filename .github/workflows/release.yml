@@ -19,6 +19,8 @@ jobs:
           registry-url: 'https://npm.pkg.github.com'
           scope: '@jamashita'
           always-auth: true
+        env:
+          NODE_AUTH_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
       - name: 'Set up'
         run: 'yarn install --frozen-lockfile'
       - name: 'Compile'
