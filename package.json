@@ -62,10 +62,13 @@
     "update:install": "yarn install && yarn upgrade && yarn audit fix --force",
     "update:upgrade": "ncu --packageManager yarn --deep --upgrade"
   },
+  "dependencies": {
+    "@jamashita/anden": "1.1.0"
+  },
   "devDependencies": {
     "@commitlint/cli": "17.3.0",
     "@commitlint/config-conventional": "17.3.0",
-    "@jamashita/eslint-plugin": "1.77.0",
+    "@jamashita/eslint-plugin": "1.79.0",
     "@semantic-release/changelog": "6.0.2",
     "@semantic-release/commit-analyzer": "9.0.2",
     "@semantic-release/git": "10.0.1",
@@ -76,12 +79,12 @@
     "git-cz": "4.9.0",
     "husky": "8.0.2",
     "is-ci": "3.0.1",
-    "lint-staged": "13.0.4",
-    "npm-check-updates": "16.4.3",
+    "lint-staged": "13.1.0",
+    "npm-check-updates": "16.6.0",
     "rimraf": "3.0.2",
     "semantic-release": "19.0.5",
     "sort-package-json": "2.1.0",
-    "typescript": "4.9.3",
+    "typescript": "4.9.4",
     "vite": "4.0.1",
     "vitest": "0.25.8"
   },
