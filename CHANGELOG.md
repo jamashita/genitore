@@ -1,3 +1,10 @@
+## [2.0.2](https://github.com/jamashita/genitore/compare/v2.0.1...v2.0.2) (2022-12-18)
+
+
+### Bug Fixes
+
+* 🐛 type path ([8ff1d9d](https://github.com/jamashita/genitore/commit/8ff1d9d21d4034c6bab3998d5696754614da2c44))
+
 ## [2.0.1](https://github.com/jamashita/genitore/compare/v2.0.0...v2.0.1) (2022-12-18)
 
 

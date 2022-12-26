@@ -6,33 +6,6 @@ import { Chrono } from '../Chrono.js';
 import { SuperpositionInternal } from '../SuperpositionInternal.js';
 
 describe('SuperpositionInternal', () => {
-  describe('toString', () => {
-    it('returns its retaining Schrodinger string', () => {
-      const superposition1: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
-        (chrono: Chrono<number, MockRuntimeError>) => {
-          chrono.accept(-1);
-        },
-        [MockRuntimeError]
-      );
-      const superposition2: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
-        (chrono: Chrono<number, MockRuntimeError>) => {
-          chrono.decline(new MockRuntimeError(''));
-        },
-        [MockRuntimeError]
-      );
-      const superposition3: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
-        (chrono: Chrono<number, MockRuntimeError>) => {
-          chrono.throw(null);
-        },
-        [MockRuntimeError]
-      );
-
-      expect(superposition1.toString()).toBe('Alive: -1');
-      expect(superposition2.toString().includes('Dead: MockRuntimeError')).toBe(true);
-      expect(superposition3.toString()).toBe('Contradiction: null');
-    });
-  });
-
   describe('accept', () => {
     it('does nothing if done once', async () => {
       const value: number = -35;
