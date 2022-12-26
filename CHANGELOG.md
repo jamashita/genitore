@@ -1,3 +1,10 @@
+# [2.1.0](https://github.com/jamashita/genitore/compare/v2.0.2...v2.1.0) (2022-12-26)
+
+
+### Features
+
+* 🎸 packages updated ([154c14d](https://github.com/jamashita/genitore/commit/154c14d1c110bf3519d7f2ee2d63c59f0b454e40))
+
 ## [2.0.2](https://github.com/jamashita/genitore/compare/v2.0.1...v2.0.2) (2022-12-18)
 
 

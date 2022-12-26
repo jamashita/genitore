@@ -659,27 +659,6 @@ describe('Superposition', () => {
     });
   });
 
-  describe('toString', () => {
-    it('returns its retaining Schrodinger string', () => {
-      const superposition1: Superposition<number, MockRuntimeError> = Superposition.playground(() => {
-        return -1;
-      }, MockRuntimeError);
-      const superposition2: Superposition<number, MockRuntimeError> = Superposition.playground(() => {
-        throw new MockRuntimeError('');
-      }, MockRuntimeError);
-      const superposition3: Superposition<number, MockRuntimeError> = Superposition.of(
-        (chrono: Chrono<number, MockRuntimeError>) => {
-          chrono.throw(null);
-        },
-        MockRuntimeError
-      );
-
-      expect(superposition1.toString()).toBe('Alive: -1');
-      expect(superposition2.toString().includes('Dead: MockRuntimeError')).toBe(true);
-      expect(superposition3.toString()).toBe('Contradiction: null');
-    });
-  });
-
   describe('get', () => {
     it('delegates inner Superposition', async () => {
       const mock: MockSuperposition<number, MockRuntimeError> = new MockSuperposition();
