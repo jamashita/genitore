@@ -28,22 +28,22 @@ git cz
 
 # Heisenberg classes
 
-## Absent<P>
+## Absent\<P\>
 
 A class that represents the fulfilled state for `Heisenberg`, but with the absence of a value. It means the value is
 `null` or `undefined`. It is equivalent to None for Optional types and it implements `Heisenberg` interface.
 
-## Lost<P>
+## Lost\<P\>
 
 A class that represents the rejected state for `Heisenberg`. This class contains an exception for the operation that
 occurred. It implements `Heisenberg` interface.
 
-## Present<P>
+## Present\<P\>
 
 A class that represents the fulfilled state for `Heisenberg`. This class contains a value of type `P` that cannot be
 `null` or `undefined`. It is equivalent to Some for Optional types. It implements `Heisenberg` interface.
 
-## Uncertain<P>
+## Uncertain\<P\>
 
 A class that represents the pending state for `Heisenberg`. It implements `Heisenberg` interface.
 
@@ -99,17 +99,17 @@ Returns `true` if this class instance is in the `Present` state, `false` otherwi
 
 # Schrödinger classes
 
-## Alive<A, D>
+## Alive\<A, D extends Error\>
 
 A class that represents the fulfilled state for `Schrodinger`. This class contains a value of type `A` that cannot be
 `Error`. It is equivalent to Success for Result types. It implements `Schrodinger` class.
 
-## Contradiction<A, D>
+## Contradiction\<A, D extends Error\>
 
 A class that represents the rejected state for `Schrodinger`. This class contains an exception for the operation that
 occurred. It implements `Schrodinger` interface.
 
-## Dead<A, D>
+## Dead\<A, D extends Error\>
 
 A class that represents the fulfilled state for `Heisenberg`. This class contains a value of type `P` that cannot be
 `null` or `undefined`. It is equivalent to Some for Option types.
@@ -117,7 +117,7 @@ A class that represents the fulfilled state for `Heisenberg`. This class contain
 A class that represents the fulfilled state for `Schrodinger`, but with an intended error. It is equivalent to Failure
 for Result types and it implements `Schrodinger` interface.
 
-## Uncertain<P>
+## Still\<A, D extends Error\>
 
 A class that represents the pending state for `Schrodinger`. It implements `Schrodinger` interface.
 
@@ -175,7 +175,7 @@ Returns `true` if this class instance is in the `Dead` state, `false` otherwise.
 
 # Superposition classes
 
-## (interface) Chrono<M, R>
+## (interface) Chrono\<M, R\>
 
 ### `chrono.accept(valye: Exclude<M, Error>): unknown`
 
@@ -364,7 +364,7 @@ handle both successful and unsuccessful outcomes of the asynchronous operation i
 
 # Ünscharferelation classes
 
-## (interface) Epoque<M>
+## (interface) Epoque\<M\>
 
 ### `epoque.accept(valye: Exclude<M, null | undefined | void>): unknown`
 
