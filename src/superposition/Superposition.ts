@@ -1,4 +1,4 @@
-import { Consumer, Kind, Peek, Supplier, Sync, UnaryFunction } from '@jamashita/anden/type';
+import { Consumer, Kind, Peek, Supplier, UnaryFunction } from '@jamashita/anden/type';
 import { Alive, DeadConstructor, Schrodinger } from '../schrodinger/index.js';
 import { Chrono } from './Chrono.js';
 import { containsError, ISuperposition, SReturnType } from './ISuperposition.js';
@@ -48,12 +48,12 @@ export class Superposition<out A, out D extends Error> implements ISuperposition
     return Promise.all(promises);
   }
 
-  public static of<A, D extends Error>(func: Consumer<Chrono<Sync<A>, D>>, ...errors: ReadonlyArray<DeadConstructor<D>>): Superposition<Sync<A>, D> {
+  public static of<A, D extends Error>(func: Consumer<Chrono<Awaited<A>, D>>, ...errors: ReadonlyArray<DeadConstructor<D>>): Superposition<Awaited<A>, D> {
     return Superposition.ofSuperposition(SuperpositionInternal.of(func, errors));
   }
 
-  public static ofSchrodinger<A, D extends Error>(schrodinger: Schrodinger<Sync<A>, D>, ...errors: ReadonlyArray<DeadConstructor<D>>): Superposition<Sync<A>, D> {
-    return Superposition.of((chrono: Chrono<Sync<A>, D>) => {
+  public static ofSchrodinger<A, D extends Error>(schrodinger: Schrodinger<Awaited<A>, D>, ...errors: ReadonlyArray<DeadConstructor<D>>): Superposition<Awaited<A>, D> {
+    return Superposition.of((chrono: Chrono<Awaited<A>, D>) => {
       chrono.catch(errors);
 
       if (schrodinger.isAlive()) {
@@ -74,15 +74,15 @@ export class Superposition<out A, out D extends Error> implements ISuperposition
     return new Superposition(superposition);
   }
 
-  public static playground<A, D extends Error>(supplier: Supplier<Exclude<A, Error> | PromiseLike<Exclude<A, Error>>>, ...errors: ReadonlyArray<DeadConstructor<D>>): Superposition<Sync<A>, D> {
-    return Superposition.of((chrono: Chrono<Sync<A>, D>) => {
+  public static playground<A, D extends Error>(supplier: Supplier<Exclude<A, Error> | PromiseLike<Exclude<A, Error>>>, ...errors: ReadonlyArray<DeadConstructor<D>>): Superposition<Awaited<A>, D> {
+    return Superposition.of((chrono: Chrono<Awaited<A>, D>) => {
       try {
         const value: Exclude<A, Error> | PromiseLike<Exclude<A, Error>> = supplier();
 
         if (Kind.isPromiseLike<A>(value)) {
           return value.then(
             (v: A) => {
-              return chrono.accept(v as Exclude<Sync<A>, Error>);
+              return chrono.accept(v as Exclude<Awaited<A>, Error>);
             },
             (e: unknown) => {
               if (containsError(e, chrono.getErrors())) {
@@ -94,7 +94,7 @@ export class Superposition<out A, out D extends Error> implements ISuperposition
           );
         }
 
-        return chrono.accept(value as Exclude<Sync<A>, Error>);
+        return chrono.accept(value as Exclude<Awaited<A>, Error>);
       }
       catch (err: unknown) {
         if (containsError(err, chrono.getErrors())) {

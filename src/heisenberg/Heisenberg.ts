@@ -10,11 +10,11 @@ export interface Heisenberg<out P> extends Serializable {
 
   getState(): HeisenbergState;
 
-  ifAbsent(consumer: Consumer<void>): void;
+  ifAbsent(consumer: Consumer<void>): this;
 
-  ifLost(consumer: Consumer<unknown>): void;
+  ifLost(consumer: Consumer<unknown>): this;
 
-  ifPresent(consumer: Consumer<Exclude<P, null | undefined | void>>): void;
+  ifPresent(consumer: Consumer<Exclude<P, null | undefined | void>>): this;
 
   isAbsent(): this is Absent<P>;
 

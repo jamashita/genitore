@@ -10,11 +10,11 @@ export interface Schrodinger<out A, out D extends Error> extends Serializable {
 
   getState(): SchrodingerState;
 
-  ifAlive(consumer: Consumer<Exclude<A, Error>>): void;
+  ifAlive(consumer: Consumer<Exclude<A, Error>>): this;
 
-  ifContradiction(consumer: Consumer<unknown>): void;
+  ifContradiction(consumer: Consumer<unknown>): this;
 
-  ifDead(consumer: Consumer<D>): void;
+  ifDead(consumer: Consumer<D>): this;
 
   isAlive(): this is Alive<A, D>;
 

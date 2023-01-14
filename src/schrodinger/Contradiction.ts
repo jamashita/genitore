@@ -27,16 +27,18 @@ export class Contradiction<out A, out D extends Error> implements Schrodinger<A,
     return 'CONTRADICTION';
   }
 
-  public ifAlive(): void {
-    // NOOP
+  public ifAlive(): this {
+    return this;
   }
 
-  public ifContradiction(consumer: Consumer<unknown>): void {
+  public ifContradiction(consumer: Consumer<unknown>): this {
     consumer(this.cause);
+
+    return this;
   }
 
-  public ifDead(): void {
-    // NOOP
+  public ifDead(): this {
+    return this;
   }
 
   public isAlive(): this is Alive<A, D> {
