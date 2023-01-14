@@ -1,16 +1,8 @@
 import { UnimplementedError } from '@jamashita/anden/error';
-import { ValueObject } from '@jamashita/anden/object';
 import { Heisenberg } from '../../heisenberg/index.js';
 import { IUnscharferelation } from '../IUnscharferelation.js';
 
-export class MockUnscharferelation<out P> extends ValueObject implements IUnscharferelation<P> {
-  public constructor() {
-    super();
-  }
-
-  public equals(): boolean {
-    throw new UnimplementedError();
-  }
+export class MockUnscharferelation<out P> implements IUnscharferelation<P> {
 
   public get(): Promise<Exclude<P, null | undefined | void>> {
     throw new UnimplementedError();

@@ -1,16 +1,8 @@
 import { UnimplementedError } from '@jamashita/anden/error';
-import { ValueObject } from '@jamashita/anden/object';
 import { DeadConstructor, Schrodinger } from '../../schrodinger/index.js';
 import { ISuperposition } from '../ISuperposition.js';
 
-export class MockSuperposition<out A, out D extends Error> extends ValueObject implements ISuperposition<A, D> {
-  public constructor() {
-    super();
-  }
-
-  public equals(): boolean {
-    throw new UnimplementedError();
-  }
+export class MockSuperposition<out A, out D extends Error> implements ISuperposition<A, D> {
 
   public get(): Promise<Exclude<A, Error>> {
     throw new UnimplementedError();
