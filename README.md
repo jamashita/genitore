@@ -495,7 +495,7 @@ return a value of type `Q` with a non-null, non-undefined, or an instance of
 a `PromiseLike<IUnscharferelation<Q>>`. The return value of this method will be a `Unscharferelation<Q>` instance if
 the `mapper` is executed and returns a value or `Unscharferelation<Q>` without error, otherwise it will return
 a `Superposition<P>` instance if the `mapper` is not executed or the returned value contains an error. The overall
-result will be a `Superposition<P | Q>` instance.
+result will be a `Unscharferelation<P | Q>` instance.
 
 This method can be used as an alternative to `promise.catch()`.
 
@@ -510,8 +510,8 @@ unscharferelation.map<string>((num: number) => {
   }
 
   return num;
-}).recover<number>((e: SyntaxError | TypeError) => {
-  logger.error(e);
+}).recover<number>(() => {
+  logger.error('null or undefined given');
 
   return 1;
 });
