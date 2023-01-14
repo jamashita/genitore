@@ -23,16 +23,18 @@ export class Alive<out A, out D extends Error> implements Schrodinger<A, D> {
     return 'ALIVE';
   }
 
-  public ifAlive(consumer: Consumer<Exclude<A, Error>>): void {
+  public ifAlive(consumer: Consumer<Exclude<A, Error>>): this {
     consumer(this.value);
+
+    return this;
   }
 
-  public ifContradiction(): void {
-    // NOOP
+  public ifContradiction(): this {
+    return this;
   }
 
-  public ifDead(): void {
-    // NOOP
+  public ifDead(): this {
+    return this;
   }
 
   public isAlive(): this is Alive<A, D> {
