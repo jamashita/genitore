@@ -1,3 +1,18 @@
+# [2.3.0](https://github.com/jamashita/genitore/compare/v2.2.0...v2.3.0) (2023-01-14)
+
+
+### Bug Fixes
+
+* 🐛 removing a superclass ([f0decea](https://github.com/jamashita/genitore/commit/f0deceab5047b3951cd557f4f282c13342559dcb))
+
+
+### Features
+
+* 🎸 ifXXXX() returns this for chaining ([b564e07](https://github.com/jamashita/genitore/commit/b564e073a992e9063403aab0c762e0a42ac78f70))
+* 🎸 ifXXXX() returns this; ([b66c0c0](https://github.com/jamashita/genitore/commit/b66c0c0a5c7ecae8daa8d0bacb4d13374f40029b))
+* 🎸 packages updagted ([ee045e1](https://github.com/jamashita/genitore/commit/ee045e13961b8073120d0f23a612713ca0c17dc0))
+* 🎸 packages updated ([1480ad5](https://github.com/jamashita/genitore/commit/1480ad50e36d834ba8e6b1d1e4632f92cee6fec6))
+
 # [2.2.0](https://github.com/jamashita/genitore/compare/v2.1.0...v2.2.0) (2023-01-03)
 
 
