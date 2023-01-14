@@ -97,7 +97,7 @@ Returns `true` if this class instance is in the `Lost` state, `false` otherwise.
 
 Returns `true` if this class instance is in the `Present` state, `false` otherwise.
 
-# Schrodinger classes
+# Schrödinger classes
 
 ## Alive<A, D>
 
@@ -208,18 +208,17 @@ Retrieves the outcome of each asynchronous operation in `superpositions` by call
 item. The resulting `Schrodinger` state for each `Superposition` can be found in the documentation
 for `superposition.terminate()`.
 
-### `Superposition.of<A, D extends Error>(func: Consumer<Chrono<Sync<A>, D>>, ...errors: ReadonlyArray<DeadConstructor<D>>): Superposition<Sync<A>, D>`
+### `Superposition.of<A, D extends Error>(func: Consumer<Chrono<Awaited<A>, D>>, ...errors: ReadonlyArray<DeadConstructor<D>>): Superposition<Awaited<A>, D>`
 
-Generates a new `Superposition` instance by invoking the provided `func` argument with a `Chrono` object. The
-`Sync<A>` type represents either a value of type `A` or a `PromiseLike<A>`. If the `chrono.accept(value)` is called with
-a valid value of `Sync<A>` type, it returns a successfully fulfilled `Superposition<A, D>`. If
-the `chrono.decline(error)` is called with an error of type `D` that is specified in the `errors` argument, it returns
-an unsuccessfully fulfilled `Superposition<A, D>`. If the `chrono.throw(cause)` is called with an argument of `unknown`
-type, it returns a rejected `Superposition<A, D>`.
+Generates a new `Superposition` instance by invoking the provided `func` argument with a `Chrono` object. If
+the `chrono.accept(value)` is called with a valid value of `Awaited<A>` type, it returns a successfully
+fulfilled `Superposition<A, D>`. If the `chrono.decline(error)` is called with an error of type `D` that is specified in
+the `errors` argument, it returns an unsuccessfully fulfilled `Superposition<A, D>`. If the `chrono.throw(cause)` is
+called with an argument of `unknown` type, it returns a rejected `Superposition<A, D>`.
 
 ```ts
 // let value is type of A or PromiseLike<A>
-Superposition.of<A, D>((chrono: Chrono<Sync<A>, D>) => {
+Superposition.of<A, D>((chrono: Chrono<Awaited<A>, D>) => {
   try {
     if (value.isValid()) {
       chrono.accept(value);
@@ -241,19 +240,18 @@ Superposition.of<A, D>((chrono: Chrono<Sync<A>, D>) => {
 }, RuntimeError);
 ```
 
-### `Superposition.ofSchrodinger<A, D extends Error>(schrodinger: Schrodinger<Sync<A>, D>, ...errors: ReadonlyArray<DeadConstructor<D>>): Superposition<Sync<A>, D>`
+### `Superposition.ofSchrodinger<A, D extends Error>(schrodinger: Schrodinger<Awaited<A>, D>, ...errors: ReadonlyArray<DeadConstructor<D>>): Superposition<Awaited<A>, D>`
 
-Creates a new `Superposition` instance from a given `Schrodinger` instance. The `Sync<A>` type represents a value of
-type `A` or a `PromiseLike<A>`. The `errors` parameter is an array of error constructors that can be thrown by the
-asynchronous operation. If the given `schrodinger` is in the `Alive` state, the resulting `Superposition` will be
-successfully fulfilled. If it is in the `Dead` state, it will be unsuccessfully fulfilled. If it is in
-the `Contradiction`or `Still`state, it will be rejected.
+Creates a new `Superposition` instance from a given `Schrodinger` instance. The `errors` parameter is an array of error
+constructors that can be thrown by the asynchronous operation. If the given `schrodinger` is in the `Alive` state, the
+resulting `Superposition` will be successfully fulfilled. If it is in the `Dead` state, it will be unsuccessfully
+fulfilled. If it is in the `Contradiction` or `Still` state, it will be rejected.
 
 ### `Superposition.ofSuperposition<A, D extends Error>(superposition: ISuperposition<A, D>): Superposition<A, D>`
 
 Generates a new `Superposition` instance from a given `Superposition` instance.
 
-### `Superposition.playground<A, D extends Error>(supplier: Supplier<Exclude<A, Error> | PromiseLike<Exclude<A, Error>>>, ...errors: ReadonlyArray<DeadConstructor<D>>): Superposition<Sync<A>, D>`
+### `Superposition.playground<A, D extends Error>(supplier: Supplier<Exclude<A, Error> | PromiseLike<Exclude<A, Error>>>, ...errors: ReadonlyArray<DeadConstructor<D>>): Superposition<Awaited<A>, D>`
 
 Creates a new `Superposition` instance by executing the provided `supplier`. If the function returns a value of type `A`
 or a fulfilled `PromiseLike<A>`, the resulting `Superposition` will be successfully fulfilled. If the function
@@ -341,6 +339,8 @@ superposition.map<string, SyntaxError>((num: number) => {
   return num;
 }, TypeError).recover<number, Error>((e: SyntaxError | TypeError) => {
   logger.error(e);
+
+  return 1;
 });
 ```
 
@@ -353,7 +353,7 @@ unsuccessfully fulfilled, the returned `Schrodinger` will be in the `Dead` state
 failure. If the `Superposition` is rejected, the returned `Schrodinger` will be in the `Contradiction` state, indicating
 that the operation has been rejected for an unknown reason.
 
-### `superposition.terminate(alive: UnaryFunction<Exclude<A, Error>, SReturnType<B, E>>, dead: UnaryFunction<D, SReturnType<B, D>>, ...errors: ReadonlyArray<DeadConstructor<E>>): Superposition<B, E>`
+### `superposition.transform<B = A, E extends Error = D>(alive: UnaryFunction<Exclude<A, Error>, SReturnType<B, E>>, dead: UnaryFunction<D, SReturnType<B, D>>, ...errors: ReadonlyArray<DeadConstructor<E>>): Superposition<B, E>`
 
 Executes the given `alive` only when the current instance is in a successfully fulfilled state, and also executes the
 `dead` only when the current instance is in an unsuccessfully fulfilled state. One of these functions will be executed
@@ -361,6 +361,170 @@ unless the current instance is in a rejected state. The overall result will be a
 
 This method combines the functionality of `superposition.map()` and `superposition.recover()` into one, allowing you to
 handle both successful and unsuccessful outcomes of the asynchronous operation in a single call.
+
+# Ünscharferelation classes
+
+## (interface) Epoque<M>
+
+### `epoque.accept(valye: Exclude<M, null | undefined | void>): unknown`
+
+### `epoque.decline(): unknown`
+
+### `epoque.throw(cause: unknown): unknown`
+
+## Unscharfeleration\<P\>
+
+A class that handles Optional of Monad programming asynchronously. This class wraps a `Heisenberg` instance and changes
+its state based on the outcome of an asynchronous operation.
+
+### `Unscharferelation.all<P>(unscharferelations: Iterable<Unscharfeleration<P>>): Unscharfeleration<Array<P>>`
+
+Takes an `Iterable<Unscharferelation<P>>` and returns a single `Unscharferelation<Array<P>>`. If
+all `unscharferelations` are in the `Present` state, the returned instance will be successfully fulfilled with an array
+of the values from the `unscharferelations`. If at least one of `unscharferelations` is in the `Absent` state, the
+returned instance will be unsuccessfully fulfilled with `null` of `undefined` from the first `Absent` state encountered.
+If at least one of `unscharferelations` is in the `Lost` state, the returned instance will be rejected with the cause
+from the first `Lost` state encountered. If there are both `Absent` and `Lost` states present in
+the `unscharferelations`, the returned instance will be rejected (prioritized).
+
+### `Unscharferelation.anyway<P>(unscharferelations: Iterable<Unscharferelation<P>>): Promise<Array<Heisenberg<P>>>`
+
+Retrieves the outcome of each asynchronous operation in `unscharferelations` by calling `unscharferelation.terminate()`
+on each item. The resulting `Heisenberg` state for each `Unscharferelation` can be found in the documentation
+for `unscharferelation.terminate()`.
+
+### `Unscharferelation.maybe<P>(value: P | PromiseLike<null | undefined | void> | PromiseLike<P> | null | undefined | void): Unscharferelation<Awaited<P>>`
+
+Creates a new `Unscharferelation` from the given value of type `P` or a `PromiseLike<P>`. If the value is `null`,
+`undefined`, or a `PromiseLike` that resolves to `null` or `undefined`, the resulting `Unscharferelation` will be
+unsuccessfully fulfilled. If a rejected `Promise` is given, the resulting `Unscharferelation` will be rejected.
+
+### `Unscharferelation.of<P>(func: Consumer<Epoque<Awaited<P>>>): Unscharferelation<Awaited<P>>`
+
+Generates a new `Unscharferelation` instance by invoking the provided `func` argument with a `Epoque` object. If
+the `epoque.accept(value)` is called with a valid value of `Awaited<A>` type, it returns a successfully
+fulfilled `Unscharferelation<P>`. If the `epoque.decline()` is called, it returns an unsuccessfully
+fulfilled `Unscharferelation<P>`. If the `epoque.throw(cause)` is called with an argument of `unknown` type, it returns
+a rejected `Unscharferelation<P>`.
+
+```ts
+// let value is type of P or PromiseLike<P>
+Unscharferelation.of<P>((epoque: Epoque<Awaited<P>>) => {
+  try {
+    if (value !== null) {
+      epoque.accept(value);
+
+      return;
+    }
+
+    epoque.decline();
+  }
+  catch (e: unknown) {
+    epoque.throw(e);
+  }
+});
+```
+
+### `Unscharferelation.ofHeisenberg<P>(heisenberg: Heisenberg<Awaited<P>>): Unscharferelation<Awaited<P>>`
+
+Creates a new `Unscharferelation` instance from a given `Heisenberg` instance. If the given `heisenberg` is in
+the `Present` state, the resulting `Unscharferelation` will be successfully fulfilled. If it is in the `Absent` state,
+it will be unsuccessfully fulfilled. If it is in the `Lost` or `Uncertain` state, it will be rejected.
+
+### `Unscharferelation.ofUnscharferelation<P>(unscharferelation: IUnscharferelation<P>): Unscharferelation<P>`
+
+Generates a new `Unscharferelation` instance from a given `Unscharferelation` instance.
+
+### `unscharferelation.get(): Promise<Exclude<P, null | undefined | void>>`
+
+Retrieves the outcome of the asynchronous operation as a `Promise`. If the instance is in the successfully fulfilled
+state, it will return a fulfilled `Promise` instance. If the instance is in the unsuccessfully fulfilled or rejected
+state, it will return a rejected `Promise` instance.
+
+### `unscharferelation.ifAbsent(consumer: Consumer<void>): this`
+
+Executes the given `consumer` if the asynchronous operation is going to be unsuccessfully fulfilled.
+
+### `superposition.ifLost(consumer: Consumer<unknown>): this`
+
+Executes the given `consumer` with the internal `cause` value of `unknown` type if the asynchronous operation is going
+to be rejected.
+
+### `unscharferelation.ifPresent(consumer: Consumer<Exclude<P, null | undefined | void>>): this`
+
+Executes the given `consumer` with the non-null, non-undefined value of `P` type if the asynchronous operation is going
+to be
+successfully fulfilled.
+
+### `unscharferelation.map<Q = P>`(mapper: UnaryFunction<Exclude<P, null | undefined | void>, UReturnType<Q>>): Unscharferelation<Q>`
+
+Executes the given `mapper` only when the current instance is in a successfully fulfilled state. The `mapper` should
+take in a single argument of type `Exclude<A, null | undefined | void>` and should return a value of type `Q` with a
+non-null, non-undefined, or an instance of `IUnscharferelation<Q>`,
+a `PromiseLike<Exclude<Q, null | undefined | void>>`, or a `PromiseLike<IUnscharferelation<Q>>`. The return value of
+this method will be a `Unscharferelation<Q>` instance if the `mapper` is executed and returns a value
+or `Superposition<Q>`.
+
+This method can be used as an alternative to `promise.then()`.
+
+```ts
+unscharferelation.map<string>((num: number) => {
+  return num.toFixed();
+}).map<number>((str: string) => {
+  const num = Number(str);
+
+  if (Number.isNaN(num)) {
+    throw new TypeError('NaN');
+  }
+
+  return num;
+});
+```
+
+### `unscharferelation.peek(peek: Peek): this`
+
+Executes the given `peek` with no arguments when the asynchronous operation represented by the current unscharferelation
+instance is completed, regardless of whether it is successfully fulfilled, unsuccessfully fulfilled, or rejected. It
+allows you to perform side effects, such as logging, without changing the outcome of the operation.
+
+### `unscharferelation.recover<Q = P>`(mapper: Supplier<UReturnType<Q>>): Unscharferelation<P | Q>`
+
+Executes the given `mapper` only when the current instance is in an unsuccessfully fulfilled state. The `mapper` should
+return a value of type `Q` with a non-null, non-undefined, or an instance of
+`IUnscharferelation<Q>`, a `PromiseLike<Exclude<Q, null | undefined | void>>`, or
+a `PromiseLike<IUnscharferelation<Q>>`. The return value of this method will be a `Unscharferelation<Q>` instance if
+the `mapper` is executed and returns a value or `Unscharferelation<Q>` without error, otherwise it will return
+a `Superposition<P>` instance if the `mapper` is not executed or the returned value contains an error. The overall
+result will be a `Superposition<P | Q>` instance.
+
+This method can be used as an alternative to `promise.catch()`.
+
+```ts
+unscharferelation.map<string>((num: number) => {
+  return num.toFixed();
+}).map<number>((str: string) => {
+  const num = Number(str);
+
+  if (Number.isNaN(num)) {
+    throw new TypeError('NaN');
+  }
+
+  return num;
+}).recover<number>((e: SyntaxError | TypeError) => {
+  logger.error(e);
+
+  return 1;
+});
+```
+
+### `unscharferelation.terminate(): Promise<Heisenberg<P>>`
+
+Terminates the asynchronous operation represented by the current `Unscharferelation` instance and obtain the final state
+of the operation represented by a `Heisenberg` instance. If the `Unscharferelation` is successfully fulfilled, the
+returned `Heisenberg` will be in the `Present` state, containing the value of the operation. If the `Unscharferelation`
+is unsuccessfully fulfilled, the returned `Heisenberg` will be in the `Absent` state, containing the error that caused
+the failure. If the `Unscharferelation` is rejected, the returned `Heisenberg` will be in the `Lost` state, indicating
+that the operation has been rejected for an unknown reason.
 
 ## License
 
