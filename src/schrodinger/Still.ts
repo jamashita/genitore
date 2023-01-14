@@ -23,16 +23,16 @@ export class Still<out A, out D extends Error> implements Schrodinger<A, D> {
     return 'STILL';
   }
 
-  public ifAlive(): void {
-    // NOOP
+  public ifAlive(): this {
+    return this;
   }
 
-  public ifContradiction(): void {
-    // NOOP
+  public ifContradiction(): this {
+    return this;
   }
 
-  public ifDead(): void {
-    // NOOP
+  public ifDead(): this {
+    return this;
   }
 
   public isAlive(): this is Alive<A, D> {

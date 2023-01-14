@@ -23,16 +23,18 @@ export class Present<out P> implements Heisenberg<P> {
     return 'PRESENT';
   }
 
-  public ifAbsent(): void {
-    // NOOP
+  public ifAbsent(): this {
+    return this;
   }
 
-  public ifLost(): void {
-    // NOOP
+  public ifLost(): this {
+    return this;
   }
 
-  public ifPresent(consumer: Consumer<Exclude<P, null | undefined | void>>): void {
+  public ifPresent(consumer: Consumer<Exclude<P, null | undefined | void>>): this {
     consumer(this.value);
+
+    return this;
   }
 
   public isAbsent(): this is Absent<P> {

@@ -27,16 +27,18 @@ export class Lost<out P> implements Heisenberg<P> {
     return 'LOST';
   }
 
-  public ifAbsent(): void {
-    // NOOP
+  public ifAbsent(): this {
+    return this;
   }
 
-  public ifLost(consumer: Consumer<unknown>): void {
+  public ifLost(consumer: Consumer<unknown>): this {
     consumer(this.cause);
+
+    return this;
   }
 
-  public ifPresent(): void {
-    // NOOP
+  public ifPresent(): this {
+    return this;
   }
 
   public isAbsent(): this is Absent<P> {

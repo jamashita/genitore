@@ -23,16 +23,16 @@ export class Uncertain<out P> implements Heisenberg<P> {
     return 'UNCERTAIN';
   }
 
-  public ifAbsent(): void {
-    // NOOP
+  public ifAbsent(): this {
+    return this;
   }
 
-  public ifLost(): void {
-    // NOOP
+  public ifLost(): this {
+    return this;
   }
 
-  public ifPresent(): void {
-    // NOOP
+  public ifPresent(): this {
+    return this;
   }
 
   public isAbsent(): this is Absent<P> {
