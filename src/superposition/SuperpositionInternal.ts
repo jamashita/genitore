@@ -121,7 +121,7 @@ export class SuperpositionInternal<out A, out D extends Error> implements ISuper
 
   public map<B = A, E extends Error = D>(
     mapper: UnaryFunction<Exclude<A, Error>, SReturnType<B, E>>,
-    ...errors: Array<DeadConstructor<E>>
+    ...errors: ReadonlyArray<DeadConstructor<E>>
   ): SuperpositionInternal<B, D | E> {
     return SuperpositionInternal.of<B, D | E>((chrono: Chrono<B, D | E>) => {
       return this.handle(AlivePlan.of(mapper, chrono), RecoveryChronoPlan.of(chrono), DestroyChronoPlan.of(chrono));
@@ -142,7 +142,7 @@ export class SuperpositionInternal<out A, out D extends Error> implements ISuper
 
   public recover<B = A, E extends Error = D>(
     mapper: UnaryFunction<D, SReturnType<B, E>>,
-    ...errors: Array<DeadConstructor<E>>
+    ...errors: ReadonlyArray<DeadConstructor<E>>
   ): SuperpositionInternal<A | B, E> {
     return SuperpositionInternal.of((chrono: Chrono<A | B, E>) => {
       return this.handle(MapChronoPlan.of(chrono), DeadPlan.of(mapper, chrono), DestroyChronoPlan.of(chrono));
@@ -184,7 +184,7 @@ export class SuperpositionInternal<out A, out D extends Error> implements ISuper
   public transform<B = A, E extends Error = D>(
     alive: UnaryFunction<Exclude<A, Error>, SReturnType<B, E>>,
     dead: UnaryFunction<D, SReturnType<B, E>>,
-    ...errors: Array<DeadConstructor<E>>
+    ...errors: ReadonlyArray<DeadConstructor<E>>
   ): SuperpositionInternal<B, E> {
     return SuperpositionInternal.of((chrono: Chrono<B, E>) => {
       this.handle(AlivePlan.of(alive, chrono), DeadPlan.of(dead, chrono), DestroyChronoPlan.of(chrono));
