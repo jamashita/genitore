@@ -11,13 +11,13 @@ This package contains Optional monad and Result monad that support asynchronousl
 
 ```
 > node -v
-v18.0.0
+v18.9.1
 
 > npm -v
-8.6.0
+8.19.1
 
 > yarn -v
-1.22.18
+1.22.19
 ```
 
 ## Conventional commit
@@ -25,6 +25,78 @@ v18.0.0
 ```
 git cz
 ```
+
+# Heisenberg classes
+
+## Absent<P>
+
+A class that represents the fulfilled state for `Heisenberg`, but with the absence of a value. It means the value
+is `null`or `undefined`. It is equivalent to None for Optional types.
+
+## Lost<P>
+
+A class that represents the rejected state for `Heisenberg`. This class contains an exception for the operation that
+occurred. It is equivalent to Error in other programming concepts.
+
+## Present<P>
+
+A class that represents the fulfilled state for `Heisenberg`. This class contains a value of type `P` that cannot be
+`null` or `undefined`. It is equivalent to Some for Optional types.
+
+## Uncertain<P>
+
+A class that represents the pending state for `Heisenberg`. This is equivalent pending state for Promise.
+
+## (interface) Heisenberg\<P\>
+
+This interface represents an Optional of Monad programming. The common interface
+for `Absent<P>`, `Lost<P>`, `Present<P>` and `Uncertain<V>`. This interface provides common methods for the value
+existence. `P` represents the type of the data.
+
+### `Heisenberg.all<P>(heisenbergs: Iterable<Heisenberg<P>>): Heisenberg<Array<P>>`
+
+Takes a `Iterable<Heisenberg<P>>` and return a single `Heisenberg<Array<P>>`. Returns `Present<Array<P>>` when
+all `heisenbergs` were `Present<P>`, Returns `Absent<Array<P>>` when at least one of `heisenbergs` were `Absent<P>`,
+Returns `Lost<Array<P>>` when at least one of `heisenbergs` were `Lost<P>`. If there are `Absent<P>` and `Lost<P>` both
+in the `heisenbergs`, the return value will be `Lost<P>` (prioritised).
+
+Takes an `Iterable<Heisenberg<P>>` and returns a single `Heisenberg<Array<P>>`. Returns `Present<Array<P>>` when
+all `heisenbergs` are `Present<P>`, Returns `Absent<Array<P>>` when at least one of `heisenbergs` is `Absent<P>`,
+Returns `Lost<Array<P>>` when at least one of `heisenbergs` is `Lost<P>`. If there are `Absent<P>` and `Lost<P>` both
+in the `heisenbergs`, the return value will be `Lost<Array<P>>` (prioritized).
+
+### `heisenberg.get(): Exclude<P, null | undefined | void>`
+
+Returns the retained value, the returned value cannot be `null` or `undefined`.
+
+### `heisenberg.getState(): HeisenbergState`
+
+Returns the current state. The state can be one of the following statuses: `'ABSENT'`, `'LOST'`, `'PRESENT'`
+or `'UNCERTAIN'`.
+
+### `heisenberg.ifAbsent(consumer: Consumer<void>): this`
+
+Executes the given `consumer` if this class instance is `Absent`.
+
+### `heisenberg.ifLost(consumer: Consumer<unknown>): this`
+
+Executes the given `consumer` if this class instance is `Lost`.
+
+### `heisenberg.ifPresent(consumer: Consumer<Exclude<P, null | undefined | void>>): this`
+
+Executes the given `consumer` with the non-null, non-undefined value of `P` type if this class instance is `Present`.
+
+### `heisenberg.isAbsent(): this is Absent<P>`
+
+Returns `true` if this class instance is `Absent<P>`. or `false` otherwise.
+
+### `heisenberg.isLost(): this is Lost<P>`
+
+Returns `true` if this class instance is `Lost<P>`. or `false` otherwise.
+
+### `heisenberg.isPresent(): this is Present<P>`
+
+Returns `true` if this class instance is `Present<P>`. or `false` otherwise.
 
 ## License
 
