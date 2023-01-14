@@ -284,7 +284,7 @@ to be rejected.
 Executes the given `consumer` with the error value of `D` type if the asynchronous operation is going to be
 unsuccessfully fulfilled.
 
-### `superposition.map<B = A, E extends Error = D>`(mapper: UnaryFunction<Exclude<A, Error>, SReturnType<B, E>>, ...errors: ReadonlyArray<DeadConstructor<E>>): Superposition<B, D | E>`
+### `superposition.map<B = A, E extends Error = D>(mapper: UnaryFunction<Exclude<A, Error>, SReturnType<B, E>>, ...errors: ReadonlyArray<DeadConstructor<E>>): Superposition<B, D | E>`
 
 Executes the given `mapper` only when the current instance is in a successfully fulfilled state. The `mapper` should
 take in a single argument of type `Exclude<A, Error>` and should return a value of type `B` without an error, or an
@@ -315,7 +315,7 @@ Executes the given `peek` with no arguments when the asynchronous operation repr
 instance is completed, regardless of whether it is successfully fulfilled, unsuccessfully fulfilled, or rejected. It
 allows you to perform side effects, such as logging, without changing the outcome of the operation.
 
-### `superposition.recover<B = A, E extends Error = D>`(mapper: UnaryFunction<D>, SReturnType<B, E>>, ...errors: ReadonlyArray<DeadConstructor<E>>): Superposition<B, D | E>`
+### `superposition.recover<B = A, E extends Error = D>(mapper: UnaryFunction<D>, SReturnType<B, E>>, ...errors: ReadonlyArray<DeadConstructor<E>>): Superposition<B, D | E>`
 
 Executes the given `mapper` only when the current instance is in an unsuccessfully fulfilled state. The `mapper` should
 take in a single argument of type `D` and should return a value of type `B` without an error, or an instance of
@@ -456,7 +456,7 @@ Executes the given `consumer` with the non-null, non-undefined value of `P` type
 to be
 successfully fulfilled.
 
-### `unscharferelation.map<Q = P>`(mapper: UnaryFunction<Exclude<P, null | undefined | void>, UReturnType<Q>>): Unscharferelation<Q>`
+### `unscharferelation.map<Q = P>(mapper: UnaryFunction<Exclude<P, null | undefined | void>, UReturnType<Q>>): Unscharferelation<Q>`
 
 Executes the given `mapper` only when the current instance is in a successfully fulfilled state. The `mapper` should
 take in a single argument of type `Exclude<A, null | undefined | void>` and should return a value of type `Q` with a
@@ -487,7 +487,7 @@ Executes the given `peek` with no arguments when the asynchronous operation repr
 instance is completed, regardless of whether it is successfully fulfilled, unsuccessfully fulfilled, or rejected. It
 allows you to perform side effects, such as logging, without changing the outcome of the operation.
 
-### `unscharferelation.recover<Q = P>`(mapper: Supplier<UReturnType<Q>>): Unscharferelation<P | Q>`
+### `unscharferelation.recover<Q = P>(mapper: Supplier<UReturnType<Q>>): Unscharferelation<P | Q>`
 
 Executes the given `mapper` only when the current instance is in an unsuccessfully fulfilled state. The `mapper` should
 return a value of type `Q` with a non-null, non-undefined, or an instance of
