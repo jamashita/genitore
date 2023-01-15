@@ -50,14 +50,14 @@ A class that represents the pending state for `Heisenberg`. It implements `Heise
 ## (interface) Heisenberg\<P\>
 
 This interface represents an Optional of Monad programming. The common interface
-for `Absent<P>`, `Lost<P>`, `Present<P>` and `Uncertain<V>`. This interface provides common methods for the value
+for `Absent<P>`, `Lost<P>`, `Present<P>` and `Uncertain<P>`. This interface provides common methods for the value
 presence and absence. `P` represents the type of the data.
 
 ### `Heisenberg.all<P>(heisenbergs: Iterable<Heisenberg<P>>): Heisenberg<Array<P>>`
 
 Takes an `Iterable<Heisenberg<P>>` and returns a single `Heisenberg<Array<P>>`. Returns `Present<Array<P>>` when
 all `heisenbergs` are in the `Present` state, returns `Absent<Array<P>>` when at least one of `heisenbergs` is in
-the `Absent` state, and returns `Lost<Array<A>>` when at least one of `heisenbergs` is in the `Lost`state. If there are
+the `Absent` state, and returns `Lost<Array<P>>` when at least one of `heisenbergs` is in the `Lost`state. If there are
 both `Absent` and `Lost` states present in the `heisenbergs`, the return value will be `Lost<Array<P>>` (prioritized).
 
 ### `heisenberg.get(): Exclude<P, null | undefined | void>`
@@ -111,11 +111,8 @@ occurred. It implements `Schrodinger` interface.
 
 ## Dead\<A, D extends Error\>
 
-A class that represents the fulfilled state for `Heisenberg`. This class contains a value of type `P` that cannot be
-`null` or `undefined`. It is equivalent to Some for Option types.
-
-A class that represents the fulfilled state for `Schrodinger`, but with an intended error. It is equivalent to Failure
-for Result types and it implements `Schrodinger` interface.
+A class that represents the fulfilled state for `Schrodinger`, but with an intended error of type `D`. It is equivalent
+to Failure for Result types and it implements `Schrodinger` interface.
 
 ## Still\<A, D extends Error\>
 
@@ -317,6 +314,12 @@ superposition.map<string, SyntaxError>((num: number) => {
 }, TypeError);
 ```
 
+### `superposition.pass(accepted: Consumer<Exclude<A, Error>>, declinded: Consumer<D>, thrown: Consumer<unknown>): this`
+
+Executes the given `accepted` with the non-error value of type `A` when the asynchronous operation is successfully
+fulfilled, `declined` with the error value of type `D` when the asynchronous operation is unsuccessfully fulfilled, or
+`thrown` with the internal `cause` value of type `unknown` when the asynchronous operation is rejected.
+
 ### `superposition.peek(peek: Peek): this`
 
 Executes the given `peek` with no arguments when the asynchronous operation represented by the current superposition
@@ -496,6 +499,12 @@ unscharferelation.map<string>((num: number) => {
   return num;
 });
 ```
+
+### `unscharfeleration.pass(accepted: Consumer<Exclude<P, null | undefined | void>>, declinded: Consumer<void>, thrown: Consumer<unknown>): this`
+
+Executes the given `accepted` with the non-null, non-undefined value of type `P` when the asynchronous operation is
+successfully fulfilled, `declined` when the asynchronous operation is unsuccessfully fulfilled, or `thrown` with the
+internal `cause` value of type `unknown` when the asynchronous operation is rejected.
 
 ### `unscharferelation.peek(peek: Peek): this`
 
