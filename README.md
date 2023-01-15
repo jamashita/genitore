@@ -189,8 +189,16 @@ Returns `true` if this class instance is in the `Dead` state, `false` otherwise.
 
 ## Superposition\<A, D extends Error\>
 
-A class that handles Result of Monad programming asynchronously. This class wraps a `Schrodinger` instance and changes
-its state based on the outcome of an asynchronous operation.
+A class that handles Result of Monad programming asynchronously. This class wraps a `Schrodinger` instance, which
+represents the outcome of an asynchronous operation, and can change its state based on the outcome of that operation.
+
+Like `Promise`, the Superposition class can handle multiple states, but it is more finely divided than `Promise`. The
+possible states are:
+
+- Successfully fulfilled: corresponds to a fulfilled state of `Promise`.
+- Unsuccessfully fulfilled: corresponds to a rejected state of `Promise`, but only for expected errors.
+- Rejected: corresponds to a rejected state of `Promise`, but for unexpected errors.
+- Pending: corresponds to a pending state of `Promise`.
 
 ### `Superposition.all<A, D extends Error>(superpositions: Iterable<Superposition<A, D>>): Superposition<Array<A>, D>`
 
@@ -374,8 +382,16 @@ handle both successful and unsuccessful outcomes of the asynchronous operation i
 
 ## Unscharfeleration\<P\>
 
-A class that handles Optional of Monad programming asynchronously. This class wraps a `Heisenberg` instance and changes
-its state based on the outcome of an asynchronous operation.
+A class that handles Optional of Monad programming asynchronously. This class wraps a `Heisenberg` instance, which
+represents the outcome of an asynchronous operation, and can change its state based on the outcome of that operation.
+
+Like `Promise`, the Unscharferelation class can handle multiple states, but it is more finely divided than `Promise`.
+The possible states are:
+
+- Successfully fulfilled: corresponds to a fulfilled state of `Promise`.
+- Unsuccessfully fulfilled: corresponds to a rejected state of `Promise`, but only for `null` and `undefined`.
+- Rejected: corresponds to a rejected state of `Promise`.
+- Pending: corresponds to a pending state of `Promise`.
 
 ### `Unscharferelation.all<P>(unscharferelations: Iterable<Unscharfeleration<P>>): Unscharfeleration<Array<P>>`
 
