@@ -15,7 +15,7 @@ export class Unscharferelation<out P> implements IUnscharferelation<P> {
       return Unscharferelation.ofHeisenberg(Present.of([]));
     }
 
-    const promises: Array<Promise<Heisenberg<P>>> = hs.map((u: Unscharferelation<P>): Promise<Heisenberg<P>> => {
+    const promises: Array<Promise<Heisenberg<P>>> = hs.map((u: Unscharferelation<P>) => {
       return u.terminate();
     });
 
@@ -37,7 +37,7 @@ export class Unscharferelation<out P> implements IUnscharferelation<P> {
   }
 
   public static anyway<P>(unscharferelations: Iterable<Unscharferelation<P>>): Promise<Array<Heisenberg<P>>> {
-    const promises: Array<Promise<Heisenberg<P>>> = [...unscharferelations].map((u: Unscharferelation<P>): Promise<Heisenberg<P>> => {
+    const promises: Array<Promise<Heisenberg<P>>> = [...unscharferelations].map((u: Unscharferelation<P>) => {
       return u.terminate();
     });
 
