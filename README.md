@@ -28,36 +28,36 @@ git cz
 
 # Heisenberg classes
 
-## Absent<P>
+## Absent\<P\>
 
 A class that represents the fulfilled state for `Heisenberg`, but with the absence of a value. It means the value is
 `null` or `undefined`. It is equivalent to None for Optional types and it implements `Heisenberg` interface.
 
-## Lost<P>
+## Lost\<P\>
 
 A class that represents the rejected state for `Heisenberg`. This class contains an exception for the operation that
 occurred. It implements `Heisenberg` interface.
 
-## Present<P>
+## Present\<P\>
 
 A class that represents the fulfilled state for `Heisenberg`. This class contains a value of type `P` that cannot be
 `null` or `undefined`. It is equivalent to Some for Optional types. It implements `Heisenberg` interface.
 
-## Uncertain<P>
+## Uncertain\<P\>
 
 A class that represents the pending state for `Heisenberg`. It implements `Heisenberg` interface.
 
 ## (interface) Heisenberg\<P\>
 
 This interface represents an Optional of Monad programming. The common interface
-for `Absent<P>`, `Lost<P>`, `Present<P>` and `Uncertain<V>`. This interface provides common methods for the value
+for `Absent<P>`, `Lost<P>`, `Present<P>` and `Uncertain<P>`. This interface provides common methods for the value
 presence and absence. `P` represents the type of the data.
 
 ### `Heisenberg.all<P>(heisenbergs: Iterable<Heisenberg<P>>): Heisenberg<Array<P>>`
 
 Takes an `Iterable<Heisenberg<P>>` and returns a single `Heisenberg<Array<P>>`. Returns `Present<Array<P>>` when
 all `heisenbergs` are in the `Present` state, returns `Absent<Array<P>>` when at least one of `heisenbergs` is in
-the `Absent` state, and returns `Lost<Array<A>>` when at least one of `heisenbergs` is in the `Lost`state. If there are
+the `Absent` state, and returns `Lost<Array<P>>` when at least one of `heisenbergs` is in the `Lost`state. If there are
 both `Absent` and `Lost` states present in the `heisenbergs`, the return value will be `Lost<Array<P>>` (prioritized).
 
 ### `heisenberg.get(): Exclude<P, null | undefined | void>`
@@ -99,25 +99,22 @@ Returns `true` if this class instance is in the `Present` state, `false` otherwi
 
 # Schrödinger classes
 
-## Alive<A, D>
+## Alive\<A, D extends Error\>
 
 A class that represents the fulfilled state for `Schrodinger`. This class contains a value of type `A` that cannot be
 `Error`. It is equivalent to Success for Result types. It implements `Schrodinger` class.
 
-## Contradiction<A, D>
+## Contradiction\<A, D extends Error\>
 
 A class that represents the rejected state for `Schrodinger`. This class contains an exception for the operation that
 occurred. It implements `Schrodinger` interface.
 
-## Dead<A, D>
+## Dead\<A, D extends Error\>
 
-A class that represents the fulfilled state for `Heisenberg`. This class contains a value of type `P` that cannot be
-`null` or `undefined`. It is equivalent to Some for Option types.
+A class that represents the fulfilled state for `Schrodinger`, but with an intended error of type `D`. It is equivalent
+to Failure for Result types and it implements `Schrodinger` interface.
 
-A class that represents the fulfilled state for `Schrodinger`, but with an intended error. It is equivalent to Failure
-for Result types and it implements `Schrodinger` interface.
-
-## Uncertain<P>
+## Still\<A, D extends Error\>
 
 A class that represents the pending state for `Schrodinger`. It implements `Schrodinger` interface.
 
@@ -175,7 +172,7 @@ Returns `true` if this class instance is in the `Dead` state, `false` otherwise.
 
 # Superposition classes
 
-## (interface) Chrono<M, R>
+## (interface) Chrono\<M, R\>
 
 ### `chrono.accept(valye: Exclude<M, Error>): unknown`
 
@@ -189,8 +186,16 @@ Returns `true` if this class instance is in the `Dead` state, `false` otherwise.
 
 ## Superposition\<A, D extends Error\>
 
-A class that handles Result of Monad programming asynchronously. This class wraps a `Schrodinger` instance and changes
-its state based on the outcome of an asynchronous operation.
+A class that handles Result of Monad programming asynchronously. This class wraps a `Schrodinger` instance, which
+represents the outcome of an asynchronous operation, and can change its state based on the outcome of that operation.
+
+Like `Promise`, the Superposition class can handle multiple states, but it is more finely divided than `Promise`. The
+possible states are:
+
+- Successfully fulfilled: corresponds to a fulfilled state of `Promise`.
+- Unsuccessfully fulfilled: corresponds to a rejected state of `Promise`, but only for expected errors.
+- Rejected: corresponds to a rejected state of `Promise`, but for unexpected errors.
+- Pending: corresponds to a pending state of `Promise`.
 
 ### `Superposition.all<A, D extends Error>(superpositions: Iterable<Superposition<A, D>>): Superposition<Array<A>, D>`
 
@@ -284,7 +289,7 @@ to be rejected.
 Executes the given `consumer` with the error value of `D` type if the asynchronous operation is going to be
 unsuccessfully fulfilled.
 
-### `superposition.map<B = A, E extends Error = D>`(mapper: UnaryFunction<Exclude<A, Error>, SReturnType<B, E>>, ...errors: ReadonlyArray<DeadConstructor<E>>): Superposition<B, D | E>`
+### `superposition.map<B = A, E extends Error = D>(mapper: UnaryFunction<Exclude<A, Error>, SReturnType<B, E>>, ...errors: ReadonlyArray<DeadConstructor<E>>): Superposition<B, D | E>`
 
 Executes the given `mapper` only when the current instance is in a successfully fulfilled state. The `mapper` should
 take in a single argument of type `Exclude<A, Error>` and should return a value of type `B` without an error, or an
@@ -309,13 +314,19 @@ superposition.map<string, SyntaxError>((num: number) => {
 }, TypeError);
 ```
 
+### `superposition.pass(accepted: Consumer<Exclude<A, Error>>, declinded: Consumer<D>, thrown: Consumer<unknown>): this`
+
+Executes the given `accepted` with the non-error value of type `A` when the asynchronous operation is successfully
+fulfilled, `declined` with the error value of type `D` when the asynchronous operation is unsuccessfully fulfilled, or
+`thrown` with the internal `cause` value of type `unknown` when the asynchronous operation is rejected.
+
 ### `superposition.peek(peek: Peek): this`
 
 Executes the given `peek` with no arguments when the asynchronous operation represented by the current superposition
 instance is completed, regardless of whether it is successfully fulfilled, unsuccessfully fulfilled, or rejected. It
 allows you to perform side effects, such as logging, without changing the outcome of the operation.
 
-### `superposition.recover<B = A, E extends Error = D>`(mapper: UnaryFunction<D>, SReturnType<B, E>>, ...errors: ReadonlyArray<DeadConstructor<E>>): Superposition<B, D | E>`
+### `superposition.recover<B = A, E extends Error = D>(mapper: UnaryFunction<D>, SReturnType<B, E>>, ...errors: ReadonlyArray<DeadConstructor<E>>): Superposition<B, D | E>`
 
 Executes the given `mapper` only when the current instance is in an unsuccessfully fulfilled state. The `mapper` should
 take in a single argument of type `D` and should return a value of type `B` without an error, or an instance of
@@ -364,7 +375,7 @@ handle both successful and unsuccessful outcomes of the asynchronous operation i
 
 # Ünscharferelation classes
 
-## (interface) Epoque<M>
+## (interface) Epoque\<M\>
 
 ### `epoque.accept(valye: Exclude<M, null | undefined | void>): unknown`
 
@@ -374,8 +385,16 @@ handle both successful and unsuccessful outcomes of the asynchronous operation i
 
 ## Unscharfeleration\<P\>
 
-A class that handles Optional of Monad programming asynchronously. This class wraps a `Heisenberg` instance and changes
-its state based on the outcome of an asynchronous operation.
+A class that handles Optional of Monad programming asynchronously. This class wraps a `Heisenberg` instance, which
+represents the outcome of an asynchronous operation, and can change its state based on the outcome of that operation.
+
+Like `Promise`, the Unscharferelation class can handle multiple states, but it is more finely divided than `Promise`.
+The possible states are:
+
+- Successfully fulfilled: corresponds to a fulfilled state of `Promise`.
+- Unsuccessfully fulfilled: corresponds to a rejected state of `Promise`, but only for `null` and `undefined`.
+- Rejected: corresponds to a rejected state of `Promise`.
+- Pending: corresponds to a pending state of `Promise`.
 
 ### `Unscharferelation.all<P>(unscharferelations: Iterable<Unscharfeleration<P>>): Unscharfeleration<Array<P>>`
 
@@ -456,7 +475,7 @@ Executes the given `consumer` with the non-null, non-undefined value of `P` type
 to be
 successfully fulfilled.
 
-### `unscharferelation.map<Q = P>`(mapper: UnaryFunction<Exclude<P, null | undefined | void>, UReturnType<Q>>): Unscharferelation<Q>`
+### `unscharferelation.map<Q = P>(mapper: UnaryFunction<Exclude<P, null | undefined | void>, UReturnType<Q>>): Unscharferelation<Q>`
 
 Executes the given `mapper` only when the current instance is in a successfully fulfilled state. The `mapper` should
 take in a single argument of type `Exclude<A, null | undefined | void>` and should return a value of type `Q` with a
@@ -481,13 +500,19 @@ unscharferelation.map<string>((num: number) => {
 });
 ```
 
+### `unscharfeleration.pass(accepted: Consumer<Exclude<P, null | undefined | void>>, declinded: Consumer<void>, thrown: Consumer<unknown>): this`
+
+Executes the given `accepted` with the non-null, non-undefined value of type `P` when the asynchronous operation is
+successfully fulfilled, `declined` when the asynchronous operation is unsuccessfully fulfilled, or `thrown` with the
+internal `cause` value of type `unknown` when the asynchronous operation is rejected.
+
 ### `unscharferelation.peek(peek: Peek): this`
 
 Executes the given `peek` with no arguments when the asynchronous operation represented by the current unscharferelation
 instance is completed, regardless of whether it is successfully fulfilled, unsuccessfully fulfilled, or rejected. It
 allows you to perform side effects, such as logging, without changing the outcome of the operation.
 
-### `unscharferelation.recover<Q = P>`(mapper: Supplier<UReturnType<Q>>): Unscharferelation<P | Q>`
+### `unscharferelation.recover<Q = P>(mapper: Supplier<UReturnType<Q>>): Unscharferelation<P | Q>`
 
 Executes the given `mapper` only when the current instance is in an unsuccessfully fulfilled state. The `mapper` should
 return a value of type `Q` with a non-null, non-undefined, or an instance of
@@ -495,7 +520,7 @@ return a value of type `Q` with a non-null, non-undefined, or an instance of
 a `PromiseLike<IUnscharferelation<Q>>`. The return value of this method will be a `Unscharferelation<Q>` instance if
 the `mapper` is executed and returns a value or `Unscharferelation<Q>` without error, otherwise it will return
 a `Superposition<P>` instance if the `mapper` is not executed or the returned value contains an error. The overall
-result will be a `Superposition<P | Q>` instance.
+result will be a `Unscharferelation<P | Q>` instance.
 
 This method can be used as an alternative to `promise.catch()`.
 
@@ -510,8 +535,8 @@ unscharferelation.map<string>((num: number) => {
   }
 
   return num;
-}).recover<number>((e: SyntaxError | TypeError) => {
-  logger.error(e);
+}).recover<number>(() => {
+  logger.error('null or undefined given');
 
   return 1;
 });

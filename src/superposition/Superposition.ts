@@ -15,7 +15,7 @@ export class Superposition<out A, out D extends Error> implements ISuperposition
       return Superposition.ofSchrodinger(Alive.of([]));
     }
 
-    const promises: Array<Promise<Schrodinger<A, D>>> = ss.map((s: Superposition<A, D>): Promise<Schrodinger<A, D>> => {
+    const promises: Array<Promise<Schrodinger<A, D>>> = ss.map((s: Superposition<A, D>) => {
       return s.terminate();
     });
 
@@ -41,7 +41,7 @@ export class Superposition<out A, out D extends Error> implements ISuperposition
   }
 
   public static anyway<A, D extends Error>(superpositions: Iterable<Superposition<A, D>>): Promise<Array<Schrodinger<A, D>>> {
-    const promises: Array<Promise<Schrodinger<A, D>>> = [...superpositions].map((s: Superposition<A, D>): Promise<Schrodinger<A, D>> => {
+    const promises: Array<Promise<Schrodinger<A, D>>> = [...superpositions].map((s: Superposition<A, D>) => {
       return s.terminate();
     });
 
