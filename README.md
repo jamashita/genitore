@@ -7,6 +7,12 @@ This package contains Optional monad and Result monad that support asynchronousl
 
 [![CI](https://github.com/jamashita/genitore/actions/workflows/ci.yml/badge.svg)](https://github.com/jamashita/genitore/actions/workflows/ci.yml)
 
+## Install
+
+```text
+yarn add @jamashita/genitore
+```
+
 ## Requisite
 
 ```
