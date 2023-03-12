@@ -1,3 +1,11 @@
+# [2.5.0](https://github.com/jamashita/genitore/compare/v2.4.0...v2.5.0) (2023-03-04)
+
+
+### Features
+
+* 🎸 pacakges update ([da65597](https://github.com/jamashita/genitore/commit/da65597b354329df42871634e01f0fef3478db9c))
+* 🎸 package instlal ([1749d7c](https://github.com/jamashita/genitore/commit/1749d7ce372777c98ea63c303d01ae1e38b4b5f4))
+
 # [2.4.0](https://github.com/jamashita/genitore/compare/v2.3.0...v2.4.0) (2023-01-31)
 
 
