@@ -5,16 +5,16 @@ This package contains Optional monad and Result monad that support asynchronousl
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 
-[![CI](https://github.com/jamashita/genitore/actions/workflows/ci.yml/badge.svg?branch=develop)](https://github.com/jamashita/genitore/actions/workflows/ci.yml)
+[![CI](https://github.com/jamashita/genitore/actions/workflows/ci.yml/badge.svg)](https://github.com/jamashita/genitore/actions/workflows/ci.yml)
 
 ## Requisite
 
 ```
 > node -v
-v18.9.1
+v19.7.0
 
 > npm -v
-8.19.1
+9.5.0
 
 > yarn -v
 1.22.19
@@ -60,40 +60,40 @@ all `heisenbergs` are in the `Present` state, returns `Absent<Array<P>>` when at
 the `Absent` state, and returns `Lost<Array<P>>` when at least one of `heisenbergs` is in the `Lost`state. If there are
 both `Absent` and `Lost` states present in the `heisenbergs`, the return value will be `Lost<Array<P>>` (prioritized).
 
-### `heisenberg.get(): Exclude<P, null | undefined | void>`
+### `Heisenberg.prototype.get(): Exclude<P, null | undefined | void>`
 
 Retrieves the retained value. If this instance is `Present`, the returned value will be a non-null, non-undefined value
 of type `P`. If this instance is `Absent` or `Uncertain`, `HeisenbergError` will be thrown. If this instance is `Lost`,
 the retained `cause` will be thrown.
 
-### `heisenberg.getState(): HeisenbergState`
+### `Heisenberg.prototype.getState(): HeisenbergState`
 
 Returns the current state. The state can be one of the following statuses: `'ABSENT'`, `'LOST'`, `'PRESENT'`
 or `'UNCERTAIN'`.
 
-### `heisenberg.ifAbsent(consumer: Consumer<void>): this`
+### `Heisenberg.prototype.ifAbsent(consumer: Consumer<void>): this`
 
 Executes the given `consumer` if this class instance is the `Absent` state.
 
-### `heisenberg.ifLost(consumer: Consumer<unknown>): this`
+### `Heisenberg.prototype.ifLost(consumer: Consumer<unknown>): this`
 
 Executes the given `consumer` with the internal `cause` value of `unknown` type if this class instance is in the `Lost`
 state.
 
-### `heisenberg.ifPresent(consumer: Consumer<Exclude<P, null | undefined | void>>): this`
+### `Heisenberg.prototype.ifPresent(consumer: Consumer<Exclude<P, null | undefined | void>>): this`
 
 Executes the given `consumer` with the internal non-null, non-undefined value of `P` type if this class instance
 is in the `Present` state.
 
-### `heisenberg.isAbsent(): this is Absent<P>`
+### `Heisenberg.prototype.isAbsent(): this is Absent<P>`
 
 Returns `true` if this class instance is in the `Absent` state, `false` otherwise.
 
-### `heisenberg.isLost(): this is Lost<P>`
+### `Heisenberg.prototype.isLost(): this is Lost<P>`
 
 Returns `true` if this class instance is in the `Lost` state, `false` otherwise.
 
-### `heisenberg.isPresent(): this is Present<P>`
+### `Heisenberg.prototype.isPresent(): this is Present<P>`
 
 Returns `true` if this class instance is in the `Present` state, `false` otherwise.
 
@@ -132,7 +132,7 @@ the `Dead` state, and returns `Contradiction<Array<A>, D>` when at least one of 
 state. If there are both `Dead` and `Contradiction` states present in the `schrodingers`, the return value will
 be `Contradiction<Array<A>, D>` (prioritized).
 
-### `schrodinger.get(): Exclude<A, Error>`
+### `Schrodinger.prototype.get(): Exclude<A, Error>`
 
 Returns the retained value, the returned value cannot be `Error`.
 
@@ -140,33 +140,33 @@ Retrieves the retained value. If this instance is `Alive`, the returned value wi
 this instance is `Dead`, the retained error will be thrown. If this instance is `Contradiction`, the retained `cause`
 will be thrown. If this instance is `Still`, `SchrodingerError` will be thrown.
 
-### `schrodinger.getState(): SchrodingerState`
+### `Schrodinger.prototype.getState(): SchrodingerState`
 
 Returns the current state. The state can be one of the following statuses: `'ALIVE'`, `'CONTRADICTION'`, `'DEAD'`
 or `'STILL'`.
 
-### `schrodinger.ifAlive(consumer: Consumer<Exclude<A, Error>>): this`
+### `Schrodinger.prototype.ifAlive(consumer: Consumer<Exclude<A, Error>>): this`
 
 Executes the given `consumer` with the non-error value of `A` type if this class instance is in the `Alive` state.
 
-### `schrodinger.ifContradiction(consumer: Consumer<unknown>): this`
+### `Schrodinger.prototype.ifContradiction(consumer: Consumer<unknown>): this`
 
 Executes the given `consumer` with the internal `cause` value of `unknown` type if this class instance is in
 the `Contradiction` state.
 
-### `schrodinger.ifDead(consumer: Consumer<D>): this`
+### `Schrodinger.prototype.ifDead(consumer: Consumer<D>): this`
 
 Executes the given `consumer` with the error value of `D` type if this class instance is in the `Dead` state.
 
-### `schrodinger.isAlive(): this is Alive<A, D>`
+### `Schrodinger.prototype.isAlive(): this is Alive<A, D>`
 
 Returns `true` if this class instance is in the `Alive` state, `false` otherwise.
 
-### `schrodinger.isContradiction(): this is Contradiction<A, D>`
+### `Schrodinger.prototype.isContradiction(): this is Contradiction<A, D>`
 
 Returns `true` if this class instance is in the `Contradiction` state, `false` otherwise.
 
-### `schrodinger.isDead(): this is Dead<A, D>`
+### `Schrodinger.prototype.isDead(): this is Dead<A, D>`
 
 Returns `true` if this class instance is in the `Dead` state, `false` otherwise.
 
@@ -174,15 +174,15 @@ Returns `true` if this class instance is in the `Dead` state, `false` otherwise.
 
 ## (interface) Chrono\<M, R\>
 
-### `chrono.accept(valye: Exclude<M, Error>): unknown`
+### `Chrono.prototype.accept(valye: Exclude<M, Error>): unknown`
 
-### `chrono.catch(errors: Iterable<DeadConstructor<R>>): void`
+### `Chrono.prototype.catch(errors: Iterable<DeadConstructor<R>>): void`
 
-### `chrono.decline(value: R): unknown`
+### `Chrono.prototype.decline(value: R): unknown`
 
-### `chrono.getErrors(): Set<DeadConstructor<R>>`
+### `Chrono.prototype.getErrors(): Set<DeadConstructor<R>>`
 
-### `chrono.throw(cause: unknown): unknown`
+### `Chrono.prototype.throw(cause: unknown): unknown`
 
 ## Superposition\<A, D extends Error\>
 
@@ -209,17 +209,18 @@ will be rejected (prioritized).
 
 ### `Superposition.anyway<A, D extends Error>(superpositions: Iterable<Superposition<A, D>>): Promise<Array<Schrodinger<A, D>>>`
 
-Retrieves the outcome of each asynchronous operation in `superpositions` by calling `superposition.terminate()` on each
-item. The resulting `Schrodinger` state for each `Superposition` can be found in the documentation
-for `superposition.terminate()`.
+Retrieves the outcome of each asynchronous operation in `superpositions` by
+calling `Superposition.prototype.terminate()` on each item. The resulting `Schrodinger` state for each `Superposition`
+can be found in the documentation for `Superposition.prototype.terminate()`.
 
 ### `Superposition.of<A, D extends Error>(func: Consumer<Chrono<Awaited<A>, D>>, ...errors: ReadonlyArray<DeadConstructor<D>>): Superposition<Awaited<A>, D>`
 
 Generates a new `Superposition` instance by invoking the provided `func` argument with a `Chrono` object. If
-the `chrono.accept(value)` is called with a valid value of `Awaited<A>` type, it returns a successfully
-fulfilled `Superposition<A, D>`. If the `chrono.decline(error)` is called with an error of type `D` that is specified in
-the `errors` argument, it returns an unsuccessfully fulfilled `Superposition<A, D>`. If the `chrono.throw(cause)` is
-called with an argument of `unknown` type, it returns a rejected `Superposition<A, D>`.
+the `Chrono.prototype.accept(value)` is called with a valid value of `Awaited<A>` type, it returns a successfully
+fulfilled `Superposition<A, D>`. If the `Chrono.prototype.decline(error)` is called with an error of type `D` that is
+specified in the `errors` argument, it returns an unsuccessfully fulfilled `Superposition<A, D>`. If
+the `Chrono.prototype.throw(cause)` is called with an argument of `unknown` type, it returns a
+rejected `Superposition<A, D>`.
 
 ```ts
 // let value is type of A or PromiseLike<A>
@@ -264,32 +265,32 @@ throws an error or returns a rejected `PromiseLike<A>`, but the error is of a ty
 the resulting `Superposition` will be unsuccessfully fulfilled. If the error is not of a type specified in the `errors`
 argument, the resulting `Superposition` will be rejected.
 
-### `superposition.get(): Promise<Exclude<A, Error>>`
+### `Superposition.prototype.get(): Promise<Exclude<A, Error>>`
 
 Retrieves the outcome of the asynchronous operation as a `Promise`. If the instance is in the successfully fulfilled
 state, it will return a fulfilled `Promise` instance. If the instance is in the unsuccessfully fulfilled or rejected
 state, it will return a rejected `Promise` instance.
 
-### `superposition.getErrors(): Set<DeadConstructor<D>>`
+### `Superposition.prototype.getErrors(): Set<DeadConstructor<D>>`
 
 Returns a set of error constructors that can be thrown by the asynchronous operation.
 
-### `superposition.ifAlive(consumer: Consumer<Exclude<A, Error>>): this`
+### `Superposition.prototype.ifAlive(consumer: Consumer<Exclude<A, Error>>): this`
 
 Executes the given `consumer` with the non-error value of `A` type if the asynchronous operation is going to be
 successfully fulfilled.
 
-### `superposition.ifContradiction(consumer: Consumer<unknown>): this`
+### `Superposition.prototype.ifContradiction(consumer: Consumer<unknown>): this`
 
 Executes the given `consumer` with the internal `cause` value of `unknown` type if the asynchronous operation is going
 to be rejected.
 
-### `superposition.ifDead(consumer: Consumer<D>): this`
+### `Superposition.prototype.ifDead(consumer: Consumer<D>): this`
 
 Executes the given `consumer` with the error value of `D` type if the asynchronous operation is going to be
 unsuccessfully fulfilled.
 
-### `superposition.map<B = A, E extends Error = D>(mapper: UnaryFunction<Exclude<A, Error>, SReturnType<B, E>>, ...errors: ReadonlyArray<DeadConstructor<E>>): Superposition<B, D | E>`
+### `Superposition.prototype.map<B = A, E extends Error = D>(mapper: UnaryFunction<Exclude<A, Error>, SReturnType<B, E>>, ...errors: ReadonlyArray<DeadConstructor<E>>): Superposition<B, D | E>`
 
 Executes the given `mapper` only when the current instance is in a successfully fulfilled state. The `mapper` should
 take in a single argument of type `Exclude<A, Error>` and should return a value of type `B` without an error, or an
@@ -298,7 +299,7 @@ The return value of this method will be a `Superposition<B, E>` instance if the 
 or `Superposition<B, E>` without error, otherwise it will return a `Superposition<B, D>` instance if the `mapper` is not
 executed or the returned value contain an error. The overall result will be a `Superposition<B, D | E>` instance.
 
-This method can be used as an alternative to `promise.then()`.
+This method can be used as an alternative to `Promise.prototype.then()`.
 
 ```ts
 superposition.map<string, SyntaxError>((num: number) => {
@@ -314,19 +315,19 @@ superposition.map<string, SyntaxError>((num: number) => {
 }, TypeError);
 ```
 
-### `superposition.pass(accepted: Consumer<Exclude<A, Error>>, declinded: Consumer<D>, thrown: Consumer<unknown>): this`
+### `Superposition.prototype.pass(accepted: Consumer<Exclude<A, Error>>, declinded: Consumer<D>, thrown: Consumer<unknown>): this`
 
 Executes the given `accepted` with the non-error value of type `A` when the asynchronous operation is successfully
 fulfilled, `declined` with the error value of type `D` when the asynchronous operation is unsuccessfully fulfilled, or
 `thrown` with the internal `cause` value of type `unknown` when the asynchronous operation is rejected.
 
-### `superposition.peek(peek: Peek): this`
+### `Superposition.prototype.peek(peek: Peek): this`
 
 Executes the given `peek` with no arguments when the asynchronous operation represented by the current superposition
 instance is completed, regardless of whether it is successfully fulfilled, unsuccessfully fulfilled, or rejected. It
 allows you to perform side effects, such as logging, without changing the outcome of the operation.
 
-### `superposition.recover<B = A, E extends Error = D>(mapper: UnaryFunction<D>, SReturnType<B, E>>, ...errors: ReadonlyArray<DeadConstructor<E>>): Superposition<B, D | E>`
+### `Superposition.prototype.recover<B = A, E extends Error = D>(mapper: UnaryFunction<D>, SReturnType<B, E>>, ...errors: ReadonlyArray<DeadConstructor<E>>): Superposition<B, D | E>`
 
 Executes the given `mapper` only when the current instance is in an unsuccessfully fulfilled state. The `mapper` should
 take in a single argument of type `D` and should return a value of type `B` without an error, or an instance of
@@ -335,7 +336,7 @@ of this method will be a `Superposition<B, E>` instance if the `mapper` is execu
 or `Superposition<B, E>` without error, otherwise it will return a `Superposition<A, E>` instance if the `mapper` is not
 executed or the returned value contains an error. The overall result will be a `Superposition<A | B, E>` instance.
 
-This method can be used as an alternative to `promise.catch()`.
+This method can be used as an alternative to `Promise.prototype.catch()`.
 
 ```ts
 superposition.map<string, SyntaxError>((num: number) => {
@@ -355,7 +356,7 @@ superposition.map<string, SyntaxError>((num: number) => {
 });
 ```
 
-### `superposition.terminate(): Promise<Schrodinger<A, D>>`
+### `Superposition.prototype.terminate(): Promise<Schrodinger<A, D>>`
 
 Terminates the asynchronous operation represented by the current `Superposition` instance and obtain the final state of
 the operation represented by a `Schrodinger` instance. If the `Superposition` is successfully fulfilled, the returned
@@ -364,14 +365,14 @@ unsuccessfully fulfilled, the returned `Schrodinger` will be in the `Dead` state
 failure. If the `Superposition` is rejected, the returned `Schrodinger` will be in the `Contradiction` state, indicating
 that the operation has been rejected for an unknown reason.
 
-### `superposition.transform<B = A, E extends Error = D>(alive: UnaryFunction<Exclude<A, Error>, SReturnType<B, E>>, dead: UnaryFunction<D, SReturnType<B, D>>, ...errors: ReadonlyArray<DeadConstructor<E>>): Superposition<B, E>`
+### `Superposition.prototype.transform<B = A, E extends Error = D>(alive: UnaryFunction<Exclude<A, Error>, SReturnType<B, E>>, dead: UnaryFunction<D, SReturnType<B, D>>, ...errors: ReadonlyArray<DeadConstructor<E>>): Superposition<B, E>`
 
 Executes the given `alive` only when the current instance is in a successfully fulfilled state, and also executes the
 `dead` only when the current instance is in an unsuccessfully fulfilled state. One of these functions will be executed
 unless the current instance is in a rejected state. The overall result will be a `Superposition<B, E>` instance.
 
-This method combines the functionality of `superposition.map()` and `superposition.recover()` into one, allowing you to
-handle both successful and unsuccessful outcomes of the asynchronous operation in a single call.
+This method combines the functionality of `Superposition.prototype.map()` and `Superposition.prototype.recover()` into
+one, allowing you to handle both successful and unsuccessful outcomes of the asynchronous operation in a single call.
 
 # Ünscharferelation classes
 
@@ -408,9 +409,9 @@ the `unscharferelations`, the returned instance will be rejected (prioritized).
 
 ### `Unscharferelation.anyway<P>(unscharferelations: Iterable<Unscharferelation<P>>): Promise<Array<Heisenberg<P>>>`
 
-Retrieves the outcome of each asynchronous operation in `unscharferelations` by calling `unscharferelation.terminate()`
-on each item. The resulting `Heisenberg` state for each `Unscharferelation` can be found in the documentation
-for `unscharferelation.terminate()`.
+Retrieves the outcome of each asynchronous operation in `unscharferelations` by
+calling `Unscharferelation.prototype.terminate()` on each item. The resulting `Heisenberg` state for
+each `Unscharferelation` can be found in the documentation for `Unscharferelation.prototype.terminate()`.
 
 ### `Unscharferelation.maybe<P>(value: P | PromiseLike<null | undefined | void> | PromiseLike<P> | null | undefined | void): Unscharferelation<Awaited<P>>`
 
@@ -422,9 +423,9 @@ unsuccessfully fulfilled. If a rejected `Promise` is given, the resulting `Unsch
 
 Generates a new `Unscharferelation` instance by invoking the provided `func` argument with a `Epoque` object. If
 the `epoque.accept(value)` is called with a valid value of `Awaited<A>` type, it returns a successfully
-fulfilled `Unscharferelation<P>`. If the `epoque.decline()` is called, it returns an unsuccessfully
-fulfilled `Unscharferelation<P>`. If the `epoque.throw(cause)` is called with an argument of `unknown` type, it returns
-a rejected `Unscharferelation<P>`.
+fulfilled `Unscharferelation<P>`. If the `Epoque.prototype.decline()` is called, it returns an unsuccessfully
+fulfilled `Unscharferelation<P>`. If the `Epoque.prototype.throw(cause)` is called with an argument of `unknown` type,
+it returns a rejected `Unscharferelation<P>`.
 
 ```ts
 // let value is type of P or PromiseLike<P>
@@ -454,37 +455,37 @@ it will be unsuccessfully fulfilled. If it is in the `Lost` or `Uncertain` state
 
 Generates a new `Unscharferelation` instance from a given `Unscharferelation` instance.
 
-### `unscharferelation.get(): Promise<Exclude<P, null | undefined | void>>`
+### `Unscharferelation.prototype.get(): Promise<Exclude<P, null | undefined | void>>`
 
 Retrieves the outcome of the asynchronous operation as a `Promise`. If the instance is in the successfully fulfilled
 state, it will return a fulfilled `Promise` instance. If the instance is in the unsuccessfully fulfilled or rejected
 state, it will return a rejected `Promise` instance.
 
-### `unscharferelation.ifAbsent(consumer: Consumer<void>): this`
+### `Unscharferelation.prototype.ifAbsent(consumer: Consumer<void>): this`
 
 Executes the given `consumer` if the asynchronous operation is going to be unsuccessfully fulfilled.
 
-### `superposition.ifLost(consumer: Consumer<unknown>): this`
+### `Unscharferelation.prototype.ifLost(consumer: Consumer<unknown>): this`
 
 Executes the given `consumer` with the internal `cause` value of `unknown` type if the asynchronous operation is going
 to be rejected.
 
-### `unscharferelation.ifPresent(consumer: Consumer<Exclude<P, null | undefined | void>>): this`
+### `Unscharferelation.prototype.ifPresent(consumer: Consumer<Exclude<P, null | undefined | void>>): this`
 
 Executes the given `consumer` with the non-null, non-undefined value of `P` type if the asynchronous operation is going
 to be
 successfully fulfilled.
 
-### `unscharferelation.map<Q = P>(mapper: UnaryFunction<Exclude<P, null | undefined | void>, UReturnType<Q>>): Unscharferelation<Q>`
+### `Unscharferelation.prototype.map<Q = P>(mapper: UnaryFunction<Exclude<P, null | undefined | void>, UReturnType<Q>>): Unscharferelation<Q>`
 
 Executes the given `mapper` only when the current instance is in a successfully fulfilled state. The `mapper` should
 take in a single argument of type `Exclude<A, null | undefined | void>` and should return a value of type `Q` with a
 non-null, non-undefined, or an instance of `IUnscharferelation<Q>`,
 a `PromiseLike<Exclude<Q, null | undefined | void>>`, or a `PromiseLike<IUnscharferelation<Q>>`. The return value of
 this method will be a `Unscharferelation<Q>` instance if the `mapper` is executed and returns a value
-or `Superposition<Q>`.
+or `Unscharferelation<Q>`.
 
-This method can be used as an alternative to `promise.then()`.
+This method can be used as an alternative to `Promise.prototype.then()`.
 
 ```ts
 unscharferelation.map<string>((num: number) => {
@@ -500,19 +501,19 @@ unscharferelation.map<string>((num: number) => {
 });
 ```
 
-### `unscharfeleration.pass(accepted: Consumer<Exclude<P, null | undefined | void>>, declinded: Consumer<void>, thrown: Consumer<unknown>): this`
+### `Unscharfeleration.prototype.pass(accepted: Consumer<Exclude<P, null | undefined | void>>, declinded: Consumer<void>, thrown: Consumer<unknown>): this`
 
 Executes the given `accepted` with the non-null, non-undefined value of type `P` when the asynchronous operation is
 successfully fulfilled, `declined` when the asynchronous operation is unsuccessfully fulfilled, or `thrown` with the
 internal `cause` value of type `unknown` when the asynchronous operation is rejected.
 
-### `unscharferelation.peek(peek: Peek): this`
+### `Unscharferelation.prototype.peek(peek: Peek): this`
 
 Executes the given `peek` with no arguments when the asynchronous operation represented by the current unscharferelation
 instance is completed, regardless of whether it is successfully fulfilled, unsuccessfully fulfilled, or rejected. It
 allows you to perform side effects, such as logging, without changing the outcome of the operation.
 
-### `unscharferelation.recover<Q = P>(mapper: Supplier<UReturnType<Q>>): Unscharferelation<P | Q>`
+### `Unscharferelation.prototype.recover<Q = P>(mapper: Supplier<UReturnType<Q>>): Unscharferelation<P | Q>`
 
 Executes the given `mapper` only when the current instance is in an unsuccessfully fulfilled state. The `mapper` should
 return a value of type `Q` with a non-null, non-undefined, or an instance of
@@ -522,7 +523,7 @@ the `mapper` is executed and returns a value or `Unscharferelation<Q>` without e
 a `Superposition<P>` instance if the `mapper` is not executed or the returned value contains an error. The overall
 result will be a `Unscharferelation<P | Q>` instance.
 
-This method can be used as an alternative to `promise.catch()`.
+This method can be used as an alternative to `Promise.prototype.catch()`.
 
 ```ts
 unscharferelation.map<string>((num: number) => {
@@ -542,7 +543,7 @@ unscharferelation.map<string>((num: number) => {
 });
 ```
 
-### `unscharferelation.terminate(): Promise<Heisenberg<P>>`
+### `Unscharferelation.prototype.terminate(): Promise<Heisenberg<P>>`
 
 Terminates the asynchronous operation represented by the current `Unscharferelation` instance and obtain the final state
 of the operation represented by a `Heisenberg` instance. If the `Unscharferelation` is successfully fulfilled, the
