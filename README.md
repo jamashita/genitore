@@ -13,7 +13,7 @@ This package contains Optional monad and Result monad that support asynchronousl
 yarn add @jamashita/genitore
 ```
 
-## Requisite
+## Prerequisite
 
 ```
 > node -v
