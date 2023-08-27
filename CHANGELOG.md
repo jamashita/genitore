@@ -1,3 +1,10 @@
+# [2.10.0](https://github.com/jamashita/genitore/compare/v2.9.0...v2.10.0) (2023-08-27)
+
+
+### Features
+
+* 🎸 pacakgesup udatee ([f4f4668](https://github.com/jamashita/genitore/commit/f4f4668f7a8d79019907f64ae8eeaf9d209890f6))
+
 # [2.9.0](https://github.com/jamashita/genitore/compare/v2.8.0...v2.9.0) (2023-07-15)
 
 
