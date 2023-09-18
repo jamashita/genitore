@@ -1,6 +1,6 @@
 {
   "name": "@jamashita/genitore",
-  "version": "2.11.0",
+  "version": "2.11.1",
   "private": false,
   "repository": {
     "type": "git",
@@ -67,7 +67,7 @@
     "update:upgrade": "ncu --packageManager yarn --deep --upgrade"
   },
   "dependencies": {
-    "@jamashita/anden": "2.2.0"
+    "@jamashita/anden": "2.2.1"
   },
   "devDependencies": {
     "@commitlint/cli": "17.7.1",
@@ -92,7 +92,7 @@
     "vitest": "0.34.4"
   },
   "engines": {
-    "node": ">=16.0.0"
+    "node": ">=18.x"
   },
   "engineStrict": true,
   "publishConfig": {

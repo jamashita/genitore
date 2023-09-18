@@ -1,3 +1,10 @@
+## [2.11.1](https://github.com/jamashita/genitore/compare/v2.11.0...v2.11.1) (2023-09-18)
+
+
+### Bug Fixes
+
+* 🐛 reqruied node version changed ([dcedd60](https://github.com/jamashita/genitore/commit/dcedd60f1464caa4dad672de3cc9cc21a8e3b968))
+
 # [2.11.0](https://github.com/jamashita/genitore/compare/v2.10.0...v2.11.0) (2023-09-18)
 
 
