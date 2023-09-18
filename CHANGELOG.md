@@ -1,3 +1,15 @@
+# [2.11.0](https://github.com/jamashita/genitore/compare/v2.10.0...v2.11.0) (2023-09-18)
+
+
+### Bug Fixes
+
+* 🐛 add lint-ignore line ([988e9ce](https://github.com/jamashita/genitore/commit/988e9cee00db8bb05c0159ce7e6e222e20dc21b8))
+
+
+### Features
+
+* 🎸 packages updated ([f019f4c](https://github.com/jamashita/genitore/commit/f019f4c80e17ec5d1da244732def1bffb8f2a24b))
+
 # [2.10.0](https://github.com/jamashita/genitore/compare/v2.9.0...v2.10.0) (2023-08-27)
 
 
