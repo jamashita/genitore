@@ -1,3 +1,15 @@
+# [2.13.0](https://github.com/jamashita/genitore/compare/v2.12.0...v2.13.0) (2023-10-14)
+
+
+### Bug Fixes
+
+* 🐛 iteration object changed ([dcb06b4](https://github.com/jamashita/genitore/commit/dcb06b49b70ad199be533ce96ef34780864d00b4))
+
+
+### Features
+
+* 🎸 packaeggs updated ([3dbd6f6](https://github.com/jamashita/genitore/commit/3dbd6f62cd33cd54171703761c7082f5ce5e7653))
+
 # [2.12.0](https://github.com/jamashita/genitore/compare/v2.11.1...v2.12.0) (2023-10-08)
 
 
