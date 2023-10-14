@@ -35,7 +35,7 @@ export class Heisenberg<out P> {
     const arr: Array<P> = [];
     let absent: boolean = false;
 
-    for (const h of heisenbergs) {
+    for (const h of hs) {
       switch (h.getState()) {
         case 'PRESENT': {
           arr.push(h.get());
