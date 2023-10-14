@@ -35,7 +35,7 @@ export class Schrodinger<out A, out D extends Error> {
     const arr: Array<A> = [];
     let err: Nullable<D> = null;
 
-    for (const s of schrodingers) {
+    for (const s of ss) {
       switch (s.getState()) {
         case 'ALIVE': {
           arr.push(s.get());
