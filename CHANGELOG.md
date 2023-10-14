@@ -1,3 +1,10 @@
+# [2.12.0](https://github.com/jamashita/genitore/compare/v2.11.1...v2.12.0) (2023-10-08)
+
+
+### Features
+
+* 🎸 pacakges updated ([3d5f96b](https://github.com/jamashita/genitore/commit/3d5f96bc0032fe5fb2e0c50e8f3587406992d9bf))
+
 ## [2.11.1](https://github.com/jamashita/genitore/compare/v2.11.0...v2.11.1) (2023-09-18)
 
 
