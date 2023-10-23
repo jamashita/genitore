@@ -3,7 +3,7 @@ import { RecoveryPlan } from '../../plan/index.js';
 import { Epoque } from '../Epoque.js';
 import { isUnscharferelation, IUnscharferelation, UReturnType } from '../IUnscharferelation.js';
 
-export class AbsentPlan<P> implements RecoveryPlan<void> {
+export class AbsentPlan<out P> implements RecoveryPlan<void> {
   private readonly mapper: Supplier<UReturnType<P>>;
   private readonly epoque: Epoque<P>;
 
