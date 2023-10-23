@@ -27,11 +27,6 @@ export interface Heisenberg<out P> extends Serializable {
 export class Heisenberg<out P> {
   public static all<P>(heisenbergs: Iterable<Heisenberg<P>>): Heisenberg<Array<P>> {
     const hs: Array<Heisenberg<P>> = [...heisenbergs];
-
-    if (hs.length === 0) {
-      return Present.of([]);
-    }
-
     const arr: Array<P> = [];
     let absent: boolean = false;
 
