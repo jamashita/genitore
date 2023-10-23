@@ -27,11 +27,6 @@ export interface Schrodinger<out A, out D extends Error> extends Serializable {
 export class Schrodinger<out A, out D extends Error> {
   public static all<A, D extends Error>(schrodingers: Iterable<Schrodinger<A, D>>): Schrodinger<Array<A>, D> {
     const ss: Array<Schrodinger<A, D>> = [...schrodingers];
-
-    if (ss.length === 0) {
-      return Alive.of([]);
-    }
-
     const arr: Array<A> = [];
     let err: Nullable<D> = null;
 
