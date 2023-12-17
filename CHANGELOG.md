@@ -1,3 +1,10 @@
+# [2.15.0](https://github.com/jamashita/genitore/compare/v2.14.0...v2.15.0) (2023-12-17)
+
+
+### Features
+
+* 🎸 packagesu pdated ([55d4442](https://github.com/jamashita/genitore/commit/55d4442d67dcc0107443501029f565177aa18549))
+
 # [2.14.0](https://github.com/jamashita/genitore/compare/v2.13.0...v2.14.0) (2023-10-23)
 
 
