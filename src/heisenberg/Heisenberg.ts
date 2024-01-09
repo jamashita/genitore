@@ -23,7 +23,7 @@ export interface Heisenberg<out P> extends Serializable {
   isPresent(): this is Present<P>;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/no-unsafe-declaration-merging
+// eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/no-unsafe-declaration-merging,@typescript-eslint/no-extraneous-class
 export class Heisenberg<out P> {
   public static all<P>(heisenbergs: Iterable<Heisenberg<P>>): Heisenberg<Array<P>> {
     const hs: Array<Heisenberg<P>> = [...heisenbergs];
