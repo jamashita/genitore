@@ -1,3 +1,15 @@
+# [2.16.0](https://github.com/jamashita/genitore/compare/v2.15.0...v2.16.0) (2024-01-09)
+
+
+### Bug Fixes
+
+* 🐛 ignore rules ([8771f31](https://github.com/jamashita/genitore/commit/8771f313895b320e87679380652025290c31a019))
+
+
+### Features
+
+* 🎸 packagesu psdated ([91854c1](https://github.com/jamashita/genitore/commit/91854c1847744cf06bebc35adda4435e59afe20c))
+
 # [2.15.0](https://github.com/jamashita/genitore/compare/v2.14.0...v2.15.0) (2023-12-17)
 
 
