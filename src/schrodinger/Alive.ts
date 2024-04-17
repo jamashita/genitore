@@ -1,8 +1,8 @@
 import { Objet } from '@jamashita/anden/object';
-import { Consumer } from '@jamashita/anden/type';
-import { Contradiction } from './Contradiction.js';
-import { Dead } from './Dead.js';
-import { Schrodinger, SchrodingerState } from './Schrodinger.js';
+import type { Consumer } from '@jamashita/anden/type';
+import type { Contradiction } from './Contradiction.js';
+import type { Dead } from './Dead.js';
+import type { Schrodinger, SchrodingerState } from './Schrodinger.js';
 
 export class Alive<out A, out D extends Error> implements Schrodinger<A, D> {
   private readonly value: Exclude<A, Error>;

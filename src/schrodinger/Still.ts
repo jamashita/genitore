@@ -1,7 +1,7 @@
-import { Alive } from './Alive.js';
-import { Contradiction } from './Contradiction.js';
-import { Dead } from './Dead.js';
-import { Schrodinger, SchrodingerState } from './Schrodinger.js';
+import type { Alive } from './Alive.js';
+import type { Contradiction } from './Contradiction.js';
+import type { Dead } from './Dead.js';
+import type { Schrodinger, SchrodingerState } from './Schrodinger.js';
 import { SchrodingerError } from './SchrodingerError.js';
 
 export class Still<out A, out D extends Error> implements Schrodinger<A, D> {

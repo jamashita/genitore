@@ -1,8 +1,8 @@
 import { MockRuntimeError } from '@jamashita/anden/error';
-import { Mock } from 'vitest';
-import { Plan } from '../../plan/index.js';
-import { Schrodinger } from '../../schrodinger/index.js';
-import { Chrono } from '../Chrono.js';
+import type { Mock } from 'vitest';
+import type { Plan } from '../../plan/index.js';
+import type { Schrodinger } from '../../schrodinger/index.js';
+import type { Chrono } from '../Chrono.js';
 import { SuperpositionInternal } from '../SuperpositionInternal.js';
 
 describe('SuperpositionInternal', () => {
@@ -50,19 +50,23 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      await superposition.map<number>((v: number) => {
-        fn1();
-        expect(v).toBe(value);
+      await superposition
+        .map<number>((v: number) => {
+          fn1();
+          expect(v).toBe(value);
 
-        return v + 4;
-      }).terminate();
+          return v + 4;
+        })
+        .terminate();
 
-      await superposition.map<number>((v: number) => {
-        fn2();
-        expect(v).toBe(value);
+      await superposition
+        .map<number>((v: number) => {
+          fn2();
+          expect(v).toBe(value);
 
-        return v + 3;
-      }).terminate();
+          return v + 3;
+        })
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(1);
       expect(fn2.mock.calls).toHaveLength(1);
@@ -112,17 +116,21 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      await superposition.recover<number, MockRuntimeError>(() => {
-        fn1();
+      await superposition
+        .recover<number, MockRuntimeError>(() => {
+          fn1();
 
-        return 4;
-      }).terminate();
+          return 4;
+        })
+        .terminate();
 
-      await superposition.recover<number, MockRuntimeError>(() => {
-        fn2();
+      await superposition
+        .recover<number, MockRuntimeError>(() => {
+          fn2();
 
-        return 3;
-      }).terminate();
+          return 3;
+        })
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(1);
       expect(fn2.mock.calls).toHaveLength(1);
@@ -177,29 +185,37 @@ describe('SuperpositionInternal', () => {
         [MockRuntimeError]
       );
 
-      await superposition.map<number, MockRuntimeError>(() => {
-        fn1();
+      await superposition
+        .map<number, MockRuntimeError>(() => {
+          fn1();
 
-        return 4;
-      }).terminate();
+          return 4;
+        })
+        .terminate();
 
-      await superposition.recover<number, MockRuntimeError>(() => {
-        fn2();
+      await superposition
+        .recover<number, MockRuntimeError>(() => {
+          fn2();
 
-        return 3;
-      }).terminate();
+          return 3;
+        })
+        .terminate();
 
-      await superposition.map<number, MockRuntimeError>(() => {
-        fn3();
+      await superposition
+        .map<number, MockRuntimeError>(() => {
+          fn3();
 
-        return 2;
-      }).terminate();
+          return 2;
+        })
+        .terminate();
 
-      await superposition.recover<number, MockRuntimeError>(() => {
-        fn4();
+      await superposition
+        .recover<number, MockRuntimeError>(() => {
+          fn4();
 
-        return 1;
-      }).terminate();
+          return 1;
+        })
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(0);
       expect(fn2.mock.calls).toHaveLength(0);
@@ -290,22 +306,26 @@ describe('SuperpositionInternal', () => {
       const fn2: Mock = vi.fn();
       const fn3: Mock = vi.fn();
 
-      await superposition.map<number>((v: number) => {
-        fn1();
-        expect(v).toBe(value);
+      await superposition
+        .map<number>((v: number) => {
+          fn1();
+          expect(v).toBe(value);
 
-        return v + 1;
-      }).map<number, MockRuntimeError>((v: number) => {
-        fn2();
-        expect(v).toBe(value + 1);
+          return v + 1;
+        })
+        .map<number, MockRuntimeError>((v: number) => {
+          fn2();
+          expect(v).toBe(value + 1);
 
-        return v + 1;
-      }).map<number, MockRuntimeError>((v: number) => {
-        fn3();
-        expect(v).toBe(value + 2);
+          return v + 1;
+        })
+        .map<number, MockRuntimeError>((v: number) => {
+          fn3();
+          expect(v).toBe(value + 2);
 
-        return v + 1;
-      }).terminate();
+          return v + 1;
+        })
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(1);
       expect(fn2.mock.calls).toHaveLength(1);
@@ -326,22 +346,26 @@ describe('SuperpositionInternal', () => {
       const fn2: Mock = vi.fn();
       const fn3: Mock = vi.fn();
 
-      await superposition.map<number>((v: number) => {
-        fn1();
-        expect(v).toBe(value);
+      await superposition
+        .map<number>((v: number) => {
+          fn1();
+          expect(v).toBe(value);
 
-        return Promise.resolve<number>(v + 1);
-      }).map<number, MockRuntimeError>((v: number) => {
-        fn2();
-        expect(v).toBe(value + 1);
+          return Promise.resolve<number>(v + 1);
+        })
+        .map<number, MockRuntimeError>((v: number) => {
+          fn2();
+          expect(v).toBe(value + 1);
 
-        return Promise.resolve<number>(v + 2);
-      }).map<number, MockRuntimeError>((v: number) => {
-        fn3();
-        expect(v).toBe(value + 2);
+          return Promise.resolve<number>(v + 2);
+        })
+        .map<number, MockRuntimeError>((v: number) => {
+          fn3();
+          expect(v).toBe(value + 2);
 
-        return Promise.resolve<number>(v + 1);
-      }).terminate();
+          return Promise.resolve<number>(v + 1);
+        })
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(1);
       expect(fn2.mock.calls).toHaveLength(1);
@@ -376,21 +400,25 @@ describe('SuperpositionInternal', () => {
       const fn2: Mock = vi.fn();
       const fn3: Mock = vi.fn();
 
-      await superposition1.map<number>((v: number) => {
-        fn1();
-        expect(v).toBe(value1);
+      await superposition1
+        .map<number>((v: number) => {
+          fn1();
+          expect(v).toBe(value1);
 
-        return superposition2;
-      }).map<number, MockRuntimeError>(() => {
-        fn2();
+          return superposition2;
+        })
+        .map<number, MockRuntimeError>(() => {
+          fn2();
 
-        return superposition3;
-      }).map<number, MockRuntimeError>((v: number) => {
-        fn3();
-        expect(v).toBe(value3);
+          return superposition3;
+        })
+        .map<number, MockRuntimeError>((v: number) => {
+          fn3();
+          expect(v).toBe(value3);
 
-        return superposition3;
-      }).terminate();
+          return superposition3;
+        })
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(1);
       expect(fn2.mock.calls).toHaveLength(1);
@@ -425,21 +453,25 @@ describe('SuperpositionInternal', () => {
       const fn2: Mock = vi.fn();
       const fn3: Mock = vi.fn();
 
-      await superposition1.map<number>((v: number) => {
-        fn1();
-        expect(v).toBe(value1);
+      await superposition1
+        .map<number>((v: number) => {
+          fn1();
+          expect(v).toBe(value1);
 
-        return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition2);
-      }).map<number, MockRuntimeError>(() => {
-        fn2();
+          return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition2);
+        })
+        .map<number, MockRuntimeError>(() => {
+          fn2();
 
-        return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition3);
-      }).map<number, MockRuntimeError>((v: number) => {
-        fn3();
-        expect(v).toBe(value3);
+          return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition3);
+        })
+        .map<number, MockRuntimeError>((v: number) => {
+          fn3();
+          expect(v).toBe(value3);
 
-        return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition3);
-      }).terminate();
+          return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition3);
+        })
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(1);
       expect(fn2.mock.calls).toHaveLength(1);
@@ -461,20 +493,24 @@ describe('SuperpositionInternal', () => {
       const fn2: Mock = vi.fn();
       const fn3: Mock = vi.fn();
 
-      await superposition.map<number>((v: number) => {
-        fn1();
-        expect(v).toBe(value);
+      await superposition
+        .map<number>((v: number) => {
+          fn1();
+          expect(v).toBe(value);
 
-        throw error;
-      }).map<number, MockRuntimeError>(() => {
-        fn2();
+          throw error;
+        })
+        .map<number, MockRuntimeError>(() => {
+          fn2();
 
-        throw error;
-      }).map<number, MockRuntimeError>(() => {
-        fn3();
+          throw error;
+        })
+        .map<number, MockRuntimeError>(() => {
+          fn3();
 
-        throw error;
-      }).terminate();
+          throw error;
+        })
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(1);
       expect(fn2.mock.calls).toHaveLength(0);
@@ -496,20 +532,24 @@ describe('SuperpositionInternal', () => {
       const fn2: Mock = vi.fn();
       const fn3: Mock = vi.fn();
 
-      await superposition.map<number>((v: number) => {
-        fn1();
-        expect(v).toBe(value);
+      await superposition
+        .map<number>((v: number) => {
+          fn1();
+          expect(v).toBe(value);
 
-        return Promise.reject<number>(error);
-      }).map<number, MockRuntimeError>(() => {
-        fn2();
+          return Promise.reject<number>(error);
+        })
+        .map<number, MockRuntimeError>(() => {
+          fn2();
 
-        return Promise.reject<number>(error);
-      }).map<number, MockRuntimeError>(() => {
-        fn3();
+          return Promise.reject<number>(error);
+        })
+        .map<number, MockRuntimeError>(() => {
+          fn3();
 
-        return Promise.reject<number>(error);
-      }).terminate();
+          return Promise.reject<number>(error);
+        })
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(1);
       expect(fn2.mock.calls).toHaveLength(0);
@@ -543,20 +583,24 @@ describe('SuperpositionInternal', () => {
       const fn2: Mock = vi.fn();
       const fn3: Mock = vi.fn();
 
-      await superposition1.map<number>((v: number) => {
-        fn1();
-        expect(v).toBe(value);
+      await superposition1
+        .map<number>((v: number) => {
+          fn1();
+          expect(v).toBe(value);
 
-        return superposition2;
-      }).map<number, MockRuntimeError>(() => {
-        fn2();
+          return superposition2;
+        })
+        .map<number, MockRuntimeError>(() => {
+          fn2();
 
-        return superposition3;
-      }).map<number, MockRuntimeError>(() => {
-        fn3();
+          return superposition3;
+        })
+        .map<number, MockRuntimeError>(() => {
+          fn3();
 
-        return superposition3;
-      }).terminate();
+          return superposition3;
+        })
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(1);
       expect(fn2.mock.calls).toHaveLength(0);
@@ -590,20 +634,24 @@ describe('SuperpositionInternal', () => {
       const fn2: Mock = vi.fn();
       const fn3: Mock = vi.fn();
 
-      await superposition1.map<number>((v: number) => {
-        fn1();
-        expect(v).toBe(value);
+      await superposition1
+        .map<number>((v: number) => {
+          fn1();
+          expect(v).toBe(value);
 
-        return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition2);
-      }).map<number, MockRuntimeError>(() => {
-        fn2();
+          return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition2);
+        })
+        .map<number, MockRuntimeError>(() => {
+          fn2();
 
-        return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition3);
-      }).map<number, MockRuntimeError>(() => {
-        fn3();
+          return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition3);
+        })
+        .map<number, MockRuntimeError>(() => {
+          fn3();
 
-        return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition3);
-      }).terminate();
+          return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition3);
+        })
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(1);
       expect(fn2.mock.calls).toHaveLength(0);
@@ -614,36 +662,38 @@ describe('SuperpositionInternal', () => {
       const value: number = 2;
       const error: MockRuntimeError = new MockRuntimeError('');
 
-      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
-        (chrono: Chrono<number, MockRuntimeError>) => {
-          chrono.accept(value);
-        },
-        []
-      );
+      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of((chrono: Chrono<number, MockRuntimeError>) => {
+        chrono.accept(value);
+      }, []);
 
       const fn1: Mock = vi.fn();
       const fn2: Mock = vi.fn();
       const fn3: Mock = vi.fn();
       const fn4: Mock = vi.fn();
 
-      await superposition.map<number>((v: number) => {
-        fn1();
-        expect(v).toBe(value);
+      await superposition
+        .map<number>((v: number) => {
+          fn1();
+          expect(v).toBe(value);
 
-        throw error;
-      }).map<number, MockRuntimeError>(() => {
-        fn2();
+          throw error;
+        })
+        .map<number, MockRuntimeError>(() => {
+          fn2();
 
-        throw error;
-      }).map<number, MockRuntimeError>(() => {
-        fn3();
+          throw error;
+        })
+        .map<number, MockRuntimeError>(() => {
+          fn3();
 
-        throw error;
-      }).recover<number, MockRuntimeError>(() => {
-        fn4();
+          throw error;
+        })
+        .recover<number, MockRuntimeError>(() => {
+          fn4();
 
-        throw error;
-      }).terminate();
+          throw error;
+        })
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(1);
       expect(fn2.mock.calls).toHaveLength(0);
@@ -655,36 +705,38 @@ describe('SuperpositionInternal', () => {
       const value: number = 2;
       const error: MockRuntimeError = new MockRuntimeError('');
 
-      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
-        (chrono: Chrono<number, MockRuntimeError>) => {
-          chrono.accept(value);
-        },
-        []
-      );
+      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of((chrono: Chrono<number, MockRuntimeError>) => {
+        chrono.accept(value);
+      }, []);
 
       const fn1: Mock = vi.fn();
       const fn2: Mock = vi.fn();
       const fn3: Mock = vi.fn();
       const fn4: Mock = vi.fn();
 
-      await superposition.map<number>((v: number) => {
-        fn1();
-        expect(v).toBe(value);
+      await superposition
+        .map<number>((v: number) => {
+          fn1();
+          expect(v).toBe(value);
 
-        return Promise.reject<number>(error);
-      }).map<number, MockRuntimeError>(() => {
-        fn2();
+          return Promise.reject<number>(error);
+        })
+        .map<number, MockRuntimeError>(() => {
+          fn2();
 
-        return Promise.reject<number>(error);
-      }).map<number, MockRuntimeError>(() => {
-        fn3();
+          return Promise.reject<number>(error);
+        })
+        .map<number, MockRuntimeError>(() => {
+          fn3();
 
-        return Promise.reject<number>(error);
-      }).recover<number, MockRuntimeError>(() => {
-        fn4();
+          return Promise.reject<number>(error);
+        })
+        .recover<number, MockRuntimeError>(() => {
+          fn4();
 
-        return Promise.reject<number>(error);
-      }).terminate();
+          return Promise.reject<number>(error);
+        })
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(1);
       expect(fn2.mock.calls).toHaveLength(0);
@@ -728,24 +780,29 @@ describe('SuperpositionInternal', () => {
       const fn3: Mock = vi.fn();
       const fn4: Mock = vi.fn();
 
-      await superposition1.map<number>((v: number) => {
-        fn1();
-        expect(v).toBe(value);
+      await superposition1
+        .map<number>((v: number) => {
+          fn1();
+          expect(v).toBe(value);
 
-        return superposition2;
-      }).map<number, MockRuntimeError>(() => {
-        fn2();
+          return superposition2;
+        })
+        .map<number, MockRuntimeError>(() => {
+          fn2();
 
-        return superposition3;
-      }).map<number, MockRuntimeError>(() => {
-        fn3();
+          return superposition3;
+        })
+        .map<number, MockRuntimeError>(() => {
+          fn3();
 
-        return superposition4;
-      }, MockRuntimeError).recover<number, MockRuntimeError>(() => {
-        fn4();
+          return superposition4;
+        }, MockRuntimeError)
+        .recover<number, MockRuntimeError>(() => {
+          fn4();
 
-        return superposition4;
-      }).terminate();
+          return superposition4;
+        })
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(1);
       expect(fn2.mock.calls).toHaveLength(0);
@@ -789,24 +846,29 @@ describe('SuperpositionInternal', () => {
       const fn3: Mock = vi.fn();
       const fn4: Mock = vi.fn();
 
-      await superposition1.map<number>((v: number) => {
-        fn1();
-        expect(v).toBe(value);
+      await superposition1
+        .map<number>((v: number) => {
+          fn1();
+          expect(v).toBe(value);
 
-        return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition2);
-      }).map<number, MockRuntimeError>(() => {
-        fn2();
+          return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition2);
+        })
+        .map<number, MockRuntimeError>(() => {
+          fn2();
 
-        return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition3);
-      }).map<number, MockRuntimeError>(() => {
-        fn3();
+          return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition3);
+        })
+        .map<number, MockRuntimeError>(() => {
+          fn3();
 
-        return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition4);
-      }, MockRuntimeError).recover<number, MockRuntimeError>(() => {
-        fn4();
+          return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition4);
+        }, MockRuntimeError)
+        .recover<number, MockRuntimeError>(() => {
+          fn4();
 
-        return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition4);
-      }).terminate();
+          return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition4);
+        })
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(1);
       expect(fn2.mock.calls).toHaveLength(0);
@@ -835,22 +897,26 @@ describe('SuperpositionInternal', () => {
       const fn2: Mock = vi.fn();
       const fn3: Mock = vi.fn();
 
-      await superposition1.map<number, MockRuntimeError>((v: number) => {
-        fn1();
-        expect(v).toBe(value1);
+      await superposition1
+        .map<number, MockRuntimeError>((v: number) => {
+          fn1();
+          expect(v).toBe(value1);
 
-        return superposition2;
-      }).map<number, MockRuntimeError>((v: number) => {
-        fn2();
-        expect(v).toBe(value2);
+          return superposition2;
+        })
+        .map<number, MockRuntimeError>((v: number) => {
+          fn2();
+          expect(v).toBe(value2);
 
-        return superposition2;
-      }).map<number, MockRuntimeError>((v: number) => {
-        fn3();
-        expect(v).toBe(value2);
+          return superposition2;
+        })
+        .map<number, MockRuntimeError>((v: number) => {
+          fn3();
+          expect(v).toBe(value2);
 
-        return superposition2;
-      }).terminate();
+          return superposition2;
+        })
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(1);
       expect(fn2.mock.calls).toHaveLength(1);
@@ -878,20 +944,24 @@ describe('SuperpositionInternal', () => {
       const fn2: Mock = vi.fn();
       const fn3: Mock = vi.fn();
 
-      await superposition1.map<number, MockRuntimeError>((v: number) => {
-        fn1();
-        expect(v).toBe(value);
+      await superposition1
+        .map<number, MockRuntimeError>((v: number) => {
+          fn1();
+          expect(v).toBe(value);
 
-        return superposition2;
-      }).recover<number, MockRuntimeError>(() => {
-        fn2();
+          return superposition2;
+        })
+        .recover<number, MockRuntimeError>(() => {
+          fn2();
 
-        return superposition2;
-      }).recover<number, MockRuntimeError>(() => {
-        fn3();
+          return superposition2;
+        })
+        .recover<number, MockRuntimeError>(() => {
+          fn3();
 
-        return superposition2;
-      }).terminate();
+          return superposition2;
+        })
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(1);
       expect(fn2.mock.calls).toHaveLength(1);
@@ -919,21 +989,25 @@ describe('SuperpositionInternal', () => {
       const fn2: Mock = vi.fn();
       const fn3: Mock = vi.fn();
 
-      await superposition1.map<number, MockRuntimeError>((v: number) => {
-        fn1();
-        expect(v).toBe(value);
+      await superposition1
+        .map<number, MockRuntimeError>((v: number) => {
+          fn1();
+          expect(v).toBe(value);
 
-        return superposition2;
-      }).recover<number, MockRuntimeError>(() => {
-        fn2();
+          return superposition2;
+        })
+        .recover<number, MockRuntimeError>(() => {
+          fn2();
 
-        return superposition2;
-      }, MockRuntimeError).map<number, MockRuntimeError>((v: number) => {
-        fn3();
-        expect(v).toBe(value);
+          return superposition2;
+        }, MockRuntimeError)
+        .map<number, MockRuntimeError>((v: number) => {
+          fn3();
+          expect(v).toBe(value);
 
-        return superposition2;
-      }).terminate();
+          return superposition2;
+        })
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(1);
       expect(fn2.mock.calls).toHaveLength(0);
@@ -957,21 +1031,25 @@ describe('SuperpositionInternal', () => {
       const fn2: Mock = vi.fn();
       const fn3: Mock = vi.fn();
 
-      await superposition.map<number, MockRuntimeError>((v: number) => {
-        fn1();
+      await superposition
+        .map<number, MockRuntimeError>((v: number) => {
+          fn1();
 
-        return v + 1;
-      }, MockRuntimeError).recover<number, MockRuntimeError>((err: MockRuntimeError) => {
-        fn2();
-        expect(err).toBe(error);
+          return v + 1;
+        }, MockRuntimeError)
+        .recover<number, MockRuntimeError>((err: MockRuntimeError) => {
+          fn2();
+          expect(err).toBe(error);
 
-        return value + 13;
-      }, MockRuntimeError).map<number, MockRuntimeError>((v: number) => {
-        fn3();
-        expect(v).toBe(value + 13);
+          return value + 13;
+        }, MockRuntimeError)
+        .map<number, MockRuntimeError>((v: number) => {
+          fn3();
+          expect(v).toBe(value + 13);
 
-        return value + 130;
-      }).terminate();
+          return value + 130;
+        })
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(0);
       expect(fn2.mock.calls).toHaveLength(1);
@@ -993,21 +1071,25 @@ describe('SuperpositionInternal', () => {
       const fn2: Mock = vi.fn();
       const fn3: Mock = vi.fn();
 
-      await superposition.map<number, MockRuntimeError>((v: number) => {
-        fn1();
+      await superposition
+        .map<number, MockRuntimeError>((v: number) => {
+          fn1();
 
-        return Promise.resolve<number>(v + 1);
-      }).recover<number, MockRuntimeError>((err: MockRuntimeError) => {
-        fn2();
-        expect(err).toBe(error);
+          return Promise.resolve<number>(v + 1);
+        })
+        .recover<number, MockRuntimeError>((err: MockRuntimeError) => {
+          fn2();
+          expect(err).toBe(error);
 
-        return Promise.resolve<number>(value + 13);
-      }, MockRuntimeError).map<number, MockRuntimeError>((v: number) => {
-        fn3();
-        expect(v).toBe(v + 13);
+          return Promise.resolve<number>(value + 13);
+        }, MockRuntimeError)
+        .map<number, MockRuntimeError>((v: number) => {
+          fn3();
+          expect(v).toBe(v + 13);
 
-        return Promise.resolve<number>(v + 130);
-      }).terminate();
+          return Promise.resolve<number>(v + 130);
+        })
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(0);
       expect(fn2.mock.calls).toHaveLength(1);
@@ -1042,21 +1124,25 @@ describe('SuperpositionInternal', () => {
       const fn2: Mock = vi.fn();
       const fn3: Mock = vi.fn();
 
-      await superposition1.map<number, MockRuntimeError>(() => {
-        fn1();
+      await superposition1
+        .map<number, MockRuntimeError>(() => {
+          fn1();
 
-        return superposition2;
-      }).recover<number, MockRuntimeError>((err: MockRuntimeError) => {
-        fn2();
-        expect(err).toBe(error);
+          return superposition2;
+        })
+        .recover<number, MockRuntimeError>((err: MockRuntimeError) => {
+          fn2();
+          expect(err).toBe(error);
 
-        return superposition3;
-      }, MockRuntimeError).map<number, MockRuntimeError>((v: number) => {
-        fn3();
-        expect(v).toBe(value2);
+          return superposition3;
+        }, MockRuntimeError)
+        .map<number, MockRuntimeError>((v: number) => {
+          fn3();
+          expect(v).toBe(value2);
 
-        return superposition3;
-      }).terminate();
+          return superposition3;
+        })
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(0);
       expect(fn2.mock.calls).toHaveLength(1);
@@ -1091,21 +1177,25 @@ describe('SuperpositionInternal', () => {
       const fn2: Mock = vi.fn();
       const fn3: Mock = vi.fn();
 
-      await superposition1.map<number, MockRuntimeError>(() => {
-        fn1();
+      await superposition1
+        .map<number, MockRuntimeError>(() => {
+          fn1();
 
-        return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition2);
-      }).recover<number, MockRuntimeError>((err: MockRuntimeError) => {
-        fn2();
-        expect(err).toBe(error);
+          return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition2);
+        })
+        .recover<number, MockRuntimeError>((err: MockRuntimeError) => {
+          fn2();
+          expect(err).toBe(error);
 
-        return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition3);
-      }, MockRuntimeError).map<number, MockRuntimeError>((v: number) => {
-        fn3();
-        expect(v).toBe(value2);
+          return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition3);
+        }, MockRuntimeError)
+        .map<number, MockRuntimeError>((v: number) => {
+          fn3();
+          expect(v).toBe(value2);
 
-        return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition3);
-      }).terminate();
+          return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition3);
+        })
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(0);
       expect(fn2.mock.calls).toHaveLength(1);
@@ -1128,22 +1218,26 @@ describe('SuperpositionInternal', () => {
       const fn2: Mock = vi.fn();
       const fn3: Mock = vi.fn();
 
-      await superposition.recover<number, MockRuntimeError>((err: MockRuntimeError) => {
-        fn1();
-        expect(err).toBe(error1);
+      await superposition
+        .recover<number, MockRuntimeError>((err: MockRuntimeError) => {
+          fn1();
+          expect(err).toBe(error1);
 
-        throw error2;
-      }, MockRuntimeError).recover<number, MockRuntimeError>((err: MockRuntimeError) => {
-        fn2();
-        expect(err).toBe(error2);
+          throw error2;
+        }, MockRuntimeError)
+        .recover<number, MockRuntimeError>((err: MockRuntimeError) => {
+          fn2();
+          expect(err).toBe(error2);
 
-        return value + 13;
-      }, MockRuntimeError).map<number, MockRuntimeError>((v: number) => {
-        fn3();
-        expect(v).toBe(value + 13);
+          return value + 13;
+        }, MockRuntimeError)
+        .map<number, MockRuntimeError>((v: number) => {
+          fn3();
+          expect(v).toBe(value + 13);
 
-        return value + 130;
-      }).terminate();
+          return value + 130;
+        })
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(1);
       expect(fn2.mock.calls).toHaveLength(1);
@@ -1166,22 +1260,26 @@ describe('SuperpositionInternal', () => {
       const fn2: Mock = vi.fn();
       const fn3: Mock = vi.fn();
 
-      await superposition.recover<number, MockRuntimeError>((err: MockRuntimeError) => {
-        fn1();
-        expect(err).toBe(error1);
+      await superposition
+        .recover<number, MockRuntimeError>((err: MockRuntimeError) => {
+          fn1();
+          expect(err).toBe(error1);
 
-        return Promise.reject<number>(error2);
-      }, MockRuntimeError).recover<number, MockRuntimeError>((err: MockRuntimeError) => {
-        fn2();
-        expect(err).toBe(error2);
+          return Promise.reject<number>(error2);
+        }, MockRuntimeError)
+        .recover<number, MockRuntimeError>((err: MockRuntimeError) => {
+          fn2();
+          expect(err).toBe(error2);
 
-        return value + 13;
-      }, MockRuntimeError).map<number, MockRuntimeError>((v: number) => {
-        fn3();
-        expect(v).toBe(value + 13);
+          return value + 13;
+        }, MockRuntimeError)
+        .map<number, MockRuntimeError>((v: number) => {
+          fn3();
+          expect(v).toBe(value + 13);
 
-        return value + 130;
-      }).terminate();
+          return value + 130;
+        })
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(1);
       expect(fn2.mock.calls).toHaveLength(1);
@@ -1216,22 +1314,26 @@ describe('SuperpositionInternal', () => {
       const fn2: Mock = vi.fn();
       const fn3: Mock = vi.fn();
 
-      await superposition1.map<number, MockRuntimeError>((v: number) => {
-        fn1();
-        expect(v).toBe(value);
+      await superposition1
+        .map<number, MockRuntimeError>((v: number) => {
+          fn1();
+          expect(v).toBe(value);
 
-        return superposition2;
-      }).recover<number, MockRuntimeError>((err: MockRuntimeError) => {
-        fn2();
-        expect(err).toBe(error1);
+          return superposition2;
+        })
+        .recover<number, MockRuntimeError>((err: MockRuntimeError) => {
+          fn2();
+          expect(err).toBe(error1);
 
-        return superposition3;
-      }, MockRuntimeError).map<number, MockRuntimeError>((v: number) => {
-        fn3();
-        expect(v).toBe(v + 13);
+          return superposition3;
+        }, MockRuntimeError)
+        .map<number, MockRuntimeError>((v: number) => {
+          fn3();
+          expect(v).toBe(v + 13);
 
-        return superposition3;
-      }).terminate();
+          return superposition3;
+        })
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(1);
       expect(fn2.mock.calls).toHaveLength(1);
@@ -1266,22 +1368,26 @@ describe('SuperpositionInternal', () => {
       const fn2: Mock = vi.fn();
       const fn3: Mock = vi.fn();
 
-      await superposition1.map<number, MockRuntimeError>((v: number) => {
-        fn1();
-        expect(v).toBe(value);
+      await superposition1
+        .map<number, MockRuntimeError>((v: number) => {
+          fn1();
+          expect(v).toBe(value);
 
-        return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition2);
-      }).recover<number, MockRuntimeError>((err: MockRuntimeError) => {
-        fn2();
-        expect(err).toBe(error1);
+          return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition2);
+        })
+        .recover<number, MockRuntimeError>((err: MockRuntimeError) => {
+          fn2();
+          expect(err).toBe(error1);
 
-        return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition3);
-      }, MockRuntimeError).map<number, MockRuntimeError>((v: number) => {
-        fn3();
-        expect(v).toBe(v + 13);
+          return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition3);
+        }, MockRuntimeError)
+        .map<number, MockRuntimeError>((v: number) => {
+          fn3();
+          expect(v).toBe(v + 13);
 
-        return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition3);
-      }).terminate();
+          return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition3);
+        })
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(1);
       expect(fn2.mock.calls).toHaveLength(1);
@@ -1292,36 +1398,38 @@ describe('SuperpositionInternal', () => {
       const value: number = 2;
       const error: MockRuntimeError = new MockRuntimeError('');
 
-      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
-        (chrono: Chrono<number, MockRuntimeError>) => {
-          chrono.accept(value);
-        },
-        []
-      );
+      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of((chrono: Chrono<number, MockRuntimeError>) => {
+        chrono.accept(value);
+      }, []);
 
       const fn1: Mock = vi.fn();
       const fn2: Mock = vi.fn();
       const fn3: Mock = vi.fn();
       const fn4: Mock = vi.fn();
 
-      await superposition.map<number, MockRuntimeError>((v: number) => {
-        fn1();
-        expect(v).toBe(value);
+      await superposition
+        .map<number, MockRuntimeError>((v: number) => {
+          fn1();
+          expect(v).toBe(value);
 
-        throw error;
-      }).recover<number, MockRuntimeError>(() => {
-        fn2();
+          throw error;
+        })
+        .recover<number, MockRuntimeError>(() => {
+          fn2();
 
-        return value + 13;
-      }, MockRuntimeError).map<number, MockRuntimeError>(() => {
-        fn3();
+          return value + 13;
+        }, MockRuntimeError)
+        .map<number, MockRuntimeError>(() => {
+          fn3();
 
-        return value + 130;
-      }).recover<number, MockRuntimeError>(() => {
-        fn4();
+          return value + 130;
+        })
+        .recover<number, MockRuntimeError>(() => {
+          fn4();
 
-        return value + 13;
-      }, MockRuntimeError).terminate();
+          return value + 13;
+        }, MockRuntimeError)
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(1);
       expect(fn2.mock.calls).toHaveLength(0);
@@ -1333,36 +1441,38 @@ describe('SuperpositionInternal', () => {
       const value: number = 2;
       const error: MockRuntimeError = new MockRuntimeError('');
 
-      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
-        (chrono: Chrono<number, MockRuntimeError>) => {
-          chrono.accept(value);
-        },
-        []
-      );
+      const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of((chrono: Chrono<number, MockRuntimeError>) => {
+        chrono.accept(value);
+      }, []);
 
       const fn1: Mock = vi.fn();
       const fn2: Mock = vi.fn();
       const fn3: Mock = vi.fn();
       const fn4: Mock = vi.fn();
 
-      await superposition.map<number, MockRuntimeError>((v: number) => {
-        fn1();
-        expect(v).toBe(value);
+      await superposition
+        .map<number, MockRuntimeError>((v: number) => {
+          fn1();
+          expect(v).toBe(value);
 
-        return Promise.reject<number>(error);
-      }).recover<number, MockRuntimeError>(() => {
-        fn2();
+          return Promise.reject<number>(error);
+        })
+        .recover<number, MockRuntimeError>(() => {
+          fn2();
 
-        return Promise.reject<number>(error);
-      }, MockRuntimeError).map<number, MockRuntimeError>(() => {
-        fn3();
+          return Promise.reject<number>(error);
+        }, MockRuntimeError)
+        .map<number, MockRuntimeError>(() => {
+          fn3();
 
-        return Promise.reject<number>(error);
-      }, MockRuntimeError).recover<number, MockRuntimeError>(() => {
-        fn4();
+          return Promise.reject<number>(error);
+        }, MockRuntimeError)
+        .recover<number, MockRuntimeError>(() => {
+          fn4();
 
-        return Promise.reject<number>(error);
-      }, MockRuntimeError).terminate();
+          return Promise.reject<number>(error);
+        }, MockRuntimeError)
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(1);
       expect(fn2.mock.calls).toHaveLength(0);
@@ -1406,20 +1516,24 @@ describe('SuperpositionInternal', () => {
       const fn3: Mock = vi.fn();
       const fn4: Mock = vi.fn();
 
-      await superposition1.map<number, MockRuntimeError>((v: number) => {
-        fn1();
-        expect(v).toBe(value);
+      await superposition1
+        .map<number, MockRuntimeError>((v: number) => {
+          fn1();
+          expect(v).toBe(value);
 
-        return superposition2;
-      }).recover<number, MockRuntimeError>(() => {
-        fn2();
+          return superposition2;
+        })
+        .recover<number, MockRuntimeError>(() => {
+          fn2();
 
-        return superposition3;
-      }, MockRuntimeError).map<number, MockRuntimeError>(() => {
-        fn3();
+          return superposition3;
+        }, MockRuntimeError)
+        .map<number, MockRuntimeError>(() => {
+          fn3();
 
-        return superposition4;
-      }).terminate();
+          return superposition4;
+        })
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(1);
       expect(fn2.mock.calls).toHaveLength(0);
@@ -1463,20 +1577,24 @@ describe('SuperpositionInternal', () => {
       const fn3: Mock = vi.fn();
       const fn4: Mock = vi.fn();
 
-      await superposition1.map<number, MockRuntimeError>((v: number) => {
-        fn1();
-        expect(v).toBe(value);
+      await superposition1
+        .map<number, MockRuntimeError>((v: number) => {
+          fn1();
+          expect(v).toBe(value);
 
-        return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition2);
-      }).recover<number, MockRuntimeError>(() => {
-        fn2();
+          return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition2);
+        })
+        .recover<number, MockRuntimeError>(() => {
+          fn2();
 
-        return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition3);
-      }, MockRuntimeError).map<number, MockRuntimeError>(() => {
-        fn3();
+          return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition3);
+        }, MockRuntimeError)
+        .map<number, MockRuntimeError>(() => {
+          fn3();
 
-        return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition4);
-      }).terminate();
+          return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition4);
+        })
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(1);
       expect(fn2.mock.calls).toHaveLength(0);
@@ -1505,22 +1623,26 @@ describe('SuperpositionInternal', () => {
       const fn2: Mock = vi.fn();
       const fn3: Mock = vi.fn();
 
-      await superposition1.map<number, MockRuntimeError>((v: number) => {
-        fn1();
-        expect(v).toBe(value1);
+      await superposition1
+        .map<number, MockRuntimeError>((v: number) => {
+          fn1();
+          expect(v).toBe(value1);
 
-        return superposition2;
-      }).map<number>((v: number) => {
-        fn2();
-        expect(v).toBe(value2);
+          return superposition2;
+        })
+        .map<number>((v: number) => {
+          fn2();
+          expect(v).toBe(value2);
 
-        return superposition2;
-      }).map<number, MockRuntimeError>((v: number) => {
-        fn3();
-        expect(v).toBe(value2);
+          return superposition2;
+        })
+        .map<number, MockRuntimeError>((v: number) => {
+          fn3();
+          expect(v).toBe(value2);
 
-        return superposition2;
-      }).terminate();
+          return superposition2;
+        })
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(1);
       expect(fn2.mock.calls).toHaveLength(1);
@@ -1548,22 +1670,26 @@ describe('SuperpositionInternal', () => {
       const fn2: Mock = vi.fn();
       const fn3: Mock = vi.fn();
 
-      await superposition1.map<number, MockRuntimeError>((v: number) => {
-        fn1();
-        expect(v).toBe(value);
+      await superposition1
+        .map<number, MockRuntimeError>((v: number) => {
+          fn1();
+          expect(v).toBe(value);
 
-        return superposition2;
-      }).recover<number, MockRuntimeError>((err: MockRuntimeError) => {
-        fn2();
-        expect(err).toBe(error);
+          return superposition2;
+        })
+        .recover<number, MockRuntimeError>((err: MockRuntimeError) => {
+          fn2();
+          expect(err).toBe(error);
 
-        return superposition2;
-      }, MockRuntimeError).recover<number, MockRuntimeError>((err: MockRuntimeError) => {
-        fn3();
-        expect(err).toBe(error);
+          return superposition2;
+        }, MockRuntimeError)
+        .recover<number, MockRuntimeError>((err: MockRuntimeError) => {
+          fn3();
+          expect(err).toBe(error);
 
-        return superposition2;
-      }, MockRuntimeError).terminate();
+          return superposition2;
+        }, MockRuntimeError)
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(1);
       expect(fn2.mock.calls).toHaveLength(1);
@@ -1591,22 +1717,26 @@ describe('SuperpositionInternal', () => {
       const fn2: Mock = vi.fn();
       const fn3: Mock = vi.fn();
 
-      await superposition1.map<number, MockRuntimeError>((v: number) => {
-        fn1();
-        expect(v).toBe(value);
+      await superposition1
+        .map<number, MockRuntimeError>((v: number) => {
+          fn1();
+          expect(v).toBe(value);
 
-        return superposition2;
-      }).recover<number, MockRuntimeError>((err: MockRuntimeError) => {
-        fn2();
-        expect(err).toBe(error);
+          return superposition2;
+        })
+        .recover<number, MockRuntimeError>((err: MockRuntimeError) => {
+          fn2();
+          expect(err).toBe(error);
 
-        return superposition2;
-      }, MockRuntimeError).map<number, MockRuntimeError>((v: number) => {
-        fn3();
-        expect(v).toBe(error);
+          return superposition2;
+        }, MockRuntimeError)
+        .map<number, MockRuntimeError>((v: number) => {
+          fn3();
+          expect(v).toBe(error);
 
-        return superposition2;
-      }, MockRuntimeError).terminate();
+          return superposition2;
+        }, MockRuntimeError)
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(1);
       expect(fn2.mock.calls).toHaveLength(0);
@@ -1632,33 +1762,36 @@ describe('SuperpositionInternal', () => {
       const fn3: Mock = vi.fn();
       const fn4: Mock = vi.fn();
 
-      await superposition.transform<number, MockRuntimeError>(
-        (v: number) => {
-          fn1();
-          expect(v).toBe(value1);
+      await superposition
+        .transform<number, MockRuntimeError>(
+          (v: number) => {
+            fn1();
+            expect(v).toBe(value1);
 
-          return value2;
-        },
-        () => {
-          fn2();
+            return value2;
+          },
+          () => {
+            fn2();
 
-          return value3;
-        },
-        MockRuntimeError
-      ).transform<number, MockRuntimeError>(
-        (v: number) => {
-          fn3();
-          expect(v).toBe(value2);
+            return value3;
+          },
+          MockRuntimeError
+        )
+        .transform<number, MockRuntimeError>(
+          (v: number) => {
+            fn3();
+            expect(v).toBe(value2);
 
-          return value2;
-        },
-        () => {
-          fn4();
+            return value2;
+          },
+          () => {
+            fn4();
 
-          return value3;
-        },
-        MockRuntimeError
-      ).terminate();
+            return value3;
+          },
+          MockRuntimeError
+        )
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(1);
       expect(fn2.mock.calls).toHaveLength(0);
@@ -1683,33 +1816,36 @@ describe('SuperpositionInternal', () => {
       const fn3: Mock = vi.fn();
       const fn4: Mock = vi.fn();
 
-      await superposition.transform<number, MockRuntimeError>(
-        (v: number) => {
-          fn1();
-          expect(v).toBe(value1);
+      await superposition
+        .transform<number, MockRuntimeError>(
+          (v: number) => {
+            fn1();
+            expect(v).toBe(value1);
 
-          return Promise.resolve<number>(value2);
-        },
-        () => {
-          fn2();
+            return Promise.resolve<number>(value2);
+          },
+          () => {
+            fn2();
 
-          return Promise.resolve<number>(value3);
-        },
-        MockRuntimeError
-      ).transform<number, MockRuntimeError>(
-        (v: number) => {
-          fn3();
-          expect(v).toBe(value2);
+            return Promise.resolve<number>(value3);
+          },
+          MockRuntimeError
+        )
+        .transform<number, MockRuntimeError>(
+          (v: number) => {
+            fn3();
+            expect(v).toBe(value2);
 
-          return Promise.resolve<number>(value2);
-        },
-        () => {
-          fn4();
+            return Promise.resolve<number>(value2);
+          },
+          () => {
+            fn4();
 
-          return Promise.resolve<number>(value3);
-        },
-        MockRuntimeError
-      ).terminate();
+            return Promise.resolve<number>(value3);
+          },
+          MockRuntimeError
+        )
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(1);
       expect(fn2.mock.calls).toHaveLength(0);
@@ -1746,33 +1882,36 @@ describe('SuperpositionInternal', () => {
       const fn3: Mock = vi.fn();
       const fn4: Mock = vi.fn();
 
-      await superposition1.transform<number, MockRuntimeError>(
-        (v: number) => {
-          fn1();
-          expect(v).toBe(value1);
+      await superposition1
+        .transform<number, MockRuntimeError>(
+          (v: number) => {
+            fn1();
+            expect(v).toBe(value1);
 
-          return superposition2;
-        },
-        () => {
-          fn2();
+            return superposition2;
+          },
+          () => {
+            fn2();
 
-          return superposition3;
-        },
-        MockRuntimeError
-      ).transform<number, MockRuntimeError>(
-        (v: number) => {
-          fn3();
-          expect(v).toBe(value2);
+            return superposition3;
+          },
+          MockRuntimeError
+        )
+        .transform<number, MockRuntimeError>(
+          (v: number) => {
+            fn3();
+            expect(v).toBe(value2);
 
-          return superposition2;
-        },
-        () => {
-          fn4();
+            return superposition2;
+          },
+          () => {
+            fn4();
 
-          return superposition3;
-        },
-        MockRuntimeError
-      ).terminate();
+            return superposition3;
+          },
+          MockRuntimeError
+        )
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(1);
       expect(fn2.mock.calls).toHaveLength(0);
@@ -1809,33 +1948,36 @@ describe('SuperpositionInternal', () => {
       const fn3: Mock = vi.fn();
       const fn4: Mock = vi.fn();
 
-      await superposition1.transform<number, MockRuntimeError>(
-        (v: number) => {
-          fn1();
-          expect(v).toBe(value1);
+      await superposition1
+        .transform<number, MockRuntimeError>(
+          (v: number) => {
+            fn1();
+            expect(v).toBe(value1);
 
-          return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition2);
-        },
-        () => {
-          fn2();
+            return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition2);
+          },
+          () => {
+            fn2();
 
-          return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition3);
-        },
-        MockRuntimeError
-      ).transform<number, MockRuntimeError>(
-        (v: number) => {
-          fn3();
-          expect(v).toBe(value2);
+            return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition3);
+          },
+          MockRuntimeError
+        )
+        .transform<number, MockRuntimeError>(
+          (v: number) => {
+            fn3();
+            expect(v).toBe(value2);
 
-          return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition2);
-        },
-        () => {
-          fn4();
+            return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition2);
+          },
+          () => {
+            fn4();
 
-          return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition3);
-        },
-        MockRuntimeError
-      ).terminate();
+            return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition3);
+          },
+          MockRuntimeError
+        )
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(1);
       expect(fn2.mock.calls).toHaveLength(0);
@@ -1860,31 +2002,34 @@ describe('SuperpositionInternal', () => {
       const fn3: Mock = vi.fn();
       const fn4: Mock = vi.fn();
 
-      await superposition.transform<number, MockRuntimeError>(
-        () => {
-          fn1();
+      await superposition
+        .transform<number, MockRuntimeError>(
+          () => {
+            fn1();
 
-          throw error2;
-        },
-        (err: MockRuntimeError) => {
-          fn2();
-          expect(err).toBe(error1);
+            throw error2;
+          },
+          (err: MockRuntimeError) => {
+            fn2();
+            expect(err).toBe(error1);
 
-          throw error3;
-        }
-      ).transform<number, MockRuntimeError>(
-        () => {
-          fn3();
+            throw error3;
+          }
+        )
+        .transform<number, MockRuntimeError>(
+          () => {
+            fn3();
 
-          throw error2;
-        },
-        (err: MockRuntimeError) => {
-          fn4();
-          expect(err).toBe(error1);
+            throw error2;
+          },
+          (err: MockRuntimeError) => {
+            fn4();
+            expect(err).toBe(error1);
 
-          throw error3;
-        }
-      ).terminate();
+            throw error3;
+          }
+        )
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(0);
       expect(fn2.mock.calls).toHaveLength(1);
@@ -1909,33 +2054,36 @@ describe('SuperpositionInternal', () => {
       const fn3: Mock = vi.fn();
       const fn4: Mock = vi.fn();
 
-      await superposition.transform<number, MockRuntimeError>(
-        () => {
-          fn1();
+      await superposition
+        .transform<number, MockRuntimeError>(
+          () => {
+            fn1();
 
-          return Promise.reject<number>(error2);
-        },
-        (err: MockRuntimeError) => {
-          fn2();
-          expect(err).toBe(error1);
+            return Promise.reject<number>(error2);
+          },
+          (err: MockRuntimeError) => {
+            fn2();
+            expect(err).toBe(error1);
 
-          return Promise.reject<number>(error3);
-        },
-        MockRuntimeError
-      ).transform<number, MockRuntimeError>(
-        () => {
-          fn3();
+            return Promise.reject<number>(error3);
+          },
+          MockRuntimeError
+        )
+        .transform<number, MockRuntimeError>(
+          () => {
+            fn3();
 
-          return Promise.reject<number>(error2);
-        },
-        (err: MockRuntimeError) => {
-          fn4();
-          expect(err).toBe(error1);
+            return Promise.reject<number>(error2);
+          },
+          (err: MockRuntimeError) => {
+            fn4();
+            expect(err).toBe(error1);
 
-          return Promise.reject<number>(error3);
-        },
-        MockRuntimeError
-      ).terminate();
+            return Promise.reject<number>(error3);
+          },
+          MockRuntimeError
+        )
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(0);
       expect(fn2.mock.calls).toHaveLength(1);
@@ -1972,33 +2120,36 @@ describe('SuperpositionInternal', () => {
       const fn3: Mock = vi.fn();
       const fn4: Mock = vi.fn();
 
-      await superposition1.transform<number, MockRuntimeError>(
-        () => {
-          fn1();
+      await superposition1
+        .transform<number, MockRuntimeError>(
+          () => {
+            fn1();
 
-          return superposition2;
-        },
-        (err: MockRuntimeError) => {
-          fn2();
-          expect(err).toBe(error1);
+            return superposition2;
+          },
+          (err: MockRuntimeError) => {
+            fn2();
+            expect(err).toBe(error1);
 
-          return superposition3;
-        },
-        MockRuntimeError
-      ).transform<number, MockRuntimeError>(
-        () => {
-          fn3();
+            return superposition3;
+          },
+          MockRuntimeError
+        )
+        .transform<number, MockRuntimeError>(
+          () => {
+            fn3();
 
-          return superposition2;
-        },
-        (err: MockRuntimeError) => {
-          fn4();
-          expect(err).toBe(error1);
+            return superposition2;
+          },
+          (err: MockRuntimeError) => {
+            fn4();
+            expect(err).toBe(error1);
 
-          return superposition3;
-        },
-        MockRuntimeError
-      ).terminate();
+            return superposition3;
+          },
+          MockRuntimeError
+        )
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(0);
       expect(fn2.mock.calls).toHaveLength(1);
@@ -2035,33 +2186,36 @@ describe('SuperpositionInternal', () => {
       const fn3: Mock = vi.fn();
       const fn4: Mock = vi.fn();
 
-      await superposition1.transform<number, MockRuntimeError>(
-        () => {
-          fn1();
+      await superposition1
+        .transform<number, MockRuntimeError>(
+          () => {
+            fn1();
 
-          return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition2);
-        },
-        (err: MockRuntimeError) => {
-          fn2();
-          expect(err).toBe(error1);
+            return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition2);
+          },
+          (err: MockRuntimeError) => {
+            fn2();
+            expect(err).toBe(error1);
 
-          return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition3);
-        },
-        MockRuntimeError
-      ).transform<number, MockRuntimeError>(
-        () => {
-          fn3();
+            return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition3);
+          },
+          MockRuntimeError
+        )
+        .transform<number, MockRuntimeError>(
+          () => {
+            fn3();
 
-          return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition2);
-        },
-        (err: MockRuntimeError) => {
-          fn4();
-          expect(err).toBe(error1);
+            return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition2);
+          },
+          (err: MockRuntimeError) => {
+            fn4();
+            expect(err).toBe(error1);
 
-          return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition3);
-        },
-        MockRuntimeError
-      ).terminate();
+            return Promise.resolve<SuperpositionInternal<number, MockRuntimeError>>(superposition3);
+          },
+          MockRuntimeError
+        )
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(0);
       expect(fn2.mock.calls).toHaveLength(1);
@@ -2093,46 +2247,50 @@ describe('SuperpositionInternal', () => {
       const fn5: Mock = vi.fn();
       const fn6: Mock = vi.fn();
 
-      await superposition1.transform<number, MockRuntimeError>(
-        (v: number) => {
-          fn1();
-          expect(v).toBe(value1);
+      await superposition1
+        .transform<number, MockRuntimeError>(
+          (v: number) => {
+            fn1();
+            expect(v).toBe(value1);
 
-          return superposition2;
-        },
-        () => {
-          fn2();
+            return superposition2;
+          },
+          () => {
+            fn2();
 
-          return superposition2;
-        },
-        MockRuntimeError
-      ).transform<number, MockRuntimeError>(
-        (v: number) => {
-          fn3();
-          expect(v).toBe(value2);
+            return superposition2;
+          },
+          MockRuntimeError
+        )
+        .transform<number, MockRuntimeError>(
+          (v: number) => {
+            fn3();
+            expect(v).toBe(value2);
 
-          return superposition2;
-        },
-        () => {
-          fn4();
+            return superposition2;
+          },
+          () => {
+            fn4();
 
-          return superposition2;
-        },
-        MockRuntimeError
-      ).transform<number, MockRuntimeError>(
-        (v: number) => {
-          fn5();
-          expect(v).toBe(value2);
+            return superposition2;
+          },
+          MockRuntimeError
+        )
+        .transform<number, MockRuntimeError>(
+          (v: number) => {
+            fn5();
+            expect(v).toBe(value2);
 
-          return superposition2;
-        },
-        () => {
-          fn6();
+            return superposition2;
+          },
+          () => {
+            fn6();
 
-          return superposition2;
-        },
-        MockRuntimeError
-      ).terminate();
+            return superposition2;
+          },
+          MockRuntimeError
+        )
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(1);
       expect(fn2.mock.calls).toHaveLength(0);
@@ -2166,46 +2324,50 @@ describe('SuperpositionInternal', () => {
       const fn5: Mock = vi.fn();
       const fn6: Mock = vi.fn();
 
-      await superposition1.transform<number, MockRuntimeError>(
-        () => {
-          fn1();
+      await superposition1
+        .transform<number, MockRuntimeError>(
+          () => {
+            fn1();
 
-          return superposition2;
-        },
-        (err: MockRuntimeError) => {
-          fn2();
-          expect(err).toBe(error1);
+            return superposition2;
+          },
+          (err: MockRuntimeError) => {
+            fn2();
+            expect(err).toBe(error1);
 
-          return superposition2;
-        },
-        MockRuntimeError
-      ).transform<number, MockRuntimeError>(
-        () => {
-          fn3();
+            return superposition2;
+          },
+          MockRuntimeError
+        )
+        .transform<number, MockRuntimeError>(
+          () => {
+            fn3();
 
-          return superposition2;
-        },
-        (err: MockRuntimeError) => {
-          fn4();
-          expect(err).toBe(error2);
+            return superposition2;
+          },
+          (err: MockRuntimeError) => {
+            fn4();
+            expect(err).toBe(error2);
 
-          return superposition2;
-        },
-        MockRuntimeError
-      ).transform<number, MockRuntimeError>(
-        () => {
-          fn5();
+            return superposition2;
+          },
+          MockRuntimeError
+        )
+        .transform<number, MockRuntimeError>(
+          () => {
+            fn5();
 
-          return superposition2;
-        },
-        (err: MockRuntimeError) => {
-          fn6();
-          expect(err).toBe(error2);
+            return superposition2;
+          },
+          (err: MockRuntimeError) => {
+            fn6();
+            expect(err).toBe(error2);
 
-          return superposition2;
-        },
-        MockRuntimeError
-      ).terminate();
+            return superposition2;
+          },
+          MockRuntimeError
+        )
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(0);
       expect(fn2.mock.calls).toHaveLength(1);
@@ -2239,43 +2401,47 @@ describe('SuperpositionInternal', () => {
       const fn5: Mock = vi.fn();
       const fn6: Mock = vi.fn();
 
-      await superposition1.transform<number>(
-        () => {
-          fn1();
+      await superposition1
+        .transform<number>(
+          () => {
+            fn1();
 
-          return superposition2;
-        },
-        () => {
-          fn2();
+            return superposition2;
+          },
+          () => {
+            fn2();
 
-          return superposition2;
-        },
-        MockRuntimeError
-      ).transform<number>(
-        () => {
-          fn3();
+            return superposition2;
+          },
+          MockRuntimeError
+        )
+        .transform<number>(
+          () => {
+            fn3();
 
-          return superposition2;
-        },
-        () => {
-          fn4();
+            return superposition2;
+          },
+          () => {
+            fn4();
 
-          return superposition2;
-        },
-        MockRuntimeError
-      ).transform<number>(
-        () => {
-          fn5();
+            return superposition2;
+          },
+          MockRuntimeError
+        )
+        .transform<number>(
+          () => {
+            fn5();
 
-          return superposition2;
-        },
-        () => {
-          fn6();
+            return superposition2;
+          },
+          () => {
+            fn6();
 
-          return superposition2;
-        },
-        MockRuntimeError
-      ).terminate();
+            return superposition2;
+          },
+          MockRuntimeError
+        )
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(0);
       expect(fn2.mock.calls).toHaveLength(0);
@@ -2293,15 +2459,18 @@ describe('SuperpositionInternal', () => {
       const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.accept(value);
-        }, [MockRuntimeError]
+        },
+        [MockRuntimeError]
       );
 
       const fn: Mock = vi.fn();
 
-      const schrodinger: Schrodinger<number, MockRuntimeError> = await superposition.ifAlive((n: number) => {
-        fn();
-        expect(n).toBe(value);
-      }).terminate();
+      const schrodinger: Schrodinger<number, MockRuntimeError> = await superposition
+        .ifAlive((n: number) => {
+          fn();
+          expect(n).toBe(value);
+        })
+        .terminate();
 
       expect(fn.mock.calls).toHaveLength(1);
       expect(schrodinger.isAlive()).toBe(true);
@@ -2313,14 +2482,17 @@ describe('SuperpositionInternal', () => {
       const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.decline(error);
-        }, [MockRuntimeError]
+        },
+        [MockRuntimeError]
       );
 
       const fn: Mock = vi.fn();
 
-      const schrodinger: Schrodinger<number, MockRuntimeError> = await superposition.ifAlive(() => {
-        fn();
-      }).terminate();
+      const schrodinger: Schrodinger<number, MockRuntimeError> = await superposition
+        .ifAlive(() => {
+          fn();
+        })
+        .terminate();
 
       expect(fn.mock.calls).toHaveLength(0);
       expect(schrodinger.isDead()).toBe(true);
@@ -2332,14 +2504,17 @@ describe('SuperpositionInternal', () => {
       const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.throw(error);
-        }, [MockRuntimeError]
+        },
+        [MockRuntimeError]
       );
 
       const fn: Mock = vi.fn();
 
-      const schrodinger: Schrodinger<number, MockRuntimeError> = await superposition.ifAlive(() => {
-        fn();
-      }).terminate();
+      const schrodinger: Schrodinger<number, MockRuntimeError> = await superposition
+        .ifAlive(() => {
+          fn();
+        })
+        .terminate();
 
       expect(fn.mock.calls).toHaveLength(0);
       expect(schrodinger.isContradiction()).toBe(true);
@@ -2353,14 +2528,17 @@ describe('SuperpositionInternal', () => {
       const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.accept(value);
-        }, [MockRuntimeError]
+        },
+        [MockRuntimeError]
       );
 
       const fn: Mock = vi.fn();
 
-      const schrodinger: Schrodinger<number, MockRuntimeError> = await superposition.ifDead(() => {
-        fn();
-      }).terminate();
+      const schrodinger: Schrodinger<number, MockRuntimeError> = await superposition
+        .ifDead(() => {
+          fn();
+        })
+        .terminate();
 
       expect(fn.mock.calls).toHaveLength(0);
       expect(schrodinger.isAlive()).toBe(true);
@@ -2372,15 +2550,18 @@ describe('SuperpositionInternal', () => {
       const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.decline(error);
-        }, [MockRuntimeError]
+        },
+        [MockRuntimeError]
       );
 
       const fn: Mock = vi.fn();
 
-      const schrodinger: Schrodinger<number, MockRuntimeError> = await superposition.ifDead((e: MockRuntimeError) => {
-        fn();
-        expect(e).toBe(error);
-      }).terminate();
+      const schrodinger: Schrodinger<number, MockRuntimeError> = await superposition
+        .ifDead((e: MockRuntimeError) => {
+          fn();
+          expect(e).toBe(error);
+        })
+        .terminate();
 
       expect(fn.mock.calls).toHaveLength(1);
       expect(schrodinger.isDead()).toBe(true);
@@ -2392,14 +2573,17 @@ describe('SuperpositionInternal', () => {
       const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.throw(error);
-        }, [MockRuntimeError]
+        },
+        [MockRuntimeError]
       );
 
       const fn: Mock = vi.fn();
 
-      const schrodinger: Schrodinger<number, MockRuntimeError> = await superposition.ifDead(() => {
-        fn();
-      }).terminate();
+      const schrodinger: Schrodinger<number, MockRuntimeError> = await superposition
+        .ifDead(() => {
+          fn();
+        })
+        .terminate();
 
       expect(fn.mock.calls).toHaveLength(0);
       expect(schrodinger.isContradiction()).toBe(true);
@@ -2413,14 +2597,17 @@ describe('SuperpositionInternal', () => {
       const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.accept(value);
-        }, [MockRuntimeError]
+        },
+        [MockRuntimeError]
       );
 
       const fn: Mock = vi.fn();
 
-      const schrodinger: Schrodinger<number, MockRuntimeError> = await superposition.ifContradiction(() => {
-        fn();
-      }).terminate();
+      const schrodinger: Schrodinger<number, MockRuntimeError> = await superposition
+        .ifContradiction(() => {
+          fn();
+        })
+        .terminate();
 
       expect(fn.mock.calls).toHaveLength(0);
       expect(schrodinger.isAlive()).toBe(true);
@@ -2432,14 +2619,17 @@ describe('SuperpositionInternal', () => {
       const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.decline(error);
-        }, [MockRuntimeError]
+        },
+        [MockRuntimeError]
       );
 
       const fn: Mock = vi.fn();
 
-      const schrodinger: Schrodinger<number, MockRuntimeError> = await superposition.ifContradiction(() => {
-        fn();
-      }).terminate();
+      const schrodinger: Schrodinger<number, MockRuntimeError> = await superposition
+        .ifContradiction(() => {
+          fn();
+        })
+        .terminate();
 
       expect(fn.mock.calls).toHaveLength(0);
       expect(schrodinger.isDead()).toBe(true);
@@ -2451,15 +2641,18 @@ describe('SuperpositionInternal', () => {
       const superposition: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of(
         (chrono: Chrono<number, MockRuntimeError>) => {
           chrono.throw(error);
-        }, [MockRuntimeError]
+        },
+        [MockRuntimeError]
       );
 
       const fn: Mock = vi.fn();
 
-      const schrodinger: Schrodinger<number, MockRuntimeError> = await superposition.ifContradiction((e: unknown) => {
-        fn();
-        expect(e).toBe(error);
-      }).terminate();
+      const schrodinger: Schrodinger<number, MockRuntimeError> = await superposition
+        .ifContradiction((e: unknown) => {
+          fn();
+          expect(e).toBe(error);
+        })
+        .terminate();
 
       expect(fn.mock.calls).toHaveLength(1);
       expect(schrodinger.isContradiction()).toBe(true);
@@ -2623,4 +2816,3 @@ describe('SuperpositionInternal', () => {
     });
   });
 });
-

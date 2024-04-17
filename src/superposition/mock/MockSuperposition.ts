@@ -1,9 +1,8 @@
 import { UnimplementedError } from '@jamashita/anden/error';
-import { DeadConstructor, Schrodinger } from '../../schrodinger/index.js';
-import { ISuperposition } from '../ISuperposition.js';
+import type { DeadConstructor, Schrodinger } from '../../schrodinger/index.js';
+import type { ISuperposition } from '../ISuperposition.js';
 
 export class MockSuperposition<out A, out D extends Error> implements ISuperposition<A, D> {
-
   public get(): Promise<Exclude<A, Error>> {
     throw new UnimplementedError();
   }

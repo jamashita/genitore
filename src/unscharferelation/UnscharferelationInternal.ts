@@ -1,25 +1,18 @@
-import { Consumer, Peek, Reject, Resolve, Supplier, UnaryFunction } from '@jamashita/anden/type';
-import { Absent, Heisenberg, Lost, Present, Uncertain } from '../heisenberg/index.js';
+import type { Consumer, Peek, Reject, Resolve, Supplier, UnaryFunction } from '@jamashita/anden/type';
+import { Absent, type Heisenberg, Lost, Present, Uncertain } from '../heisenberg/index.js';
 import {
   DestroyPassPlan,
-  DestroyPlan,
+  type DestroyPlan,
   MapPassPlan,
-  MapPlan,
-  Plan,
+  type MapPlan,
+  type Plan,
   RecoveryPassPlan,
-  RecoveryPlan,
+  type RecoveryPlan,
   SpoilPlan
 } from '../plan/index.js';
-import { Epoque } from './Epoque.js';
-import { IUnscharferelation, UReturnType } from './IUnscharferelation.js';
-import {
-  AbsentPlan,
-  CombinedEpoquePlan,
-  DestroyEpoquePlan,
-  MapEpoquePlan,
-  PresentPlan,
-  RecoveryEpoquePlan
-} from './Plan/index.js';
+import type { Epoque } from './Epoque.js';
+import type { IUnscharferelation, UReturnType } from './IUnscharferelation.js';
+import { AbsentPlan, CombinedEpoquePlan, DestroyEpoquePlan, MapEpoquePlan, PresentPlan, RecoveryEpoquePlan } from './Plan/index.js';
 import { UnscharferelationError } from './UnscharferelationError.js';
 
 export class UnscharferelationInternal<out P> implements IUnscharferelation<P>, Epoque<P> {
@@ -36,6 +29,7 @@ export class UnscharferelationInternal<out P> implements IUnscharferelation<P>, 
     func(this);
   }
 
+  // biome-ignore lint/suspicious/noConfusingVoidType: <explanation>
   public accept(value: Exclude<P, null | undefined | void>): void {
     if (this.settled()) {
       return;
@@ -43,9 +37,9 @@ export class UnscharferelationInternal<out P> implements IUnscharferelation<P>, 
 
     this.heisenberg = Present.of(value);
 
-    this.plans.forEach((plan: MapPlan<P>) => {
+    for (const plan of this.plans) {
       plan.onMap(value);
-    });
+    }
   }
 
   public decline(): void {
@@ -55,14 +49,17 @@ export class UnscharferelationInternal<out P> implements IUnscharferelation<P>, 
 
     this.heisenberg = Absent.of();
 
-    this.plans.forEach((plan: RecoveryPlan<void>) => {
+    for (const plan of this.plans) {
       plan.onRecover();
-    });
+    }
   }
 
+  // biome-ignore lint/suspicious/noConfusingVoidType: <explanation>
   public get(): Promise<Exclude<P, null | undefined | void>> {
+    // biome-ignore lint/suspicious/noConfusingVoidType: <explanation>
     return new Promise((resolve: Resolve<Exclude<P, null | undefined | void>>, reject: Reject) => {
       this.pass(
+        // biome-ignore lint/suspicious/noConfusingVoidType: <explanation>
         (value: Exclude<P, null | undefined | void>) => {
           resolve(value);
         },
@@ -76,6 +73,7 @@ export class UnscharferelationInternal<out P> implements IUnscharferelation<P>, 
     });
   }
 
+  // biome-ignore lint/suspicious/noConfusingVoidType: <explanation>
   private handle(map: MapPlan<Exclude<P, null | undefined | void>>, recover: RecoveryPlan<void>, destroy: DestroyPlan): unknown {
     if (this.heisenberg.isPresent()) {
       return map.onMap(this.heisenberg.get());
@@ -102,18 +100,21 @@ export class UnscharferelationInternal<out P> implements IUnscharferelation<P>, 
     return this;
   }
 
+  // biome-ignore lint/suspicious/noConfusingVoidType: <explanation>
   public ifPresent(consumer: Consumer<Exclude<P, null | undefined | void>>): this {
     this.handle(MapPassPlan.of(consumer), SpoilPlan.of(), SpoilPlan.of());
 
     return this;
   }
 
+  // biome-ignore lint/suspicious/noConfusingVoidType: <explanation>
   public map<Q = P>(mapper: UnaryFunction<Exclude<P, null | undefined | void>, UReturnType<Q>>): UnscharferelationInternal<Q> {
     return UnscharferelationInternal.of((epoque: Epoque<Q>) => {
       return this.handle(PresentPlan.of(mapper, epoque), RecoveryEpoquePlan.of(epoque), DestroyEpoquePlan.of(epoque));
     });
   }
 
+  // biome-ignore lint/suspicious/noConfusingVoidType: <explanation>
   public pass(accepted: Consumer<Exclude<P, null | undefined | void>>, declined: Consumer<void>, thrown: Consumer<unknown>): this {
     this.handle(MapPassPlan.of(accepted), RecoveryPassPlan.of(declined), DestroyPassPlan.of(thrown));
 
@@ -155,9 +156,9 @@ export class UnscharferelationInternal<out P> implements IUnscharferelation<P>, 
 
     this.heisenberg = Lost.of(cause);
 
-    this.plans.forEach((plan: DestroyPlan) => {
+    for (const plan of this.plans) {
       plan.onDestroy(cause);
-    });
+    }
   }
 
   public toString(): string {

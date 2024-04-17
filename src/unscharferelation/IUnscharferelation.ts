@@ -1,9 +1,10 @@
-import { Consumer, Kind, Peek, Serializable, Supplier, UnaryFunction } from '@jamashita/anden/type';
-import { Heisenberg } from '../heisenberg/index.js';
+import { type Consumer, Kind, type Peek, type Serializable, type Supplier, type UnaryFunction } from '@jamashita/anden/type';
+import type { Heisenberg } from '../heisenberg/index.js';
 
 export type UReturnType<T> =
-  IUnscharferelation<T>
+  | IUnscharferelation<T>
   | PromiseLike<IUnscharferelation<T>>
+  // biome-ignore lint/suspicious/noConfusingVoidType: <explanation>
   | PromiseLike<null | undefined | void>
   | PromiseLike<T>
   | T
@@ -12,16 +13,20 @@ export type UReturnType<T> =
   | void;
 
 export interface IUnscharferelation<out P> extends Serializable {
+  // biome-ignore lint/suspicious/noConfusingVoidType: <explanation>
   get(): Promise<Exclude<P, null | undefined | void>>;
 
   ifAbsent(consumer: Consumer<void>): this;
 
   ifLost(consumer: Consumer<unknown>): this;
 
+  // biome-ignore lint/suspicious/noConfusingVoidType: <explanation>
   ifPresent(consumer: Consumer<Exclude<P, null | undefined | void>>): this;
 
+  // biome-ignore lint/suspicious/noConfusingVoidType: <explanation>
   map<Q = P>(mapper: UnaryFunction<Exclude<P, null | undefined | void>, UReturnType<Q>>): IUnscharferelation<Q>;
 
+  // biome-ignore lint/suspicious/noConfusingVoidType: <explanation>
   pass(accepted: Consumer<Exclude<P, null | undefined | void>>, declined: Consumer<void>, thrown: Consumer<unknown>): this;
 
   peek(peek: Peek): this;

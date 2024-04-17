@@ -1,25 +1,18 @@
-import { Consumer, Peek, Reject, Resolve, UnaryFunction } from '@jamashita/anden/type';
+import type { Consumer, Peek, Reject, Resolve, UnaryFunction } from '@jamashita/anden/type';
 import {
   DestroyPassPlan,
-  DestroyPlan,
+  type DestroyPlan,
   MapPassPlan,
-  MapPlan,
-  Plan,
+  type MapPlan,
+  type Plan,
   RecoveryPassPlan,
-  RecoveryPlan,
+  type RecoveryPlan,
   SpoilPlan
 } from '../plan/index.js';
-import { Alive, Contradiction, Dead, DeadConstructor, Schrodinger, Still } from '../schrodinger/index.js';
-import { Chrono } from './Chrono.js';
-import { ISuperposition, SReturnType } from './ISuperposition.js';
-import {
-  AlivePlan,
-  CombinedChronoPlan,
-  DeadPlan,
-  DestroyChronoPlan,
-  MapChronoPlan,
-  RecoveryChronoPlan
-} from './Plan/index.js';
+import { Alive, Contradiction, Dead, type DeadConstructor, type Schrodinger, Still } from '../schrodinger/index.js';
+import type { Chrono } from './Chrono.js';
+import type { ISuperposition, SReturnType } from './ISuperposition.js';
+import { AlivePlan, CombinedChronoPlan, DeadPlan, DestroyChronoPlan, MapChronoPlan, RecoveryChronoPlan } from './Plan/index.js';
 
 export class SuperpositionInternal<out A, out D extends Error> implements ISuperposition<A, D>, Chrono<A, D> {
   private schrodinger: Schrodinger<A, D>;
@@ -44,15 +37,15 @@ export class SuperpositionInternal<out A, out D extends Error> implements ISuper
 
     this.schrodinger = Alive.of(value);
 
-    this.plans.forEach((plan: MapPlan<Exclude<A, Error>>) => {
+    for (const plan of this.plans) {
       plan.onMap(value);
-    });
+    }
   }
 
   public catch(errors: Iterable<DeadConstructor<D>>): void {
-    [...errors].forEach((error: DeadConstructor<D>) => {
+    for (const error of errors) {
       this.errors.add(error);
-    });
+    }
   }
 
   public decline(error: D): void {
@@ -62,9 +55,9 @@ export class SuperpositionInternal<out A, out D extends Error> implements ISuper
 
     this.schrodinger = Dead.of(error);
 
-    this.plans.forEach((plan: RecoveryPlan<D>) => {
+    for (const plan of this.plans) {
       plan.onRecover(error);
-    });
+    }
   }
 
   public get(): Promise<Exclude<A, Error>> {
@@ -123,9 +116,12 @@ export class SuperpositionInternal<out A, out D extends Error> implements ISuper
     mapper: UnaryFunction<Exclude<A, Error>, SReturnType<B, E>>,
     ...errors: ReadonlyArray<DeadConstructor<E>>
   ): SuperpositionInternal<B, D | E> {
-    return SuperpositionInternal.of<B, D | E>((chrono: Chrono<B, D | E>) => {
-      return this.handle(AlivePlan.of(mapper, chrono), RecoveryChronoPlan.of(chrono), DestroyChronoPlan.of(chrono));
-    }, [...this.errors, ...errors]);
+    return SuperpositionInternal.of<B, D | E>(
+      (chrono: Chrono<B, D | E>) => {
+        return this.handle(AlivePlan.of(mapper, chrono), RecoveryChronoPlan.of(chrono), DestroyChronoPlan.of(chrono));
+      },
+      [...this.errors, ...errors]
+    );
   }
 
   public pass(accepted: Consumer<Exclude<A, Error>>, declined: Consumer<D>, thrown: Consumer<unknown>): this {
@@ -172,9 +168,9 @@ export class SuperpositionInternal<out A, out D extends Error> implements ISuper
 
     this.schrodinger = Contradiction.of(cause);
 
-    this.plans.forEach((plan: DestroyPlan) => {
+    for (const plan of this.plans) {
       plan.onDestroy(cause);
-    });
+    }
   }
 
   public toString(): string {

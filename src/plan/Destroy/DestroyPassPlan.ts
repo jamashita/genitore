@@ -1,5 +1,5 @@
-import { Consumer } from '@jamashita/anden/type';
-import { DestroyPlan } from './DestroyPlan.js';
+import type { Consumer } from '@jamashita/anden/type';
+import type { DestroyPlan } from './DestroyPlan.js';
 
 export class DestroyPassPlan implements DestroyPlan {
   private readonly destroy: Consumer<unknown>;

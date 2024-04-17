@@ -1,8 +1,8 @@
-import { Absent } from './Absent.js';
-import { Heisenberg, HeisenbergState } from './Heisenberg.js';
+import type { Absent } from './Absent.js';
+import type { Heisenberg, HeisenbergState } from './Heisenberg.js';
 import { HeisenbergError } from './HeisenbergError.js';
-import { Lost } from './Lost.js';
-import { Present } from './Present.js';
+import type { Lost } from './Lost.js';
+import type { Present } from './Present.js';
 
 export class Uncertain<out P> implements Heisenberg<P> {
   private static readonly INSTANCE: Uncertain<unknown> = new Uncertain();

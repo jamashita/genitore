@@ -1,5 +1,5 @@
-import { MockRuntimeError } from '@jamashita/anden/error';
-import { Mock } from 'vitest';
+import type { MockRuntimeError } from '@jamashita/anden/error';
+import type { Mock } from 'vitest';
 import { MockChrono } from '../../mock/MockChrono.js';
 import { MapChronoPlan } from '../MapChronoPlan.js';
 

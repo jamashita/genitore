@@ -1,7 +1,7 @@
-import { Consumer, Kind, Peek, Supplier, UnaryFunction } from '@jamashita/anden/type';
+import { type Consumer, Kind, type Peek, type Supplier, type UnaryFunction } from '@jamashita/anden/type';
 import { Heisenberg, Present } from '../heisenberg/index.js';
-import { Epoque } from './Epoque.js';
-import { IUnscharferelation, UReturnType } from './IUnscharferelation.js';
+import type { Epoque } from './Epoque.js';
+import type { IUnscharferelation, UReturnType } from './IUnscharferelation.js';
 import { UnscharferelationError } from './UnscharferelationError.js';
 import { UnscharferelationInternal } from './UnscharferelationInternal.js';
 
@@ -44,6 +44,7 @@ export class Unscharferelation<out P> implements IUnscharferelation<P> {
     return Promise.all(promises);
   }
 
+  // biome-ignore lint/suspicious/noConfusingVoidType: <explanation>
   public static maybe<P>(value: P | PromiseLike<null | undefined | void> | PromiseLike<P> | null | undefined | void): Unscharferelation<Awaited<P>> {
     return Unscharferelation.of((epoque: Epoque<Awaited<P>>) => {
       if (Kind.isNone(value)) {
@@ -57,6 +58,7 @@ export class Unscharferelation<out P> implements IUnscharferelation<P> {
               return epoque.decline();
             }
 
+            // biome-ignore lint/suspicious/noConfusingVoidType: <explanation>
             return epoque.accept(v as Exclude<Awaited<P>, null | undefined | void>);
           },
           () => {
@@ -65,6 +67,7 @@ export class Unscharferelation<out P> implements IUnscharferelation<P> {
         );
       }
 
+      // biome-ignore lint/suspicious/noConfusingVoidType: <explanation>
       return epoque.accept(value as Exclude<Awaited<P>, null | undefined | void>);
     });
   }
@@ -97,6 +100,7 @@ export class Unscharferelation<out P> implements IUnscharferelation<P> {
     this.internal = internal;
   }
 
+  // biome-ignore lint/suspicious/noConfusingVoidType: <explanation>
   public get(): Promise<Exclude<P, null | undefined | void>> {
     return this.internal.get();
   }
@@ -113,16 +117,19 @@ export class Unscharferelation<out P> implements IUnscharferelation<P> {
     return this;
   }
 
+  // biome-ignore lint/suspicious/noConfusingVoidType: <explanation>
   public ifPresent(consumer: Consumer<Exclude<P, null | undefined | void>>): this {
     this.internal.ifPresent(consumer);
 
     return this;
   }
 
+  // biome-ignore lint/suspicious/noConfusingVoidType: <explanation>
   public map<Q = P>(mapper: UnaryFunction<Exclude<P, null | undefined | void>, UReturnType<Q>>): Unscharferelation<Q> {
     return Unscharferelation.ofUnscharferelation(this.internal.map(mapper));
   }
 
+  // biome-ignore lint/suspicious/noConfusingVoidType: <explanation>
   public pass(accepted: Consumer<Exclude<P, null | undefined | void>>, declined: Consumer<void>, thrown: Consumer<unknown>): this {
     this.internal.pass(accepted, declined, thrown);
 

@@ -1,8 +1,8 @@
 import { Objet } from '@jamashita/anden/object';
-import { Consumer } from '@jamashita/anden/type';
-import { Alive } from './Alive.js';
-import { Contradiction } from './Contradiction.js';
-import { Schrodinger, SchrodingerState } from './Schrodinger.js';
+import type { Consumer } from '@jamashita/anden/type';
+import type { Alive } from './Alive.js';
+import type { Contradiction } from './Contradiction.js';
+import type { Schrodinger, SchrodingerState } from './Schrodinger.js';
 
 export class Dead<out A, out D extends Error> implements Schrodinger<A, D> {
   private readonly error: D;
@@ -16,7 +16,6 @@ export class Dead<out A, out D extends Error> implements Schrodinger<A, D> {
   }
 
   public get(): never {
-    // eslint-disable-next-line @typescript-eslint/no-throw-literal
     throw this.error;
   }
 

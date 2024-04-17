@@ -1,8 +1,11 @@
-import { Consumer, Kind, Peek, Serializable, UnaryFunction } from '@jamashita/anden/type';
-import { DeadConstructor, Schrodinger } from '../schrodinger/index.js';
+import { type Consumer, Kind, type Peek, type Serializable, type UnaryFunction } from '@jamashita/anden/type';
+import type { DeadConstructor, Schrodinger } from '../schrodinger/index.js';
 
 export type SReturnType<B, E extends Error> =
-  Exclude<B, Error> | ISuperposition<B, E> | PromiseLike<Exclude<B, Error>> | PromiseLike<ISuperposition<B, E>>;
+  | Exclude<B, Error>
+  | ISuperposition<B, E>
+  | PromiseLike<Exclude<B, Error>>
+  | PromiseLike<ISuperposition<B, E>>;
 
 export interface ISuperposition<out A, out D extends Error> extends Serializable {
   get(): Promise<Exclude<A, Error>>;
@@ -24,10 +27,7 @@ export interface ISuperposition<out A, out D extends Error> extends Serializable
 
   peek(peek: Peek): this;
 
-  recover<B = A, E extends Error = D>(
-    mapper: UnaryFunction<D, SReturnType<B, E>>,
-    ...errors: Array<DeadConstructor<E>>
-  ): ISuperposition<A | B, E>;
+  recover<B = A, E extends Error = D>(mapper: UnaryFunction<D, SReturnType<B, E>>, ...errors: Array<DeadConstructor<E>>): ISuperposition<A | B, E>;
 
   terminate(): Promise<Schrodinger<A, D>>;
 

@@ -1,8 +1,8 @@
 import { Objet } from '@jamashita/anden/object';
-import { Consumer } from '@jamashita/anden/type';
-import { Alive } from './Alive.js';
-import { Dead } from './Dead.js';
-import { Schrodinger, SchrodingerState } from './Schrodinger.js';
+import type { Consumer } from '@jamashita/anden/type';
+import type { Alive } from './Alive.js';
+import type { Dead } from './Dead.js';
+import type { Schrodinger, SchrodingerState } from './Schrodinger.js';
 
 export class Contradiction<out A, out D extends Error> implements Schrodinger<A, D> {
   private readonly cause: unknown;

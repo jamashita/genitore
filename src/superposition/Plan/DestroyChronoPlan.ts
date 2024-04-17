@@ -1,5 +1,5 @@
-import { DestroyPlan } from '../../plan/index.js';
-import { Chrono } from '../Chrono.js';
+import type { DestroyPlan } from '../../plan/index.js';
+import type { Chrono } from '../Chrono.js';
 
 export class DestroyChronoPlan<out A, out D extends Error> implements DestroyPlan {
   private readonly chrono: Chrono<A, D>;

@@ -1,4 +1,4 @@
-import { Mock } from 'vitest';
+import type { Mock } from 'vitest';
 import { PassPlan } from '../PassPlan.js';
 
 describe('PassPlan', () => {

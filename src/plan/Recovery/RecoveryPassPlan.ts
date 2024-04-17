@@ -1,5 +1,5 @@
-import { Consumer } from '@jamashita/anden/type';
-import { RecoveryPlan } from './RecoveryPlan.js';
+import type { Consumer } from '@jamashita/anden/type';
+import type { RecoveryPlan } from './RecoveryPlan.js';
 
 export class RecoveryPassPlan<in out R> implements RecoveryPlan<R> {
   private readonly recover: Consumer<R>;

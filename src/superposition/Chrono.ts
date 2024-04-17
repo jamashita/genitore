@@ -1,4 +1,4 @@
-import { DeadConstructor } from '../schrodinger/index.js';
+import type { DeadConstructor } from '../schrodinger/index.js';
 
 export interface Chrono<out M, out R extends Error> {
   accept(value: Exclude<M, Error>): unknown;
