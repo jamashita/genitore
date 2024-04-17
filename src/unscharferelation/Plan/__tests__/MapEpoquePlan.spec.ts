@@ -1,4 +1,4 @@
-import { Mock } from 'vitest';
+import type { Mock } from 'vitest';
 import { MockEpoque } from '../../mock/MockEpoque.js';
 import { MapEpoquePlan } from '../MapEpoquePlan.js';
 

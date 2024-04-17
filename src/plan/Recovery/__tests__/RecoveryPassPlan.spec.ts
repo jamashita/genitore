@@ -1,4 +1,4 @@
-import { Mock } from 'vitest';
+import type { Mock } from 'vitest';
 import { RecoveryPassPlan } from '../RecoveryPassPlan.js';
 
 describe('RecoveryPassPlan', () => {
@@ -8,12 +8,10 @@ describe('RecoveryPassPlan', () => {
 
       const fn: Mock = vi.fn();
 
-      const plan: RecoveryPassPlan<number> = RecoveryPassPlan.of(
-        (v: number) => {
-          fn();
-          expect(v).toBe(value);
-        }
-      );
+      const plan: RecoveryPassPlan<number> = RecoveryPassPlan.of((v: number) => {
+        fn();
+        expect(v).toBe(value);
+      });
 
       plan.onRecover(value);
 

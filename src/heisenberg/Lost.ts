@@ -1,8 +1,8 @@
 import { Objet } from '@jamashita/anden/object';
-import { Consumer } from '@jamashita/anden/type';
-import { Absent } from './Absent.js';
-import { Heisenberg, HeisenbergState } from './Heisenberg.js';
-import { Present } from './Present.js';
+import type { Consumer } from '@jamashita/anden/type';
+import type { Absent } from './Absent.js';
+import type { Heisenberg, HeisenbergState } from './Heisenberg.js';
+import type { Present } from './Present.js';
 
 export class Lost<out P> implements Heisenberg<P> {
   private readonly cause: unknown;

@@ -1,8 +1,8 @@
 import { MockRuntimeError } from '@jamashita/anden/error';
-import { Resolve } from '@jamashita/anden/type';
-import { Mock } from 'vitest';
+import type { Resolve } from '@jamashita/anden/type';
+import type { Mock } from 'vitest';
 import { Alive, Dead } from '../../../schrodinger/index.js';
-import { Chrono } from '../../Chrono.js';
+import type { Chrono } from '../../Chrono.js';
 import { MockChrono } from '../../mock/MockChrono.js';
 import { Superposition } from '../../Superposition.js';
 import { DeadPlan } from '../DeadPlan.js';
@@ -524,9 +524,11 @@ describe('DeadPlan', () => {
             fn1();
             expect(e).toBe(error);
 
-            return Promise.resolve(Superposition.of((c: Chrono<number, MockRuntimeError>) => {
-              return c.throw(error);
-            }));
+            return Promise.resolve(
+              Superposition.of((c: Chrono<number, MockRuntimeError>) => {
+                return c.throw(error);
+              })
+            );
           },
           new MockChrono(
             () => {

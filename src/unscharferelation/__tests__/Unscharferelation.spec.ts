@@ -1,7 +1,7 @@
 import { MockRuntimeError } from '@jamashita/anden/error';
-import { Mock } from 'vitest';
-import { Absent, Heisenberg, HeisenbergError, Lost, Present, Uncertain } from '../../heisenberg/index.js';
-import { Epoque } from '../Epoque.js';
+import type { Mock } from 'vitest';
+import { Absent, type Heisenberg, HeisenbergError, Lost, Present, Uncertain } from '../../heisenberg/index.js';
+import type { Epoque } from '../Epoque.js';
 import { MockUnscharferelation } from '../mock/MockUnscharferelation.js';
 import { Unscharferelation } from '../Unscharferelation.js';
 import { UnscharferelationError } from '../UnscharferelationError.js';
@@ -31,10 +31,9 @@ describe('Unscharferelation', () => {
       const array: Array<number> = heisenberg.get();
 
       expect(array).toHaveLength(unscharferelations.length);
-      for (let i: number = 0; i < array.length; i++) {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      for (let i = 0; i < array.length; i++) {
+        // biome-ignore lint/style/noNonNullAssertion: <explanation>
         const u: Unscharferelation<number> = unscharferelations[i]!;
-        // eslint-disable-next-line no-await-in-loop
         const h: Heisenberg<number> = await u.terminate();
 
         expect(array[i]).toBe(h.get());
@@ -148,10 +147,9 @@ describe('Unscharferelation', () => {
       const array: Array<number> = heisenberg.get();
 
       expect(array).toHaveLength(unscharferelations.length);
-      for (let i: number = 0; i < array.length; i++) {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      for (let i = 0; i < array.length; i++) {
+        // biome-ignore lint/style/noNonNullAssertion: <explanation>
         const u: Unscharferelation<number> = unscharferelations[i]!;
-        // eslint-disable-next-line no-await-in-loop
         const h: Heisenberg<number> = await u.terminate();
 
         expect(array[i]).toBe(h.get());
@@ -298,10 +296,9 @@ describe('Unscharferelation', () => {
       const heisenbergs: Array<Heisenberg<number>> = await Unscharferelation.anyway(unscharferelations);
 
       expect(heisenbergs).toHaveLength(unscharferelations.length);
-      for (let i: number = 0; i < unscharferelations.length; i++) {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      for (let i = 0; i < unscharferelations.length; i++) {
+        // biome-ignore lint/style/noNonNullAssertion: <explanation>
         const u: Unscharferelation<number> = unscharferelations[i]!;
-        // eslint-disable-next-line no-await-in-loop
         const h: Heisenberg<number> = await u.terminate();
 
         expect(h.get()).toBe(i - 1);
@@ -317,10 +314,9 @@ describe('Unscharferelation', () => {
       const heisenbergs: Array<Heisenberg<number>> = await Unscharferelation.anyway(unscharferelations);
 
       expect(heisenbergs).toHaveLength(unscharferelations.length);
-      for (let i: number = 0; i < unscharferelations.length; i++) {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      for (let i = 0; i < unscharferelations.length; i++) {
+        // biome-ignore lint/style/noNonNullAssertion: <explanation>
         const u: Unscharferelation<number> = unscharferelations[i]!;
-        // eslint-disable-next-line no-await-in-loop
         const h: Heisenberg<number> = await u.terminate();
 
         expect(() => {
@@ -330,11 +326,7 @@ describe('Unscharferelation', () => {
     });
 
     it('returns Lost Heisenbergs', async () => {
-      const losts: Array<unknown> = [
-        null,
-        undefined,
-        NaN
-      ];
+      const losts: Array<unknown> = [null, undefined, Number.NaN];
 
       const unscharferelation1: Unscharferelation<number> = Unscharferelation.of((epoque: Epoque<number>) => {
         epoque.throw(null);
@@ -343,17 +335,16 @@ describe('Unscharferelation', () => {
         epoque.throw(undefined);
       });
       const unscharferelation3: Unscharferelation<number> = Unscharferelation.of((epoque: Epoque<number>) => {
-        epoque.throw(NaN);
+        epoque.throw(Number.NaN);
       });
       const unscharferelations: Array<Unscharferelation<number>> = [unscharferelation1, unscharferelation2, unscharferelation3];
 
       const heisenbergs: Array<Heisenberg<number>> = await Unscharferelation.anyway(unscharferelations);
 
       expect(heisenbergs).toHaveLength(unscharferelations.length);
-      for (let i: number = 0; i < unscharferelations.length; i++) {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      for (let i = 0; i < unscharferelations.length; i++) {
+        // biome-ignore lint/style/noNonNullAssertion: <explanation>
         const u: Unscharferelation<number> = unscharferelations[i]!;
-        // eslint-disable-next-line no-await-in-loop
         const h: Heisenberg<number> = await u.terminate();
 
         if (h.isLost()) {
@@ -373,26 +364,28 @@ describe('Unscharferelation', () => {
       const heisenbergs: Array<Heisenberg<number>> = await Unscharferelation.anyway(unscharferelations);
 
       expect(heisenbergs).toHaveLength(unscharferelations.length);
-      for (let i: number = 0; i < unscharferelations.length; i++) {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      for (let i = 0; i < unscharferelations.length; i++) {
+        // biome-ignore lint/style/noNonNullAssertion: <explanation>
         const u: Unscharferelation<number> = unscharferelations[i]!;
-        // eslint-disable-next-line no-await-in-loop
         const h: Heisenberg<number> = await u.terminate();
 
         switch (i) {
+          // biome-ignore lint/suspicious/noFallthroughSwitchClause: <explanation>
           case 0: {
             if (h.isLost()) {
               expect(h.getCause()).toBeNull();
             }
-            continue;
+
+            break;
           }
+          // biome-ignore lint/suspicious/noFallthroughSwitchClause: <explanation>
           case 1: {
             expect(() => {
               h.get();
             }).toThrow(HeisenbergError);
-            continue;
+
+            break;
           }
-          case 2:
           default: {
             expect(h.get()).toBe(1);
           }
@@ -503,11 +496,9 @@ describe('Unscharferelation', () => {
     it('returns its retaining Heisenberg string', () => {
       const unscharferelation1: Unscharferelation<number> = Unscharferelation.maybe(-1);
       const unscharferelation2: Unscharferelation<number> = Unscharferelation.maybe<number>(null);
-      const unscharferelation3: Unscharferelation<number> = Unscharferelation.of(
-        (epoque: Epoque<number>) => {
-          epoque.throw(null);
-        }
-      );
+      const unscharferelation3: Unscharferelation<number> = Unscharferelation.of((epoque: Epoque<number>) => {
+        epoque.throw(null);
+      });
 
       expect(unscharferelation1.toString()).toBe('Present: -1');
       expect(unscharferelation2.toString()).toBe('Absent');

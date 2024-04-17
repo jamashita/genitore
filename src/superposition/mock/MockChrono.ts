@@ -1,6 +1,6 @@
-import { Consumer } from '@jamashita/anden/type';
-import { DeadConstructor } from '../../schrodinger/index.js';
-import { Chrono } from '../Chrono.js';
+import type { Consumer } from '@jamashita/anden/type';
+import type { DeadConstructor } from '../../schrodinger/index.js';
+import type { Chrono } from '../Chrono.js';
 
 export class MockChrono<in out M, in out R extends Error> implements Chrono<M, R> {
   private readonly map: Consumer<Exclude<M, Error>>;
@@ -20,9 +20,9 @@ export class MockChrono<in out M, in out R extends Error> implements Chrono<M, R
   }
 
   public catch(errors: Iterable<DeadConstructor<R>>): void {
-    [...errors].forEach((error: DeadConstructor<R>) => {
+    for (const error of errors) {
       this.errors.add(error);
-    });
+    }
   }
 
   public decline(value: R): unknown {

@@ -1,5 +1,5 @@
-import { Mock } from 'vitest';
-import { Heisenberg } from '../Heisenberg.js';
+import type { Mock } from 'vitest';
+import type { Heisenberg } from '../Heisenberg.js';
 import { HeisenbergError } from '../HeisenbergError.js';
 import { Uncertain } from '../Uncertain.js';
 

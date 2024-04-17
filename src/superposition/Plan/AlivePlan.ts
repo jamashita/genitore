@@ -1,23 +1,17 @@
-import { Kind, UnaryFunction } from '@jamashita/anden/type';
-import { MapPlan } from '../../plan/index.js';
-import { Chrono } from '../Chrono.js';
-import { containsError, isSuperposition, ISuperposition, SReturnType } from '../ISuperposition.js';
+import { Kind, type UnaryFunction } from '@jamashita/anden/type';
+import type { MapPlan } from '../../plan/index.js';
+import type { Chrono } from '../Chrono.js';
+import { containsError, isSuperposition, type ISuperposition, type SReturnType } from '../ISuperposition.js';
 
 export class AlivePlan<in out A, out B, out E extends Error> implements MapPlan<Exclude<A, Error>> {
   private readonly mapper: UnaryFunction<Exclude<A, Error>, SReturnType<B, E>>;
   private readonly chrono: Chrono<B, E>;
 
-  public static of<A, B, E extends Error>(
-    mapper: UnaryFunction<Exclude<A, Error>, SReturnType<B, E>>,
-    chrono: Chrono<B, E>
-  ): AlivePlan<A, B, E> {
+  public static of<A, B, E extends Error>(mapper: UnaryFunction<Exclude<A, Error>, SReturnType<B, E>>, chrono: Chrono<B, E>): AlivePlan<A, B, E> {
     return new AlivePlan(mapper, chrono);
   }
 
-  protected constructor(
-    mapper: UnaryFunction<Exclude<A, Error>, SReturnType<B, E>>,
-    chrono: Chrono<B, E>
-  ) {
+  protected constructor(mapper: UnaryFunction<Exclude<A, Error>, SReturnType<B, E>>, chrono: Chrono<B, E>) {
     this.mapper = mapper;
     this.chrono = chrono;
   }
@@ -77,8 +71,7 @@ export class AlivePlan<in out A, out B, out E extends Error> implements MapPlan<
       }
 
       return this.forOther(mapped);
-    }
-    catch (err: unknown) {
+    } catch (err: unknown) {
       return this.forError(err);
     }
   }

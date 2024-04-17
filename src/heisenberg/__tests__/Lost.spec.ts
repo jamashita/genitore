@@ -1,6 +1,6 @@
 import { MockRuntimeError } from '@jamashita/anden/error';
-import { Mock } from 'vitest';
-import { Heisenberg } from '../Heisenberg.js';
+import type { Mock } from 'vitest';
+import type { Heisenberg } from '../Heisenberg.js';
 import { Lost } from '../Lost.js';
 
 describe('Lost', () => {

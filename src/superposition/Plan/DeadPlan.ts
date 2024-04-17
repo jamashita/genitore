@@ -1,23 +1,17 @@
-import { Kind, UnaryFunction } from '@jamashita/anden/type';
-import { RecoveryPlan } from '../../plan/index.js';
-import { Chrono } from '../Chrono.js';
-import { containsError, isSuperposition, ISuperposition, SReturnType } from '../ISuperposition.js';
+import { Kind, type UnaryFunction } from '@jamashita/anden/type';
+import type { RecoveryPlan } from '../../plan/index.js';
+import type { Chrono } from '../Chrono.js';
+import { containsError, isSuperposition, type ISuperposition, type SReturnType } from '../ISuperposition.js';
 
 export class DeadPlan<out B, in out D extends Error, E extends Error> implements RecoveryPlan<D> {
   private readonly mapper: UnaryFunction<D, SReturnType<B, E>>;
   private readonly chrono: Chrono<B, E>;
 
-  public static of<B, D extends Error, E extends Error>(
-    mapper: UnaryFunction<D, SReturnType<B, E>>,
-    chrono: Chrono<B, E>
-  ): DeadPlan<B, D, E> {
+  public static of<B, D extends Error, E extends Error>(mapper: UnaryFunction<D, SReturnType<B, E>>, chrono: Chrono<B, E>): DeadPlan<B, D, E> {
     return new DeadPlan(mapper, chrono);
   }
 
-  protected constructor(
-    mapper: UnaryFunction<D, SReturnType<B, E>>,
-    chrono: Chrono<B, E>
-  ) {
+  protected constructor(mapper: UnaryFunction<D, SReturnType<B, E>>, chrono: Chrono<B, E>) {
     this.mapper = mapper;
     this.chrono = chrono;
   }
@@ -69,7 +63,6 @@ export class DeadPlan<out B, in out D extends Error, E extends Error> implements
             }
 
             return this.forOther(v);
-
           },
           (e: unknown) => {
             return this.forError(e);
@@ -78,8 +71,7 @@ export class DeadPlan<out B, in out D extends Error, E extends Error> implements
       }
 
       return this.forOther(mapped);
-    }
-    catch (err: unknown) {
+    } catch (err: unknown) {
       return this.forError(err);
     }
   }

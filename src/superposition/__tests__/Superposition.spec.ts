@@ -1,7 +1,7 @@
 import { MockRuntimeError } from '@jamashita/anden/error';
-import { Mock } from 'vitest';
-import { Alive, Contradiction, Dead, Schrodinger, Still } from '../../schrodinger/index.js';
-import { Chrono } from '../Chrono.js';
+import type { Mock } from 'vitest';
+import { Alive, Contradiction, Dead, type Schrodinger, Still } from '../../schrodinger/index.js';
+import type { Chrono } from '../Chrono.js';
 import { MockSuperposition } from '../mock/MockSuperposition.js';
 import { Superposition } from '../Superposition.js';
 import { SuperpositionError } from '../SuperpositionError.js';
@@ -37,10 +37,9 @@ describe('Superposition', () => {
       const array: Array<number> = schrodinger.get();
 
       expect(array).toHaveLength(superpositions.length);
-      for (let i: number = 0; i < array.length; i++) {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      for (let i = 0; i < array.length; i++) {
+        // biome-ignore lint/style/noNonNullAssertion: <explanation>
         const ss: Superposition<number, MockRuntimeError> = superpositions[i]!;
-        // eslint-disable-next-line no-await-in-loop
         const s: Schrodinger<number, MockRuntimeError> = await ss.terminate();
 
         expect(array[i]).toBe(s.get());
@@ -191,10 +190,9 @@ describe('Superposition', () => {
       const array: Array<number> = schrodinger.get();
 
       expect(array).toHaveLength(superpositions.length);
-      for (let i: number = 0; i < array.length; i++) {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      for (let i = 0; i < array.length; i++) {
+        // biome-ignore lint/style/noNonNullAssertion: <explanation>
         const ss: Superposition<number, MockRuntimeError> = superpositions[i]!;
-        // eslint-disable-next-line no-await-in-loop
         const s: Schrodinger<number, MockRuntimeError> = await ss.terminate();
 
         expect(array[i]).toBe(s.get());
@@ -313,7 +311,6 @@ describe('Superposition', () => {
         Superposition.playground(() => {
           return Promise.reject<number>(error3);
         }, MockRuntimeError)
-
       ];
 
       const superposition: Superposition<Array<number>, MockRuntimeError> = Superposition.all(superpositions);
@@ -395,10 +392,9 @@ describe('Superposition', () => {
       const schrodingers: Array<Schrodinger<number, MockRuntimeError>> = await Superposition.anyway(superpositions);
 
       expect(schrodingers).toHaveLength(superpositions.length);
-      for (let i: number = 0; i < superpositions.length; i++) {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      for (let i = 0; i < superpositions.length; i++) {
+        // biome-ignore lint/style/noNonNullAssertion: <explanation>
         const ss: Superposition<number, MockRuntimeError> = superpositions[i]!;
-        // eslint-disable-next-line no-await-in-loop
         const s: Schrodinger<number, MockRuntimeError> = await ss.terminate();
 
         expect(s.get()).toBe(i - 1);
@@ -425,10 +421,9 @@ describe('Superposition', () => {
       const schrodingers: Array<Schrodinger<number, MockRuntimeError>> = await Superposition.anyway(superpositions);
 
       expect(schrodingers).toHaveLength(superpositions.length);
-      for (let i: number = 0; i < superpositions.length; i++) {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      for (let i = 0; i < superpositions.length; i++) {
+        // biome-ignore lint/style/noNonNullAssertion: <explanation>
         const ss: Superposition<number, MockRuntimeError> = superpositions[i]!;
-        // eslint-disable-next-line no-await-in-loop
         const s: Schrodinger<number, MockRuntimeError> = await ss.terminate();
 
         expect(() => {
@@ -438,11 +433,7 @@ describe('Superposition', () => {
     });
 
     it('returns Contradiction Schrodingers', async () => {
-      const contradictions: Array<unknown> = [
-        null,
-        undefined,
-        NaN
-      ];
+      const contradictions: Array<unknown> = [null, undefined, Number.NaN];
 
       const superposition1: Superposition<number, MockRuntimeError> = Superposition.of((chrono: Chrono<number, MockRuntimeError>) => {
         chrono.throw(null);
@@ -451,17 +442,16 @@ describe('Superposition', () => {
         chrono.throw(undefined);
       });
       const superposition3: Superposition<number, MockRuntimeError> = Superposition.of((chrono: Chrono<number, MockRuntimeError>) => {
-        chrono.throw(NaN);
+        chrono.throw(Number.NaN);
       });
       const superpositions: Array<Superposition<number, MockRuntimeError>> = [superposition1, superposition2, superposition3];
 
       const schrodingers: Array<Schrodinger<number, MockRuntimeError>> = await Superposition.anyway(superpositions);
 
       expect(schrodingers).toHaveLength(superpositions.length);
-      for (let i: number = 0; i < superpositions.length; i++) {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      for (let i = 0; i < superpositions.length; i++) {
+        // biome-ignore lint/style/noNonNullAssertion: <explanation>
         const ss: Superposition<number, MockRuntimeError> = superpositions[i]!;
-        // eslint-disable-next-line no-await-in-loop
         const s: Schrodinger<number, MockRuntimeError> = await ss.terminate();
 
         if (s.isContradiction()) {
@@ -486,26 +476,28 @@ describe('Superposition', () => {
       const schrodingers: Array<Schrodinger<number, MockRuntimeError>> = await Superposition.anyway(superpositions);
 
       expect(schrodingers).toHaveLength(superpositions.length);
-      for (let i: number = 0; i < superpositions.length; i++) {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      for (let i = 0; i < superpositions.length; i++) {
+        // biome-ignore lint/style/noNonNullAssertion: <explanation>
         const ss: Superposition<number, MockRuntimeError> = superpositions[i]!;
-        // eslint-disable-next-line no-await-in-loop
         const s: Schrodinger<number, MockRuntimeError> = await ss.terminate();
 
         switch (i) {
+          // biome-ignore lint/suspicious/noFallthroughSwitchClause: <explanation>
           case 0: {
             if (s.isContradiction()) {
               expect(s.getCause()).toBeNull();
             }
-            continue;
+
+            break;
           }
+          // biome-ignore lint/suspicious/noFallthroughSwitchClause: <explanation>
           case 1: {
             expect(() => {
               s.get();
             }).toThrow(error);
-            continue;
+
+            break;
           }
-          case 2:
           default: {
             expect(s.get()).toBe(1);
           }

@@ -1,4 +1,4 @@
-import { Plan } from './Plan.js';
+import type { Plan } from './Plan.js';
 
 export class SpoilPlan<out M, out R> implements Plan<M, R> {
   private static readonly INSTANCE: SpoilPlan<unknown, unknown> = new SpoilPlan();
