@@ -1,4 +1,4 @@
-import { Consumer, Serializable } from '@jamashita/anden/type';
+import type { Consumer, Serializable } from '@jamashita/anden/type';
 import { Absent } from './Absent.js';
 import { Lost } from './Lost.js';
 import { Present } from './Present.js';
@@ -6,6 +6,7 @@ import { Present } from './Present.js';
 export type HeisenbergState = 'ABSENT' | 'LOST' | 'PRESENT' | 'UNCERTAIN';
 
 export interface Heisenberg<out P> extends Serializable {
+  // biome-ignore lint/suspicious/noConfusingVoidType: <explanation>
   get(): Exclude<P, null | undefined | void>;
 
   getState(): HeisenbergState;
@@ -14,6 +15,7 @@ export interface Heisenberg<out P> extends Serializable {
 
   ifLost(consumer: Consumer<unknown>): this;
 
+  // biome-ignore lint/suspicious/noConfusingVoidType: <explanation>
   ifPresent(consumer: Consumer<Exclude<P, null | undefined | void>>): this;
 
   isAbsent(): this is Absent<P>;
@@ -23,12 +25,13 @@ export interface Heisenberg<out P> extends Serializable {
   isPresent(): this is Present<P>;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/no-unsafe-declaration-merging,@typescript-eslint/no-extraneous-class
+// biome-ignore lint/complexity/noStaticOnlyClass: <explanation>
+// biome-ignore lint/suspicious/noUnsafeDeclarationMerging: <explanation>
 export class Heisenberg<out P> {
   public static all<P>(heisenbergs: Iterable<Heisenberg<P>>): Heisenberg<Array<P>> {
     const hs: Array<Heisenberg<P>> = [...heisenbergs];
     const arr: Array<P> = [];
-    let absent: boolean = false;
+    let absent = false;
 
     for (const h of hs) {
       switch (h.getState()) {

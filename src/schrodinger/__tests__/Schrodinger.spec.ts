@@ -16,11 +16,7 @@ describe('Schroginer', () => {
     });
 
     it('returns Alive when sync Alive given', () => {
-      const schrodingers: Array<Schrodinger<number, MockRuntimeError>> = [
-        Alive.of(0),
-        Alive.of(1),
-        Alive.of(2)
-      ];
+      const schrodingers: Array<Schrodinger<number, MockRuntimeError>> = [Alive.of(0), Alive.of(1), Alive.of(2)];
 
       const schrodinger: Schrodinger<Array<number>, MockRuntimeError> = Schrodinger.all(schrodingers);
 
@@ -29,8 +25,8 @@ describe('Schroginer', () => {
       const array: Array<number> = schrodinger.get();
 
       expect(array).toHaveLength(schrodingers.length);
-      for (let i: number = 0; i < array.length; i++) {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      for (let i = 0; i < array.length; i++) {
+        // biome-ignore lint/style/noNonNullAssertion: <explanation>
         const s: Schrodinger<number, MockRuntimeError> = schrodingers[i]!;
 
         expect(array[i]).toBe(s.get());
@@ -39,11 +35,7 @@ describe('Schroginer', () => {
 
     it('returns Dead when sync Schrodingers which first one is Dead given', () => {
       const error: MockRuntimeError = new MockRuntimeError('');
-      const schrodingers: Array<Schrodinger<number, MockRuntimeError>> = [
-        Dead.of(error),
-        Alive.of(1),
-        Alive.of(2)
-      ];
+      const schrodingers: Array<Schrodinger<number, MockRuntimeError>> = [Dead.of(error), Alive.of(1), Alive.of(2)];
 
       const schrodinger: Schrodinger<Array<number>, MockRuntimeError> = Schrodinger.all(schrodingers);
 
@@ -55,11 +47,7 @@ describe('Schroginer', () => {
 
     it('returns Schrodinger when Schrodingers which second one is Dead given', () => {
       const error: MockRuntimeError = new MockRuntimeError('');
-      const schrodingers: Array<Schrodinger<number, MockRuntimeError>> = [
-        Alive.of(0),
-        Dead.of(error),
-        Alive.of(2)
-      ];
+      const schrodingers: Array<Schrodinger<number, MockRuntimeError>> = [Alive.of(0), Dead.of(error), Alive.of(2)];
 
       const schrodinger: Schrodinger<Array<number>, MockRuntimeError> = Schrodinger.all(schrodingers);
 
@@ -71,11 +59,7 @@ describe('Schroginer', () => {
 
     it('returns Dead when Schrodingers which last one is Dead given', () => {
       const error: MockRuntimeError = new MockRuntimeError('');
-      const schrodingers: Array<Schrodinger<number, MockRuntimeError>> = [
-        Alive.of(0),
-        Alive.of(1),
-        Dead.of(error)
-      ];
+      const schrodingers: Array<Schrodinger<number, MockRuntimeError>> = [Alive.of(0), Alive.of(1), Dead.of(error)];
 
       const schrodinger: Schrodinger<Array<number>, MockRuntimeError> = Schrodinger.all(schrodingers);
 
@@ -88,11 +72,7 @@ describe('Schroginer', () => {
     it('returns Contradiction when Schrodingers which contains Contradiction given', () => {
       const error: MockRuntimeError = new MockRuntimeError('');
 
-      const schrodingers: Array<Schrodinger<number, MockRuntimeError>> = [
-        Alive.of(0),
-        Contradiction.of(error),
-        Alive.of(2)
-      ];
+      const schrodingers: Array<Schrodinger<number, MockRuntimeError>> = [Alive.of(0), Contradiction.of(error), Alive.of(2)];
 
       const schrodinger: Schrodinger<Array<number>, MockRuntimeError> = Schrodinger.all(schrodingers);
 
@@ -107,11 +87,7 @@ describe('Schroginer', () => {
       const error2: MockRuntimeError = new MockRuntimeError('');
       const error3: MockRuntimeError = new MockRuntimeError('');
 
-      const schrodingers: Array<Schrodinger<number, MockRuntimeError>> = [
-        Dead.of(error1),
-        Contradiction.of(error2),
-        Dead.of(error3)
-      ];
+      const schrodingers: Array<Schrodinger<number, MockRuntimeError>> = [Dead.of(error1), Contradiction.of(error2), Dead.of(error3)];
 
       const schrodinger: Schrodinger<Array<number>, MockRuntimeError> = Schrodinger.all(schrodingers);
 

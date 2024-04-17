@@ -1,29 +1,23 @@
 import { MockRuntimeError } from '@jamashita/anden/error';
-import { Mock } from 'vitest';
-import { Heisenberg, HeisenbergError } from '../../heisenberg/index.js';
-import { Plan } from '../../plan/index.js';
-import { Epoque } from '../Epoque.js';
+import type { Mock } from 'vitest';
+import { type Heisenberg, HeisenbergError } from '../../heisenberg/index.js';
+import type { Plan } from '../../plan/index.js';
+import type { Epoque } from '../Epoque.js';
 import { UnscharferelationError } from '../UnscharferelationError.js';
 import { UnscharferelationInternal } from '../UnscharferelationInternal.js';
 
 describe('UnscharferelationInternal', () => {
   describe('toString', () => {
     it('returns its retaining Heisenberg string', () => {
-      const unscharferelation1: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.accept(-1);
-        }
-      );
-      const unscharferelation2: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.decline();
-        }
-      );
-      const unscharferelation3: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.throw(null);
-        }
-      );
+      const unscharferelation1: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.accept(-1);
+      });
+      const unscharferelation2: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.decline();
+      });
+      const unscharferelation3: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.throw(null);
+      });
 
       expect(unscharferelation1.toString()).toBe('Present: -1');
       expect(unscharferelation2.toString()).toBe('Absent');
@@ -37,15 +31,14 @@ describe('UnscharferelationInternal', () => {
 
       const fn: Mock = vi.fn();
 
+      // biome-ignore lint/suspicious/noConfusingVoidType: <explanation>
       const plans: Set<Plan<Exclude<number, null | undefined | void>, void>> = new Set();
 
       plans.forEach = fn;
 
-      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.accept(value);
-        }
-      );
+      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.accept(value);
+      });
 
       // @ts-expect-error
       unscharferelation.plans = plans;
@@ -69,25 +62,27 @@ describe('UnscharferelationInternal', () => {
       const fn1: Mock = vi.fn();
       const fn2: Mock = vi.fn();
 
-      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.accept(value);
-        }
-      );
+      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.accept(value);
+      });
 
-      await unscharferelation.map((v: number) => {
-        fn1();
-        expect(v).toBe(value);
+      await unscharferelation
+        .map((v: number) => {
+          fn1();
+          expect(v).toBe(value);
 
-        return v + 4;
-      }).terminate();
+          return v + 4;
+        })
+        .terminate();
 
-      await unscharferelation.map((v: number) => {
-        fn2();
-        expect(v).toBe(value);
+      await unscharferelation
+        .map((v: number) => {
+          fn2();
+          expect(v).toBe(value);
 
-        return v + 3;
-      }).terminate();
+          return v + 3;
+        })
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(1);
       expect(fn2.mock.calls).toHaveLength(1);
@@ -98,15 +93,14 @@ describe('UnscharferelationInternal', () => {
     it('does nothing if done once', async () => {
       const fn: Mock = vi.fn();
 
+      // biome-ignore lint/suspicious/noConfusingVoidType: <explanation>
       const plans: Set<Plan<Exclude<number, null | undefined | void>, void>> = new Set();
 
       plans.forEach = fn;
 
-      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.decline();
-        }
-      );
+      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.decline();
+      });
 
       // @ts-expect-error
       unscharferelation.plans = plans;
@@ -127,23 +121,25 @@ describe('UnscharferelationInternal', () => {
       const fn1: Mock = vi.fn();
       const fn2: Mock = vi.fn();
 
-      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.decline();
-        }
-      );
+      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.decline();
+      });
 
-      await unscharferelation.recover(() => {
-        fn1();
+      await unscharferelation
+        .recover(() => {
+          fn1();
 
-        return 4;
-      }).terminate();
+          return 4;
+        })
+        .terminate();
 
-      await unscharferelation.recover(() => {
-        fn2();
+      await unscharferelation
+        .recover(() => {
+          fn2();
 
-        return 3;
-      }).terminate();
+          return 3;
+        })
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(1);
       expect(fn2.mock.calls).toHaveLength(1);
@@ -156,15 +152,14 @@ describe('UnscharferelationInternal', () => {
 
       const fn: Mock = vi.fn();
 
+      // biome-ignore lint/suspicious/noConfusingVoidType: <explanation>
       const plans: Set<Plan<Exclude<number, null | undefined | void>, void>> = new Set();
 
       plans.forEach = fn;
 
-      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.throw(error);
-        }
-      );
+      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.throw(error);
+      });
 
       // @ts-expect-error
       unscharferelation.plans = plans;
@@ -192,35 +187,41 @@ describe('UnscharferelationInternal', () => {
       const fn3: Mock = vi.fn();
       const fn4: Mock = vi.fn();
 
-      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.throw(error);
-        }
-      );
+      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.throw(error);
+      });
 
-      await unscharferelation.map(() => {
-        fn1();
+      await unscharferelation
+        .map(() => {
+          fn1();
 
-        return 4;
-      }).terminate();
+          return 4;
+        })
+        .terminate();
 
-      await unscharferelation.recover(() => {
-        fn2();
+      await unscharferelation
+        .recover(() => {
+          fn2();
 
-        return 3;
-      }).terminate();
+          return 3;
+        })
+        .terminate();
 
-      await unscharferelation.map(() => {
-        fn3();
+      await unscharferelation
+        .map(() => {
+          fn3();
 
-        return 2;
-      }).terminate();
+          return 2;
+        })
+        .terminate();
 
-      await unscharferelation.recover(() => {
-        fn4();
+      await unscharferelation
+        .recover(() => {
+          fn4();
 
-        return 1;
-      }).terminate();
+          return 1;
+        })
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(0);
       expect(fn2.mock.calls).toHaveLength(0);
@@ -234,21 +235,15 @@ describe('UnscharferelationInternal', () => {
       const value: number = -201;
       const error: MockRuntimeError = new MockRuntimeError('');
 
-      const unscharferelation1: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.accept(value);
-        }
-      );
-      const unscharferelation2: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.decline();
-        }
-      );
-      const unscharferelation3: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.throw(error);
-        }
-      );
+      const unscharferelation1: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.accept(value);
+      });
+      const unscharferelation2: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.decline();
+      });
+      const unscharferelation3: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.throw(error);
+      });
 
       await expect(unscharferelation1.get()).resolves.toBe(value);
       await expect(unscharferelation2.get()).rejects.toThrow(UnscharferelationError);
@@ -288,32 +283,34 @@ describe('UnscharferelationInternal', () => {
     it('invokes callbacks unless it is not Absent nor Lost', async () => {
       const value: number = -201;
 
-      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.accept(value);
-        }
-      );
+      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.accept(value);
+      });
 
       const fn1: Mock = vi.fn();
       const fn2: Mock = vi.fn();
       const fn3: Mock = vi.fn();
 
-      await unscharferelation.map((v: number) => {
-        fn1();
-        expect(v).toBe(value);
+      await unscharferelation
+        .map((v: number) => {
+          fn1();
+          expect(v).toBe(value);
 
-        return v + 1;
-      }).map((v: number) => {
-        fn2();
-        expect(v).toBe(value + 1);
+          return v + 1;
+        })
+        .map((v: number) => {
+          fn2();
+          expect(v).toBe(value + 1);
 
-        return v + 1;
-      }).map((v: number) => {
-        fn3();
-        expect(v).toBe(value + 2);
+          return v + 1;
+        })
+        .map((v: number) => {
+          fn3();
+          expect(v).toBe(value + 2);
 
-        return v + 1;
-      }).terminate();
+          return v + 1;
+        })
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(1);
       expect(fn2.mock.calls).toHaveLength(1);
@@ -323,32 +320,34 @@ describe('UnscharferelationInternal', () => {
     it('invokes callbacks unless it is not Absent nor Lost, even if the return value is Promise', async () => {
       const value: number = -201;
 
-      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.accept(value);
-        }
-      );
+      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.accept(value);
+      });
 
       const fn1: Mock = vi.fn();
       const fn2: Mock = vi.fn();
       const fn3: Mock = vi.fn();
 
-      await unscharferelation.map((v: number) => {
-        fn1();
-        expect(v).toBe(value);
+      await unscharferelation
+        .map((v: number) => {
+          fn1();
+          expect(v).toBe(value);
 
-        return Promise.resolve(v + 1);
-      }).map((v: number) => {
-        fn2();
-        expect(v).toBe(value + 1);
+          return Promise.resolve(v + 1);
+        })
+        .map((v: number) => {
+          fn2();
+          expect(v).toBe(value + 1);
 
-        return Promise.resolve(v + 1);
-      }).map((v: number) => {
-        fn3();
-        expect(v).toBe(value + 2);
+          return Promise.resolve(v + 1);
+        })
+        .map((v: number) => {
+          fn3();
+          expect(v).toBe(value + 2);
 
-        return Promise.resolve(v + 1);
-      }).terminate();
+          return Promise.resolve(v + 1);
+        })
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(1);
       expect(fn2.mock.calls).toHaveLength(1);
@@ -360,42 +359,40 @@ describe('UnscharferelationInternal', () => {
       const value2: number = -20100;
       const value3: number = -20100;
 
-      const unscharferelation1: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.accept(value1);
-        }
-      );
-      const unscharferelation2: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.accept(value2);
-        }
-      );
-      const unscharferelation3: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.accept(value3);
-        }
-      );
+      const unscharferelation1: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.accept(value1);
+      });
+      const unscharferelation2: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.accept(value2);
+      });
+      const unscharferelation3: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.accept(value3);
+      });
 
       const fn1: Mock = vi.fn();
       const fn2: Mock = vi.fn();
       const fn3: Mock = vi.fn();
 
-      await unscharferelation1.map((v: number) => {
-        fn1();
-        expect(v).toBe(value1);
+      await unscharferelation1
+        .map((v: number) => {
+          fn1();
+          expect(v).toBe(value1);
 
-        return unscharferelation2;
-      }).map((v: number) => {
-        fn2();
-        expect(v).toBe(value2);
+          return unscharferelation2;
+        })
+        .map((v: number) => {
+          fn2();
+          expect(v).toBe(value2);
 
-        return unscharferelation3;
-      }).map((v: number) => {
-        fn3();
-        expect(v).toBe(value3);
+          return unscharferelation3;
+        })
+        .map((v: number) => {
+          fn3();
+          expect(v).toBe(value3);
 
-        return unscharferelation3;
-      }).terminate();
+          return unscharferelation3;
+        })
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(1);
       expect(fn2.mock.calls).toHaveLength(1);
@@ -407,42 +404,40 @@ describe('UnscharferelationInternal', () => {
       const value2: number = -20100;
       const value3: number = -20100;
 
-      const unscharferelation1: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.accept(value1);
-        }
-      );
-      const unscharferelation2: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.accept(value2);
-        }
-      );
-      const unscharferelation3: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.accept(value3);
-        }
-      );
+      const unscharferelation1: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.accept(value1);
+      });
+      const unscharferelation2: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.accept(value2);
+      });
+      const unscharferelation3: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.accept(value3);
+      });
 
       const fn1: Mock = vi.fn();
       const fn2: Mock = vi.fn();
       const fn3: Mock = vi.fn();
 
-      await unscharferelation1.map((v: number) => {
-        fn1();
-        expect(v).toBe(value1);
+      await unscharferelation1
+        .map((v: number) => {
+          fn1();
+          expect(v).toBe(value1);
 
-        return Promise.resolve(unscharferelation2);
-      }).map((v: number) => {
-        fn2();
-        expect(v).toBe(value2);
+          return Promise.resolve(unscharferelation2);
+        })
+        .map((v: number) => {
+          fn2();
+          expect(v).toBe(value2);
 
-        return Promise.resolve(unscharferelation3);
-      }).map((v: number) => {
-        fn3();
-        expect(v).toBe(value3);
+          return Promise.resolve(unscharferelation3);
+        })
+        .map((v: number) => {
+          fn3();
+          expect(v).toBe(value3);
 
-        return Promise.resolve(unscharferelation3);
-      }).terminate();
+          return Promise.resolve(unscharferelation3);
+        })
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(1);
       expect(fn2.mock.calls).toHaveLength(1);
@@ -452,30 +447,32 @@ describe('UnscharferelationInternal', () => {
     it('will not invoke callbacks when a callback returns null', async () => {
       const value: number = -201;
 
-      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.accept(value);
-        }
-      );
+      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.accept(value);
+      });
 
       const fn1: Mock = vi.fn();
       const fn2: Mock = vi.fn();
       const fn3: Mock = vi.fn();
 
-      await unscharferelation.map((v: number) => {
-        fn1();
-        expect(v).toBe(value);
+      await unscharferelation
+        .map((v: number) => {
+          fn1();
+          expect(v).toBe(value);
 
-        return null;
-      }).map(() => {
-        fn2();
+          return null;
+        })
+        .map(() => {
+          fn2();
 
-        return null;
-      }).map(() => {
-        fn3();
+          return null;
+        })
+        .map(() => {
+          fn3();
 
-        return null;
-      }).terminate();
+          return null;
+        })
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(1);
       expect(fn2.mock.calls).toHaveLength(0);
@@ -485,30 +482,32 @@ describe('UnscharferelationInternal', () => {
     it('will not invoke callbacks when a callback returns Promise<null>', async () => {
       const value: number = -201;
 
-      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.accept(value);
-        }
-      );
+      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.accept(value);
+      });
 
       const fn1: Mock = vi.fn();
       const fn2: Mock = vi.fn();
       const fn3: Mock = vi.fn();
 
-      await unscharferelation.map((v: number) => {
-        fn1();
-        expect(v).toBe(value);
+      await unscharferelation
+        .map((v: number) => {
+          fn1();
+          expect(v).toBe(value);
 
-        return Promise.resolve(null);
-      }).map(() => {
-        fn2();
+          return Promise.resolve(null);
+        })
+        .map(() => {
+          fn2();
 
-        return Promise.resolve(null);
-      }).map(() => {
-        fn3();
+          return Promise.resolve(null);
+        })
+        .map(() => {
+          fn3();
 
-        return Promise.resolve(null);
-      }).terminate();
+          return Promise.resolve(null);
+        })
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(1);
       expect(fn2.mock.calls).toHaveLength(0);
@@ -518,40 +517,38 @@ describe('UnscharferelationInternal', () => {
     it('will not invoke callbacks when a callback returns Absent Unscharferelation', async () => {
       const value: number = -201;
 
-      const unscharferelation1: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.accept(value);
-        }
-      );
-      const unscharferelation2: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.decline();
-        }
-      );
-      const unscharferelation3: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.decline();
-        }
-      );
+      const unscharferelation1: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.accept(value);
+      });
+      const unscharferelation2: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.decline();
+      });
+      const unscharferelation3: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.decline();
+      });
 
       const fn1: Mock = vi.fn();
       const fn2: Mock = vi.fn();
       const fn3: Mock = vi.fn();
 
-      await unscharferelation1.map((v: number) => {
-        fn1();
-        expect(v).toBe(value);
+      await unscharferelation1
+        .map((v: number) => {
+          fn1();
+          expect(v).toBe(value);
 
-        return unscharferelation2;
-      }).map(() => {
-        fn2();
+          return unscharferelation2;
+        })
+        .map(() => {
+          fn2();
 
-        return unscharferelation3;
-      }).map(() => {
-        fn3();
+          return unscharferelation3;
+        })
+        .map(() => {
+          fn3();
 
-        return unscharferelation3;
-      }).terminate();
+          return unscharferelation3;
+        })
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(1);
       expect(fn2.mock.calls).toHaveLength(0);
@@ -561,40 +558,38 @@ describe('UnscharferelationInternal', () => {
     it('will not invoke callbacks when a callback returns Promise<Absent Unscharferelation>', async () => {
       const value: number = -201;
 
-      const unscharferelation1: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.accept(value);
-        }
-      );
-      const unscharferelation2: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.decline();
-        }
-      );
-      const unscharferelation3: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.decline();
-        }
-      );
+      const unscharferelation1: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.accept(value);
+      });
+      const unscharferelation2: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.decline();
+      });
+      const unscharferelation3: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.decline();
+      });
 
       const fn1: Mock = vi.fn();
       const fn2: Mock = vi.fn();
       const fn3: Mock = vi.fn();
 
-      await unscharferelation1.map((v: number) => {
-        fn1();
-        expect(v).toBe(value);
+      await unscharferelation1
+        .map((v: number) => {
+          fn1();
+          expect(v).toBe(value);
 
-        return Promise.resolve(unscharferelation2);
-      }).map(() => {
-        fn2();
+          return Promise.resolve(unscharferelation2);
+        })
+        .map(() => {
+          fn2();
 
-        return Promise.resolve(unscharferelation3);
-      }).map(() => {
-        fn3();
+          return Promise.resolve(unscharferelation3);
+        })
+        .map(() => {
+          fn3();
 
-        return Promise.resolve(unscharferelation3);
-      }).terminate();
+          return Promise.resolve(unscharferelation3);
+        })
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(1);
       expect(fn2.mock.calls).toHaveLength(0);
@@ -605,35 +600,38 @@ describe('UnscharferelationInternal', () => {
       const value: number = -201;
       const error: MockRuntimeError = new MockRuntimeError('');
 
-      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.accept(value);
-        }
-      );
+      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.accept(value);
+      });
 
       const fn1: Mock = vi.fn();
       const fn2: Mock = vi.fn();
       const fn3: Mock = vi.fn();
       const fn4: Mock = vi.fn();
 
-      await unscharferelation.map((v: number) => {
-        fn1();
-        expect(v).toBe(value);
+      await unscharferelation
+        .map((v: number) => {
+          fn1();
+          expect(v).toBe(value);
 
-        throw error;
-      }).map(() => {
-        fn2();
+          throw error;
+        })
+        .map(() => {
+          fn2();
 
-        throw error;
-      }).map(() => {
-        fn3();
+          throw error;
+        })
+        .map(() => {
+          fn3();
 
-        throw error;
-      }).recover(() => {
-        fn4();
+          throw error;
+        })
+        .recover(() => {
+          fn4();
 
-        throw error;
-      }).terminate();
+          throw error;
+        })
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(1);
       expect(fn2.mock.calls).toHaveLength(0);
@@ -645,35 +643,38 @@ describe('UnscharferelationInternal', () => {
       const value: number = -201;
       const error: MockRuntimeError = new MockRuntimeError('');
 
-      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.accept(value);
-        }
-      );
+      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.accept(value);
+      });
 
       const fn1: Mock = vi.fn();
       const fn2: Mock = vi.fn();
       const fn3: Mock = vi.fn();
       const fn4: Mock = vi.fn();
 
-      await unscharferelation.map((v: number) => {
-        fn1();
-        expect(v).toBe(value);
+      await unscharferelation
+        .map((v: number) => {
+          fn1();
+          expect(v).toBe(value);
 
-        return Promise.reject(error);
-      }).map(() => {
-        fn2();
+          return Promise.reject(error);
+        })
+        .map(() => {
+          fn2();
 
-        return Promise.reject(error);
-      }).map(() => {
-        fn3();
+          return Promise.reject(error);
+        })
+        .map(() => {
+          fn3();
 
-        return Promise.reject(error);
-      }).recover(() => {
-        fn4();
+          return Promise.reject(error);
+        })
+        .recover(() => {
+          fn4();
 
-        return Promise.reject(error);
-      }).terminate();
+          return Promise.reject(error);
+        })
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(1);
       expect(fn2.mock.calls).toHaveLength(0);
@@ -687,50 +688,47 @@ describe('UnscharferelationInternal', () => {
       const error2: MockRuntimeError = new MockRuntimeError('');
       const error3: MockRuntimeError = new MockRuntimeError('');
 
-      const unscharferelation1: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.accept(value);
-        }
-      );
-      const unscharferelation2: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.throw(error1);
-        }
-      );
-      const unscharferelation3: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.throw(error2);
-        }
-      );
-      const unscharferelation4: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.throw(error3);
-        }
-      );
+      const unscharferelation1: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.accept(value);
+      });
+      const unscharferelation2: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.throw(error1);
+      });
+      const unscharferelation3: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.throw(error2);
+      });
+      const unscharferelation4: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.throw(error3);
+      });
 
       const fn1: Mock = vi.fn();
       const fn2: Mock = vi.fn();
       const fn3: Mock = vi.fn();
       const fn4: Mock = vi.fn();
 
-      await unscharferelation1.map((v: number) => {
-        fn1();
-        expect(v).toBe(value);
+      await unscharferelation1
+        .map((v: number) => {
+          fn1();
+          expect(v).toBe(value);
 
-        return unscharferelation2;
-      }).map(() => {
-        fn2();
+          return unscharferelation2;
+        })
+        .map(() => {
+          fn2();
 
-        return unscharferelation3;
-      }).map(() => {
-        fn3();
+          return unscharferelation3;
+        })
+        .map(() => {
+          fn3();
 
-        return unscharferelation4;
-      }).recover(() => {
-        fn4();
+          return unscharferelation4;
+        })
+        .recover(() => {
+          fn4();
 
-        return unscharferelation4;
-      }).terminate();
+          return unscharferelation4;
+        })
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(1);
       expect(fn2.mock.calls).toHaveLength(0);
@@ -742,37 +740,37 @@ describe('UnscharferelationInternal', () => {
       const value1: number = -201;
       const value2: number = -220;
 
-      const unscharferelation1: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.accept(value1);
-        }
-      );
-      const unscharferelation2: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.accept(value2);
-        }
-      );
+      const unscharferelation1: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.accept(value1);
+      });
+      const unscharferelation2: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.accept(value2);
+      });
 
       const fn1: Mock = vi.fn();
       const fn2: Mock = vi.fn();
       const fn3: Mock = vi.fn();
 
-      await unscharferelation1.map((v: number) => {
-        fn1();
-        expect(v).toBe(value1);
+      await unscharferelation1
+        .map((v: number) => {
+          fn1();
+          expect(v).toBe(value1);
 
-        return unscharferelation2;
-      }).map((v: number) => {
-        fn2();
-        expect(v).toBe(value2);
+          return unscharferelation2;
+        })
+        .map((v: number) => {
+          fn2();
+          expect(v).toBe(value2);
 
-        return unscharferelation2;
-      }).map((v: number) => {
-        fn3();
-        expect(v).toBe(value2);
+          return unscharferelation2;
+        })
+        .map((v: number) => {
+          fn3();
+          expect(v).toBe(value2);
 
-        return unscharferelation2;
-      }).terminate();
+          return unscharferelation2;
+        })
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(1);
       expect(fn2.mock.calls).toHaveLength(1);
@@ -783,37 +781,37 @@ describe('UnscharferelationInternal', () => {
       const value1: number = -201;
       const value2: number = -2010;
 
-      const unscharferelation1: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.accept(value1);
-        }
-      );
-      const unscharferelation2: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.accept(value2);
-        }
-      );
+      const unscharferelation1: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.accept(value1);
+      });
+      const unscharferelation2: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.accept(value2);
+      });
 
       const fn1: Mock = vi.fn();
       const fn2: Mock = vi.fn();
       const fn3: Mock = vi.fn();
 
-      await unscharferelation1.map((v: number) => {
-        fn1();
-        expect(v).toBe(value1);
+      await unscharferelation1
+        .map((v: number) => {
+          fn1();
+          expect(v).toBe(value1);
 
-        return unscharferelation2;
-      }).map((v: number) => {
-        fn2();
-        expect(v).toBe(value2);
+          return unscharferelation2;
+        })
+        .map((v: number) => {
+          fn2();
+          expect(v).toBe(value2);
 
-        return unscharferelation2;
-      }).map((v: number) => {
-        fn3();
-        expect(v).toBe(value2);
+          return unscharferelation2;
+        })
+        .map((v: number) => {
+          fn3();
+          expect(v).toBe(value2);
 
-        return unscharferelation2;
-      }).terminate();
+          return unscharferelation2;
+        })
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(1);
       expect(fn2.mock.calls).toHaveLength(1);
@@ -823,35 +821,35 @@ describe('UnscharferelationInternal', () => {
     it('instantly declines once declined Unscharferelation', async () => {
       const value: number = -201;
 
-      const unscharferelation1: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.accept(value);
-        }
-      );
-      const unscharferelation2: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.decline();
-        }
-      );
+      const unscharferelation1: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.accept(value);
+      });
+      const unscharferelation2: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.decline();
+      });
 
       const fn1: Mock = vi.fn();
       const fn2: Mock = vi.fn();
       const fn3: Mock = vi.fn();
 
-      await unscharferelation1.map((v: number) => {
-        fn1();
-        expect(v).toBe(value);
+      await unscharferelation1
+        .map((v: number) => {
+          fn1();
+          expect(v).toBe(value);
 
-        return unscharferelation2;
-      }).recover(() => {
-        fn2();
+          return unscharferelation2;
+        })
+        .recover(() => {
+          fn2();
 
-        return unscharferelation2;
-      }).recover(() => {
-        fn3();
+          return unscharferelation2;
+        })
+        .recover(() => {
+          fn3();
 
-        return unscharferelation2;
-      }).terminate();
+          return unscharferelation2;
+        })
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(1);
       expect(fn2.mock.calls).toHaveLength(1);
@@ -862,35 +860,35 @@ describe('UnscharferelationInternal', () => {
       const value: number = -201;
       const error: MockRuntimeError = new MockRuntimeError('');
 
-      const unscharferelation1: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.accept(value);
-        }
-      );
-      const unscharferelation2: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.throw(error);
-        }
-      );
+      const unscharferelation1: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.accept(value);
+      });
+      const unscharferelation2: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.throw(error);
+      });
 
       const fn1: Mock = vi.fn();
       const fn2: Mock = vi.fn();
       const fn3: Mock = vi.fn();
 
-      await unscharferelation1.map((v: number) => {
-        fn1();
-        expect(v).toBe(value);
+      await unscharferelation1
+        .map((v: number) => {
+          fn1();
+          expect(v).toBe(value);
 
-        return unscharferelation2;
-      }).recover(() => {
-        fn2();
+          return unscharferelation2;
+        })
+        .recover(() => {
+          fn2();
 
-        return unscharferelation2;
-      }).map(() => {
-        fn3();
+          return unscharferelation2;
+        })
+        .map(() => {
+          fn3();
 
-        return unscharferelation2;
-      }).terminate();
+          return unscharferelation2;
+        })
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(1);
       expect(fn2.mock.calls).toHaveLength(0);
@@ -902,30 +900,32 @@ describe('UnscharferelationInternal', () => {
     it('invokes callbacks unless it is not Present nor Lost', async () => {
       const value: number = -201;
 
-      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.decline();
-        }
-      );
+      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.decline();
+      });
 
       const fn1: Mock = vi.fn();
       const fn2: Mock = vi.fn();
       const fn3: Mock = vi.fn();
 
-      await unscharferelation.map((v: number) => {
-        fn1();
+      await unscharferelation
+        .map((v: number) => {
+          fn1();
 
-        return v + 1;
-      }).recover(() => {
-        fn2();
+          return v + 1;
+        })
+        .recover(() => {
+          fn2();
 
-        return value + 23;
-      }).map((v: number) => {
-        fn3();
-        expect(v).toBe(value + 23);
+          return value + 23;
+        })
+        .map((v: number) => {
+          fn3();
+          expect(v).toBe(value + 23);
 
-        return v + 230;
-      }).terminate();
+          return v + 230;
+        })
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(0);
       expect(fn2.mock.calls).toHaveLength(1);
@@ -935,30 +935,32 @@ describe('UnscharferelationInternal', () => {
     it('invokes callbacks unless it is not Present nor Lost, even if the return value is Promise', async () => {
       const value: number = -201;
 
-      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.decline();
-        }
-      );
+      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.decline();
+      });
 
       const fn1: Mock = vi.fn();
       const fn2: Mock = vi.fn();
       const fn3: Mock = vi.fn();
 
-      await unscharferelation.map((v: number) => {
-        fn1();
+      await unscharferelation
+        .map((v: number) => {
+          fn1();
 
-        return Promise.resolve(v + 23);
-      }).recover(() => {
-        fn2();
+          return Promise.resolve(v + 23);
+        })
+        .recover(() => {
+          fn2();
 
-        return Promise.resolve(value + 23);
-      }).map((v: number) => {
-        fn3();
-        expect(v).toBe(value + 23);
+          return Promise.resolve(value + 23);
+        })
+        .map((v: number) => {
+          fn3();
+          expect(v).toBe(value + 23);
 
-        return Promise.resolve(value + 23);
-      }).terminate();
+          return Promise.resolve(value + 23);
+        })
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(0);
       expect(fn2.mock.calls).toHaveLength(1);
@@ -969,40 +971,38 @@ describe('UnscharferelationInternal', () => {
       const value1: number = -20100;
       const value2: number = -2010;
 
-      const unscharferelation1: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.decline();
-        }
-      );
-      const unscharferelation2: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.accept(value1);
-        }
-      );
-      const unscharferelation3: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.accept(value2);
-        }
-      );
+      const unscharferelation1: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.decline();
+      });
+      const unscharferelation2: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.accept(value1);
+      });
+      const unscharferelation3: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.accept(value2);
+      });
 
       const fn1: Mock = vi.fn();
       const fn2: Mock = vi.fn();
       const fn3: Mock = vi.fn();
 
-      await unscharferelation1.map(() => {
-        fn1();
+      await unscharferelation1
+        .map(() => {
+          fn1();
 
-        return unscharferelation2;
-      }).recover(() => {
-        fn2();
+          return unscharferelation2;
+        })
+        .recover(() => {
+          fn2();
 
-        return unscharferelation3;
-      }).map((v: number) => {
-        fn3();
-        expect(v).toBe(value2);
+          return unscharferelation3;
+        })
+        .map((v: number) => {
+          fn3();
+          expect(v).toBe(value2);
 
-        return unscharferelation3;
-      }).terminate();
+          return unscharferelation3;
+        })
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(0);
       expect(fn2.mock.calls).toHaveLength(1);
@@ -1013,40 +1013,38 @@ describe('UnscharferelationInternal', () => {
       const value1: number = -20100;
       const value2: number = -2010;
 
-      const unscharferelation1: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.decline();
-        }
-      );
-      const unscharferelation2: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.accept(value1);
-        }
-      );
-      const unscharferelation3: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.accept(value2);
-        }
-      );
+      const unscharferelation1: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.decline();
+      });
+      const unscharferelation2: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.accept(value1);
+      });
+      const unscharferelation3: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.accept(value2);
+      });
 
       const fn1: Mock = vi.fn();
       const fn2: Mock = vi.fn();
       const fn3: Mock = vi.fn();
 
-      await unscharferelation1.map(() => {
-        fn1();
+      await unscharferelation1
+        .map(() => {
+          fn1();
 
-        return Promise.resolve(unscharferelation2);
-      }).recover(() => {
-        fn2();
+          return Promise.resolve(unscharferelation2);
+        })
+        .recover(() => {
+          fn2();
 
-        return Promise.resolve(unscharferelation3);
-      }).map((v: number) => {
-        fn3();
-        expect(v).toBe(value2);
+          return Promise.resolve(unscharferelation3);
+        })
+        .map((v: number) => {
+          fn3();
+          expect(v).toBe(value2);
 
-        return Promise.resolve(unscharferelation3);
-      }).terminate();
+          return Promise.resolve(unscharferelation3);
+        })
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(0);
       expect(fn2.mock.calls).toHaveLength(1);
@@ -1056,30 +1054,32 @@ describe('UnscharferelationInternal', () => {
     it('will not invoke callbacks with a callback returns null', async () => {
       const value: number = -201;
 
-      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.decline();
-        }
-      );
+      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.decline();
+      });
 
       const fn1: Mock = vi.fn();
       const fn2: Mock = vi.fn();
       const fn3: Mock = vi.fn();
 
-      await unscharferelation.recover(() => {
-        fn1();
+      await unscharferelation
+        .recover(() => {
+          fn1();
 
-        return null;
-      }).recover(() => {
-        fn2();
+          return null;
+        })
+        .recover(() => {
+          fn2();
 
-        return value + 23;
-      }).map((v: number) => {
-        fn3();
-        expect(v).toBe(value + 23);
+          return value + 23;
+        })
+        .map((v: number) => {
+          fn3();
+          expect(v).toBe(value + 23);
 
-        return v + 230;
-      }).terminate();
+          return v + 230;
+        })
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(1);
       expect(fn2.mock.calls).toHaveLength(1);
@@ -1089,30 +1089,32 @@ describe('UnscharferelationInternal', () => {
     it('will not invoke callbacks with a callback returns Promise<null>', async () => {
       const value: number = -201;
 
-      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.decline();
-        }
-      );
+      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.decline();
+      });
 
       const fn1: Mock = vi.fn();
       const fn2: Mock = vi.fn();
       const fn3: Mock = vi.fn();
 
-      await unscharferelation.recover(() => {
-        fn1();
+      await unscharferelation
+        .recover(() => {
+          fn1();
 
-        return Promise.resolve(null);
-      }).recover(() => {
-        fn2();
+          return Promise.resolve(null);
+        })
+        .recover(() => {
+          fn2();
 
-        return value + 23;
-      }).map((v: number) => {
-        fn3();
-        expect(v).toBe(value + 23);
+          return value + 23;
+        })
+        .map((v: number) => {
+          fn3();
+          expect(v).toBe(value + 23);
 
-        return v + 230;
-      }).terminate();
+          return v + 230;
+        })
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(1);
       expect(fn2.mock.calls).toHaveLength(1);
@@ -1122,40 +1124,38 @@ describe('UnscharferelationInternal', () => {
     it('will not invoke callbacks with a callback returns Absent Unscharferelation', async () => {
       const value: number = -201;
 
-      const unscharferelation1: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.accept(value);
-        }
-      );
-      const unscharferelation2: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.decline();
-        }
-      );
-      const unscharferelation3: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.decline();
-        }
-      );
+      const unscharferelation1: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.accept(value);
+      });
+      const unscharferelation2: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.decline();
+      });
+      const unscharferelation3: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.decline();
+      });
 
       const fn1: Mock = vi.fn();
       const fn2: Mock = vi.fn();
       const fn3: Mock = vi.fn();
 
-      await unscharferelation1.map((v: number) => {
-        fn1();
-        expect(v).toBe(value);
+      await unscharferelation1
+        .map((v: number) => {
+          fn1();
+          expect(v).toBe(value);
 
-        return unscharferelation2;
-      }).recover(() => {
-        fn2();
+          return unscharferelation2;
+        })
+        .recover(() => {
+          fn2();
 
-        return unscharferelation3;
-      }).map(() => {
-        fn3();
+          return unscharferelation3;
+        })
+        .map(() => {
+          fn3();
 
-        return unscharferelation3;
-      }).terminate();
+          return unscharferelation3;
+        })
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(1);
       expect(fn2.mock.calls).toHaveLength(1);
@@ -1165,40 +1165,38 @@ describe('UnscharferelationInternal', () => {
     it('will not invoke callbacks with a callback returns Promise<Absent Unscharferelation>', async () => {
       const value: number = -201;
 
-      const unscharferelation1: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.accept(value);
-        }
-      );
-      const unscharferelation2: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.decline();
-        }
-      );
-      const unscharferelation3: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.decline();
-        }
-      );
+      const unscharferelation1: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.accept(value);
+      });
+      const unscharferelation2: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.decline();
+      });
+      const unscharferelation3: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.decline();
+      });
 
       const fn1: Mock = vi.fn();
       const fn2: Mock = vi.fn();
       const fn3: Mock = vi.fn();
 
-      await unscharferelation1.map((v: number) => {
-        fn1();
-        expect(v).toBe(value);
+      await unscharferelation1
+        .map((v: number) => {
+          fn1();
+          expect(v).toBe(value);
 
-        return Promise.resolve(unscharferelation2);
-      }).recover(() => {
-        fn2();
+          return Promise.resolve(unscharferelation2);
+        })
+        .recover(() => {
+          fn2();
 
-        return Promise.resolve(unscharferelation3);
-      }).map(() => {
-        fn3();
+          return Promise.resolve(unscharferelation3);
+        })
+        .map(() => {
+          fn3();
 
-        return Promise.resolve(unscharferelation3);
-      }).terminate();
+          return Promise.resolve(unscharferelation3);
+        })
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(1);
       expect(fn2.mock.calls).toHaveLength(1);
@@ -1209,35 +1207,38 @@ describe('UnscharferelationInternal', () => {
       const value: number = -201;
       const error: MockRuntimeError = new MockRuntimeError('');
 
-      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.accept(value);
-        }
-      );
+      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.accept(value);
+      });
 
       const fn1: Mock = vi.fn();
       const fn2: Mock = vi.fn();
       const fn3: Mock = vi.fn();
       const fn4: Mock = vi.fn();
 
-      await unscharferelation.map((v: number) => {
-        fn1();
-        expect(v).toBe(value);
+      await unscharferelation
+        .map((v: number) => {
+          fn1();
+          expect(v).toBe(value);
 
-        throw error;
-      }).recover(() => {
-        fn2();
+          throw error;
+        })
+        .recover(() => {
+          fn2();
 
-        throw error;
-      }).map(() => {
-        fn3();
+          throw error;
+        })
+        .map(() => {
+          fn3();
 
-        throw error;
-      }).recover(() => {
-        fn4();
+          throw error;
+        })
+        .recover(() => {
+          fn4();
 
-        throw error;
-      }).terminate();
+          throw error;
+        })
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(1);
       expect(fn2.mock.calls).toHaveLength(0);
@@ -1249,35 +1250,38 @@ describe('UnscharferelationInternal', () => {
       const value: number = -201;
       const error: MockRuntimeError = new MockRuntimeError('');
 
-      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.accept(value);
-        }
-      );
+      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.accept(value);
+      });
 
       const fn1: Mock = vi.fn();
       const fn2: Mock = vi.fn();
       const fn3: Mock = vi.fn();
       const fn4: Mock = vi.fn();
 
-      await unscharferelation.map((v: number) => {
-        fn1();
-        expect(v).toBe(value);
+      await unscharferelation
+        .map((v: number) => {
+          fn1();
+          expect(v).toBe(value);
 
-        return Promise.reject(error);
-      }).recover(() => {
-        fn2();
+          return Promise.reject(error);
+        })
+        .recover(() => {
+          fn2();
 
-        return Promise.reject(error);
-      }).map(() => {
-        fn3();
+          return Promise.reject(error);
+        })
+        .map(() => {
+          fn3();
 
-        return Promise.reject(error);
-      }).recover(() => {
-        fn4();
+          return Promise.reject(error);
+        })
+        .recover(() => {
+          fn4();
 
-        throw error;
-      }).terminate();
+          throw error;
+        })
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(1);
       expect(fn2.mock.calls).toHaveLength(0);
@@ -1291,50 +1295,47 @@ describe('UnscharferelationInternal', () => {
       const error2: MockRuntimeError = new MockRuntimeError('');
       const error3: MockRuntimeError = new MockRuntimeError('');
 
-      const unscharferelation1: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.accept(value);
-        }
-      );
-      const unscharferelation2: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.throw(error1);
-        }
-      );
-      const unscharferelation3: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.throw(error2);
-        }
-      );
-      const unscharferelation4: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.throw(error3);
-        }
-      );
+      const unscharferelation1: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.accept(value);
+      });
+      const unscharferelation2: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.throw(error1);
+      });
+      const unscharferelation3: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.throw(error2);
+      });
+      const unscharferelation4: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.throw(error3);
+      });
 
       const fn1: Mock = vi.fn();
       const fn2: Mock = vi.fn();
       const fn3: Mock = vi.fn();
       const fn4: Mock = vi.fn();
 
-      await unscharferelation1.map((v: number) => {
-        fn1();
-        expect(v).toBe(value);
+      await unscharferelation1
+        .map((v: number) => {
+          fn1();
+          expect(v).toBe(value);
 
-        return unscharferelation2;
-      }).recover(() => {
-        fn2();
+          return unscharferelation2;
+        })
+        .recover(() => {
+          fn2();
 
-        return unscharferelation3;
-      }).map(() => {
-        fn3();
+          return unscharferelation3;
+        })
+        .map(() => {
+          fn3();
 
-        return unscharferelation4;
-      }).recover(() => {
-        fn4();
+          return unscharferelation4;
+        })
+        .recover(() => {
+          fn4();
 
-        return unscharferelation4;
-      }).terminate();
+          return unscharferelation4;
+        })
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(1);
       expect(fn2.mock.calls).toHaveLength(0);
@@ -1348,50 +1349,47 @@ describe('UnscharferelationInternal', () => {
       const error2: MockRuntimeError = new MockRuntimeError('');
       const error3: MockRuntimeError = new MockRuntimeError('');
 
-      const unscharferelation1: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.accept(value);
-        }
-      );
-      const unscharferelation2: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.throw(error1);
-        }
-      );
-      const unscharferelation3: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.throw(error2);
-        }
-      );
-      const unscharferelation4: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.throw(error3);
-        }
-      );
+      const unscharferelation1: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.accept(value);
+      });
+      const unscharferelation2: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.throw(error1);
+      });
+      const unscharferelation3: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.throw(error2);
+      });
+      const unscharferelation4: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.throw(error3);
+      });
 
       const fn1: Mock = vi.fn();
       const fn2: Mock = vi.fn();
       const fn3: Mock = vi.fn();
       const fn4: Mock = vi.fn();
 
-      await unscharferelation1.map((v: number) => {
-        fn1();
-        expect(v).toBe(value);
+      await unscharferelation1
+        .map((v: number) => {
+          fn1();
+          expect(v).toBe(value);
 
-        return Promise.resolve(unscharferelation2);
-      }).recover(() => {
-        fn2();
+          return Promise.resolve(unscharferelation2);
+        })
+        .recover(() => {
+          fn2();
 
-        return Promise.resolve(unscharferelation3);
-      }).map(() => {
-        fn3();
+          return Promise.resolve(unscharferelation3);
+        })
+        .map(() => {
+          fn3();
 
-        return Promise.resolve(unscharferelation3);
-      }).recover(() => {
-        fn4();
+          return Promise.resolve(unscharferelation3);
+        })
+        .recover(() => {
+          fn4();
 
-        return unscharferelation4;
-      }).terminate();
+          return unscharferelation4;
+        })
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(1);
       expect(fn2.mock.calls).toHaveLength(0);
@@ -1403,37 +1401,37 @@ describe('UnscharferelationInternal', () => {
       const value1: number = -201;
       const value2: number = -201;
 
-      const unscharferelation1: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.accept(value1);
-        }
-      );
-      const unscharferelation2: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.accept(value2);
-        }
-      );
+      const unscharferelation1: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.accept(value1);
+      });
+      const unscharferelation2: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.accept(value2);
+      });
 
       const fn1: Mock = vi.fn();
       const fn2: Mock = vi.fn();
       const fn3: Mock = vi.fn();
 
-      await unscharferelation1.map((v: number) => {
-        fn1();
-        expect(v).toBe(value1);
+      await unscharferelation1
+        .map((v: number) => {
+          fn1();
+          expect(v).toBe(value1);
 
-        return unscharferelation2;
-      }).map((v: number) => {
-        fn2();
-        expect(v).toBe(value2);
+          return unscharferelation2;
+        })
+        .map((v: number) => {
+          fn2();
+          expect(v).toBe(value2);
 
-        return unscharferelation2;
-      }).map((v: number) => {
-        fn3();
-        expect(v).toBe(value2);
+          return unscharferelation2;
+        })
+        .map((v: number) => {
+          fn3();
+          expect(v).toBe(value2);
 
-        return unscharferelation2;
-      }).terminate();
+          return unscharferelation2;
+        })
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(1);
       expect(fn2.mock.calls).toHaveLength(1);
@@ -1443,35 +1441,35 @@ describe('UnscharferelationInternal', () => {
     it('instantly declines once declined Unscharferelation', async () => {
       const value: number = -201;
 
-      const unscharferelation1: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.accept(value);
-        }
-      );
-      const unscharferelation2: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.decline();
-        }
-      );
+      const unscharferelation1: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.accept(value);
+      });
+      const unscharferelation2: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.decline();
+      });
 
       const fn1: Mock = vi.fn();
       const fn2: Mock = vi.fn();
       const fn3: Mock = vi.fn();
 
-      await unscharferelation1.map((v: number) => {
-        fn1();
-        expect(v).toBe(value);
+      await unscharferelation1
+        .map((v: number) => {
+          fn1();
+          expect(v).toBe(value);
 
-        return unscharferelation2;
-      }).recover(() => {
-        fn2();
+          return unscharferelation2;
+        })
+        .recover(() => {
+          fn2();
 
-        return unscharferelation2;
-      }).recover(() => {
-        fn3();
+          return unscharferelation2;
+        })
+        .recover(() => {
+          fn3();
 
-        return unscharferelation2;
-      }).terminate();
+          return unscharferelation2;
+        })
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(1);
       expect(fn2.mock.calls).toHaveLength(1);
@@ -1482,35 +1480,35 @@ describe('UnscharferelationInternal', () => {
       const value: number = -201;
       const error: MockRuntimeError = new MockRuntimeError('');
 
-      const unscharferelation1: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.accept(value);
-        }
-      );
-      const unscharferelation2: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.throw(error);
-        }
-      );
+      const unscharferelation1: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.accept(value);
+      });
+      const unscharferelation2: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.throw(error);
+      });
 
       const fn1: Mock = vi.fn();
       const fn2: Mock = vi.fn();
       const fn3: Mock = vi.fn();
 
-      await unscharferelation1.map((v: number) => {
-        fn1();
-        expect(v).toBe(value);
+      await unscharferelation1
+        .map((v: number) => {
+          fn1();
+          expect(v).toBe(value);
 
-        return unscharferelation2;
-      }).recover(() => {
-        fn2();
+          return unscharferelation2;
+        })
+        .recover(() => {
+          fn2();
 
-        return unscharferelation2;
-      }).map(() => {
-        fn3();
+          return unscharferelation2;
+        })
+        .map(() => {
+          fn3();
 
-        return unscharferelation2;
-      }).terminate();
+          return unscharferelation2;
+        })
+        .terminate();
 
       expect(fn1.mock.calls).toHaveLength(1);
       expect(fn2.mock.calls).toHaveLength(0);
@@ -1522,35 +1520,35 @@ describe('UnscharferelationInternal', () => {
     it('invokes callback if Unscharferelation is Present', async () => {
       const value: number = -201;
 
-      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.accept(value);
-        }
-      );
+      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.accept(value);
+      });
 
       const fn: Mock = vi.fn();
 
-      const heisenberg: Heisenberg<number> = await unscharferelation.ifPresent((v: number) => {
-        fn();
-        expect(v).toBe(value);
-      }).terminate();
+      const heisenberg: Heisenberg<number> = await unscharferelation
+        .ifPresent((v: number) => {
+          fn();
+          expect(v).toBe(value);
+        })
+        .terminate();
 
       expect(fn.mock.calls).toHaveLength(1);
       expect(heisenberg.isPresent()).toBe(true);
     });
 
     it('does not invoke callback if Unscharferelation is Absent', async () => {
-      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.decline();
-        }
-      );
+      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.decline();
+      });
 
       const fn: Mock = vi.fn();
 
-      const heisenberg: Heisenberg<number> = await unscharferelation.ifPresent(() => {
-        fn();
-      }).terminate();
+      const heisenberg: Heisenberg<number> = await unscharferelation
+        .ifPresent(() => {
+          fn();
+        })
+        .terminate();
 
       expect(fn.mock.calls).toHaveLength(0);
       expect(heisenberg.isAbsent()).toBe(true);
@@ -1559,17 +1557,17 @@ describe('UnscharferelationInternal', () => {
     it('does not invoke callback if Unscharferelation is Lost', async () => {
       const error: MockRuntimeError = new MockRuntimeError('');
 
-      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.throw(error);
-        }
-      );
+      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.throw(error);
+      });
 
       const fn: Mock = vi.fn();
 
-      const heisenberg: Heisenberg<number> = await unscharferelation.ifPresent(() => {
-        fn();
-      }).terminate();
+      const heisenberg: Heisenberg<number> = await unscharferelation
+        .ifPresent(() => {
+          fn();
+        })
+        .terminate();
 
       expect(fn.mock.calls).toHaveLength(0);
       expect(heisenberg.isLost()).toBe(true);
@@ -1580,17 +1578,17 @@ describe('UnscharferelationInternal', () => {
     it('does not invoke callback if Unscharferelation is Present', async () => {
       const value: number = -201;
 
-      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.accept(value);
-        }
-      );
+      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.accept(value);
+      });
 
       const fn: Mock = vi.fn();
 
-      const heisenberg: Heisenberg<number> = await unscharferelation.ifAbsent(() => {
-        fn();
-      }).terminate();
+      const heisenberg: Heisenberg<number> = await unscharferelation
+        .ifAbsent(() => {
+          fn();
+        })
+        .terminate();
 
       expect(fn.mock.calls).toHaveLength(0);
       expect(heisenberg.isPresent()).toBe(true);
@@ -1598,17 +1596,17 @@ describe('UnscharferelationInternal', () => {
     });
 
     it('invokes callback if Unscharferelation is Absent', async () => {
-      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.decline();
-        }
-      );
+      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.decline();
+      });
 
       const fn: Mock = vi.fn();
 
-      const heisenberg: Heisenberg<number> = await unscharferelation.ifAbsent(() => {
-        fn();
-      }).terminate();
+      const heisenberg: Heisenberg<number> = await unscharferelation
+        .ifAbsent(() => {
+          fn();
+        })
+        .terminate();
 
       expect(fn.mock.calls).toHaveLength(1);
       expect(heisenberg.isAbsent()).toBe(true);
@@ -1617,17 +1615,17 @@ describe('UnscharferelationInternal', () => {
     it('does not invoke callback if Unscharferelation is Lost', async () => {
       const error: MockRuntimeError = new MockRuntimeError('');
 
-      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.throw(error);
-        }
-      );
+      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.throw(error);
+      });
 
       const fn: Mock = vi.fn();
 
-      const heisenberg: Heisenberg<number> = await unscharferelation.ifAbsent(() => {
-        fn();
-      }).terminate();
+      const heisenberg: Heisenberg<number> = await unscharferelation
+        .ifAbsent(() => {
+          fn();
+        })
+        .terminate();
 
       expect(fn.mock.calls).toHaveLength(0);
       expect(heisenberg.isLost()).toBe(true);
@@ -1638,17 +1636,17 @@ describe('UnscharferelationInternal', () => {
     it('does not invoke callback if Unscharferelation is Present', async () => {
       const value: number = -201;
 
-      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.accept(value);
-        }
-      );
+      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.accept(value);
+      });
 
       const fn: Mock = vi.fn();
 
-      const heisenberg: Heisenberg<number> = await unscharferelation.ifLost(() => {
-        fn();
-      }).terminate();
+      const heisenberg: Heisenberg<number> = await unscharferelation
+        .ifLost(() => {
+          fn();
+        })
+        .terminate();
 
       expect(fn.mock.calls).toHaveLength(0);
       expect(heisenberg.isPresent()).toBe(true);
@@ -1656,17 +1654,17 @@ describe('UnscharferelationInternal', () => {
     });
 
     it('does not invoke callback if Unscharferelation is Absent', async () => {
-      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.decline();
-        }
-      );
+      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.decline();
+      });
 
       const fn: Mock = vi.fn();
 
-      const heisenberg: Heisenberg<number> = await unscharferelation.ifLost(() => {
-        fn();
-      }).terminate();
+      const heisenberg: Heisenberg<number> = await unscharferelation
+        .ifLost(() => {
+          fn();
+        })
+        .terminate();
 
       expect(fn.mock.calls).toHaveLength(0);
       expect(heisenberg.isAbsent()).toBe(true);
@@ -1675,18 +1673,18 @@ describe('UnscharferelationInternal', () => {
     it('invokes callback if Unscharferelation is Lost', async () => {
       const error: MockRuntimeError = new MockRuntimeError('');
 
-      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.throw(error);
-        }
-      );
+      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.throw(error);
+      });
 
       const fn: Mock = vi.fn();
 
-      const heisenberg: Heisenberg<number> = await unscharferelation.ifLost((e: unknown) => {
-        fn();
-        expect(e).toBe(error);
-      }).terminate();
+      const heisenberg: Heisenberg<number> = await unscharferelation
+        .ifLost((e: unknown) => {
+          fn();
+          expect(e).toBe(error);
+        })
+        .terminate();
 
       expect(fn.mock.calls).toHaveLength(1);
       expect(heisenberg.isLost()).toBe(true);
@@ -1697,11 +1695,9 @@ describe('UnscharferelationInternal', () => {
     it('invokes first callback if Unscharferelation is Present', () => {
       const value: number = -201;
 
-      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.accept(value);
-        }
-      );
+      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.accept(value);
+      });
 
       const fn1: Mock = vi.fn();
       const fn2: Mock = vi.fn();
@@ -1726,11 +1722,9 @@ describe('UnscharferelationInternal', () => {
     });
 
     it('invokes second callback if Unscharferelation is Absent', () => {
-      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.decline();
-        }
-      );
+      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.decline();
+      });
 
       const fn1: Mock = vi.fn();
       const fn2: Mock = vi.fn();
@@ -1756,11 +1750,9 @@ describe('UnscharferelationInternal', () => {
     it('invokes third callback if Unscharferelation is Lost', () => {
       const error: MockRuntimeError = new MockRuntimeError('');
 
-      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.throw(error);
-        }
-      );
+      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.throw(error);
+      });
 
       const fn1: Mock = vi.fn();
       const fn2: Mock = vi.fn();
@@ -1789,11 +1781,9 @@ describe('UnscharferelationInternal', () => {
     it('invokes first callback if Unscharferelation is Present', () => {
       const value: number = -201;
 
-      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.accept(value);
-        }
-      );
+      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.accept(value);
+      });
 
       const fn: Mock = vi.fn();
 
@@ -1805,11 +1795,9 @@ describe('UnscharferelationInternal', () => {
     });
 
     it('invokes second callback if Unscharferelation is Absent', () => {
-      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.decline();
-        }
-      );
+      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.decline();
+      });
 
       const fn: Mock = vi.fn();
 
@@ -1823,11 +1811,9 @@ describe('UnscharferelationInternal', () => {
     it('invokes third callback if Unscharferelation is Lost', () => {
       const error: MockRuntimeError = new MockRuntimeError('');
 
-      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of(
-        (epoque: Epoque<number>) => {
-          epoque.throw(error);
-        }
-      );
+      const unscharferelation: UnscharferelationInternal<number> = UnscharferelationInternal.of((epoque: Epoque<number>) => {
+        epoque.throw(error);
+      });
 
       const fn: Mock = vi.fn();
 

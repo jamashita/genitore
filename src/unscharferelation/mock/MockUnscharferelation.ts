@@ -1,9 +1,9 @@
 import { UnimplementedError } from '@jamashita/anden/error';
-import { Heisenberg } from '../../heisenberg/index.js';
-import { IUnscharferelation } from '../IUnscharferelation.js';
+import type { Heisenberg } from '../../heisenberg/index.js';
+import type { IUnscharferelation } from '../IUnscharferelation.js';
 
 export class MockUnscharferelation<out P> implements IUnscharferelation<P> {
-
+  // biome-ignore lint/suspicious/noConfusingVoidType: <explanation>
   public get(): Promise<Exclude<P, null | undefined | void>> {
     throw new UnimplementedError();
   }

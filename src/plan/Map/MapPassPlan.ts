@@ -1,5 +1,5 @@
-import { Consumer } from '@jamashita/anden/type';
-import { MapPlan } from './MapPlan.js';
+import type { Consumer } from '@jamashita/anden/type';
+import type { MapPlan } from './MapPlan.js';
 
 export class MapPassPlan<in out M> implements MapPlan<M> {
   private readonly map: Consumer<M>;

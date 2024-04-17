@@ -1,5 +1,5 @@
-import { RecoveryPlan } from '../../plan/index.js';
-import { Epoque } from '../Epoque.js';
+import type { RecoveryPlan } from '../../plan/index.js';
+import type { Epoque } from '../Epoque.js';
 
 export class RecoveryEpoquePlan<out P> implements RecoveryPlan<void> {
   private readonly epoque: Epoque<P>;

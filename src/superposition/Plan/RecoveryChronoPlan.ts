@@ -1,5 +1,5 @@
-import { RecoveryPlan } from '../../plan/index.js';
-import { Chrono } from '../Chrono.js';
+import type { RecoveryPlan } from '../../plan/index.js';
+import type { Chrono } from '../Chrono.js';
 
 export class RecoveryChronoPlan<out A, out D extends Error> implements RecoveryPlan<D> {
   private readonly chrono: Chrono<A, D>;

@@ -1,8 +1,8 @@
-import { Consumer } from '@jamashita/anden/type';
-import { Heisenberg, HeisenbergState } from './Heisenberg.js';
+import type { Consumer } from '@jamashita/anden/type';
+import type { Heisenberg, HeisenbergState } from './Heisenberg.js';
 import { HeisenbergError } from './HeisenbergError.js';
-import { Lost } from './Lost.js';
-import { Present } from './Present.js';
+import type { Lost } from './Lost.js';
+import type { Present } from './Present.js';
 
 export class Absent<out P> implements Heisenberg<P> {
   private static readonly INSTANCE: Absent<unknown> = new Absent();

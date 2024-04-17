@@ -17,11 +17,7 @@ describe('Heisenberg', () => {
     });
 
     it('returns Present when Present given', () => {
-      const heisenbergs: Array<Heisenberg<number>> = [
-        Present.of(0),
-        Present.of(1),
-        Present.of(2)
-      ];
+      const heisenbergs: Array<Heisenberg<number>> = [Present.of(0), Present.of(1), Present.of(2)];
 
       const heisenberg: Heisenberg<Array<number>> = Heisenberg.all(heisenbergs);
 
@@ -30,8 +26,8 @@ describe('Heisenberg', () => {
       const array: Array<number> = heisenberg.get();
 
       expect(array).toHaveLength(heisenbergs.length);
-      for (let i: number = 0; i < array.length; i++) {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      for (let i = 0; i < array.length; i++) {
+        // biome-ignore lint/style/noNonNullAssertion: <explanation>
         const h: Heisenberg<number> = heisenbergs[i]!;
 
         expect(array[i]).toBe(h.get());
@@ -39,11 +35,7 @@ describe('Heisenberg', () => {
     });
 
     it('returns Absent with Heisenbergs which first one is Absent given', () => {
-      const heisenbergs: Array<Heisenberg<number>> = [
-        Absent.of(),
-        Present.of(1),
-        Present.of(2)
-      ];
+      const heisenbergs: Array<Heisenberg<number>> = [Absent.of(), Present.of(1), Present.of(2)];
 
       const heisenberg: Heisenberg<Array<number>> = Heisenberg.all(heisenbergs);
 
@@ -54,11 +46,7 @@ describe('Heisenberg', () => {
     });
 
     it('returns Absent with Heisenbergs which second one is Absent given', () => {
-      const heisenbergs: Array<Heisenberg<number>> = [
-        Present.of(1),
-        Absent.of(),
-        Present.of(2)
-      ];
+      const heisenbergs: Array<Heisenberg<number>> = [Present.of(1), Absent.of(), Present.of(2)];
 
       const heisenberg: Heisenberg<Array<number>> = Heisenberg.all(heisenbergs);
 
@@ -69,12 +57,7 @@ describe('Heisenberg', () => {
     });
 
     it('returns Absent with Heisenbergs which last one is Absent given', () => {
-      const heisenbergs: Array<Heisenberg<number>> = [
-        Present.of(0),
-        Present.of(1),
-        Absent.of()
-      ];
-
+      const heisenbergs: Array<Heisenberg<number>> = [Present.of(0), Present.of(1), Absent.of()];
       const heisenberg: Heisenberg<Array<number>> = Heisenberg.all(heisenbergs);
 
       expect(heisenberg.isAbsent()).toBe(true);
@@ -86,11 +69,7 @@ describe('Heisenberg', () => {
     it('returns Lost when Heisenbergs which contains Lost given', () => {
       const error: MockRuntimeError = new MockRuntimeError('');
 
-      const heisenbergs: Array<Heisenberg<number>> = [
-        Present.of(0),
-        Lost.of(error),
-        Present.of(2)
-      ];
+      const heisenbergs: Array<Heisenberg<number>> = [Present.of(0), Lost.of(error), Present.of(2)];
 
       const heisenberg: Heisenberg<Array<number>> = Heisenberg.all(heisenbergs);
 
@@ -103,11 +82,7 @@ describe('Heisenberg', () => {
     it('returns Lost when Heisenbergs which contains Lost given even if all of others are Absent', () => {
       const error: MockRuntimeError = new MockRuntimeError('');
 
-      const heisenbergs: Array<Heisenberg<number>> = [
-        Absent.of(),
-        Lost.of(error),
-        Absent.of()
-      ];
+      const heisenbergs: Array<Heisenberg<number>> = [Absent.of(), Lost.of(error), Absent.of()];
 
       const heisenberg: Heisenberg<Array<number>> = Heisenberg.all(heisenbergs);
 
