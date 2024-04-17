@@ -1,7 +1,7 @@
-import { Consumer, Kind, Peek, Supplier, UnaryFunction } from '@jamashita/anden/type';
-import { Alive, DeadConstructor, Schrodinger } from '../schrodinger/index.js';
-import { Chrono } from './Chrono.js';
-import { containsError, ISuperposition, SReturnType } from './ISuperposition.js';
+import { type Consumer, Kind, type Peek, type Supplier, type UnaryFunction } from '@jamashita/anden/type';
+import { Alive, type DeadConstructor, Schrodinger } from '../schrodinger/index.js';
+import type { Chrono } from './Chrono.js';
+import { containsError, type ISuperposition, type SReturnType } from './ISuperposition.js';
 import { SuperpositionError } from './SuperpositionError.js';
 import { SuperpositionInternal } from './SuperpositionInternal.js';
 
@@ -20,9 +20,9 @@ export class Superposition<out A, out D extends Error> implements ISuperposition
     });
 
     return Superposition.of((chrono: Chrono<Array<A>, D>) => {
-      ss.forEach((s: Superposition<A, D>) => {
+      for (const s of ss) {
         chrono.catch(s.getErrors());
-      });
+      }
 
       return Promise.all(promises).then((schrodingers: Array<Schrodinger<A, D>>) => {
         const s: Schrodinger<Array<A>, D> = Schrodinger.all(schrodingers);
@@ -48,62 +48,76 @@ export class Superposition<out A, out D extends Error> implements ISuperposition
     return Promise.all(promises);
   }
 
-  public static of<A, D extends Error>(func: Consumer<Chrono<Awaited<A>, D>>, ...errors: ReadonlyArray<DeadConstructor<D>>): Superposition<Awaited<A>, D> {
+  public static of<A, D extends Error>(
+    func: Consumer<Chrono<Awaited<A>, D>>,
+    ...errors: ReadonlyArray<DeadConstructor<D>>
+  ): Superposition<Awaited<A>, D> {
     return Superposition.ofSuperposition(SuperpositionInternal.of(func, errors));
   }
 
-  public static ofSchrodinger<A, D extends Error>(schrodinger: Schrodinger<Awaited<A>, D>, ...errors: ReadonlyArray<DeadConstructor<D>>): Superposition<Awaited<A>, D> {
-    return Superposition.of((chrono: Chrono<Awaited<A>, D>) => {
-      chrono.catch(errors);
+  public static ofSchrodinger<A, D extends Error>(
+    schrodinger: Schrodinger<Awaited<A>, D>,
+    ...errors: ReadonlyArray<DeadConstructor<D>>
+  ): Superposition<Awaited<A>, D> {
+    return Superposition.of(
+      (chrono: Chrono<Awaited<A>, D>) => {
+        chrono.catch(errors);
 
-      if (schrodinger.isAlive()) {
-        return chrono.accept(schrodinger.get());
-      }
-      if (schrodinger.isDead()) {
-        return chrono.decline(schrodinger.getError());
-      }
-      if (schrodinger.isContradiction()) {
-        return chrono.throw(schrodinger.getCause());
-      }
+        if (schrodinger.isAlive()) {
+          return chrono.accept(schrodinger.get());
+        }
+        if (schrodinger.isDead()) {
+          return chrono.decline(schrodinger.getError());
+        }
+        if (schrodinger.isContradiction()) {
+          return chrono.throw(schrodinger.getCause());
+        }
 
-      return chrono.throw(new SuperpositionError('UNEXPECTED SCHRODINGER STATE'));
-    }, ...errors);
+        return chrono.throw(new SuperpositionError('UNEXPECTED SCHRODINGER STATE'));
+      },
+      ...errors
+    );
   }
 
   public static ofSuperposition<A, D extends Error>(superposition: ISuperposition<A, D>): Superposition<A, D> {
     return new Superposition(superposition);
   }
 
-  public static playground<A, D extends Error>(supplier: Supplier<Exclude<A, Error> | PromiseLike<Exclude<A, Error>>>, ...errors: ReadonlyArray<DeadConstructor<D>>): Superposition<Awaited<A>, D> {
-    return Superposition.of((chrono: Chrono<Awaited<A>, D>) => {
-      try {
-        const value: Exclude<A, Error> | PromiseLike<Exclude<A, Error>> = supplier();
+  public static playground<A, D extends Error>(
+    supplier: Supplier<Exclude<A, Error> | PromiseLike<Exclude<A, Error>>>,
+    ...errors: ReadonlyArray<DeadConstructor<D>>
+  ): Superposition<Awaited<A>, D> {
+    return Superposition.of(
+      (chrono: Chrono<Awaited<A>, D>) => {
+        try {
+          const value: Exclude<A, Error> | PromiseLike<Exclude<A, Error>> = supplier();
 
-        if (Kind.isPromiseLike<A>(value)) {
-          return value.then(
-            (v: A) => {
-              return chrono.accept(v as Exclude<Awaited<A>, Error>);
-            },
-            (e: unknown) => {
-              if (containsError(e, chrono.getErrors())) {
-                return chrono.decline(e);
+          if (Kind.isPromiseLike<A>(value)) {
+            return value.then(
+              (v: A) => {
+                return chrono.accept(v as Exclude<Awaited<A>, Error>);
+              },
+              (e: unknown) => {
+                if (containsError(e, chrono.getErrors())) {
+                  return chrono.decline(e);
+                }
+
+                return chrono.throw(e);
               }
+            );
+          }
 
-              return chrono.throw(e);
-            }
-          );
+          return chrono.accept(value as Exclude<Awaited<A>, Error>);
+        } catch (err: unknown) {
+          if (containsError(err, chrono.getErrors())) {
+            return chrono.decline(err);
+          }
+
+          return chrono.throw(err);
         }
-
-        return chrono.accept(value as Exclude<Awaited<A>, Error>);
-      }
-      catch (err: unknown) {
-        if (containsError(err, chrono.getErrors())) {
-          return chrono.decline(err);
-        }
-
-        return chrono.throw(err);
-      }
-    }, ...errors);
+      },
+      ...errors
+    );
   }
 
   protected constructor(internal: ISuperposition<A, D>) {
@@ -143,11 +157,7 @@ export class Superposition<out A, out D extends Error> implements ISuperposition
     return Superposition.ofSuperposition(this.internal.map<B, D | E>(mapper, ...this.internal.getErrors(), ...errors));
   }
 
-  public pass(
-    accepted: Consumer<Exclude<A, Error>>,
-    declined: Consumer<D>,
-    thrown: Consumer<unknown>
-  ): this {
+  public pass(accepted: Consumer<Exclude<A, Error>>, declined: Consumer<D>, thrown: Consumer<unknown>): this {
     this.internal.pass(accepted, declined, thrown);
 
     return this;

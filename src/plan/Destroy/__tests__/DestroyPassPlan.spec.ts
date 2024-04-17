@@ -1,4 +1,4 @@
-import { Mock } from 'vitest';
+import type { Mock } from 'vitest';
 import { DestroyPassPlan } from '../DestroyPassPlan.js';
 
 describe('DestroyPassPlan', () => {
@@ -8,12 +8,10 @@ describe('DestroyPassPlan', () => {
 
       const fn: Mock = vi.fn();
 
-      const plan: DestroyPassPlan = DestroyPassPlan.of(
-        (v: unknown) => {
-          fn();
-          expect(v).toBe(value);
-        }
-      );
+      const plan: DestroyPassPlan = DestroyPassPlan.of((v: unknown) => {
+        fn();
+        expect(v).toBe(value);
+      });
 
       plan.onDestroy(value);
 

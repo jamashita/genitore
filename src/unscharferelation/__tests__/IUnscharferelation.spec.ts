@@ -1,5 +1,5 @@
 import { Present } from '../../heisenberg/index.js';
-import { Epoque } from '../Epoque.js';
+import type { Epoque } from '../Epoque.js';
 import { isUnscharferelation } from '../IUnscharferelation.js';
 import { Unscharferelation } from '../Unscharferelation.js';
 import { UnscharferelationInternal } from '../UnscharferelationInternal.js';
@@ -8,11 +8,9 @@ describe('IUnscharferelation', () => {
   describe('isUnscharferelation', () => {
     it('returns true if IUnscharferelation methods the given object have', () => {
       const unscharferelation1: Unscharferelation<number> = Unscharferelation.ofHeisenberg(Present.of(4));
-      const unscharferelation2: UnscharferelationInternal<number> = UnscharferelationInternal.of<number>(
-        (epoque: Epoque<number>) => {
-          epoque.decline();
-        }
-      );
+      const unscharferelation2: UnscharferelationInternal<number> = UnscharferelationInternal.of<number>((epoque: Epoque<number>) => {
+        epoque.decline();
+      });
 
       expect(isUnscharferelation<number>(null)).toBe(false);
       expect(isUnscharferelation<number>(undefined)).toBe(false);

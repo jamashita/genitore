@@ -1,6 +1,6 @@
-import { Mock } from 'vitest';
+import type { Mock } from 'vitest';
 import { Absent } from '../Absent.js';
-import { Heisenberg } from '../Heisenberg.js';
+import type { Heisenberg } from '../Heisenberg.js';
 import { HeisenbergError } from '../HeisenbergError.js';
 
 describe('Absent', () => {

@@ -1,5 +1,5 @@
-import { MapPlan } from '../../plan/index.js';
-import { Chrono } from '../Chrono.js';
+import type { MapPlan } from '../../plan/index.js';
+import type { Chrono } from '../Chrono.js';
 
 export class MapChronoPlan<out A, out D extends Error> implements MapPlan<Exclude<A, Error>> {
   private readonly chrono: Chrono<A, D>;

@@ -1,4 +1,4 @@
-import { DestroyPlan, MapPlan, Plan, RecoveryPlan } from '../../plan/index.js';
+import type { DestroyPlan, MapPlan, Plan, RecoveryPlan } from '../../plan/index.js';
 
 export class CombinedChronoPlan<out A, out D extends Error> implements Plan<Exclude<A, Error>, D> {
   private readonly map: MapPlan<Exclude<A, Error>>;

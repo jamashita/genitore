@@ -1,8 +1,8 @@
 import { MockRuntimeError } from '@jamashita/anden/error';
-import { Resolve } from '@jamashita/anden/type';
-import { Mock } from 'vitest';
+import type { Resolve } from '@jamashita/anden/type';
+import type { Mock } from 'vitest';
 import { Absent, Present } from '../../../heisenberg/index.js';
-import { Epoque } from '../../Epoque.js';
+import type { Epoque } from '../../Epoque.js';
 import { MockEpoque } from '../../mock/MockEpoque.js';
 import { Unscharferelation } from '../../Unscharferelation.js';
 import { AbsentPlan } from '../AbsentPlan.js';
@@ -154,9 +154,11 @@ describe('AbsentPlan', () => {
           () => {
             fn1();
 
-            return Promise.resolve(Unscharferelation.of((e: Epoque<number>) => {
-              return e.accept(value - 6);
-            }));
+            return Promise.resolve(
+              Unscharferelation.of((e: Epoque<number>) => {
+                return e.accept(value - 6);
+              })
+            );
           },
           new MockEpoque(
             (n: number) => {
@@ -580,9 +582,11 @@ describe('AbsentPlan', () => {
           () => {
             fn1();
 
-            return Promise.resolve(Unscharferelation.of((e: Epoque<number>) => {
-              return e.throw(error);
-            }));
+            return Promise.resolve(
+              Unscharferelation.of((e: Epoque<number>) => {
+                return e.throw(error);
+              })
+            );
           },
           new MockEpoque(
             () => {

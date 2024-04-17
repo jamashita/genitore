@@ -1,4 +1,4 @@
-import { Consumer, Kind, Nullable, Serializable } from '@jamashita/anden/type';
+import { type Consumer, Kind, type Nullable, type Serializable } from '@jamashita/anden/type';
 import { Alive } from './Alive.js';
 import { Contradiction } from './Contradiction.js';
 import { Dead } from './Dead.js';
@@ -23,7 +23,8 @@ export interface Schrodinger<out A, out D extends Error> extends Serializable {
   isDead(): this is Dead<A, D>;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/no-unsafe-declaration-merging,@typescript-eslint/no-extraneous-class
+// biome-ignore lint/complexity/noStaticOnlyClass: <explanation>
+// biome-ignore lint/suspicious/noUnsafeDeclarationMerging: <explanation>
 export class Schrodinger<out A, out D extends Error> {
   public static all<A, D extends Error>(schrodingers: Iterable<Schrodinger<A, D>>): Schrodinger<Array<A>, D> {
     const ss: Array<Schrodinger<A, D>> = [...schrodingers];

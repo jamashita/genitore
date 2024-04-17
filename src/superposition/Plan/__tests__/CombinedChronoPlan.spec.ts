@@ -1,5 +1,5 @@
 import { MockRuntimeError } from '@jamashita/anden/error';
-import { Mock } from 'vitest';
+import type { Mock } from 'vitest';
 import { PassPlan } from '../../../plan/index.js';
 import { CombinedChronoPlan } from '../CombinedChronoPlan.js';
 

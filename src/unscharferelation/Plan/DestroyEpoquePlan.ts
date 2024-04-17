@@ -1,5 +1,5 @@
-import { DestroyPlan } from '../../plan/index.js';
-import { Epoque } from '../Epoque.js';
+import type { DestroyPlan } from '../../plan/index.js';
+import type { Epoque } from '../Epoque.js';
 
 export class DestroyEpoquePlan<out P> implements DestroyPlan {
   private readonly epoque: Epoque<P>;

@@ -1,6 +1,6 @@
-import { MockRuntimeError } from '@jamashita/anden/error';
-import { Mock } from 'vitest';
-import { Schrodinger } from '../Schrodinger.js';
+import type { MockRuntimeError } from '@jamashita/anden/error';
+import type { Mock } from 'vitest';
+import type { Schrodinger } from '../Schrodinger.js';
 import { SchrodingerError } from '../SchrodingerError.js';
 import { Still } from '../Still.js';
 

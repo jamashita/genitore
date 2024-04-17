@@ -1,8 +1,8 @@
 import { MockRuntimeError } from '@jamashita/anden/error';
-import { Resolve } from '@jamashita/anden/type';
-import { Mock } from 'vitest';
+import type { Resolve } from '@jamashita/anden/type';
+import type { Mock } from 'vitest';
 import { Alive, Dead } from '../../../schrodinger/index.js';
-import { Chrono } from '../../Chrono.js';
+import type { Chrono } from '../../Chrono.js';
 import { MockChrono } from '../../mock/MockChrono.js';
 import { Superposition } from '../../Superposition.js';
 import { AlivePlan } from '../AlivePlan.js';
@@ -18,30 +18,33 @@ describe('AlivePlan', () => {
       const fn4: Mock = vi.fn();
 
       await new Promise((resolve: Resolve<void>) => {
-        const plan: AlivePlan<number, number, MockRuntimeError> = AlivePlan.of((n: number) => {
-          fn1();
-          expect(n).toBe(value);
-
-          return n - 1;
-        }, new MockChrono(
+        const plan: AlivePlan<number, number, MockRuntimeError> = AlivePlan.of(
           (n: number) => {
-            fn2();
-            expect(n).toBe(value - 1);
+            fn1();
+            expect(n).toBe(value);
 
-            resolve();
+            return n - 1;
           },
-          () => {
-            fn3();
+          new MockChrono(
+            (n: number) => {
+              fn2();
+              expect(n).toBe(value - 1);
 
-            resolve();
-          },
-          () => {
-            fn4();
+              resolve();
+            },
+            () => {
+              fn3();
 
-            resolve();
-          },
-          new Set()
-        ));
+              resolve();
+            },
+            () => {
+              fn4();
+
+              resolve();
+            },
+            new Set()
+          )
+        );
 
         plan.onMap(value);
       });
@@ -61,30 +64,33 @@ describe('AlivePlan', () => {
       const fn4: Mock = vi.fn();
 
       await new Promise((resolve: Resolve<void>) => {
-        const plan: AlivePlan<number, number, MockRuntimeError> = AlivePlan.of<number, number, MockRuntimeError>((n: number) => {
-          fn1();
-          expect(n).toBe(value);
-
-          return Promise.resolve<number>(n - 2);
-        }, new MockChrono(
+        const plan: AlivePlan<number, number, MockRuntimeError> = AlivePlan.of<number, number, MockRuntimeError>(
           (n: number) => {
-            fn2();
-            expect(n).toBe(value - 2);
+            fn1();
+            expect(n).toBe(value);
 
-            resolve();
+            return Promise.resolve<number>(n - 2);
           },
-          () => {
-            fn3();
+          new MockChrono(
+            (n: number) => {
+              fn2();
+              expect(n).toBe(value - 2);
 
-            resolve();
-          },
-          () => {
-            fn4();
+              resolve();
+            },
+            () => {
+              fn3();
 
-            resolve();
-          },
-          new Set()
-        ));
+              resolve();
+            },
+            () => {
+              fn4();
+
+              resolve();
+            },
+            new Set()
+          )
+        );
 
         plan.onMap(value);
       });
@@ -104,30 +110,33 @@ describe('AlivePlan', () => {
       const fn4: Mock = vi.fn();
 
       await new Promise((resolve: Resolve<void>) => {
-        const plan: AlivePlan<number, number, MockRuntimeError> = AlivePlan.of((n: number) => {
-          fn1();
-          expect(n).toBe(value);
-
-          return Superposition.ofSchrodinger(Alive.of(n - 3));
-        }, new MockChrono(
+        const plan: AlivePlan<number, number, MockRuntimeError> = AlivePlan.of(
           (n: number) => {
-            fn2();
-            expect(n).toBe(value - 3);
+            fn1();
+            expect(n).toBe(value);
 
-            resolve();
+            return Superposition.ofSchrodinger(Alive.of(n - 3));
           },
-          () => {
-            fn3();
+          new MockChrono(
+            (n: number) => {
+              fn2();
+              expect(n).toBe(value - 3);
 
-            resolve();
-          },
-          () => {
-            fn4();
+              resolve();
+            },
+            () => {
+              fn3();
 
-            resolve();
-          },
-          new Set()
-        ));
+              resolve();
+            },
+            () => {
+              fn4();
+
+              resolve();
+            },
+            new Set()
+          )
+        );
 
         plan.onMap(value);
       });
@@ -147,30 +156,33 @@ describe('AlivePlan', () => {
       const fn4: Mock = vi.fn();
 
       await new Promise((resolve: Resolve<void>) => {
-        const plan: AlivePlan<number, number, MockRuntimeError> = AlivePlan.of((n: number) => {
-          fn1();
-          expect(n).toBe(value);
-
-          return Promise.resolve(Superposition.ofSchrodinger(Alive.of(n - 3)));
-        }, new MockChrono(
+        const plan: AlivePlan<number, number, MockRuntimeError> = AlivePlan.of(
           (n: number) => {
-            fn2();
-            expect(n).toBe(value - 3);
+            fn1();
+            expect(n).toBe(value);
 
-            resolve();
+            return Promise.resolve(Superposition.ofSchrodinger(Alive.of(n - 3)));
           },
-          () => {
-            fn3();
+          new MockChrono(
+            (n: number) => {
+              fn2();
+              expect(n).toBe(value - 3);
 
-            resolve();
-          },
-          () => {
-            fn4();
+              resolve();
+            },
+            () => {
+              fn3();
 
-            resolve();
-          },
-          new Set()
-        ));
+              resolve();
+            },
+            () => {
+              fn4();
+
+              resolve();
+            },
+            new Set()
+          )
+        );
 
         plan.onMap(value);
       });
@@ -191,30 +203,33 @@ describe('AlivePlan', () => {
       const fn4: Mock = vi.fn();
 
       await new Promise((resolve: Resolve<void>) => {
-        const plan: AlivePlan<number, number, MockRuntimeError> = AlivePlan.of((n: number) => {
-          fn1();
-          expect(n).toBe(value);
+        const plan: AlivePlan<number, number, MockRuntimeError> = AlivePlan.of(
+          (n: number) => {
+            fn1();
+            expect(n).toBe(value);
 
-          throw error;
-        }, new MockChrono(
-          () => {
-            fn2();
-
-            resolve();
+            throw error;
           },
-          (e: MockRuntimeError) => {
-            fn3();
-            expect(e).toBe(error);
+          new MockChrono(
+            () => {
+              fn2();
 
-            resolve();
-          },
-          () => {
-            fn4();
+              resolve();
+            },
+            (e: MockRuntimeError) => {
+              fn3();
+              expect(e).toBe(error);
 
-            resolve();
-          },
-          new Set([MockRuntimeError])
-        ));
+              resolve();
+            },
+            () => {
+              fn4();
+
+              resolve();
+            },
+            new Set([MockRuntimeError])
+          )
+        );
 
         plan.onMap(value);
       });
@@ -235,30 +250,33 @@ describe('AlivePlan', () => {
       const fn4: Mock = vi.fn();
 
       await new Promise((resolve: Resolve<void>) => {
-        const plan: AlivePlan<number, number, MockRuntimeError> = AlivePlan.of<number, number, MockRuntimeError>((n: number) => {
-          fn1();
-          expect(n).toBe(value);
+        const plan: AlivePlan<number, number, MockRuntimeError> = AlivePlan.of<number, number, MockRuntimeError>(
+          (n: number) => {
+            fn1();
+            expect(n).toBe(value);
 
-          return Promise.reject<number>(error);
-        }, new MockChrono(
-          () => {
-            fn2();
-
-            resolve();
+            return Promise.reject<number>(error);
           },
-          (e: MockRuntimeError) => {
-            fn3();
-            expect(e).toBe(error);
+          new MockChrono(
+            () => {
+              fn2();
 
-            resolve();
-          },
-          () => {
-            fn4();
+              resolve();
+            },
+            (e: MockRuntimeError) => {
+              fn3();
+              expect(e).toBe(error);
 
-            resolve();
-          },
-          new Set([MockRuntimeError])
-        ));
+              resolve();
+            },
+            () => {
+              fn4();
+
+              resolve();
+            },
+            new Set([MockRuntimeError])
+          )
+        );
 
         plan.onMap(value);
       });
@@ -279,30 +297,33 @@ describe('AlivePlan', () => {
       const fn4: Mock = vi.fn();
 
       await new Promise((resolve: Resolve<void>) => {
-        const plan: AlivePlan<number, number, MockRuntimeError> = AlivePlan.of((n: number) => {
-          fn1();
-          expect(n).toBe(value);
+        const plan: AlivePlan<number, number, MockRuntimeError> = AlivePlan.of(
+          (n: number) => {
+            fn1();
+            expect(n).toBe(value);
 
-          return Superposition.ofSchrodinger(Dead.of(error), MockRuntimeError);
-        }, new MockChrono(
-          () => {
-            fn2();
-
-            resolve();
+            return Superposition.ofSchrodinger(Dead.of(error), MockRuntimeError);
           },
-          (e: MockRuntimeError) => {
-            fn3();
-            expect(e).toBe(error);
+          new MockChrono(
+            () => {
+              fn2();
 
-            resolve();
-          },
-          () => {
-            fn4();
+              resolve();
+            },
+            (e: MockRuntimeError) => {
+              fn3();
+              expect(e).toBe(error);
 
-            resolve();
-          },
-          new Set([MockRuntimeError])
-        ));
+              resolve();
+            },
+            () => {
+              fn4();
+
+              resolve();
+            },
+            new Set([MockRuntimeError])
+          )
+        );
 
         plan.onMap(value);
       });
@@ -323,30 +344,33 @@ describe('AlivePlan', () => {
       const fn4: Mock = vi.fn();
 
       await new Promise((resolve: Resolve<void>) => {
-        const plan: AlivePlan<number, number, MockRuntimeError> = AlivePlan.of((n: number) => {
-          fn1();
-          expect(n).toBe(value);
+        const plan: AlivePlan<number, number, MockRuntimeError> = AlivePlan.of(
+          (n: number) => {
+            fn1();
+            expect(n).toBe(value);
 
-          return Promise.resolve(Superposition.ofSchrodinger(Dead.of(error), MockRuntimeError));
-        }, new MockChrono(
-          () => {
-            fn2();
-
-            resolve();
+            return Promise.resolve(Superposition.ofSchrodinger(Dead.of(error), MockRuntimeError));
           },
-          (e: MockRuntimeError) => {
-            fn3();
-            expect(e).toBe(error);
+          new MockChrono(
+            () => {
+              fn2();
 
-            resolve();
-          },
-          () => {
-            fn4();
+              resolve();
+            },
+            (e: MockRuntimeError) => {
+              fn3();
+              expect(e).toBe(error);
 
-            resolve();
-          },
-          new Set([MockRuntimeError])
-        ));
+              resolve();
+            },
+            () => {
+              fn4();
+
+              resolve();
+            },
+            new Set([MockRuntimeError])
+          )
+        );
 
         plan.onMap(value);
       });
@@ -367,30 +391,33 @@ describe('AlivePlan', () => {
       const fn4: Mock = vi.fn();
 
       await new Promise((resolve: Resolve<void>) => {
-        const plan: AlivePlan<number, number, MockRuntimeError> = AlivePlan.of((n: number) => {
-          fn1();
-          expect(n).toBe(value);
+        const plan: AlivePlan<number, number, MockRuntimeError> = AlivePlan.of(
+          (n: number) => {
+            fn1();
+            expect(n).toBe(value);
 
-          throw error;
-        }, new MockChrono(
-          () => {
-            fn2();
-
-            resolve();
+            throw error;
           },
-          () => {
-            fn3();
+          new MockChrono(
+            () => {
+              fn2();
 
-            resolve();
-          },
-          (e: unknown) => {
-            fn4();
-            expect(e).toBe(error);
+              resolve();
+            },
+            () => {
+              fn3();
 
-            resolve();
-          },
-          new Set()
-        ));
+              resolve();
+            },
+            (e: unknown) => {
+              fn4();
+              expect(e).toBe(error);
+
+              resolve();
+            },
+            new Set()
+          )
+        );
 
         plan.onMap(value);
       });
@@ -411,30 +438,33 @@ describe('AlivePlan', () => {
       const fn4: Mock = vi.fn();
 
       await new Promise((resolve: Resolve<void>) => {
-        const plan: AlivePlan<number, number, MockRuntimeError> = AlivePlan.of<number, number, MockRuntimeError>((n: number) => {
-          fn1();
-          expect(n).toBe(value);
+        const plan: AlivePlan<number, number, MockRuntimeError> = AlivePlan.of<number, number, MockRuntimeError>(
+          (n: number) => {
+            fn1();
+            expect(n).toBe(value);
 
-          return Promise.reject<number>(error);
-        }, new MockChrono(
-          () => {
-            fn2();
-
-            resolve();
+            return Promise.reject<number>(error);
           },
-          () => {
-            fn3();
+          new MockChrono(
+            () => {
+              fn2();
 
-            resolve();
-          },
-          (e: unknown) => {
-            fn4();
-            expect(e).toBe(error);
+              resolve();
+            },
+            () => {
+              fn3();
 
-            resolve();
-          },
-          new Set()
-        ));
+              resolve();
+            },
+            (e: unknown) => {
+              fn4();
+              expect(e).toBe(error);
+
+              resolve();
+            },
+            new Set()
+          )
+        );
 
         plan.onMap(value);
       });
@@ -454,26 +484,29 @@ describe('AlivePlan', () => {
       const fn3: Mock = vi.fn();
       const fn4: Mock = vi.fn();
 
-      const plan: AlivePlan<number, number, MockRuntimeError> = AlivePlan.of((n: number) => {
-        fn1();
-        expect(n).toBe(value);
+      const plan: AlivePlan<number, number, MockRuntimeError> = AlivePlan.of(
+        (n: number) => {
+          fn1();
+          expect(n).toBe(value);
 
-        return Superposition.of((c: Chrono<number, MockRuntimeError>) => {
-          return c.throw(error);
-        });
-      }, new MockChrono(
-        () => {
-          fn2();
+          return Superposition.of((c: Chrono<number, MockRuntimeError>) => {
+            return c.throw(error);
+          });
         },
-        () => {
-          fn3();
-        },
-        (e: unknown) => {
-          fn4();
-          expect(e).toBe(error);
-        },
-        new Set()
-      ));
+        new MockChrono(
+          () => {
+            fn2();
+          },
+          () => {
+            fn3();
+          },
+          (e: unknown) => {
+            fn4();
+            expect(e).toBe(error);
+          },
+          new Set()
+        )
+      );
 
       plan.onMap(value);
 
@@ -493,32 +526,37 @@ describe('AlivePlan', () => {
       const fn4: Mock = vi.fn();
 
       await new Promise((resolve: Resolve<void>) => {
-        const plan: AlivePlan<number, number, MockRuntimeError> = AlivePlan.of((n: number) => {
-          fn1();
-          expect(n).toBe(value);
+        const plan: AlivePlan<number, number, MockRuntimeError> = AlivePlan.of(
+          (n: number) => {
+            fn1();
+            expect(n).toBe(value);
 
-          return Promise.resolve(Superposition.of((c: Chrono<number, MockRuntimeError>) => {
-            return c.throw(error);
-          }));
-        }, new MockChrono(
-          () => {
-            fn2();
-
-            resolve();
+            return Promise.resolve(
+              Superposition.of((c: Chrono<number, MockRuntimeError>) => {
+                return c.throw(error);
+              })
+            );
           },
-          () => {
-            fn3();
+          new MockChrono(
+            () => {
+              fn2();
 
-            resolve();
-          },
-          (e: unknown) => {
-            fn4();
-            expect(e).toBe(error);
+              resolve();
+            },
+            () => {
+              fn3();
 
-            resolve();
-          },
-          new Set()
-        ));
+              resolve();
+            },
+            (e: unknown) => {
+              fn4();
+              expect(e).toBe(error);
+
+              resolve();
+            },
+            new Set()
+          )
+        );
 
         plan.onMap(value);
       });
