@@ -1,3 +1,12 @@
+# [2.18.0](https://github.com/jamashita/genitore/compare/v2.17.0...v2.18.0) (2024-04-17)
+
+
+### Features
+
+* 🎸 biome applied ([33770f0](https://github.com/jamashita/genitore/commit/33770f0c3e617f0391b30d9efdc7d47022619248))
+* 🎸 biome settings ([681f900](https://github.com/jamashita/genitore/commit/681f900e4db353196e7e7ae5e39495637136378d))
+* 🎸 packages updated ([c151df5](https://github.com/jamashita/genitore/commit/c151df54955f5dff9b6f26738644cee3d3483c85))
+
 # [2.17.0](https://github.com/jamashita/genitore/compare/v2.16.0...v2.17.0) (2024-01-17)
 
 
