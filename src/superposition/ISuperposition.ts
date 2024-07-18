@@ -1,5 +1,5 @@
 import { type Consumer, Kind, type Peek, type Serializable, type UnaryFunction } from '@jamashita/anden/type';
-import type { DeadConstructor, Schrodinger } from '../schrodinger/index.js';
+import type { Schrodinger } from '../schrodinger/index.js';
 
 export type SReturnType<B, E extends Error> =
   | Exclude<B, Error>
@@ -10,31 +10,25 @@ export type SReturnType<B, E extends Error> =
 export interface ISuperposition<out A, out D extends Error> extends Serializable {
   get(): Promise<Exclude<A, Error>>;
 
-  getErrors(): Set<DeadConstructor<D>>;
-
   ifAlive(consumer: Consumer<Exclude<A, Error>>): this;
 
   ifContradiction(consumer: Consumer<unknown>): this;
 
   ifDead(consumer: Consumer<D>): this;
 
-  map<B = A, E extends Error = D>(
-    mapper: UnaryFunction<Exclude<A, Error>, SReturnType<B, E>>,
-    ...errors: Array<DeadConstructor<E>>
-  ): ISuperposition<B, D | E>;
+  map<B = A, E extends Error = D>(mapper: UnaryFunction<Exclude<A, Error>, SReturnType<B, E>>): ISuperposition<B, D | E>;
 
   pass(accepted: Consumer<Exclude<A, Error>>, declined: Consumer<D>, thrown: Consumer<unknown>): this;
 
   peek(peek: Peek): this;
 
-  recover<B = A, E extends Error = D>(mapper: UnaryFunction<D, SReturnType<B, E>>, ...errors: Array<DeadConstructor<E>>): ISuperposition<A | B, E>;
+  recover<B = A, E extends Error = D>(mapper: UnaryFunction<D, SReturnType<B, E>>): ISuperposition<A | B, E>;
 
   terminate(): Promise<Schrodinger<A, D>>;
 
   transform<B = A, E extends Error = D>(
     alive: UnaryFunction<Exclude<A, Error>, SReturnType<B, E>>,
-    dead: UnaryFunction<D, SReturnType<B, E>>,
-    ...errors: Array<DeadConstructor<E>>
+    dead: UnaryFunction<D, SReturnType<B, E>>
   ): ISuperposition<B, E>;
 }
 
@@ -43,9 +37,6 @@ export const isSuperposition = <A, D extends Error>(value: unknown): value is IS
     return false;
   }
   if (!Kind.isFunction(value.get)) {
-    return false;
-  }
-  if (!Kind.isFunction(value.getErrors)) {
     return false;
   }
   if (!Kind.isFunction(value.terminate)) {
@@ -77,10 +68,4 @@ export const isSuperposition = <A, D extends Error>(value: unknown): value is IS
   }
 
   return true;
-};
-
-export const containsError = <E extends Error>(err: unknown, errors: Set<DeadConstructor<E>>): err is E => {
-  return [...errors].some((error: DeadConstructor<E>) => {
-    return Kind.isClass<DeadConstructor<E>>(err, error);
-  });
 };
