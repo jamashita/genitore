@@ -1,5 +1,5 @@
-export interface Chrono<out M, out R extends Error> {
-  accept(value: Exclude<M, Error>): unknown;
+export interface Chrono<out M, out R> {
+  accept(value: M): unknown;
 
   decline(value: R): unknown;
 
