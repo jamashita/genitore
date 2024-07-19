@@ -16,10 +16,6 @@ export class DeadPlan<out B, in out D, E> implements RecoveryPlan<D> {
     this.chrono = chrono;
   }
 
-  private forOther(v: B): unknown {
-    return this.chrono.accept(v);
-  }
-
   private forSuperposition(superposition: ISuperposition<B, E>): unknown {
     return superposition.pass(
       (v: B) => {
@@ -48,7 +44,7 @@ export class DeadPlan<out B, in out D, E> implements RecoveryPlan<D> {
               return this.forSuperposition(v);
             }
 
-            return this.forOther(v);
+            return this.chrono.accept(v);
           },
           (e: unknown) => {
             return this.chrono.throw(e);
@@ -56,7 +52,7 @@ export class DeadPlan<out B, in out D, E> implements RecoveryPlan<D> {
         );
       }
 
-      return this.forOther(mapped);
+      return this.chrono.accept(mapped);
     } catch (err: unknown) {
       return this.chrono.throw(err);
     }

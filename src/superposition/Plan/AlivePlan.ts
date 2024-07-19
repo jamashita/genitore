@@ -44,7 +44,7 @@ export class AlivePlan<in out A, out B, out E> implements MapPlan<A> {
               return this.forSuperposition(v);
             }
 
-            return this.chrono.decline(v);
+            return this.chrono.accept(v);
           },
           (e: unknown) => {
             return this.chrono.throw(e);
