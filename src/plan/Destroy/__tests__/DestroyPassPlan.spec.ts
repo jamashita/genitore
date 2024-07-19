@@ -1,14 +1,13 @@
-import type { Mock } from 'vitest';
 import { DestroyPassPlan } from '../DestroyPassPlan.js';
 
 describe('DestroyPassPlan', () => {
   describe('onDestroy', () => {
     it('invokes callback when onDestroy() called', () => {
-      const value: number = -35;
+      const value = -35;
 
-      const fn: Mock = vi.fn();
+      const fn = vi.fn();
 
-      const plan: DestroyPassPlan = DestroyPassPlan.of((v: unknown) => {
+      const plan = DestroyPassPlan.of((v: unknown) => {
         fn();
         expect(v).toBe(value);
       });
