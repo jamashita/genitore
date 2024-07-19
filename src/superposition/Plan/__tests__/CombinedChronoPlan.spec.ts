@@ -1,16 +1,15 @@
 import { MockRuntimeError } from '@jamashita/anden/error';
-import type { Mock } from 'vitest';
 import { PassPlan } from '../../../plan/index.js';
 import { CombinedChronoPlan } from '../CombinedChronoPlan.js';
 
 describe('CombinedChronoPlan', () => {
   describe('onMap', () => {
     it('invokes first callback', () => {
-      const value: number = -35;
+      const value = -35;
 
-      const fn1: Mock = vi.fn();
-      const fn2: Mock = vi.fn();
-      const fn3: Mock = vi.fn();
+      const fn1 = vi.fn();
+      const fn2 = vi.fn();
+      const fn3 = vi.fn();
 
       const pass: PassPlan<number, MockRuntimeError> = PassPlan.of(
         (v: number) => {
@@ -38,9 +37,9 @@ describe('CombinedChronoPlan', () => {
     it('invokes second callback', () => {
       const value: MockRuntimeError = new MockRuntimeError('');
 
-      const fn1: Mock = vi.fn();
-      const fn2: Mock = vi.fn();
-      const fn3: Mock = vi.fn();
+      const fn1 = vi.fn();
+      const fn2 = vi.fn();
+      const fn3 = vi.fn();
 
       const pass: PassPlan<number, MockRuntimeError> = PassPlan.of(
         () => {
@@ -66,13 +65,13 @@ describe('CombinedChronoPlan', () => {
 
   describe('onDestroy', () => {
     it('invokes third callback', () => {
-      const value: number = -35;
+      const value = -35;
 
-      const fn1: Mock = vi.fn();
-      const fn2: Mock = vi.fn();
-      const fn3: Mock = vi.fn();
+      const fn1 = vi.fn();
+      const fn2 = vi.fn();
+      const fn3 = vi.fn();
 
-      const pass: PassPlan<number, MockRuntimeError> = PassPlan.of(
+      const pass = PassPlan.of<number, MockRuntimeError>(
         () => {
           fn1();
         },
@@ -84,7 +83,7 @@ describe('CombinedChronoPlan', () => {
           expect(v).toBe(value);
         }
       );
-      const plan: CombinedChronoPlan<number, MockRuntimeError> = CombinedChronoPlan.of(pass, pass, pass);
+      const plan = CombinedChronoPlan.of<number, MockRuntimeError>(pass, pass, pass);
 
       plan.onDestroy(value);
 
