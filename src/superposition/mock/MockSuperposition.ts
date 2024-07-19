@@ -2,8 +2,8 @@ import { UnimplementedError } from '@jamashita/anden/error';
 import type { Schrodinger } from '../../schrodinger/index.js';
 import type { ISuperposition } from '../ISuperposition.js';
 
-export class MockSuperposition<out A, out D extends Error> implements ISuperposition<A, D> {
-  public get(): Promise<Exclude<A, Error>> {
+export class MockSuperposition<out A, out D> implements ISuperposition<A, D> {
+  public get(): Promise<A> {
     throw new UnimplementedError();
   }
 
@@ -19,7 +19,7 @@ export class MockSuperposition<out A, out D extends Error> implements ISuperposi
     throw new UnimplementedError();
   }
 
-  public map<B = A, E extends Error = D>(): ISuperposition<B, D | E> {
+  public map<B = A, E = D>(): ISuperposition<B, D | E> {
     throw new UnimplementedError();
   }
 
@@ -31,7 +31,7 @@ export class MockSuperposition<out A, out D extends Error> implements ISuperposi
     throw new UnimplementedError();
   }
 
-  public recover<B = A, E extends Error = D>(): ISuperposition<A | B, E> {
+  public recover<B = A, E = D>(): ISuperposition<A | B, E> {
     throw new UnimplementedError();
   }
 
@@ -43,7 +43,7 @@ export class MockSuperposition<out A, out D extends Error> implements ISuperposi
     throw new UnimplementedError();
   }
 
-  public transform<B = A, E extends Error = D>(): ISuperposition<B, E> {
+  public transform<B = A, E = D>(): ISuperposition<B, E> {
     throw new UnimplementedError();
   }
 }
