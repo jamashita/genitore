@@ -385,12 +385,12 @@
   resolved "https://registry.yarnpkg.com/@isaacs/string-locale-compare/-/string-locale-compare-1.1.0.tgz#291c227e93fd407a96ecd59879a35809120e432b"
   integrity sha512-SQ7Kzhh9+D+ZW9MA0zkYv3VXhIDNx+LzM6EJ+/65I3QY+enU6Itte7E5XX7EWrqLW2FN4n06GWzBnPoC3th2aQ==
 
-"@jamashita/anden@2.11.1":
-  version "2.11.1"
-  resolved "https://npm.pkg.github.com/download/@jamashita/anden/2.11.1/45300b3aafcb409b365549a2f3a225edbd2de774#45300b3aafcb409b365549a2f3a225edbd2de774"
-  integrity sha512-M6yvmUMcf7kiFyOLRqMQfQ3EwJbjDDwmxwtLRqmiAZHdpYDE/PsI4BAvxwsiHASV/euP2GdpVfyNDlfrhQ5ccw==
+"@jamashita/anden@2.12.0":
+  version "2.12.0"
+  resolved "https://npm.pkg.github.com/download/@jamashita/anden/2.12.0/d70ac6616aeeb29c848420308cc29e10344461f9#d70ac6616aeeb29c848420308cc29e10344461f9"
+  integrity sha512-CpgsrB69M8x/Ku3JYV9mjdTKsHZBhcQjjBMsQl8vA+SPhJMuMW0eMUx3wRvavIShp2Wuw37qeHrZEUtXs+gyuA==
   dependencies:
-    dayjs "1.11.11"
+    dayjs "1.11.12"
     object-hash "3.0.0"
     reflect-metadata "0.2.2"
     ulid "2.3.0"
@@ -1862,10 +1862,10 @@ dargs@^8.0.0:
   resolved "https://registry.yarnpkg.com/dargs/-/dargs-8.1.0.tgz#a34859ea509cbce45485e5aa356fef70bfcc7272"
   integrity sha512-wAV9QHOsNbwnWdNW2FYvE1P56wtgSbM+3SZcdGiWQILwVjACCXDCI3Ai8QlCjMDB8YK5zySiXZYBiwGmNY3lnw==
 
-dayjs@1.11.11:
-  version "1.11.11"
-  resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.11.11.tgz#dfe0e9d54c5f8b68ccf8ca5f72ac603e7e5ed59e"
-  integrity sha512-okzr3f11N6WuqYtZSvm+F776mB41wRZMhKP+hc34YdW+KmtYYK9iqvHSwo2k9FEH3fhGXvOPV6yz2IcSrfRUDg==
+dayjs@1.11.12:
+  version "1.11.12"
+  resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.11.12.tgz#5245226cc7f40a15bf52e0b99fd2a04669ccac1d"
+  integrity sha512-Rt2g+nTbLlDWZTwwrIXjy9MeiZmSDI375FvZs72ngxx8PDC6YXOeR3q5LAuPzjZQxhiWdRKac7RKV+YyQYfYIg==
 
 debug@4, debug@^4.0.0, debug@^4.3.3, debug@^4.3.4, debug@^4.3.5, debug@~4.3.4:
   version "4.3.5"
