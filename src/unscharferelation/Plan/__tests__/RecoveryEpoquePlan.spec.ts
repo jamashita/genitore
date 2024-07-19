@@ -1,15 +1,14 @@
-import type { Mock } from 'vitest';
 import { MockEpoque } from '../../mock/MockEpoque.js';
 import { RecoveryEpoquePlan } from '../RecoveryEpoquePlan.js';
 
 describe('RecoveryEpoquePlan', () => {
   describe('onRecover', () => {
     it('invokes second callback', () => {
-      const fn1: Mock = vi.fn();
-      const fn2: Mock = vi.fn();
-      const fn3: Mock = vi.fn();
+      const fn1 = vi.fn();
+      const fn2 = vi.fn();
+      const fn3 = vi.fn();
 
-      const epoque: MockEpoque<number> = new MockEpoque(
+      const epoque = new MockEpoque<number>(
         () => {
           fn1();
         },
@@ -20,7 +19,7 @@ describe('RecoveryEpoquePlan', () => {
           fn3();
         }
       );
-      const plan: RecoveryEpoquePlan<number> = RecoveryEpoquePlan.of(epoque);
+      const plan = RecoveryEpoquePlan.of<number>(epoque);
 
       plan.onRecover();
 
