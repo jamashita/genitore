@@ -5,13 +5,13 @@ import type { Schrodinger } from '../Schrodinger.js';
 describe('Alive', () => {
   describe('get', () => {
     it('returns the inner value', () => {
-      const alive1: Alive<number, MockRuntimeError> = Alive.of(1);
-      const alive2: Alive<number, MockRuntimeError> = Alive.of(0);
-      const alive3: Alive<number, MockRuntimeError> = Alive.of(-1);
-      const alive4: Alive<string, MockRuntimeError> = Alive.of('');
-      const alive5: Alive<string, MockRuntimeError> = Alive.of('1');
-      const alive6: Alive<boolean, MockRuntimeError> = Alive.of(true);
-      const alive7: Alive<boolean, MockRuntimeError> = Alive.of(false);
+      const alive1 = Alive.of(1);
+      const alive2 = Alive.of(0);
+      const alive3 = Alive.of(-1);
+      const alive4 = Alive.of('');
+      const alive5 = Alive.of('1');
+      const alive6 = Alive.of(true);
+      const alive7 = Alive.of(false);
 
       expect(alive1.get()).toBe(1);
       expect(alive2.get()).toBe(0);
@@ -80,13 +80,13 @@ describe('Alive', () => {
 
   describe('isAlive', () => {
     it('always returns true', () => {
-      const alive1: Alive<number, MockRuntimeError> = Alive.of(1);
-      const alive2: Alive<number, MockRuntimeError> = Alive.of(0);
-      const alive3: Alive<number, MockRuntimeError> = Alive.of(-1);
-      const alive4: Alive<string, MockRuntimeError> = Alive.of('');
-      const alive5: Alive<string, MockRuntimeError> = Alive.of('1');
-      const alive6: Alive<boolean, MockRuntimeError> = Alive.of(true);
-      const alive7: Alive<boolean, MockRuntimeError> = Alive.of(false);
+      const alive1 = Alive.of(1);
+      const alive2 = Alive.of(0);
+      const alive3 = Alive.of(-1);
+      const alive4 = Alive.of('');
+      const alive5 = Alive.of('1');
+      const alive6 = Alive.of(true);
+      const alive7 = Alive.of(false);
 
       expect(alive1.isAlive()).toBe(true);
       expect(alive2.isAlive()).toBe(true);
@@ -100,13 +100,13 @@ describe('Alive', () => {
 
   describe('isContradiction', () => {
     it('always returns false', () => {
-      const alive1: Alive<number, MockRuntimeError> = Alive.of(1);
-      const alive2: Alive<number, MockRuntimeError> = Alive.of(0);
-      const alive3: Alive<number, MockRuntimeError> = Alive.of(-1);
-      const alive4: Alive<string, MockRuntimeError> = Alive.of('');
-      const alive5: Alive<string, MockRuntimeError> = Alive.of('1');
-      const alive6: Alive<boolean, MockRuntimeError> = Alive.of(true);
-      const alive7: Alive<boolean, MockRuntimeError> = Alive.of(false);
+      const alive1 = Alive.of(1);
+      const alive2 = Alive.of(0);
+      const alive3 = Alive.of(-1);
+      const alive4 = Alive.of('');
+      const alive5 = Alive.of('1');
+      const alive6 = Alive.of(true);
+      const alive7 = Alive.of(false);
 
       expect(alive1.isContradiction()).toBe(false);
       expect(alive2.isContradiction()).toBe(false);
@@ -120,13 +120,13 @@ describe('Alive', () => {
 
   describe('isDead', () => {
     it('always returns false', () => {
-      const alive1: Alive<number, MockRuntimeError> = Alive.of(1);
-      const alive2: Alive<number, MockRuntimeError> = Alive.of(0);
-      const alive3: Alive<number, MockRuntimeError> = Alive.of(-1);
-      const alive4: Alive<string, MockRuntimeError> = Alive.of('');
-      const alive5: Alive<string, MockRuntimeError> = Alive.of('1');
-      const alive6: Alive<boolean, MockRuntimeError> = Alive.of(true);
-      const alive7: Alive<boolean, MockRuntimeError> = Alive.of(false);
+      const alive1 = Alive.of(1);
+      const alive2 = Alive.of(0);
+      const alive3 = Alive.of(-1);
+      const alive4 = Alive.of('');
+      const alive5 = Alive.of('1');
+      const alive6 = Alive.of(true);
+      const alive7 = Alive.of(false);
 
       expect(alive1.isDead()).toBe(false);
       expect(alive2.isDead()).toBe(false);

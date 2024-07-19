@@ -6,7 +6,7 @@ import { Still } from '../Still.js';
 describe('Still', () => {
   describe('get', () => {
     it('throws SchrodingerError', () => {
-      const still: Still<number, MockRuntimeError> = Still.of();
+      const still = Still.of();
 
       expect(() => {
         still.get();

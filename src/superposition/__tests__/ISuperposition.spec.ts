@@ -8,8 +8,8 @@ import { SuperpositionInternal } from '../SuperpositionInternal.js';
 describe('ISuperposition', () => {
   describe('isSuperposition', () => {
     it('returns true if ISuperposition methods the given object have', () => {
-      const superposition1: Superposition<number, MockRuntimeError> = Superposition.ofSchrodinger(Alive.of(4));
-      const superposition2: SuperpositionInternal<number, MockRuntimeError> = SuperpositionInternal.of((chrono: Chrono<number, MockRuntimeError>) => {
+      const superposition1 = Superposition.ofSchrodinger(Alive.of(4));
+      const superposition2 = SuperpositionInternal.of((chrono: Chrono<number, MockRuntimeError>) => {
         chrono.decline(new MockRuntimeError(''));
       });
 

@@ -7,7 +7,7 @@ describe('Dead', () => {
     it('throws the inner error', () => {
       const error = new MockRuntimeError('');
 
-      const dead: Dead<number, MockRuntimeError> = Dead.of(error);
+      const dead = Dead.of(error);
 
       expect(() => {
         dead.get();
@@ -18,7 +18,7 @@ describe('Dead', () => {
   describe('getError', () => {
     it('returns thrown error', () => {
       const error = new MockRuntimeError('');
-      const dead: Dead<number, MockRuntimeError> = Dead.of(error);
+      const dead = Dead.of(error);
 
       expect(dead.getError()).toBe(error);
     });
@@ -81,8 +81,8 @@ describe('Dead', () => {
 
   describe('isAlive', () => {
     it('always returns false', () => {
-      const dead1: Dead<number, MockRuntimeError> = Dead.of(new MockRuntimeError(''));
-      const dead2: Dead<number, MockRuntimeError> = Dead.of(new MockRuntimeError(''));
+      const dead1 = Dead.of(new MockRuntimeError(''));
+      const dead2 = Dead.of(new MockRuntimeError(''));
 
       expect(dead1.isAlive()).toBe(false);
       expect(dead2.isAlive()).toBe(false);
@@ -91,8 +91,8 @@ describe('Dead', () => {
 
   describe('isContradiction', () => {
     it('always returns false', () => {
-      const dead1: Dead<number, MockRuntimeError> = Dead.of(new MockRuntimeError(''));
-      const dead2: Dead<number, MockRuntimeError> = Dead.of(new MockRuntimeError(''));
+      const dead1 = Dead.of(new MockRuntimeError(''));
+      const dead2 = Dead.of(new MockRuntimeError(''));
 
       expect(dead1.isContradiction()).toBe(false);
       expect(dead2.isContradiction()).toBe(false);
@@ -101,8 +101,8 @@ describe('Dead', () => {
 
   describe('isDead', () => {
     it('always returns true', () => {
-      const dead1: Dead<number, MockRuntimeError> = Dead.of(new MockRuntimeError(''));
-      const dead2: Dead<number, MockRuntimeError> = Dead.of(new MockRuntimeError(''));
+      const dead1 = Dead.of(new MockRuntimeError(''));
+      const dead2 = Dead.of(new MockRuntimeError(''));
 
       expect(dead1.isDead()).toBe(true);
       expect(dead2.isDead()).toBe(true);
