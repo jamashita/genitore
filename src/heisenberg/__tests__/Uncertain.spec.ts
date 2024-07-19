@@ -1,4 +1,3 @@
-import type { Mock } from 'vitest';
 import type { Heisenberg } from '../Heisenberg.js';
 import { HeisenbergError } from '../HeisenbergError.js';
 import { Uncertain } from '../Uncertain.js';
@@ -6,7 +5,7 @@ import { Uncertain } from '../Uncertain.js';
 describe('Uncertain', () => {
   describe('get', () => {
     it('throws HeisenbergError', () => {
-      const uncertain: Uncertain<number> = Uncertain.of();
+      const uncertain = Uncertain.of<number>();
 
       expect(() => {
         uncertain.get();
@@ -22,7 +21,7 @@ describe('Uncertain', () => {
 
   describe('ifAbsent', () => {
     it('will not be invoked', () => {
-      const fn: Mock = vi.fn();
+      const fn = vi.fn();
 
       const uncertain: Heisenberg<number> = Uncertain.of();
 
@@ -36,7 +35,7 @@ describe('Uncertain', () => {
 
   describe('ifLost', () => {
     it('will not be invoked', () => {
-      const fn: Mock = vi.fn();
+      const fn = vi.fn();
 
       const uncertain: Heisenberg<number> = Uncertain.of();
 
@@ -50,7 +49,7 @@ describe('Uncertain', () => {
 
   describe('ifPresent', () => {
     it('will not be invoked', () => {
-      const fn: Mock = vi.fn();
+      const fn = vi.fn();
 
       const uncertain: Heisenberg<number> = Uncertain.of();
 
@@ -64,7 +63,7 @@ describe('Uncertain', () => {
 
   describe('isAbsent', () => {
     it('always returns false', () => {
-      const uncertain: Uncertain<number> = Uncertain.of();
+      const uncertain = Uncertain.of<number>();
 
       expect(uncertain.isAbsent()).toBe(false);
     });
@@ -72,7 +71,7 @@ describe('Uncertain', () => {
 
   describe('isLost', () => {
     it('always returns false', () => {
-      const uncertain: Uncertain<number> = Uncertain.of();
+      const uncertain = Uncertain.of<number>();
 
       expect(uncertain.isLost()).toBe(false);
     });
@@ -80,7 +79,7 @@ describe('Uncertain', () => {
 
   describe('isPresent', () => {
     it('always returns false', () => {
-      const uncertain: Uncertain<number> = Uncertain.of();
+      const uncertain = Uncertain.of<number>();
 
       expect(uncertain.isPresent()).toBe(false);
     });

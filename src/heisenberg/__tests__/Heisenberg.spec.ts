@@ -10,34 +10,34 @@ describe('Heisenberg', () => {
     it('returns Present with empty array when empty array given', () => {
       const heisenbergs: Array<Heisenberg<number>> = [];
 
-      const heisenberg: Heisenberg<Array<number>> = Heisenberg.all(heisenbergs);
+      const heisenberg = Heisenberg.all(heisenbergs);
 
       expect(heisenberg.isPresent()).toBe(true);
       expect(heisenberg.get()).toHaveLength(heisenbergs.length);
     });
 
     it('returns Present when Present given', () => {
-      const heisenbergs: Array<Heisenberg<number>> = [Present.of(0), Present.of(1), Present.of(2)];
+      const heisenbergs = [Present.of(0), Present.of(1), Present.of(2)];
 
-      const heisenberg: Heisenberg<Array<number>> = Heisenberg.all(heisenbergs);
+      const heisenberg = Heisenberg.all(heisenbergs);
 
       expect(heisenberg.isPresent()).toBe(true);
 
-      const array: Array<number> = heisenberg.get();
+      const array = heisenberg.get();
 
       expect(array).toHaveLength(heisenbergs.length);
       for (let i = 0; i < array.length; i++) {
         // biome-ignore lint/style/noNonNullAssertion: <explanation>
-        const h: Heisenberg<number> = heisenbergs[i]!;
+        const h = heisenbergs[i]!;
 
         expect(array[i]).toBe(h.get());
       }
     });
 
     it('returns Absent with Heisenbergs which first one is Absent given', () => {
-      const heisenbergs: Array<Heisenberg<number>> = [Absent.of(), Present.of(1), Present.of(2)];
+      const heisenbergs = [Absent.of(), Present.of(1), Present.of(2)];
 
-      const heisenberg: Heisenberg<Array<number>> = Heisenberg.all(heisenbergs);
+      const heisenberg = Heisenberg.all(heisenbergs);
 
       expect(heisenberg.isAbsent()).toBe(true);
       expect(() => {
@@ -46,9 +46,9 @@ describe('Heisenberg', () => {
     });
 
     it('returns Absent with Heisenbergs which second one is Absent given', () => {
-      const heisenbergs: Array<Heisenberg<number>> = [Present.of(1), Absent.of(), Present.of(2)];
+      const heisenbergs = [Present.of(1), Absent.of(), Present.of(2)];
 
-      const heisenberg: Heisenberg<Array<number>> = Heisenberg.all(heisenbergs);
+      const heisenberg = Heisenberg.all(heisenbergs);
 
       expect(heisenberg.isAbsent()).toBe(true);
       expect(() => {
@@ -57,8 +57,8 @@ describe('Heisenberg', () => {
     });
 
     it('returns Absent with Heisenbergs which last one is Absent given', () => {
-      const heisenbergs: Array<Heisenberg<number>> = [Present.of(0), Present.of(1), Absent.of()];
-      const heisenberg: Heisenberg<Array<number>> = Heisenberg.all(heisenbergs);
+      const heisenbergs = [Present.of(0), Present.of(1), Absent.of()];
+      const heisenberg = Heisenberg.all(heisenbergs);
 
       expect(heisenberg.isAbsent()).toBe(true);
       expect(() => {
@@ -67,11 +67,11 @@ describe('Heisenberg', () => {
     });
 
     it('returns Lost when Heisenbergs which contains Lost given', () => {
-      const error: MockRuntimeError = new MockRuntimeError('');
+      const error = new MockRuntimeError('');
 
-      const heisenbergs: Array<Heisenberg<number>> = [Present.of(0), Lost.of(error), Present.of(2)];
+      const heisenbergs = [Present.of(0), Lost.of(error), Present.of(2)];
 
-      const heisenberg: Heisenberg<Array<number>> = Heisenberg.all(heisenbergs);
+      const heisenberg = Heisenberg.all(heisenbergs);
 
       expect(heisenberg.isLost()).toBe(true);
       expect(() => {
@@ -80,11 +80,11 @@ describe('Heisenberg', () => {
     });
 
     it('returns Lost when Heisenbergs which contains Lost given even if all of others are Absent', () => {
-      const error: MockRuntimeError = new MockRuntimeError('');
+      const error = new MockRuntimeError('');
 
-      const heisenbergs: Array<Heisenberg<number>> = [Absent.of(), Lost.of(error), Absent.of()];
+      const heisenbergs = [Absent.of(), Lost.of(error), Absent.of()];
 
-      const heisenberg: Heisenberg<Array<number>> = Heisenberg.all(heisenbergs);
+      const heisenberg = Heisenberg.all(heisenbergs);
 
       expect(heisenberg.isLost()).toBe(true);
       expect(() => {
