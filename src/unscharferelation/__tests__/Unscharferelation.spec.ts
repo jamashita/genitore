@@ -17,7 +17,11 @@ describe('Unscharferelation', () => {
     });
 
     it('returns Present Unscharferelation when Present Unscharferelations given', async () => {
-      const unscharferelations = [Unscharferelation.maybe(0), Unscharferelation.maybe(1), Unscharferelation.maybe(2)];
+      const unscharferelations = [
+        Unscharferelation.ofHeisenberg(Present.of(0)),
+        Unscharferelation.ofHeisenberg(Present.of(1)),
+        Unscharferelation.ofHeisenberg(Present.of(2))
+      ];
 
       const heisenberg = await Unscharferelation.all(unscharferelations).terminate();
 
@@ -36,7 +40,11 @@ describe('Unscharferelation', () => {
     });
 
     it('returns Absent Unscharferelation sync Unscharferelations which first one is Absent given', async () => {
-      const unscharferelations = [Unscharferelation.maybe<number>(null), Unscharferelation.maybe(1), Unscharferelation.maybe(2)];
+      const unscharferelations = [
+        Unscharferelation.ofHeisenberg(Absent.of<number>()),
+        Unscharferelation.ofHeisenberg(Present.of(1)),
+        Unscharferelation.ofHeisenberg(Present.of(2))
+      ];
 
       const unscharferelation = Unscharferelation.all(unscharferelations);
 
@@ -49,7 +57,11 @@ describe('Unscharferelation', () => {
     });
 
     it('returns Absent Unscharferelation with sync Unscharferelations which second one is Absent given', async () => {
-      const unscharferelations = [Unscharferelation.maybe(1), Unscharferelation.maybe<number>(null), Unscharferelation.maybe(2)];
+      const unscharferelations = [
+        Unscharferelation.ofHeisenberg(Present.of(1)),
+        Unscharferelation.ofHeisenberg(Absent.of<number>()),
+        Unscharferelation.ofHeisenberg(Present.of(2))
+      ];
 
       const unscharferelation = Unscharferelation.all(unscharferelations);
 
@@ -62,7 +74,11 @@ describe('Unscharferelation', () => {
     });
 
     it('returns Absent Unscharferelation with sync Unscharferelations which last one is Absent given', async () => {
-      const unscharferelations = [Unscharferelation.maybe(0), Unscharferelation.maybe(1), Unscharferelation.maybe<number>(null)];
+      const unscharferelations = [
+        Unscharferelation.ofHeisenberg(Present.of(0)),
+        Unscharferelation.ofHeisenberg(Present.of(1)),
+        Unscharferelation.ofHeisenberg(Absent.of<number>())
+      ];
 
       const unscharferelation = Unscharferelation.all(unscharferelations);
 
@@ -78,11 +94,11 @@ describe('Unscharferelation', () => {
       const error = new MockRuntimeError('');
 
       const unscharferelations = [
-        Unscharferelation.maybe(0),
+        Unscharferelation.ofHeisenberg(Present.of(0)),
         Unscharferelation.of((epoque: Epoque<number>) => {
           epoque.throw(error);
         }),
-        Unscharferelation.maybe(2)
+        Unscharferelation.ofHeisenberg(Present.of(2))
       ];
 
       const unscharferelation = Unscharferelation.all(unscharferelations);
@@ -99,11 +115,11 @@ describe('Unscharferelation', () => {
       const error = new MockRuntimeError('');
 
       const unscharferelations = [
-        Unscharferelation.maybe<number>(null),
+        Unscharferelation.ofHeisenberg(Absent.of<number>()),
         Unscharferelation.of((epoque: Epoque<number>) => {
           epoque.throw(error);
         }),
-        Unscharferelation.maybe<number>(null)
+        Unscharferelation.ofHeisenberg(Absent.of<number>())
       ];
 
       const unscharferelation = Unscharferelation.all(unscharferelations);
@@ -118,9 +134,9 @@ describe('Unscharferelation', () => {
 
     it('returns Present Unscharferelation when async Present Unscharferelations given', async () => {
       const unscharferelations = [
-        Unscharferelation.maybe(Promise.resolve(0)),
-        Unscharferelation.maybe(Promise.resolve(1)),
-        Unscharferelation.maybe(Promise.resolve(2))
+        Unscharferelation.ofHeisenbergAsync(Promise.resolve(Present.of(0))),
+        Unscharferelation.ofHeisenbergAsync(Promise.resolve(Present.of(1))),
+        Unscharferelation.ofHeisenbergAsync(Promise.resolve(Present.of(2)))
       ];
 
       const heisenberg = await Unscharferelation.all(unscharferelations).terminate();
@@ -141,9 +157,9 @@ describe('Unscharferelation', () => {
 
     it('returns Absent Unscharferelation when async Unscharferelations which first one is Absent given', async () => {
       const unscharferelations = [
-        Unscharferelation.maybe<number>(Promise.resolve(undefined)),
-        Unscharferelation.maybe(Promise.resolve(1)),
-        Unscharferelation.maybe(Promise.resolve(2))
+        Unscharferelation.ofHeisenberg(Absent.of<number>()),
+        Unscharferelation.ofHeisenbergAsync(Promise.resolve(Present.of(1))),
+        Unscharferelation.ofHeisenbergAsync(Promise.resolve(Present.of(2)))
       ];
 
       const unscharferelation = Unscharferelation.all(unscharferelations);
@@ -158,9 +174,9 @@ describe('Unscharferelation', () => {
 
     it('returns Absent Unscharferelation when async Unscharferelations which second one is Absent given', async () => {
       const unscharferelations = [
-        Unscharferelation.maybe(Promise.resolve(0)),
-        Unscharferelation.maybe<number>(Promise.resolve(undefined)),
-        Unscharferelation.maybe(Promise.resolve(2))
+        Unscharferelation.ofHeisenbergAsync(Promise.resolve(Present.of(0))),
+        Unscharferelation.ofHeisenberg(Absent.of<number>()),
+        Unscharferelation.ofHeisenbergAsync(Promise.resolve(Present.of(2)))
       ];
 
       const unscharferelation = Unscharferelation.all(unscharferelations);
@@ -175,9 +191,9 @@ describe('Unscharferelation', () => {
 
     it('returns Absent Unscharferelation when async Unscharferelations which last one is Absent given', async () => {
       const unscharferelations = [
-        Unscharferelation.maybe(Promise.resolve(0)),
-        Unscharferelation.maybe(Promise.resolve(1)),
-        Unscharferelation.maybe<number>(Promise.resolve<void>(undefined))
+        Unscharferelation.ofHeisenbergAsync(Promise.resolve(Present.of(0))),
+        Unscharferelation.ofHeisenbergAsync(Promise.resolve(Present.of(1))),
+        Unscharferelation.ofHeisenbergAsync(Promise.resolve(Absent.of<number>()))
       ];
 
       const unscharferelation = Unscharferelation.all(unscharferelations);
@@ -192,9 +208,9 @@ describe('Unscharferelation', () => {
 
     it('returns Lost Unscharferelation when async Unscharferelations which contains Lost given', async () => {
       const unscharferelations = [
-        Unscharferelation.maybe<number>(Promise.resolve(undefined)),
-        Unscharferelation.maybe<number>(Promise.resolve(undefined)),
-        Unscharferelation.maybe(Promise.resolve(2))
+        Unscharferelation.ofHeisenberg(Absent.of<number>()),
+        Unscharferelation.ofHeisenberg(Absent.of<number>()),
+        Unscharferelation.ofHeisenbergAsync(Promise.resolve(Present.of(2)))
       ];
 
       const unscharferelation = Unscharferelation.all(unscharferelations);
@@ -209,9 +225,9 @@ describe('Unscharferelation', () => {
 
     it('returns Lost Unscharferelation when async Unscharferelations which contains Lost given even if all of others are Absent', async () => {
       const unscharferelations = [
-        Unscharferelation.maybe<number>(Promise.resolve(undefined)),
-        Unscharferelation.maybe(Promise.resolve(1)),
-        Unscharferelation.maybe<number>(Promise.resolve(undefined))
+        Unscharferelation.ofHeisenberg(Absent.of<number>()),
+        Unscharferelation.ofHeisenbergAsync(Promise.resolve(Present.of(1))),
+        Unscharferelation.ofHeisenberg(Absent.of<number>())
       ];
 
       const unscharferelation = Unscharferelation.all(unscharferelations);
@@ -231,8 +247,8 @@ describe('Unscharferelation', () => {
         Unscharferelation.of((epoque: Epoque<number>) => {
           epoque.throw(error);
         }),
-        Unscharferelation.maybe<number>(Promise.resolve(undefined)),
-        Unscharferelation.maybe(Promise.resolve(2))
+        Unscharferelation.ofHeisenberg(Absent.of<number>()),
+        Unscharferelation.ofHeisenbergAsync(Promise.resolve(Present.of(2)))
       ];
 
       const unscharferelation = Unscharferelation.all(unscharferelations);
@@ -249,13 +265,13 @@ describe('Unscharferelation', () => {
       const error = new MockRuntimeError('');
 
       const unscharferelations = [
-        Unscharferelation.maybe<number>(Promise.resolve(undefined)),
+        Unscharferelation.ofHeisenberg(Absent.of<number>()),
         Unscharferelation.of((epoque: Epoque<number>) => {
           setImmediate(() => {
             epoque.throw(error);
           });
         }),
-        Unscharferelation.maybe(Promise.resolve(2))
+        Unscharferelation.ofHeisenbergAsync(Promise.resolve(Present.of(2)))
       ];
 
       const unscharferelation = Unscharferelation.all(unscharferelations);
@@ -271,9 +287,9 @@ describe('Unscharferelation', () => {
 
   describe('anyway', () => {
     it('returns Present Heisenbergs', async () => {
-      const unscharferelation1 = Unscharferelation.maybe(-1);
-      const unscharferelation2 = Unscharferelation.maybe(0);
-      const unscharferelation3 = Unscharferelation.maybe(1);
+      const unscharferelation1 = Unscharferelation.ofHeisenberg(Present.of(-1));
+      const unscharferelation2 = Unscharferelation.ofHeisenberg(Present.of(0));
+      const unscharferelation3 = Unscharferelation.ofHeisenberg(Present.of(1));
       const unscharferelations = [unscharferelation1, unscharferelation2, unscharferelation3];
 
       const heisenbergs = await Unscharferelation.anyway(unscharferelations);
@@ -289,9 +305,9 @@ describe('Unscharferelation', () => {
     });
 
     it('returns Absent Heisenbergs', async () => {
-      const unscharferelation1 = Unscharferelation.maybe<number>(null);
-      const unscharferelation2 = Unscharferelation.maybe<number>(null);
-      const unscharferelation3 = Unscharferelation.maybe<number>(null);
+      const unscharferelation1 = Unscharferelation.ofHeisenberg(Absent.of<number>());
+      const unscharferelation2 = Unscharferelation.ofHeisenberg(Absent.of<number>());
+      const unscharferelation3 = Unscharferelation.ofHeisenberg(Absent.of<number>());
       const unscharferelations = [unscharferelation1, unscharferelation2, unscharferelation3];
 
       const heisenbergs = await Unscharferelation.anyway(unscharferelations);
@@ -340,8 +356,8 @@ describe('Unscharferelation', () => {
       const unscharferelation1 = Unscharferelation.of((epoque: Epoque<number>) => {
         epoque.throw(null);
       });
-      const unscharferelation2 = Unscharferelation.maybe<number>(null);
-      const unscharferelation3 = Unscharferelation.maybe(1);
+      const unscharferelation2 = Unscharferelation.ofHeisenberg(Absent.of<number>());
+      const unscharferelation3 = Unscharferelation.ofHeisenberg(Present.of(1));
       const unscharferelations = [unscharferelation1, unscharferelation2, unscharferelation3];
 
       const heisenbergs = await Unscharferelation.anyway(unscharferelations);
@@ -379,47 +395,45 @@ describe('Unscharferelation', () => {
 
   describe('maybe', () => {
     it('returns Present Unscharferelation if a value is not null nor undefined', async () => {
-      expect(await Unscharferelation.maybe(1).terminate()).toBeInstanceOf(Present);
-      expect(await Unscharferelation.maybe(0).terminate()).toBeInstanceOf(Present);
-      expect(await Unscharferelation.maybe('a').terminate()).toBeInstanceOf(Present);
-      expect(await Unscharferelation.maybe('').terminate()).toBeInstanceOf(Present);
-      expect(await Unscharferelation.maybe(true).terminate()).toBeInstanceOf(Present);
-      expect(await Unscharferelation.maybe(false).terminate()).toBeInstanceOf(Present);
-      expect(await Unscharferelation.maybe(Symbol()).terminate()).toBeInstanceOf(Present);
-      expect(await Unscharferelation.maybe(0n).terminate()).toBeInstanceOf(Present);
-      expect(await Unscharferelation.maybe(1n).terminate()).toBeInstanceOf(Present);
-      expect(await Unscharferelation.maybe(-1n).terminate()).toBeInstanceOf(Present);
-      expect(await Unscharferelation.maybe({}).terminate()).toBeInstanceOf(Present);
-      expect(await Unscharferelation.maybe(new Error()).terminate()).toBeInstanceOf(Present);
+      expect(await Unscharferelation.ofHeisenberg(Present.of(1)).terminate()).toBeInstanceOf(Present);
+      expect(await Unscharferelation.ofHeisenberg(Present.of(0)).terminate()).toBeInstanceOf(Present);
+      expect(await Unscharferelation.ofHeisenberg(Present.of('a')).terminate()).toBeInstanceOf(Present);
+      expect(await Unscharferelation.ofHeisenberg(Present.of('')).terminate()).toBeInstanceOf(Present);
+      expect(await Unscharferelation.ofHeisenberg(Present.of(true)).terminate()).toBeInstanceOf(Present);
+      expect(await Unscharferelation.ofHeisenberg(Present.of(false)).terminate()).toBeInstanceOf(Present);
+      expect(await Unscharferelation.ofHeisenberg(Present.of(Symbol())).terminate()).toBeInstanceOf(Present);
+      expect(await Unscharferelation.ofHeisenberg(Present.of(0n)).terminate()).toBeInstanceOf(Present);
+      expect(await Unscharferelation.ofHeisenberg(Present.of(1n)).terminate()).toBeInstanceOf(Present);
+      expect(await Unscharferelation.ofHeisenberg(Present.of(-1n)).terminate()).toBeInstanceOf(Present);
+      expect(await Unscharferelation.ofHeisenberg(Present.of({})).terminate()).toBeInstanceOf(Present);
+      expect(await Unscharferelation.ofHeisenberg(Present.of(new Error())).terminate()).toBeInstanceOf(Present);
     });
 
     it('returns Absent Unscharferelation if a value is null or undefined', async () => {
-      expect(await Unscharferelation.maybe(null).terminate()).toBeInstanceOf(Absent);
-      expect(await Unscharferelation.maybe(undefined).terminate()).toBeInstanceOf(Absent);
+      expect(await Unscharferelation.ofHeisenberg(Absent.of()).terminate()).toBeInstanceOf(Absent);
     });
 
     it('returns Present Unscharferelation if a Promise is returned', async () => {
-      expect(await Unscharferelation.maybe(Promise.resolve(1)).terminate()).toBeInstanceOf(Present);
-      expect(await Unscharferelation.maybe(Promise.resolve(0)).terminate()).toBeInstanceOf(Present);
-      expect(await Unscharferelation.maybe(Promise.resolve('a')).terminate()).toBeInstanceOf(Present);
-      expect(await Unscharferelation.maybe(Promise.resolve('')).terminate()).toBeInstanceOf(Present);
-      expect(await Unscharferelation.maybe(Promise.resolve(true)).terminate()).toBeInstanceOf(Present);
-      expect(await Unscharferelation.maybe(Promise.resolve(false)).terminate()).toBeInstanceOf(Present);
-      expect(await Unscharferelation.maybe(Promise.resolve(Symbol())).terminate()).toBeInstanceOf(Present);
-      expect(await Unscharferelation.maybe(Promise.resolve(0n)).terminate()).toBeInstanceOf(Present);
-      expect(await Unscharferelation.maybe(Promise.resolve(1n)).terminate()).toBeInstanceOf(Present);
-      expect(await Unscharferelation.maybe(Promise.resolve(-1n)).terminate()).toBeInstanceOf(Present);
-      expect(await Unscharferelation.maybe(Promise.resolve({})).terminate()).toBeInstanceOf(Present);
-      expect(await Unscharferelation.maybe(Promise.resolve(new Error())).terminate()).toBeInstanceOf(Present);
+      expect(await Unscharferelation.ofHeisenbergAsync(Promise.resolve(Present.of(1))).terminate()).toBeInstanceOf(Present);
+      expect(await Unscharferelation.ofHeisenbergAsync(Promise.resolve(Present.of(0))).terminate()).toBeInstanceOf(Present);
+      expect(await Unscharferelation.ofHeisenbergAsync(Promise.resolve(Present.of('a'))).terminate()).toBeInstanceOf(Present);
+      expect(await Unscharferelation.ofHeisenbergAsync(Promise.resolve(Present.of(''))).terminate()).toBeInstanceOf(Present);
+      expect(await Unscharferelation.ofHeisenbergAsync(Promise.resolve(Present.of(true))).terminate()).toBeInstanceOf(Present);
+      expect(await Unscharferelation.ofHeisenbergAsync(Promise.resolve(Present.of(false))).terminate()).toBeInstanceOf(Present);
+      expect(await Unscharferelation.ofHeisenbergAsync(Promise.resolve(Present.of(Symbol()))).terminate()).toBeInstanceOf(Present);
+      expect(await Unscharferelation.ofHeisenbergAsync(Promise.resolve(Present.of(0n))).terminate()).toBeInstanceOf(Present);
+      expect(await Unscharferelation.ofHeisenbergAsync(Promise.resolve(Present.of(1n))).terminate()).toBeInstanceOf(Present);
+      expect(await Unscharferelation.ofHeisenbergAsync(Promise.resolve(Present.of(-1n))).terminate()).toBeInstanceOf(Present);
+      expect(await Unscharferelation.ofHeisenbergAsync(Promise.resolve(Present.of({}))).terminate()).toBeInstanceOf(Present);
+      expect(await Unscharferelation.ofHeisenbergAsync(Promise.resolve(Present.of(new Error()))).terminate()).toBeInstanceOf(Present);
     });
 
     it('returns Absent Unscharferelation if null or undefined is returned', async () => {
-      expect(await Unscharferelation.maybe(Promise.resolve(null)).terminate()).toBeInstanceOf(Absent);
-      expect(await Unscharferelation.maybe(Promise.resolve(undefined)).terminate()).toBeInstanceOf(Absent);
+      expect(await Unscharferelation.ofHeisenbergAsync(Promise.resolve(Absent.of())).terminate()).toBeInstanceOf(Absent);
     });
 
     it('returns Lost Unscharferelation if an unexpected rejected Promise is returned', async () => {
-      expect(await Unscharferelation.maybe(Promise.reject(new MockRuntimeError(''))).terminate()).toBeInstanceOf(Lost);
+      expect(await Unscharferelation.ofHeisenbergAsync(Promise.reject(Present.of(new MockRuntimeError('')))).terminate()).toBeInstanceOf(Lost);
     });
   });
 
@@ -477,8 +491,8 @@ describe('Unscharferelation', () => {
 
   describe('toString', () => {
     it('returns its retaining Heisenberg string', () => {
-      const unscharferelation1 = Unscharferelation.maybe(-1);
-      const unscharferelation2 = Unscharferelation.maybe<number>(null);
+      const unscharferelation1 = Unscharferelation.ofHeisenberg(Present.of(-1));
+      const unscharferelation2 = Unscharferelation.ofHeisenberg(Absent.of<number>());
       const unscharferelation3 = Unscharferelation.of((epoque: Epoque<number>) => {
         epoque.throw(null);
       });
