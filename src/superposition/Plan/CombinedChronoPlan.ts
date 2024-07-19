@@ -1,15 +1,15 @@
 import type { DestroyPlan, MapPlan, Plan, RecoveryPlan } from '../../plan/index.js';
 
-export class CombinedChronoPlan<out A, out D extends Error> implements Plan<Exclude<A, Error>, D> {
-  private readonly map: MapPlan<Exclude<A, Error>>;
+export class CombinedChronoPlan<out A, out D> implements Plan<A, D> {
+  private readonly map: MapPlan<A>;
   private readonly recover: RecoveryPlan<D>;
   private readonly destroy: DestroyPlan;
 
-  public static of<A, D extends Error>(map: MapPlan<Exclude<A, Error>>, recover: RecoveryPlan<D>, destroy: DestroyPlan): CombinedChronoPlan<A, D> {
+  public static of<A, D>(map: MapPlan<A>, recover: RecoveryPlan<D>, destroy: DestroyPlan): CombinedChronoPlan<A, D> {
     return new CombinedChronoPlan(map, recover, destroy);
   }
 
-  protected constructor(map: MapPlan<Exclude<A, Error>>, recover: RecoveryPlan<D>, destroy: DestroyPlan) {
+  protected constructor(map: MapPlan<A>, recover: RecoveryPlan<D>, destroy: DestroyPlan) {
     this.map = map;
     this.recover = recover;
     this.destroy = destroy;
@@ -19,7 +19,7 @@ export class CombinedChronoPlan<out A, out D extends Error> implements Plan<Excl
     return this.destroy.onDestroy(cause);
   }
 
-  public onMap(value: Exclude<A, Error>): unknown {
+  public onMap(value: A): unknown {
     return this.map.onMap(value);
   }
 

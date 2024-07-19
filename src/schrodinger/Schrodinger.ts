@@ -5,12 +5,12 @@ import { Dead } from './Dead.js';
 
 export type SchrodingerState = 'ALIVE' | 'CONTRADICTION' | 'DEAD' | 'STILL';
 
-export interface Schrodinger<out A, out D extends Error> extends Serializable {
-  get(): Exclude<A, Error>;
+export interface Schrodinger<out A, out D> extends Serializable {
+  get(): A;
 
   getState(): SchrodingerState;
 
-  ifAlive(consumer: Consumer<Exclude<A, Error>>): this;
+  ifAlive(consumer: Consumer<A>): this;
 
   ifContradiction(consumer: Consumer<unknown>): this;
 
@@ -25,9 +25,9 @@ export interface Schrodinger<out A, out D extends Error> extends Serializable {
 
 // biome-ignore lint/complexity/noStaticOnlyClass: <explanation>
 // biome-ignore lint/suspicious/noUnsafeDeclarationMerging: <explanation>
-export class Schrodinger<out A, out D extends Error> {
-  public static all<A, D extends Error>(schrodingers: Iterable<Schrodinger<A, D>>): Schrodinger<Array<A>, D> {
-    const ss: Array<Schrodinger<A, D>> = [...schrodingers];
+export class Schrodinger<out A, out D> {
+  public static all<A, D>(schrodingers: Iterable<Schrodinger<A, D>>): Schrodinger<Array<A>, D> {
+    const ss = [...schrodingers];
     const arr: Array<A> = [];
     let err: Nullable<D> = null;
 
@@ -40,7 +40,7 @@ export class Schrodinger<out A, out D extends Error> {
         }
         case 'DEAD': {
           if (Kind.isNull(err)) {
-            const dead: Dead<A, D> = s as Dead<A, D>;
+            const dead = s as Dead<A, D>;
 
             err = dead.getError();
           }
@@ -48,7 +48,7 @@ export class Schrodinger<out A, out D extends Error> {
           break;
         }
         case 'CONTRADICTION': {
-          const contradiction: Contradiction<A, D> = s as Contradiction<A, D>;
+          const contradiction = s as Contradiction<A, D>;
 
           return Contradiction.of(contradiction.getCause());
         }

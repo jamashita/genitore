@@ -1,17 +1,16 @@
-import type { Mock } from 'vitest';
 import { MockEpoque } from '../../mock/MockEpoque.js';
 import { DestroyEpoquePlan } from '../DestroyEpoquePlan.js';
 
 describe('DestroyEpoquePlan', () => {
   describe('onDestroy', () => {
     it('invokes third callback', () => {
-      const value: number = -35;
+      const value = -35;
 
-      const fn1: Mock = vi.fn();
-      const fn2: Mock = vi.fn();
-      const fn3: Mock = vi.fn();
+      const fn1 = vi.fn();
+      const fn2 = vi.fn();
+      const fn3 = vi.fn();
 
-      const epoque: MockEpoque<number> = new MockEpoque(
+      const epoque = new MockEpoque<number>(
         () => {
           fn1();
         },
@@ -23,7 +22,7 @@ describe('DestroyEpoquePlan', () => {
           expect(v).toBe(value);
         }
       );
-      const plan: DestroyEpoquePlan<number> = DestroyEpoquePlan.of(epoque);
+      const plan = DestroyEpoquePlan.of<number>(epoque);
 
       plan.onDestroy(value);
 

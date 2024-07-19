@@ -4,10 +4,10 @@ import type { Dead } from './Dead.js';
 import type { Schrodinger, SchrodingerState } from './Schrodinger.js';
 import { SchrodingerError } from './SchrodingerError.js';
 
-export class Still<out A, out D extends Error> implements Schrodinger<A, D> {
-  private static readonly INSTANCE: Still<unknown, Error> = new Still();
+export class Still<out A, out D> implements Schrodinger<A, D> {
+  private static readonly INSTANCE = new Still<unknown, unknown>();
 
-  public static of<A, D extends Error>(): Still<A, D> {
+  public static of<A, D>(): Still<A, D> {
     return Still.INSTANCE as Still<A, D>;
   }
 

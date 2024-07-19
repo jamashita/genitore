@@ -4,10 +4,10 @@ import type { Alive } from './Alive.js';
 import type { Dead } from './Dead.js';
 import type { Schrodinger, SchrodingerState } from './Schrodinger.js';
 
-export class Contradiction<out A, out D extends Error> implements Schrodinger<A, D> {
+export class Contradiction<out A, out D> implements Schrodinger<A, D> {
   private readonly cause: unknown;
 
-  public static of<A, D extends Error>(cause: unknown): Contradiction<A, D> {
+  public static of<A, D>(cause: unknown): Contradiction<A, D> {
     return new Contradiction(cause);
   }
 
@@ -61,7 +61,7 @@ export class Contradiction<out A, out D extends Error> implements Schrodinger<A,
     return this.serialize();
   }
 
-  public transform<B, E extends Error>(): Contradiction<B, E> {
+  public transform<B, E>(): Contradiction<B, E> {
     return this as unknown as Contradiction<B, E>;
   }
 }

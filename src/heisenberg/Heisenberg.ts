@@ -29,7 +29,7 @@ export interface Heisenberg<out P> extends Serializable {
 // biome-ignore lint/suspicious/noUnsafeDeclarationMerging: <explanation>
 export class Heisenberg<out P> {
   public static all<P>(heisenbergs: Iterable<Heisenberg<P>>): Heisenberg<Array<P>> {
-    const hs: Array<Heisenberg<P>> = [...heisenbergs];
+    const hs = [...heisenbergs];
     const arr: Array<P> = [];
     let absent = false;
 
@@ -46,7 +46,7 @@ export class Heisenberg<out P> {
           break;
         }
         case 'LOST': {
-          const lost: Lost<P> = h as Lost<P>;
+          const lost = h as Lost<P>;
 
           return Lost.of(lost.getCause());
         }

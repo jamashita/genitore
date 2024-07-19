@@ -4,10 +4,10 @@ import type { Alive } from './Alive.js';
 import type { Contradiction } from './Contradiction.js';
 import type { Schrodinger, SchrodingerState } from './Schrodinger.js';
 
-export class Dead<out A, out D extends Error> implements Schrodinger<A, D> {
+export class Dead<out A, out D> implements Schrodinger<A, D> {
   private readonly error: D;
 
-  public static of<A, D extends Error>(error: D): Dead<A, D> {
+  public static of<A, D>(error: D): Dead<A, D> {
     return new Dead(error);
   }
 

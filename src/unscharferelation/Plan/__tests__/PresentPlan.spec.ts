@@ -1,6 +1,5 @@
 import { MockRuntimeError } from '@jamashita/anden/error';
 import type { Resolve } from '@jamashita/anden/type';
-import type { Mock } from 'vitest';
 import { Absent, Present } from '../../../heisenberg/index.js';
 import type { Epoque } from '../../Epoque.js';
 import { MockEpoque } from '../../mock/MockEpoque.js';
@@ -10,15 +9,15 @@ import { PresentPlan } from '../PresentPlan.js';
 describe('PresentPlan', () => {
   describe('onMap', () => {
     it('invokes first callback when P given', async () => {
-      const value: number = 10;
+      const value = 10;
 
-      const fn1: Mock = vi.fn();
-      const fn2: Mock = vi.fn();
-      const fn3: Mock = vi.fn();
-      const fn4: Mock = vi.fn();
+      const fn1 = vi.fn();
+      const fn2 = vi.fn();
+      const fn3 = vi.fn();
+      const fn4 = vi.fn();
 
       await new Promise((resolve: Resolve<void>) => {
-        const plan: PresentPlan<number, number> = PresentPlan.of(
+        const plan = PresentPlan.of<number, number>(
           (n: number) => {
             fn1();
             expect(n).toBe(value);
@@ -55,15 +54,15 @@ describe('PresentPlan', () => {
     });
 
     it('invokes first callback when Promise<P> given', async () => {
-      const value: number = 10;
+      const value = 10;
 
-      const fn1: Mock = vi.fn();
-      const fn2: Mock = vi.fn();
-      const fn3: Mock = vi.fn();
-      const fn4: Mock = vi.fn();
+      const fn1 = vi.fn();
+      const fn2 = vi.fn();
+      const fn3 = vi.fn();
+      const fn4 = vi.fn();
 
       await new Promise((resolve: Resolve<void>) => {
-        const plan: PresentPlan<number, number> = PresentPlan.of(
+        const plan = PresentPlan.of<number, number>(
           (n: number) => {
             fn1();
             expect(n).toBe(value);
@@ -100,15 +99,15 @@ describe('PresentPlan', () => {
     });
 
     it('invokes first callback when Present Unscharfeleration given', async () => {
-      const value: number = 10;
+      const value = 10;
 
-      const fn1: Mock = vi.fn();
-      const fn2: Mock = vi.fn();
-      const fn3: Mock = vi.fn();
-      const fn4: Mock = vi.fn();
+      const fn1 = vi.fn();
+      const fn2 = vi.fn();
+      const fn3 = vi.fn();
+      const fn4 = vi.fn();
 
       await new Promise((resolve: Resolve<void>) => {
-        const plan: PresentPlan<number, number> = PresentPlan.of(
+        const plan = PresentPlan.of<number, number>(
           (n: number) => {
             fn1();
             expect(n).toBe(value);
@@ -145,15 +144,15 @@ describe('PresentPlan', () => {
     });
 
     it('invokes first callback when Promise<Present Unscharferelation> given', async () => {
-      const value: number = 10;
+      const value = 10;
 
-      const fn1: Mock = vi.fn();
-      const fn2: Mock = vi.fn();
-      const fn3: Mock = vi.fn();
-      const fn4: Mock = vi.fn();
+      const fn1 = vi.fn();
+      const fn2 = vi.fn();
+      const fn3 = vi.fn();
+      const fn4 = vi.fn();
 
       await new Promise((resolve: Resolve<void>) => {
-        const plan: PresentPlan<number, number> = PresentPlan.of(
+        const plan = PresentPlan.of<number, number>(
           (n: number) => {
             fn1();
             expect(n).toBe(value);
@@ -190,15 +189,15 @@ describe('PresentPlan', () => {
     });
 
     it('invokes second callback when null given', async () => {
-      const value: number = 10;
+      const value = 10;
 
-      const fn1: Mock = vi.fn();
-      const fn2: Mock = vi.fn();
-      const fn3: Mock = vi.fn();
-      const fn4: Mock = vi.fn();
+      const fn1 = vi.fn();
+      const fn2 = vi.fn();
+      const fn3 = vi.fn();
+      const fn4 = vi.fn();
 
       await new Promise((resolve: Resolve<void>) => {
-        const plan: PresentPlan<number, number> = PresentPlan.of<number, number>(
+        const plan = PresentPlan.of<number, number>(
           (n: number) => {
             fn1();
             expect(n).toBe(value);
@@ -234,15 +233,15 @@ describe('PresentPlan', () => {
     });
 
     it('invokes second callback when undefined given', async () => {
-      const value: number = 10;
+      const value = 10;
 
-      const fn1: Mock = vi.fn();
-      const fn2: Mock = vi.fn();
-      const fn3: Mock = vi.fn();
-      const fn4: Mock = vi.fn();
+      const fn1 = vi.fn();
+      const fn2 = vi.fn();
+      const fn3 = vi.fn();
+      const fn4 = vi.fn();
 
       await new Promise((resolve: Resolve<void>) => {
-        const plan: PresentPlan<number, number> = PresentPlan.of<number, number>(
+        const plan = PresentPlan.of<number, number>(
           (n: number) => {
             fn1();
             expect(n).toBe(value);
@@ -278,15 +277,15 @@ describe('PresentPlan', () => {
     });
 
     it('invokes second callback when Promise<null> given', async () => {
-      const value: number = 10;
+      const value = 10;
 
-      const fn1: Mock = vi.fn();
-      const fn2: Mock = vi.fn();
-      const fn3: Mock = vi.fn();
-      const fn4: Mock = vi.fn();
+      const fn1 = vi.fn();
+      const fn2 = vi.fn();
+      const fn3 = vi.fn();
+      const fn4 = vi.fn();
 
       await new Promise((resolve: Resolve<void>) => {
-        const plan: PresentPlan<number, number> = PresentPlan.of<number, number>(
+        const plan = PresentPlan.of<number, number>(
           (n: number) => {
             fn1();
             expect(n).toBe(value);
@@ -322,15 +321,15 @@ describe('PresentPlan', () => {
     });
 
     it('invokes second callback when Promise<undefined> given', async () => {
-      const value: number = 10;
+      const value = 10;
 
-      const fn1: Mock = vi.fn();
-      const fn2: Mock = vi.fn();
-      const fn3: Mock = vi.fn();
-      const fn4: Mock = vi.fn();
+      const fn1 = vi.fn();
+      const fn2 = vi.fn();
+      const fn3 = vi.fn();
+      const fn4 = vi.fn();
 
       await new Promise((resolve: Resolve<void>) => {
-        const plan: PresentPlan<number, number> = PresentPlan.of<number, number>(
+        const plan = PresentPlan.of<number, number>(
           () => {
             fn1();
 
@@ -365,15 +364,15 @@ describe('PresentPlan', () => {
     });
 
     it('invokes second callback when Absent Unscharferelation given', async () => {
-      const value: number = 10;
+      const value = 10;
 
-      const fn1: Mock = vi.fn();
-      const fn2: Mock = vi.fn();
-      const fn3: Mock = vi.fn();
-      const fn4: Mock = vi.fn();
+      const fn1 = vi.fn();
+      const fn2 = vi.fn();
+      const fn3 = vi.fn();
+      const fn4 = vi.fn();
 
       await new Promise((resolve: Resolve<void>) => {
-        const plan: PresentPlan<number, number> = PresentPlan.of(
+        const plan = PresentPlan.of<number, number>(
           (n: number) => {
             fn1();
             expect(n).toBe(value);
@@ -409,15 +408,15 @@ describe('PresentPlan', () => {
     });
 
     it('invokes second callback when Promise<Absent Unscharferelation> given', async () => {
-      const value: number = 10;
+      const value = 10;
 
-      const fn1: Mock = vi.fn();
-      const fn2: Mock = vi.fn();
-      const fn3: Mock = vi.fn();
-      const fn4: Mock = vi.fn();
+      const fn1 = vi.fn();
+      const fn2 = vi.fn();
+      const fn3 = vi.fn();
+      const fn4 = vi.fn();
 
       await new Promise((resolve: Resolve<void>) => {
-        const plan: PresentPlan<number, number> = PresentPlan.of(
+        const plan = PresentPlan.of<number, number>(
           (n: number) => {
             fn1();
             expect(n).toBe(value);
@@ -453,16 +452,16 @@ describe('PresentPlan', () => {
     });
 
     it('invokes third callback when an unexpected error thrown', async () => {
-      const value: number = 10;
-      const error: MockRuntimeError = new MockRuntimeError('');
+      const value = 10;
+      const error = new MockRuntimeError('');
 
-      const fn1: Mock = vi.fn();
-      const fn2: Mock = vi.fn();
-      const fn3: Mock = vi.fn();
-      const fn4: Mock = vi.fn();
+      const fn1 = vi.fn();
+      const fn2 = vi.fn();
+      const fn3 = vi.fn();
+      const fn4 = vi.fn();
 
       await new Promise((resolve: Resolve<void>) => {
-        const plan: PresentPlan<number, number> = PresentPlan.of(
+        const plan = PresentPlan.of<number, number>(
           (n: number) => {
             fn1();
             expect(n).toBe(value);
@@ -499,16 +498,16 @@ describe('PresentPlan', () => {
     });
 
     it('invokes third callback when an unexpected rejected Promise given', async () => {
-      const value: number = 10;
-      const error: MockRuntimeError = new MockRuntimeError('');
+      const value = 10;
+      const error = new MockRuntimeError('');
 
-      const fn1: Mock = vi.fn();
-      const fn2: Mock = vi.fn();
-      const fn3: Mock = vi.fn();
-      const fn4: Mock = vi.fn();
+      const fn1 = vi.fn();
+      const fn2 = vi.fn();
+      const fn3 = vi.fn();
+      const fn4 = vi.fn();
 
       await new Promise((resolve: Resolve<void>) => {
-        const plan: PresentPlan<number, number> = PresentPlan.of(
+        const plan = PresentPlan.of<number, number>(
           (n: number) => {
             fn1();
             expect(n).toBe(value);
@@ -545,16 +544,16 @@ describe('PresentPlan', () => {
     });
 
     it('invokes third callback when Lost Unscharferelation given', async () => {
-      const value: number = 10;
-      const error: MockRuntimeError = new MockRuntimeError('');
+      const value = 10;
+      const error = new MockRuntimeError('');
 
-      const fn1: Mock = vi.fn();
-      const fn2: Mock = vi.fn();
-      const fn3: Mock = vi.fn();
-      const fn4: Mock = vi.fn();
+      const fn1 = vi.fn();
+      const fn2 = vi.fn();
+      const fn3 = vi.fn();
+      const fn4 = vi.fn();
 
       await new Promise((resolve: Resolve<void>) => {
-        const plan: PresentPlan<number, number> = PresentPlan.of(
+        const plan = PresentPlan.of<number, number>(
           (n: number) => {
             fn1();
             expect(n).toBe(value);
@@ -593,16 +592,16 @@ describe('PresentPlan', () => {
     });
 
     it('invokes third callback when Promise<Lost Unscharferelation> given', async () => {
-      const value: number = 10;
-      const error: MockRuntimeError = new MockRuntimeError('');
+      const value = 10;
+      const error = new MockRuntimeError('');
 
-      const fn1: Mock = vi.fn();
-      const fn2: Mock = vi.fn();
-      const fn3: Mock = vi.fn();
-      const fn4: Mock = vi.fn();
+      const fn1 = vi.fn();
+      const fn2 = vi.fn();
+      const fn3 = vi.fn();
+      const fn4 = vi.fn();
 
       await new Promise((resolve: Resolve<void>) => {
-        const plan: PresentPlan<number, number> = PresentPlan.of(
+        const plan = PresentPlan.of<number, number>(
           (n: number) => {
             fn1();
             expect(n).toBe(value);

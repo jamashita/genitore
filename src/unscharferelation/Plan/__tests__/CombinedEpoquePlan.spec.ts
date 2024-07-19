@@ -1,17 +1,16 @@
-import type { Mock } from 'vitest';
 import { PassPlan } from '../../../plan/index.js';
 import { CombinedEpoquePlan } from '../CombinedEpoquePlan.js';
 
 describe('CombinedEpoquePlan', () => {
   describe('onMap', () => {
     it('invokes first callback', () => {
-      const value: number = -35;
+      const value = -35;
 
-      const fn1: Mock = vi.fn();
-      const fn2: Mock = vi.fn();
-      const fn3: Mock = vi.fn();
+      const fn1 = vi.fn();
+      const fn2 = vi.fn();
+      const fn3 = vi.fn();
 
-      const pass: PassPlan<number, void> = PassPlan.of(
+      const pass = PassPlan.of<number, void>(
         (v: number) => {
           fn1();
           expect(v).toBe(value);
@@ -23,7 +22,7 @@ describe('CombinedEpoquePlan', () => {
           fn3();
         }
       );
-      const plan: CombinedEpoquePlan<number> = CombinedEpoquePlan.of(pass, pass, pass);
+      const plan = CombinedEpoquePlan.of<number>(pass, pass, pass);
 
       plan.onMap(value);
 
@@ -35,11 +34,11 @@ describe('CombinedEpoquePlan', () => {
 
   describe('onRecover', () => {
     it('invokes second callback', () => {
-      const fn1: Mock = vi.fn();
-      const fn2: Mock = vi.fn();
-      const fn3: Mock = vi.fn();
+      const fn1 = vi.fn();
+      const fn2 = vi.fn();
+      const fn3 = vi.fn();
 
-      const pass: PassPlan<number, void> = PassPlan.of(
+      const pass = PassPlan.of<number, void>(
         () => {
           fn1();
         },
@@ -50,7 +49,7 @@ describe('CombinedEpoquePlan', () => {
           fn3();
         }
       );
-      const plan: CombinedEpoquePlan<number> = CombinedEpoquePlan.of(pass, pass, pass);
+      const plan = CombinedEpoquePlan.of<number>(pass, pass, pass);
 
       plan.onRecover();
 
@@ -62,13 +61,13 @@ describe('CombinedEpoquePlan', () => {
 
   describe('onDestroy', () => {
     it('invokes third callback', () => {
-      const value: number = -35;
+      const value = -35;
 
-      const fn1: Mock = vi.fn();
-      const fn2: Mock = vi.fn();
-      const fn3: Mock = vi.fn();
+      const fn1 = vi.fn();
+      const fn2 = vi.fn();
+      const fn3 = vi.fn();
 
-      const pass: PassPlan<number, void> = PassPlan.of(
+      const pass = PassPlan.of<number, void>(
         () => {
           fn1();
         },
@@ -80,7 +79,7 @@ describe('CombinedEpoquePlan', () => {
           expect(v).toBe(value);
         }
       );
-      const plan: CombinedEpoquePlan<number> = CombinedEpoquePlan.of(pass, pass, pass);
+      const plan = CombinedEpoquePlan.of<number>(pass, pass, pass);
 
       plan.onDestroy(value);
 

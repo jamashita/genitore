@@ -1,4 +1,3 @@
-import type { Mock } from 'vitest';
 import { Absent } from '../Absent.js';
 import type { Heisenberg } from '../Heisenberg.js';
 import { HeisenbergError } from '../HeisenbergError.js';
@@ -6,7 +5,7 @@ import { HeisenbergError } from '../HeisenbergError.js';
 describe('Absent', () => {
   describe('get', () => {
     it('throws UnscharferelationError', () => {
-      const absent: Absent<number> = Absent.of();
+      const absent = Absent.of<number>();
 
       expect(() => {
         absent.get();
@@ -22,7 +21,7 @@ describe('Absent', () => {
 
   describe('ifAbsent', () => {
     it('will be invoked', () => {
-      const fn: Mock = vi.fn();
+      const fn = vi.fn();
 
       const absent: Heisenberg<number> = Absent.of();
 
@@ -36,7 +35,7 @@ describe('Absent', () => {
 
   describe('ifLost', () => {
     it('will not be invoked', () => {
-      const fn: Mock = vi.fn();
+      const fn = vi.fn();
 
       const absent: Heisenberg<number> = Absent.of();
 
@@ -50,7 +49,7 @@ describe('Absent', () => {
 
   describe('ifPresent', () => {
     it('will not be invoked', () => {
-      const fn: Mock = vi.fn();
+      const fn = vi.fn();
 
       const absent: Heisenberg<number> = Absent.of();
 
@@ -64,8 +63,8 @@ describe('Absent', () => {
 
   describe('isAbsent', () => {
     it('always returns true', () => {
-      const absent1: Absent<void> = Absent.of();
-      const absent2: Absent<number> = Absent.of();
+      const absent1 = Absent.of<void>();
+      const absent2 = Absent.of<number>();
 
       expect(absent1.isAbsent()).toBe(true);
       expect(absent2.isAbsent()).toBe(true);
@@ -74,8 +73,8 @@ describe('Absent', () => {
 
   describe('isLost', () => {
     it('always returns false', () => {
-      const absent1: Absent<void> = Absent.of();
-      const absent2: Absent<number> = Absent.of();
+      const absent1 = Absent.of<void>();
+      const absent2 = Absent.of<number>();
 
       expect(absent1.isLost()).toBe(false);
       expect(absent2.isLost()).toBe(false);
@@ -84,8 +83,8 @@ describe('Absent', () => {
 
   describe('isPresent', () => {
     it('always returns false', () => {
-      const absent1: Absent<void> = Absent.of();
-      const absent2: Absent<number> = Absent.of();
+      const absent1 = Absent.of<void>();
+      const absent2 = Absent.of<number>();
 
       expect(absent1.isPresent()).toBe(false);
       expect(absent2.isPresent()).toBe(false);

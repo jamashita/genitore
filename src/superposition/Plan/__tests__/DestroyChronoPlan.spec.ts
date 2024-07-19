@@ -1,18 +1,17 @@
 import type { MockRuntimeError } from '@jamashita/anden/error';
-import type { Mock } from 'vitest';
 import { MockChrono } from '../../mock/MockChrono.js';
 import { DestroyChronoPlan } from '../DestroyChronoPlan.js';
 
 describe('DestroyChronoPlan', () => {
   describe('onDestroy', () => {
     it('invokes third callback', () => {
-      const value: number = -35;
+      const value = -35;
 
-      const fn1: Mock = vi.fn();
-      const fn2: Mock = vi.fn();
-      const fn3: Mock = vi.fn();
+      const fn1 = vi.fn();
+      const fn2 = vi.fn();
+      const fn3 = vi.fn();
 
-      const chrono: MockChrono<number, MockRuntimeError> = new MockChrono(
+      const chrono = new MockChrono<number, MockRuntimeError>(
         () => {
           fn1();
         },
@@ -22,10 +21,9 @@ describe('DestroyChronoPlan', () => {
         (v: unknown) => {
           fn3();
           expect(v).toBe(value);
-        },
-        new Set()
+        }
       );
-      const plan: DestroyChronoPlan<number, MockRuntimeError> = DestroyChronoPlan.of(chrono);
+      const plan = DestroyChronoPlan.of<number, MockRuntimeError>(chrono);
 
       plan.onDestroy(value);
 
