@@ -1,17 +1,16 @@
-import type { Mock } from 'vitest';
 import type { Heisenberg } from '../Heisenberg.js';
 import { Present } from '../Present.js';
 
 describe('Present', () => {
   describe('get', () => {
     it('returns the inner value', () => {
-      const present1: Present<number> = Present.of(1);
-      const present2: Present<number> = Present.of(0);
-      const present3: Present<number> = Present.of(-1);
-      const present4: Present<string> = Present.of('');
-      const present5: Present<string> = Present.of('1');
-      const present6: Present<boolean> = Present.of(true);
-      const present7: Present<boolean> = Present.of(false);
+      const present1 = Present.of(1);
+      const present2 = Present.of(0);
+      const present3 = Present.of(-1);
+      const present4 = Present.of('');
+      const present5 = Present.of('1');
+      const present6 = Present.of(true);
+      const present7 = Present.of(false);
 
       expect(present1.get()).toBe(1);
       expect(present2.get()).toBe(0);
@@ -31,9 +30,9 @@ describe('Present', () => {
 
   describe('ifAbsent', () => {
     it('will not be invoked', () => {
-      const value: number = 1;
+      const value = 1;
 
-      const fn: Mock = vi.fn();
+      const fn = vi.fn();
 
       const present: Heisenberg<number> = Present.of(value);
 
@@ -47,9 +46,9 @@ describe('Present', () => {
 
   describe('ifLost', () => {
     it('will not be invoked', () => {
-      const value: number = 1;
+      const value = 1;
 
-      const fn: Mock = vi.fn();
+      const fn = vi.fn();
 
       const present: Heisenberg<number> = Present.of(value);
 
@@ -63,9 +62,9 @@ describe('Present', () => {
 
   describe('ifPresent', () => {
     it('will be invoked', () => {
-      const value: number = 1;
+      const value = 1;
 
-      const fn: Mock = vi.fn();
+      const fn = vi.fn();
 
       const present: Heisenberg<number> = Present.of(value);
 
@@ -80,13 +79,13 @@ describe('Present', () => {
 
   describe('isAbsent', () => {
     it('always returns false', () => {
-      const present1: Present<number> = Present.of(1);
-      const present2: Present<number> = Present.of(0);
-      const present3: Present<number> = Present.of(-1);
-      const present4: Present<string> = Present.of('');
-      const present5: Present<string> = Present.of('1');
-      const present6: Present<boolean> = Present.of(true);
-      const present7: Present<boolean> = Present.of(false);
+      const present1 = Present.of(1);
+      const present2 = Present.of(0);
+      const present3 = Present.of(-1);
+      const present4 = Present.of('');
+      const present5 = Present.of('1');
+      const present6 = Present.of(true);
+      const present7 = Present.of(false);
 
       expect(present1.isAbsent()).toBe(false);
       expect(present2.isAbsent()).toBe(false);
@@ -100,13 +99,13 @@ describe('Present', () => {
 
   describe('isLost', () => {
     it('always returns false', () => {
-      const present1: Present<number> = Present.of(1);
-      const present2: Present<number> = Present.of(0);
-      const present3: Present<number> = Present.of(-1);
-      const present4: Present<string> = Present.of('');
-      const present5: Present<string> = Present.of('1');
-      const present6: Present<boolean> = Present.of(true);
-      const present7: Present<boolean> = Present.of(false);
+      const present1 = Present.of(1);
+      const present2 = Present.of(0);
+      const present3 = Present.of(-1);
+      const present4 = Present.of('');
+      const present5 = Present.of('1');
+      const present6 = Present.of(true);
+      const present7 = Present.of(false);
 
       expect(present1.isLost()).toBe(false);
       expect(present2.isLost()).toBe(false);
@@ -120,13 +119,13 @@ describe('Present', () => {
 
   describe('isPresent', () => {
     it('always returns true', () => {
-      const present1: Present<number> = Present.of(1);
-      const present2: Present<number> = Present.of(0);
-      const present3: Present<number> = Present.of(-1);
-      const present4: Present<string> = Present.of('');
-      const present5: Present<string> = Present.of('1');
-      const present6: Present<boolean> = Present.of(true);
-      const present7: Present<boolean> = Present.of(false);
+      const present1 = Present.of(1);
+      const present2 = Present.of(0);
+      const present3 = Present.of(-1);
+      const present4 = Present.of('');
+      const present5 = Present.of('1');
+      const present6 = Present.of(true);
+      const present7 = Present.of(false);
 
       expect(present1.isPresent()).toBe(true);
       expect(present2.isPresent()).toBe(true);

@@ -105,32 +105,31 @@ Returns `true` if this class instance is in the `Present` state, `false` otherwi
 
 # Schrödinger classes
 
-## Alive\<A, D extends Error\>
+## Alive\<A, D\>
 
-A class that represents the fulfilled state for `Schrodinger`. This class contains a value of type `A` that cannot be
-`Error`. It is equivalent to Success for Result types. It implements `Schrodinger` class.
+A class that represents the fulfilled state for `Schrodinger`. It is equivalent to Success for Result types. It implements `Schrodinger` class.
 
-## Contradiction\<A, D extends Error\>
+## Contradiction\<A, D\>
 
 A class that represents the rejected state for `Schrodinger`. This class contains an exception for the operation that
 occurred. It implements `Schrodinger` interface.
 
-## Dead\<A, D extends Error\>
+## Dead\<A, D\>
 
 A class that represents the fulfilled state for `Schrodinger`, but with an intended error of type `D`. It is equivalent
 to Failure for Result types and it implements `Schrodinger` interface.
 
-## Still\<A, D extends Error\>
+## Still\<A, D\>
 
 A class that represents the pending state for `Schrodinger`. It implements `Schrodinger` interface.
 
-## (interface) Schrodinger\<A, D extends Error\>
+## (interface) Schrodinger\<A, D\>
 
 This interface represents an Result of Monad programming. The common interface
 for `Alive<A, D>`, `Contradiction<A, D>`, `Dead<A, D>` and `Still<A, D>`. This interface provides common methods for
 success and failure. `A` represents the type of the data and `D` represents the type of the error that may be thrown.
 
-### `Schrodinger.all<A, D extends Error>(schrodingers: Iterable<Schrodinger<A, D>>): Schrodinger<Array<A>, D>`
+### `Schrodinger.all<A, D>(schrodingers: Iterable<Schrodinger<A, D>>): Schrodinger<Array<A>, D>`
 
 Takes an `Iterable<Schrodinger<A, D>>` and returns a single `Schrodinger<Array<A>, D>`. Returns `Alive<Array<A>, D>`
 when all `schrodingers` are in the `Alive` state, returns `Dead<Array<A>, D>` when at least one of `schrodingers` is in
@@ -138,9 +137,9 @@ the `Dead` state, and returns `Contradiction<Array<A>, D>` when at least one of 
 state. If there are both `Dead` and `Contradiction` states present in the `schrodingers`, the return value will
 be `Contradiction<Array<A>, D>` (prioritized).
 
-### `Schrodinger.prototype.get(): Exclude<A, Error>`
+### `Schrodinger.prototype.get(): A`
 
-Returns the retained value, the returned value cannot be `Error`.
+Returns the retained value.
 
 Retrieves the retained value. If this instance is `Alive`, the returned value will be a non-error value of type `A`. If
 this instance is `Dead`, the retained error will be thrown. If this instance is `Contradiction`, the retained `cause`
@@ -151,7 +150,7 @@ will be thrown. If this instance is `Still`, `SchrodingerError` will be thrown.
 Returns the current state. The state can be one of the following statuses: `'ALIVE'`, `'CONTRADICTION'`, `'DEAD'`
 or `'STILL'`.
 
-### `Schrodinger.prototype.ifAlive(consumer: Consumer<Exclude<A, Error>>): this`
+### `Schrodinger.prototype.ifAlive(consumer: Consumer<A>): this`
 
 Executes the given `consumer` with the non-error value of `A` type if this class instance is in the `Alive` state.
 
@@ -180,17 +179,13 @@ Returns `true` if this class instance is in the `Dead` state, `false` otherwise.
 
 ## (interface) Chrono\<M, R\>
 
-### `Chrono.prototype.accept(valye: Exclude<M, Error>): unknown`
-
-### `Chrono.prototype.catch(errors: Iterable<DeadConstructor<R>>): void`
+### `Chrono.prototype.accept(valye: M>): unknown`
 
 ### `Chrono.prototype.decline(value: R): unknown`
 
-### `Chrono.prototype.getErrors(): Set<DeadConstructor<R>>`
-
 ### `Chrono.prototype.throw(cause: unknown): unknown`
 
-## Superposition\<A, D extends Error\>
+## Superposition\<A, D\>
 
 A class that handles Result of Monad programming asynchronously. This class wraps a `Schrodinger` instance, which
 represents the outcome of an asynchronous operation, and can change its state based on the outcome of that operation.
@@ -203,7 +198,7 @@ possible states are:
 - Rejected: corresponds to a rejected state of `Promise`, but for unexpected errors.
 - Pending: corresponds to a pending state of `Promise`.
 
-### `Superposition.all<A, D extends Error>(superpositions: Iterable<Superposition<A, D>>): Superposition<Array<A>, D>`
+### `Superposition.all<A, D>(superpositions: Iterable<Superposition<A, D>>): Superposition<Array<A>, D>`
 
 Takes an `Iterable<Superposition<A, D>>` and returns a single `Superposition<Array<A>, D>`. If all `superpositions` are
 in the `Alive` state, the returned instance will be successfully fulfilled with an array of the values from the
@@ -213,18 +208,18 @@ in the `Contradiction` state, the returned instance will be rejected with the ca
 encountered. If there are both `Dead` and `Contradiction` states present in the `superpositions`, the returned instance
 will be rejected (prioritized).
 
-### `Superposition.anyway<A, D extends Error>(superpositions: Iterable<Superposition<A, D>>): Promise<Array<Schrodinger<A, D>>>`
+### `Superposition.anyway<A, D>(superpositions: Iterable<Superposition<A, D>>): Promise<Array<Schrodinger<A, D>>>`
 
 Retrieves the outcome of each asynchronous operation in `superpositions` by
 calling `Superposition.prototype.terminate()` on each item. The resulting `Schrodinger` state for each `Superposition`
 can be found in the documentation for `Superposition.prototype.terminate()`.
 
-### `Superposition.of<A, D extends Error>(func: Consumer<Chrono<Awaited<A>, D>>, ...errors: ReadonlyArray<DeadConstructor<D>>): Superposition<Awaited<A>, D>`
+### `Superposition.of<A, D>(func: Consumer<Chrono<Awaited<A>, D>>): Superposition<Awaited<A>, D>`
 
 Generates a new `Superposition` instance by invoking the provided `func` argument with a `Chrono` object. If
 the `Chrono.prototype.accept(value)` is called with a valid value of `Awaited<A>` type, it returns a successfully
-fulfilled `Superposition<A, D>`. If the `Chrono.prototype.decline(error)` is called with an error of type `D` that is
-specified in the `errors` argument, it returns an unsuccessfully fulfilled `Superposition<A, D>`. If
+fulfilled `Superposition<A, D>`. If the `Chrono.prototype.decline(error)` is called with an error of type `D`, it returns an unsuccessfully
+fulfilled `Superposition<A, D>`. If
 the `Chrono.prototype.throw(cause)` is called with an argument of `unknown` type, it returns a
 rejected `Superposition<A, D>`.
 
@@ -249,27 +244,18 @@ Superposition.of<A, D>((chrono: Chrono<Awaited<A>, D>) => {
 
     chrono.throw(e);
   }
-}, RuntimeError);
+});
 ```
 
-### `Superposition.ofSchrodinger<A, D extends Error>(schrodinger: Schrodinger<Awaited<A>, D>, ...errors: ReadonlyArray<DeadConstructor<D>>): Superposition<Awaited<A>, D>`
+### `Superposition.ofSchrodinger<A, D>(schrodinger: Schrodinger<Awaited<A>, D>): Superposition<Awaited<A>, D>`
 
-Creates a new `Superposition` instance from a given `Schrodinger` instance. The `errors` parameter is an array of error
-constructors that can be thrown by the asynchronous operation. If the given `schrodinger` is in the `Alive` state, the
+Creates a new `Superposition` instance from a given `Schrodinger` instance. If the given `schrodinger` is in the `Alive` state, the
 resulting `Superposition` will be successfully fulfilled. If it is in the `Dead` state, it will be unsuccessfully
 fulfilled. If it is in the `Contradiction` or `Still` state, it will be rejected.
 
-### `Superposition.ofSuperposition<A, D extends Error>(superposition: ISuperposition<A, D>): Superposition<A, D>`
+### `Superposition.ofSuperposition<A, D>(superposition: ISuperposition<A, D>): Superposition<A, D>`
 
 Generates a new `Superposition` instance from a given `Superposition` instance.
-
-### `Superposition.playground<A, D extends Error>(supplier: Supplier<Exclude<A, Error> | PromiseLike<Exclude<A, Error>>>, ...errors: ReadonlyArray<DeadConstructor<D>>): Superposition<Awaited<A>, D>`
-
-Creates a new `Superposition` instance by executing the provided `supplier`. If the function returns a value of type `A`
-or a fulfilled `PromiseLike<A>`, the resulting `Superposition` will be successfully fulfilled. If the function
-throws an error or returns a rejected `PromiseLike<A>`, but the error is of a type specified in the `errors` argument,
-the resulting `Superposition` will be unsuccessfully fulfilled. If the error is not of a type specified in the `errors`
-argument, the resulting `Superposition` will be rejected.
 
 ### `Superposition.prototype.get(): Promise<Exclude<A, Error>>`
 
@@ -277,11 +263,7 @@ Retrieves the outcome of the asynchronous operation as a `Promise`. If the insta
 state, it will return a fulfilled `Promise` instance. If the instance is in the unsuccessfully fulfilled or rejected
 state, it will return a rejected `Promise` instance.
 
-### `Superposition.prototype.getErrors(): Set<DeadConstructor<D>>`
-
-Returns a set of error constructors that can be thrown by the asynchronous operation.
-
-### `Superposition.prototype.ifAlive(consumer: Consumer<Exclude<A, Error>>): this`
+### `Superposition.prototype.ifAlive(consumer: Consumer<A>): this`
 
 Executes the given `consumer` with the non-error value of `A` type if the asynchronous operation is going to be
 successfully fulfilled.
@@ -296,11 +278,11 @@ to be rejected.
 Executes the given `consumer` with the error value of `D` type if the asynchronous operation is going to be
 unsuccessfully fulfilled.
 
-### `Superposition.prototype.map<B = A, E extends Error = D>(mapper: UnaryFunction<Exclude<A, Error>, SReturnType<B, E>>, ...errors: ReadonlyArray<DeadConstructor<E>>): Superposition<B, D | E>`
+### `Superposition.prototype.map<B = A, E = D>(mapper: UnaryFunction<A, SReturnType<B, E>>): Superposition<B, D | E>`
 
 Executes the given `mapper` only when the current instance is in a successfully fulfilled state. The `mapper` should
-take in a single argument of type `Exclude<A, Error>` and should return a value of type `B` without an error, or an
-instance of `ISuperposition<B, E>`, a `PromiseLike<Exclude<B, Error>>`, or a `PromiseLike<ISuperposition<B, E>>`.
+take in a single argument of type `A` and should return a value of type `B` without an error, or an
+instance of `ISuperposition<B, E>`, a `PromiseLike<B>`, or a `PromiseLike<ISuperposition<B, E>>`.
 The return value of this method will be a `Superposition<B, E>` instance if the `mapper` is executed and returns a value
 or `Superposition<B, E>` without error, otherwise it will return a `Superposition<B, D>` instance if the `mapper` is not
 executed or the returned value contain an error. The overall result will be a `Superposition<B, D | E>` instance.
@@ -310,7 +292,7 @@ This method can be used as an alternative to `Promise.prototype.then()`.
 ```ts
 superposition.map<string, SyntaxError>((num: number) => {
   return num.toFixed();
-}, SyntaxError).map<number, SyntaxError | TypeError>((str: string) => {
+}).map<number, SyntaxError | TypeError>((str: string) => {
   const num = Number(str);
 
   if (Number.isNaN(num)) {
@@ -318,10 +300,10 @@ superposition.map<string, SyntaxError>((num: number) => {
   }
 
   return num;
-}, TypeError);
+});
 ```
 
-### `Superposition.prototype.pass(accepted: Consumer<Exclude<A, Error>>, declinded: Consumer<D>, thrown: Consumer<unknown>): this`
+### `Superposition.prototype.pass(accepted: Consumer<A>, declinded: Consumer<D>, thrown: Consumer<unknown>): this`
 
 Executes the given `accepted` with the non-error value of type `A` when the asynchronous operation is successfully
 fulfilled, `declined` with the error value of type `D` when the asynchronous operation is unsuccessfully fulfilled, or
@@ -333,11 +315,11 @@ Executes the given `peek` with no arguments when the asynchronous operation repr
 instance is completed, regardless of whether it is successfully fulfilled, unsuccessfully fulfilled, or rejected. It
 allows you to perform side effects, such as logging, without changing the outcome of the operation.
 
-### `Superposition.prototype.recover<B = A, E extends Error = D>(mapper: UnaryFunction<D>, SReturnType<B, E>>, ...errors: ReadonlyArray<DeadConstructor<E>>): Superposition<B, D | E>`
+### `Superposition.prototype.recover<B = A, E = D>(mapper: UnaryFunction<D>, SReturnType<B, E>>): Superposition<B, D | E>`
 
 Executes the given `mapper` only when the current instance is in an unsuccessfully fulfilled state. The `mapper` should
 take in a single argument of type `D` and should return a value of type `B` without an error, or an instance of
-`ISuperposition<B, E>`, a `PromiseLike<Exclude<B, Error>>`, or a `PromiseLike<ISuperposition<B, E>>`. The return value
+`ISuperposition<B, E>`, a `PromiseLike<B>`, or a `PromiseLike<ISuperposition<B, E>>`. The return value
 of this method will be a `Superposition<B, E>` instance if the `mapper` is executed and returns a value
 or `Superposition<B, E>` without error, otherwise it will return a `Superposition<A, E>` instance if the `mapper` is not
 executed or the returned value contains an error. The overall result will be a `Superposition<A | B, E>` instance.
@@ -347,7 +329,7 @@ This method can be used as an alternative to `Promise.prototype.catch()`.
 ```ts
 superposition.map<string, SyntaxError>((num: number) => {
   return num.toFixed();
-}, SyntaxError).map<number, SyntaxError | TypeError>((str: string) => {
+}).map<number, SyntaxError | TypeError>((str: string) => {
   const num = Number(str);
 
   if (Number.isNaN(num)) {
@@ -355,7 +337,7 @@ superposition.map<string, SyntaxError>((num: number) => {
   }
 
   return num;
-}, TypeError).recover<number, Error>((e: SyntaxError | TypeError) => {
+}).recover<number, Error>((e: SyntaxError | TypeError) => {
   logger.error(e);
 
   return 1;
@@ -371,7 +353,7 @@ unsuccessfully fulfilled, the returned `Schrodinger` will be in the `Dead` state
 failure. If the `Superposition` is rejected, the returned `Schrodinger` will be in the `Contradiction` state, indicating
 that the operation has been rejected for an unknown reason.
 
-### `Superposition.prototype.transform<B = A, E extends Error = D>(alive: UnaryFunction<Exclude<A, Error>, SReturnType<B, E>>, dead: UnaryFunction<D, SReturnType<B, D>>, ...errors: ReadonlyArray<DeadConstructor<E>>): Superposition<B, E>`
+### `Superposition.prototype.transform<B = A, E = D>(alive: UnaryFunction<Exclude<A, Error>, SReturnType<B, E>>, dead: UnaryFunction<D, SReturnType<B, D>>): Superposition<B, E>`
 
 Executes the given `alive` only when the current instance is in a successfully fulfilled state, and also executes the
 `dead` only when the current instance is in an unsuccessfully fulfilled state. One of these functions will be executed
@@ -419,7 +401,7 @@ Retrieves the outcome of each asynchronous operation in `unscharferelations` by
 calling `Unscharferelation.prototype.terminate()` on each item. The resulting `Heisenberg` state for
 each `Unscharferelation` can be found in the documentation for `Unscharferelation.prototype.terminate()`.
 
-### `Unscharferelation.maybe<P>(value: P | PromiseLike<null | undefined | void> | PromiseLike<P> | null | undefined | void): Unscharferelation<Awaited<P>>`
+### `Unscharferelation.maybe<P>(value: UReturnType<P>): Unscharferelation<Awaited<P>>`
 
 Creates a new `Unscharferelation` from the given value of type `P` or a `PromiseLike<P>`. If the value is `null`,
 `undefined`, or a `PromiseLike` that resolves to `null` or `undefined`, the resulting `Unscharferelation` will be

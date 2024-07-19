@@ -1,14 +1,13 @@
 import { MockRuntimeError } from '@jamashita/anden/error';
-import type { Mock } from 'vitest';
 import { Dead } from '../Dead.js';
 import type { Schrodinger } from '../Schrodinger.js';
 
 describe('Dead', () => {
   describe('get', () => {
     it('throws the inner error', () => {
-      const error: MockRuntimeError = new MockRuntimeError('');
+      const error = new MockRuntimeError('');
 
-      const dead: Dead<number, MockRuntimeError> = Dead.of(error);
+      const dead = Dead.of(error);
 
       expect(() => {
         dead.get();
@@ -18,8 +17,8 @@ describe('Dead', () => {
 
   describe('getError', () => {
     it('returns thrown error', () => {
-      const error: MockRuntimeError = new MockRuntimeError('');
-      const dead: Dead<number, MockRuntimeError> = Dead.of(error);
+      const error = new MockRuntimeError('');
+      const dead = Dead.of(error);
 
       expect(dead.getError()).toBe(error);
     });
@@ -33,9 +32,9 @@ describe('Dead', () => {
 
   describe('ifAlive', () => {
     it('will not be invoked', () => {
-      const error: MockRuntimeError = new MockRuntimeError('');
+      const error = new MockRuntimeError('');
 
-      const fn: Mock = vi.fn();
+      const fn = vi.fn();
 
       const dead: Schrodinger<number, MockRuntimeError> = Dead.of(error);
 
@@ -49,9 +48,9 @@ describe('Dead', () => {
 
   describe('ifContradiction', () => {
     it('will not be invoked', () => {
-      const error: MockRuntimeError = new MockRuntimeError('');
+      const error = new MockRuntimeError('');
 
-      const fn: Mock = vi.fn();
+      const fn = vi.fn();
 
       const dead: Schrodinger<number, MockRuntimeError> = Dead.of(error);
 
@@ -65,9 +64,9 @@ describe('Dead', () => {
 
   describe('ifDead', () => {
     it('will be invoked', () => {
-      const error: MockRuntimeError = new MockRuntimeError('');
+      const error = new MockRuntimeError('');
 
-      const fn: Mock = vi.fn();
+      const fn = vi.fn();
 
       const dead: Schrodinger<number, MockRuntimeError> = Dead.of(error);
 
@@ -82,8 +81,8 @@ describe('Dead', () => {
 
   describe('isAlive', () => {
     it('always returns false', () => {
-      const dead1: Dead<number, MockRuntimeError> = Dead.of(new MockRuntimeError(''));
-      const dead2: Dead<number, MockRuntimeError> = Dead.of(new MockRuntimeError(''));
+      const dead1 = Dead.of(new MockRuntimeError(''));
+      const dead2 = Dead.of(new MockRuntimeError(''));
 
       expect(dead1.isAlive()).toBe(false);
       expect(dead2.isAlive()).toBe(false);
@@ -92,8 +91,8 @@ describe('Dead', () => {
 
   describe('isContradiction', () => {
     it('always returns false', () => {
-      const dead1: Dead<number, MockRuntimeError> = Dead.of(new MockRuntimeError(''));
-      const dead2: Dead<number, MockRuntimeError> = Dead.of(new MockRuntimeError(''));
+      const dead1 = Dead.of(new MockRuntimeError(''));
+      const dead2 = Dead.of(new MockRuntimeError(''));
 
       expect(dead1.isContradiction()).toBe(false);
       expect(dead2.isContradiction()).toBe(false);
@@ -102,8 +101,8 @@ describe('Dead', () => {
 
   describe('isDead', () => {
     it('always returns true', () => {
-      const dead1: Dead<number, MockRuntimeError> = Dead.of(new MockRuntimeError(''));
-      const dead2: Dead<number, MockRuntimeError> = Dead.of(new MockRuntimeError(''));
+      const dead1 = Dead.of(new MockRuntimeError(''));
+      const dead2 = Dead.of(new MockRuntimeError(''));
 
       expect(dead1.isDead()).toBe(true);
       expect(dead2.isDead()).toBe(true);

@@ -1,17 +1,16 @@
-import type { Mock } from 'vitest';
 import { MockEpoque } from '../../mock/MockEpoque.js';
 import { MapEpoquePlan } from '../MapEpoquePlan.js';
 
 describe('MapEpoquePlan', () => {
   describe('onMap', () => {
     it('invokes first callback', () => {
-      const value: number = -35;
+      const value = -35;
 
-      const fn1: Mock = vi.fn();
-      const fn2: Mock = vi.fn();
-      const fn3: Mock = vi.fn();
+      const fn1 = vi.fn();
+      const fn2 = vi.fn();
+      const fn3 = vi.fn();
 
-      const epoque: MockEpoque<number> = new MockEpoque(
+      const epoque = new MockEpoque<number>(
         (v: number) => {
           fn1();
           expect(v).toBe(value);
@@ -23,7 +22,7 @@ describe('MapEpoquePlan', () => {
           fn3();
         }
       );
-      const plan: MapEpoquePlan<number> = MapEpoquePlan.of(epoque);
+      const plan = MapEpoquePlan.of<number>(epoque);
 
       plan.onMap(value);
 
