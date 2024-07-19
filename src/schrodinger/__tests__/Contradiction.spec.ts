@@ -1,13 +1,12 @@
 import { MockRuntimeError } from '@jamashita/anden/error';
-import type { Mock } from 'vitest';
 import { Contradiction } from '../Contradiction.js';
 import type { Schrodinger } from '../Schrodinger.js';
 
 describe('Contradiction', () => {
   describe('get', () => {
     it('throws given error', () => {
-      const error1: MockRuntimeError = new MockRuntimeError('');
-      const error2: MockRuntimeError = new MockRuntimeError('');
+      const error1 = new MockRuntimeError('');
+      const error2 = new MockRuntimeError('');
       const contradiction1: Contradiction<number, MockRuntimeError> = Contradiction.of(error1);
       const contradiction2: Contradiction<number, MockRuntimeError> = Contradiction.of(error2);
 
@@ -22,8 +21,8 @@ describe('Contradiction', () => {
 
   describe('getCause', () => {
     it('returns thrown error', () => {
-      const error1: MockRuntimeError = new MockRuntimeError('');
-      const error2: MockRuntimeError = new MockRuntimeError('');
+      const error1 = new MockRuntimeError('');
+      const error2 = new MockRuntimeError('');
       const contradiction1: Contradiction<number, MockRuntimeError> = Contradiction.of(error1);
       const contradiction2: Contradiction<number, MockRuntimeError> = Contradiction.of(error2);
 
@@ -40,9 +39,9 @@ describe('Contradiction', () => {
 
   describe('ifAlive', () => {
     it('will not be invoked', () => {
-      const value: number = 1;
+      const value = 1;
 
-      const fn: Mock = vi.fn();
+      const fn = vi.fn();
 
       const contradiction: Schrodinger<number, MockRuntimeError> = Contradiction.of(value);
 
@@ -56,9 +55,9 @@ describe('Contradiction', () => {
 
   describe('ifContradiction', () => {
     it('will be invoked', () => {
-      const value: number = 1;
+      const value = 1;
 
-      const fn: Mock = vi.fn();
+      const fn = vi.fn();
 
       const contradiction: Schrodinger<number, MockRuntimeError> = Contradiction.of(value);
 
@@ -73,9 +72,9 @@ describe('Contradiction', () => {
 
   describe('ifDead', () => {
     it('will not be invoked', () => {
-      const value: number = 1;
+      const value = 1;
 
-      const fn: Mock = vi.fn();
+      const fn = vi.fn();
 
       const contradiction: Schrodinger<number, MockRuntimeError> = Contradiction.of(value);
 
@@ -89,7 +88,7 @@ describe('Contradiction', () => {
 
   describe('isAlive', () => {
     it('always returns false', () => {
-      const error: MockRuntimeError = new MockRuntimeError('');
+      const error = new MockRuntimeError('');
       const contradiction: Contradiction<number, MockRuntimeError> = Contradiction.of(error);
 
       expect(contradiction.isAlive()).toBe(false);
@@ -98,7 +97,7 @@ describe('Contradiction', () => {
 
   describe('isContradiction', () => {
     it('always returns true', () => {
-      const error: MockRuntimeError = new MockRuntimeError('');
+      const error = new MockRuntimeError('');
       const contradiction: Contradiction<number, MockRuntimeError> = Contradiction.of(error);
 
       expect(contradiction.isContradiction()).toBe(true);
@@ -107,7 +106,7 @@ describe('Contradiction', () => {
 
   describe('isDead', () => {
     it('always returns false', () => {
-      const error: MockRuntimeError = new MockRuntimeError('');
+      const error = new MockRuntimeError('');
       const contradiction: Contradiction<number, MockRuntimeError> = Contradiction.of(error);
 
       expect(contradiction.isDead()).toBe(false);

@@ -1,12 +1,11 @@
 import { MockRuntimeError } from '@jamashita/anden/error';
-import type { Mock } from 'vitest';
 import { Dead } from '../Dead.js';
 import type { Schrodinger } from '../Schrodinger.js';
 
 describe('Dead', () => {
   describe('get', () => {
     it('throws the inner error', () => {
-      const error: MockRuntimeError = new MockRuntimeError('');
+      const error = new MockRuntimeError('');
 
       const dead: Dead<number, MockRuntimeError> = Dead.of(error);
 
@@ -18,7 +17,7 @@ describe('Dead', () => {
 
   describe('getError', () => {
     it('returns thrown error', () => {
-      const error: MockRuntimeError = new MockRuntimeError('');
+      const error = new MockRuntimeError('');
       const dead: Dead<number, MockRuntimeError> = Dead.of(error);
 
       expect(dead.getError()).toBe(error);
@@ -33,9 +32,9 @@ describe('Dead', () => {
 
   describe('ifAlive', () => {
     it('will not be invoked', () => {
-      const error: MockRuntimeError = new MockRuntimeError('');
+      const error = new MockRuntimeError('');
 
-      const fn: Mock = vi.fn();
+      const fn = vi.fn();
 
       const dead: Schrodinger<number, MockRuntimeError> = Dead.of(error);
 
@@ -49,9 +48,9 @@ describe('Dead', () => {
 
   describe('ifContradiction', () => {
     it('will not be invoked', () => {
-      const error: MockRuntimeError = new MockRuntimeError('');
+      const error = new MockRuntimeError('');
 
-      const fn: Mock = vi.fn();
+      const fn = vi.fn();
 
       const dead: Schrodinger<number, MockRuntimeError> = Dead.of(error);
 
@@ -65,9 +64,9 @@ describe('Dead', () => {
 
   describe('ifDead', () => {
     it('will be invoked', () => {
-      const error: MockRuntimeError = new MockRuntimeError('');
+      const error = new MockRuntimeError('');
 
-      const fn: Mock = vi.fn();
+      const fn = vi.fn();
 
       const dead: Schrodinger<number, MockRuntimeError> = Dead.of(error);
 

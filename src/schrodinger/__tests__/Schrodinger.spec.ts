@@ -34,7 +34,7 @@ describe('Schroginer', () => {
     });
 
     it('returns Dead when sync Schrodingers which first one is Dead given', () => {
-      const error: MockRuntimeError = new MockRuntimeError('');
+      const error = new MockRuntimeError('');
       const schrodingers: Array<Schrodinger<number, MockRuntimeError>> = [Dead.of(error), Alive.of(1), Alive.of(2)];
 
       const schrodinger: Schrodinger<Array<number>, MockRuntimeError> = Schrodinger.all(schrodingers);
@@ -46,7 +46,7 @@ describe('Schroginer', () => {
     });
 
     it('returns Schrodinger when Schrodingers which second one is Dead given', () => {
-      const error: MockRuntimeError = new MockRuntimeError('');
+      const error = new MockRuntimeError('');
       const schrodingers: Array<Schrodinger<number, MockRuntimeError>> = [Alive.of(0), Dead.of(error), Alive.of(2)];
 
       const schrodinger: Schrodinger<Array<number>, MockRuntimeError> = Schrodinger.all(schrodingers);
@@ -58,7 +58,7 @@ describe('Schroginer', () => {
     });
 
     it('returns Dead when Schrodingers which last one is Dead given', () => {
-      const error: MockRuntimeError = new MockRuntimeError('');
+      const error = new MockRuntimeError('');
       const schrodingers: Array<Schrodinger<number, MockRuntimeError>> = [Alive.of(0), Alive.of(1), Dead.of(error)];
 
       const schrodinger: Schrodinger<Array<number>, MockRuntimeError> = Schrodinger.all(schrodingers);
@@ -70,7 +70,7 @@ describe('Schroginer', () => {
     });
 
     it('returns Contradiction when Schrodingers which contains Contradiction given', () => {
-      const error: MockRuntimeError = new MockRuntimeError('');
+      const error = new MockRuntimeError('');
 
       const schrodingers: Array<Schrodinger<number, MockRuntimeError>> = [Alive.of(0), Contradiction.of(error), Alive.of(2)];
 
@@ -83,9 +83,9 @@ describe('Schroginer', () => {
     });
 
     it('returns Contradiction when Schrodingers which contains Contradiction given even if all of others are Dead', () => {
-      const error1: MockRuntimeError = new MockRuntimeError('');
-      const error2: MockRuntimeError = new MockRuntimeError('');
-      const error3: MockRuntimeError = new MockRuntimeError('');
+      const error1 = new MockRuntimeError('');
+      const error2 = new MockRuntimeError('');
+      const error3 = new MockRuntimeError('');
 
       const schrodingers: Array<Schrodinger<number, MockRuntimeError>> = [Dead.of(error1), Contradiction.of(error2), Dead.of(error3)];
 

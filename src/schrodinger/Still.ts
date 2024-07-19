@@ -5,7 +5,7 @@ import type { Schrodinger, SchrodingerState } from './Schrodinger.js';
 import { SchrodingerError } from './SchrodingerError.js';
 
 export class Still<out A, out D> implements Schrodinger<A, D> {
-  private static readonly INSTANCE: Still<unknown, unknown> = new Still();
+  private static readonly INSTANCE = new Still<unknown, unknown>();
 
   public static of<A, D>(): Still<A, D> {
     return Still.INSTANCE as Still<A, D>;

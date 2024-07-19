@@ -5,7 +5,7 @@ import { MapChronoPlan } from '../MapChronoPlan.js';
 describe('MapChronoPlan', () => {
   describe('onMap', () => {
     it('invokes first callback', () => {
-      const value: number = -35;
+      const value = -35;
 
       const fn1 = vi.fn();
       const fn2 = vi.fn();

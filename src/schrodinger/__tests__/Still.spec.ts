@@ -1,5 +1,4 @@
 import type { MockRuntimeError } from '@jamashita/anden/error';
-import type { Mock } from 'vitest';
 import type { Schrodinger } from '../Schrodinger.js';
 import { SchrodingerError } from '../SchrodingerError.js';
 import { Still } from '../Still.js';
@@ -23,7 +22,7 @@ describe('Still', () => {
 
   describe('ifAlive', () => {
     it('will not be invoked', () => {
-      const fn: Mock = vi.fn();
+      const fn = vi.fn();
 
       const still: Schrodinger<number, MockRuntimeError> = Still.of();
 
@@ -37,7 +36,7 @@ describe('Still', () => {
 
   describe('ifContradiction', () => {
     it('will not be invoked', () => {
-      const fn: Mock = vi.fn();
+      const fn = vi.fn();
 
       const still: Schrodinger<number, MockRuntimeError> = Still.of();
 
@@ -51,7 +50,7 @@ describe('Still', () => {
 
   describe('ifDead', () => {
     it('will not be invoked', () => {
-      const fn: Mock = vi.fn();
+      const fn = vi.fn();
 
       const still: Schrodinger<number, MockRuntimeError> = Still.of();
 

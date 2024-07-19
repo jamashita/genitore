@@ -5,7 +5,7 @@ import { DestroyChronoPlan } from '../DestroyChronoPlan.js';
 describe('DestroyChronoPlan', () => {
   describe('onDestroy', () => {
     it('invokes third callback', () => {
-      const value: number = -35;
+      const value = -35;
 
       const fn1 = vi.fn();
       const fn2 = vi.fn();

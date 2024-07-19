@@ -1,5 +1,4 @@
 import type { MockRuntimeError } from '@jamashita/anden/error';
-import type { Mock } from 'vitest';
 import { Alive } from '../Alive.js';
 import type { Schrodinger } from '../Schrodinger.js';
 
@@ -32,9 +31,9 @@ describe('Alive', () => {
 
   describe('ifAlive', () => {
     it('will be invoked', () => {
-      const value: number = 1;
+      const value = 1;
 
-      const fn: Mock = vi.fn();
+      const fn = vi.fn();
 
       const alive: Schrodinger<number, MockRuntimeError> = Alive.of(value);
 
@@ -49,9 +48,9 @@ describe('Alive', () => {
 
   describe('ifContradiction', () => {
     it('will not be invoked', () => {
-      const value: number = 1;
+      const value = 1;
 
-      const fn: Mock = vi.fn();
+      const fn = vi.fn();
 
       const alive: Schrodinger<number, MockRuntimeError> = Alive.of(value);
 
@@ -65,9 +64,9 @@ describe('Alive', () => {
 
   describe('ifDead', () => {
     it('will not be invoked', () => {
-      const value: number = 1;
+      const value = 1;
 
-      const fn: Mock = vi.fn();
+      const fn = vi.fn();
 
       const alive: Schrodinger<number, MockRuntimeError> = Alive.of(value);
 

@@ -35,7 +35,7 @@ describe('CombinedChronoPlan', () => {
 
   describe('onRecover', () => {
     it('invokes second callback', () => {
-      const value: MockRuntimeError = new MockRuntimeError('');
+      const value = new MockRuntimeError('');
 
       const fn1 = vi.fn();
       const fn2 = vi.fn();
