@@ -7,8 +7,8 @@ import { UnscharferelationInternal } from '../UnscharferelationInternal.js';
 describe('IUnscharferelation', () => {
   describe('isUnscharferelation', () => {
     it('returns true if IUnscharferelation methods the given object have', () => {
-      const unscharferelation1: Unscharferelation<number> = Unscharferelation.ofHeisenberg(Present.of(4));
-      const unscharferelation2: UnscharferelationInternal<number> = UnscharferelationInternal.of<number>((epoque: Epoque<number>) => {
+      const unscharferelation1 = Unscharferelation.ofHeisenberg(Present.of(4));
+      const unscharferelation2 = UnscharferelationInternal.of<number>((epoque: Epoque<number>) => {
         epoque.decline();
       });
 
