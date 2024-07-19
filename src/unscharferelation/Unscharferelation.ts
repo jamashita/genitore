@@ -1,4 +1,4 @@
-import { type Consumer, Kind, type Peek, type Supplier, type UnaryFunction } from '@jamashita/anden/type';
+import type { Consumer, Peek, Supplier, UnaryFunction } from '@jamashita/anden/type';
 import { Heisenberg, Present } from '../heisenberg/index.js';
 import type { Epoque } from './Epoque.js';
 import type { IUnscharferelation, UReturnType } from './IUnscharferelation.js';
@@ -44,40 +44,12 @@ export class Unscharferelation<out P> implements IUnscharferelation<P> {
     return Promise.all(promises);
   }
 
-  // biome-ignore lint/suspicious/noConfusingVoidType: <explanation>
-  public static maybe<P>(value: P | PromiseLike<null | undefined | void> | PromiseLike<P> | null | undefined | void): Unscharferelation<Awaited<P>> {
-    return Unscharferelation.of((epoque: Epoque<Awaited<P>>) => {
-      if (Kind.isNone(value)) {
-        return epoque.decline();
-      }
-
-      if (Kind.isPromiseLike<P>(value)) {
-        return value.then(
-          (v: P) => {
-            if (Kind.isNone(v)) {
-              return epoque.decline();
-            }
-
-            // biome-ignore lint/suspicious/noConfusingVoidType: <explanation>
-            return epoque.accept(v as Exclude<Awaited<P>, null | undefined | void>);
-          },
-          () => {
-            return epoque.throw(new UnscharferelationError('REJECTED'));
-          }
-        );
-      }
-
-      // biome-ignore lint/suspicious/noConfusingVoidType: <explanation>
-      return epoque.accept(value as Exclude<Awaited<P>, null | undefined | void>);
-    });
-  }
-
-  public static of<P>(func: Consumer<Epoque<Awaited<P>>>): Unscharferelation<Awaited<P>> {
+  public static of<P>(func: Consumer<Epoque<P>>): Unscharferelation<P> {
     return Unscharferelation.ofUnscharferelation(UnscharferelationInternal.of(func));
   }
 
-  public static ofHeisenberg<P>(heisenberg: Heisenberg<Awaited<P>>): Unscharferelation<Awaited<P>> {
-    return Unscharferelation.of((epoque: Epoque<Awaited<P>>) => {
+  public static ofHeisenberg<P>(heisenberg: Heisenberg<P>): Unscharferelation<P> {
+    return Unscharferelation.of((epoque: Epoque<P>) => {
       if (heisenberg.isPresent()) {
         return epoque.accept(heisenberg.get());
       }
@@ -89,6 +61,29 @@ export class Unscharferelation<out P> implements IUnscharferelation<P> {
       }
 
       return epoque.throw(new UnscharferelationError('UNEXPECTED UNSCHARFERELATION STATE'));
+    });
+  }
+
+  public static ofHeisenbergAsync<P>(promise: PromiseLike<Heisenberg<P>>): Unscharferelation<P> {
+    return Unscharferelation.of((epoque: Epoque<P>) => {
+      return promise.then(
+        (heisenberg: Heisenberg<P>) => {
+          if (heisenberg.isPresent()) {
+            return epoque.accept(heisenberg.get());
+          }
+          if (heisenberg.isAbsent()) {
+            return epoque.decline();
+          }
+          if (heisenberg.isLost()) {
+            return epoque.throw(heisenberg.getCause());
+          }
+
+          return epoque.throw(new UnscharferelationError('UNEXPECTED UNSCHARFERELATION STATE'));
+        },
+        (e: unknown) => {
+          return epoque.throw(e);
+        }
+      );
     });
   }
 

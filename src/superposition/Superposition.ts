@@ -66,7 +66,7 @@ export class Superposition<out A, out D> implements ISuperposition<A, D> {
 
   public static ofSchrodingerAsync<A, D>(promise: PromiseLike<Schrodinger<A, D>>): Superposition<A, D> {
     return Superposition.of((chrono: Chrono<A, D>) => {
-      promise.then(
+      return promise.then(
         (schrodinger: Schrodinger<A, D>) => {
           if (schrodinger.isAlive()) {
             return chrono.accept(schrodinger.get());
