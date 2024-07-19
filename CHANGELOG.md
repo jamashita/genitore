@@ -1,3 +1,21 @@
+# [2.20.0](https://github.com/jamashita/genitore/compare/v2.19.0...v2.20.0) (2024-07-19)
+
+
+### Features
+
+* 🎸 doc updated ([49fb774](https://github.com/jamashita/genitore/commit/49fb7746725fc20ee60f3c6d1e80ceae591dd7f6))
+* 🎸 heisenberg update ([864ef2c](https://github.com/jamashita/genitore/commit/864ef2cc8270dd271bff50b8d75f588a08ff249c))
+* 🎸 ofHeisenbergAsync ([8bc2212](https://github.com/jamashita/genitore/commit/8bc22128f080aec1c6a2c74c90509a72442b78cf))
+* 🎸 pacakges udpated ([296ec97](https://github.com/jamashita/genitore/commit/296ec97ed93771f39472a40ecb1e5270b3df7e6b))
+* 🎸 packages updated ([5b3aeee](https://github.com/jamashita/genitore/commit/5b3aeeec4b006e07fca02f8acefeef21f4a0b56e))
+* 🎸 remove DeadConstructor ([67af557](https://github.com/jamashita/genitore/commit/67af55777a6ea3cc4ac9d0c794446e90755c5e79))
+* 🎸 remove errors ([cb8c710](https://github.com/jamashita/genitore/commit/cb8c7106bb517fb07906149c09e46dd9cf3f4f9b))
+* 🎸 remove extends Error ([8059b32](https://github.com/jamashita/genitore/commit/8059b32579d5cb1ba3ebc6ec1a9e13ad30c43791))
+* 🎸 remove extends Error ([008dfd1](https://github.com/jamashita/genitore/commit/008dfd192509a8ec42a21c6b6a696078fc09545e))
+* 🎸 superposition ([e72ef0f](https://github.com/jamashita/genitore/commit/e72ef0f621713367c2965bc21457e8077f76bb51))
+* 🎸 test update ([e3d1637](https://github.com/jamashita/genitore/commit/e3d1637216cdd6e5bd0155b3dbad59a183d50dac))
+* 🎸 type removed ([bfa9334](https://github.com/jamashita/genitore/commit/bfa9334d319fc0a3b651065d3bbb7db311a764ee))
+
 # [2.19.0](https://github.com/jamashita/genitore/compare/v2.18.0...v2.19.0) (2024-06-23)
 
 

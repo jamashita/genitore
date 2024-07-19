@@ -4,18 +4,18 @@ import type { Contradiction } from './Contradiction.js';
 import type { Dead } from './Dead.js';
 import type { Schrodinger, SchrodingerState } from './Schrodinger.js';
 
-export class Alive<out A, out D extends Error> implements Schrodinger<A, D> {
-  private readonly value: Exclude<A, Error>;
+export class Alive<out A, out D> implements Schrodinger<A, D> {
+  private readonly value: A;
 
-  public static of<A, D extends Error>(value: Exclude<A, Error>): Alive<A, D> {
+  public static of<A, D>(value: A): Alive<A, D> {
     return new Alive(value);
   }
 
-  protected constructor(value: Exclude<A, Error>) {
+  protected constructor(value: A) {
     this.value = value;
   }
 
-  public get(): Exclude<A, Error> {
+  public get(): A {
     return this.value;
   }
 
@@ -23,7 +23,7 @@ export class Alive<out A, out D extends Error> implements Schrodinger<A, D> {
     return 'ALIVE';
   }
 
-  public ifAlive(consumer: Consumer<Exclude<A, Error>>): this {
+  public ifAlive(consumer: Consumer<A>): this {
     consumer(this.value);
 
     return this;
@@ -57,7 +57,7 @@ export class Alive<out A, out D extends Error> implements Schrodinger<A, D> {
     return this.serialize();
   }
 
-  public transform<E extends Error>(): Alive<A, E> {
+  public transform<E>(): Alive<A, E> {
     return this as unknown as Alive<A, E>;
   }
 }

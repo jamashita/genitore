@@ -5,7 +5,7 @@ import type { Lost } from './Lost.js';
 import type { Present } from './Present.js';
 
 export class Uncertain<out P> implements Heisenberg<P> {
-  private static readonly INSTANCE: Uncertain<unknown> = new Uncertain();
+  private static readonly INSTANCE = new Uncertain<unknown>();
 
   public static of<P>(): Uncertain<P> {
     return Uncertain.INSTANCE as Uncertain<P>;

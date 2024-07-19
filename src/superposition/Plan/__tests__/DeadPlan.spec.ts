@@ -1,6 +1,5 @@
 import { MockRuntimeError } from '@jamashita/anden/error';
 import type { Resolve } from '@jamashita/anden/type';
-import type { Mock } from 'vitest';
 import { Alive, Dead } from '../../../schrodinger/index.js';
 import type { Chrono } from '../../Chrono.js';
 import { MockChrono } from '../../mock/MockChrono.js';
@@ -10,13 +9,13 @@ import { DeadPlan } from '../DeadPlan.js';
 describe('DeadPlan', () => {
   describe('onRecover', () => {
     it('invokes first callback when A given', async () => {
-      const value: number = 101;
-      const error: MockRuntimeError = new MockRuntimeError('');
+      const value = 101;
+      const error = new MockRuntimeError('');
 
-      const fn1: Mock = vi.fn();
-      const fn2: Mock = vi.fn();
-      const fn3: Mock = vi.fn();
-      const fn4: Mock = vi.fn();
+      const fn1 = vi.fn();
+      const fn2 = vi.fn();
+      const fn3 = vi.fn();
+      const fn4 = vi.fn();
 
       await new Promise((resolve: Resolve<void>) => {
         const plan: DeadPlan<number, MockRuntimeError, MockRuntimeError> = DeadPlan.of(
@@ -42,8 +41,7 @@ describe('DeadPlan', () => {
               fn4();
 
               resolve();
-            },
-            new Set([MockRuntimeError])
+            }
           )
         );
 
@@ -57,13 +55,13 @@ describe('DeadPlan', () => {
     });
 
     it('invokes first callback when Promise<A> given', async () => {
-      const value: number = 101;
-      const error: MockRuntimeError = new MockRuntimeError('');
+      const value = 101;
+      const error = new MockRuntimeError('');
 
-      const fn1: Mock = vi.fn();
-      const fn2: Mock = vi.fn();
-      const fn3: Mock = vi.fn();
-      const fn4: Mock = vi.fn();
+      const fn1 = vi.fn();
+      const fn2 = vi.fn();
+      const fn3 = vi.fn();
+      const fn4 = vi.fn();
 
       await new Promise((resolve: Resolve<void>) => {
         const plan: DeadPlan<number, MockRuntimeError, MockRuntimeError> = DeadPlan.of<number, MockRuntimeError, MockRuntimeError>(
@@ -89,8 +87,7 @@ describe('DeadPlan', () => {
               fn4();
 
               resolve();
-            },
-            new Set([MockRuntimeError])
+            }
           )
         );
 
@@ -104,13 +101,13 @@ describe('DeadPlan', () => {
     });
 
     it('invokes first callback when Alive Superposition given', async () => {
-      const value: number = 101;
-      const error: MockRuntimeError = new MockRuntimeError('');
+      const value = 101;
+      const error = new MockRuntimeError('');
 
-      const fn1: Mock = vi.fn();
-      const fn2: Mock = vi.fn();
-      const fn3: Mock = vi.fn();
-      const fn4: Mock = vi.fn();
+      const fn1 = vi.fn();
+      const fn2 = vi.fn();
+      const fn3 = vi.fn();
+      const fn4 = vi.fn();
 
       await new Promise((resolve: Resolve<void>) => {
         const plan: DeadPlan<number, MockRuntimeError, MockRuntimeError> = DeadPlan.of(
@@ -136,8 +133,7 @@ describe('DeadPlan', () => {
               fn4();
 
               resolve();
-            },
-            new Set([MockRuntimeError])
+            }
           )
         );
 
@@ -151,16 +147,16 @@ describe('DeadPlan', () => {
     });
 
     it('invokes first callback when Promise<Alive Superposition> given', async () => {
-      const value: number = 101;
-      const error: MockRuntimeError = new MockRuntimeError('');
+      const value = 101;
+      const error = new MockRuntimeError('');
 
-      const fn1: Mock = vi.fn();
-      const fn2: Mock = vi.fn();
-      const fn3: Mock = vi.fn();
-      const fn4: Mock = vi.fn();
+      const fn1 = vi.fn();
+      const fn2 = vi.fn();
+      const fn3 = vi.fn();
+      const fn4 = vi.fn();
 
       await new Promise((resolve: Resolve<void>) => {
-        const plan: DeadPlan<number, MockRuntimeError, MockRuntimeError> = DeadPlan.of(
+        const plan = DeadPlan.of<number, MockRuntimeError, MockRuntimeError>(
           (e: MockRuntimeError) => {
             fn1();
             expect(e).toBe(error);
@@ -183,8 +179,7 @@ describe('DeadPlan', () => {
               fn4();
 
               resolve();
-            },
-            new Set([MockRuntimeError])
+            }
           )
         );
 
@@ -197,16 +192,16 @@ describe('DeadPlan', () => {
       expect(fn4.mock.calls).toHaveLength(0);
     });
 
-    it('invokes second callback when D thrown', async () => {
-      const error: MockRuntimeError = new MockRuntimeError('');
+    it('invokes third callback when D thrown', async () => {
+      const error = new MockRuntimeError('');
 
-      const fn1: Mock = vi.fn();
-      const fn2: Mock = vi.fn();
-      const fn3: Mock = vi.fn();
-      const fn4: Mock = vi.fn();
+      const fn1 = vi.fn();
+      const fn2 = vi.fn();
+      const fn3 = vi.fn();
+      const fn4 = vi.fn();
 
       await new Promise((resolve: Resolve<void>) => {
-        const plan: DeadPlan<number, MockRuntimeError, MockRuntimeError> = DeadPlan.of(
+        const plan = DeadPlan.of<number, MockRuntimeError, MockRuntimeError>(
           (e: MockRuntimeError) => {
             fn1();
             expect(e).toBe(error);
@@ -219,18 +214,17 @@ describe('DeadPlan', () => {
 
               resolve();
             },
-            (e: MockRuntimeError) => {
+            () => {
               fn3();
+
+              resolve();
+            },
+            (e: unknown) => {
+              fn4();
               expect(e).toBe(error);
 
               resolve();
-            },
-            () => {
-              fn4();
-
-              resolve();
-            },
-            new Set([MockRuntimeError])
+            }
           )
         );
 
@@ -239,20 +233,20 @@ describe('DeadPlan', () => {
 
       expect(fn1.mock.calls).toHaveLength(1);
       expect(fn2.mock.calls).toHaveLength(0);
-      expect(fn3.mock.calls).toHaveLength(1);
-      expect(fn4.mock.calls).toHaveLength(0);
+      expect(fn3.mock.calls).toHaveLength(0);
+      expect(fn4.mock.calls).toHaveLength(1);
     });
 
-    it('invokes second callback when rejected Promise<A> given', async () => {
-      const error: MockRuntimeError = new MockRuntimeError('');
+    it('invokes third callback when rejected Promise<A> given', async () => {
+      const error = new MockRuntimeError('');
 
-      const fn1: Mock = vi.fn();
-      const fn2: Mock = vi.fn();
-      const fn3: Mock = vi.fn();
-      const fn4: Mock = vi.fn();
+      const fn1 = vi.fn();
+      const fn2 = vi.fn();
+      const fn3 = vi.fn();
+      const fn4 = vi.fn();
 
       await new Promise((resolve: Resolve<void>) => {
-        const plan: DeadPlan<number, MockRuntimeError, MockRuntimeError> = DeadPlan.of<number, MockRuntimeError, MockRuntimeError>(
+        const plan = DeadPlan.of<number, MockRuntimeError, MockRuntimeError>(
           (e: MockRuntimeError) => {
             fn1();
             expect(e).toBe(error);
@@ -265,18 +259,17 @@ describe('DeadPlan', () => {
 
               resolve();
             },
-            (e: MockRuntimeError) => {
+            () => {
               fn3();
+
+              resolve();
+            },
+            (e: unknown) => {
+              fn4();
               expect(e).toBe(error);
 
               resolve();
-            },
-            () => {
-              fn4();
-
-              resolve();
-            },
-            new Set([MockRuntimeError])
+            }
           )
         );
 
@@ -285,25 +278,25 @@ describe('DeadPlan', () => {
 
       expect(fn1.mock.calls).toHaveLength(1);
       expect(fn2.mock.calls).toHaveLength(0);
-      expect(fn3.mock.calls).toHaveLength(1);
-      expect(fn4.mock.calls).toHaveLength(0);
+      expect(fn3.mock.calls).toHaveLength(0);
+      expect(fn4.mock.calls).toHaveLength(1);
     });
 
     it('invokes second callback when Dead Superposition given', async () => {
-      const error: MockRuntimeError = new MockRuntimeError('');
+      const error = new MockRuntimeError('');
 
-      const fn1: Mock = vi.fn();
-      const fn2: Mock = vi.fn();
-      const fn3: Mock = vi.fn();
-      const fn4: Mock = vi.fn();
+      const fn1 = vi.fn();
+      const fn2 = vi.fn();
+      const fn3 = vi.fn();
+      const fn4 = vi.fn();
 
       await new Promise((resolve: Resolve<void>) => {
-        const plan: DeadPlan<number, MockRuntimeError, MockRuntimeError> = DeadPlan.of(
+        const plan = DeadPlan.of<number, MockRuntimeError, MockRuntimeError>(
           (e: MockRuntimeError) => {
             fn1();
             expect(e).toBe(error);
 
-            return Superposition.ofSchrodinger(Dead.of(error), MockRuntimeError);
+            return Superposition.ofSchrodinger(Dead.of(error));
           },
           new MockChrono(
             () => {
@@ -321,8 +314,7 @@ describe('DeadPlan', () => {
               fn4();
 
               resolve();
-            },
-            new Set([MockRuntimeError])
+            }
           )
         );
 
@@ -336,20 +328,20 @@ describe('DeadPlan', () => {
     });
 
     it('invokes second callback when Promise<Dead Superposition given', async () => {
-      const error: MockRuntimeError = new MockRuntimeError('');
+      const error = new MockRuntimeError('');
 
-      const fn1: Mock = vi.fn();
-      const fn2: Mock = vi.fn();
-      const fn3: Mock = vi.fn();
-      const fn4: Mock = vi.fn();
+      const fn1 = vi.fn();
+      const fn2 = vi.fn();
+      const fn3 = vi.fn();
+      const fn4 = vi.fn();
 
       await new Promise((resolve: Resolve<void>) => {
-        const plan: DeadPlan<number, MockRuntimeError, MockRuntimeError> = DeadPlan.of(
+        const plan = DeadPlan.of<number, MockRuntimeError, MockRuntimeError>(
           (e: MockRuntimeError) => {
             fn1();
             expect(e).toBe(error);
 
-            return Promise.resolve(Superposition.ofSchrodinger(Dead.of(error), MockRuntimeError));
+            return Promise.resolve(Superposition.ofSchrodinger(Dead.of(error)));
           },
           new MockChrono(
             () => {
@@ -367,8 +359,7 @@ describe('DeadPlan', () => {
               fn4();
 
               resolve();
-            },
-            new Set([MockRuntimeError])
+            }
           )
         );
 
@@ -382,15 +373,15 @@ describe('DeadPlan', () => {
     });
 
     it('invokes third callback when an unexpected error thrown', async () => {
-      const error: MockRuntimeError = new MockRuntimeError('');
+      const error = new MockRuntimeError('');
 
-      const fn1: Mock = vi.fn();
-      const fn2: Mock = vi.fn();
-      const fn3: Mock = vi.fn();
-      const fn4: Mock = vi.fn();
+      const fn1 = vi.fn();
+      const fn2 = vi.fn();
+      const fn3 = vi.fn();
+      const fn4 = vi.fn();
 
       await new Promise((resolve: Resolve<void>) => {
-        const plan: DeadPlan<number, MockRuntimeError, MockRuntimeError> = DeadPlan.of(
+        const plan = DeadPlan.of<number, MockRuntimeError, MockRuntimeError>(
           (e: MockRuntimeError) => {
             fn1();
             expect(e).toBe(error);
@@ -412,8 +403,7 @@ describe('DeadPlan', () => {
               fn4();
 
               resolve();
-            },
-            new Set()
+            }
           )
         );
 
@@ -427,15 +417,15 @@ describe('DeadPlan', () => {
     });
 
     it('invokes third callback when an unexpected rejected Promise given', async () => {
-      const error: MockRuntimeError = new MockRuntimeError('');
+      const error = new MockRuntimeError('');
 
-      const fn1: Mock = vi.fn();
-      const fn2: Mock = vi.fn();
-      const fn3: Mock = vi.fn();
-      const fn4: Mock = vi.fn();
+      const fn1 = vi.fn();
+      const fn2 = vi.fn();
+      const fn3 = vi.fn();
+      const fn4 = vi.fn();
 
       await new Promise((resolve: Resolve<void>) => {
-        const plan: DeadPlan<number, MockRuntimeError, MockRuntimeError> = DeadPlan.of<number, MockRuntimeError, MockRuntimeError>(
+        const plan = DeadPlan.of<number, MockRuntimeError, MockRuntimeError>(
           (e: MockRuntimeError) => {
             fn1();
             expect(e).toBe(error);
@@ -457,8 +447,7 @@ describe('DeadPlan', () => {
               fn4();
 
               resolve();
-            },
-            new Set()
+            }
           )
         );
 
@@ -472,14 +461,14 @@ describe('DeadPlan', () => {
     });
 
     it('invokes third callback when Contradiction Superposition given', () => {
-      const error: MockRuntimeError = new MockRuntimeError('');
+      const error = new MockRuntimeError('');
 
-      const fn1: Mock = vi.fn();
-      const fn2: Mock = vi.fn();
-      const fn3: Mock = vi.fn();
-      const fn4: Mock = vi.fn();
+      const fn1 = vi.fn();
+      const fn2 = vi.fn();
+      const fn3 = vi.fn();
+      const fn4 = vi.fn();
 
-      const plan: DeadPlan<number, MockRuntimeError, MockRuntimeError> = DeadPlan.of(
+      const plan = DeadPlan.of<number, MockRuntimeError, MockRuntimeError>(
         (e: MockRuntimeError) => {
           fn1();
           expect(e).toBe(error);
@@ -497,8 +486,7 @@ describe('DeadPlan', () => {
           },
           () => {
             fn4();
-          },
-          new Set()
+          }
         )
       );
 
@@ -511,15 +499,15 @@ describe('DeadPlan', () => {
     });
 
     it('invokes third callback when Promise<Contradiction Superposition> given', async () => {
-      const error: MockRuntimeError = new MockRuntimeError('');
+      const error = new MockRuntimeError('');
 
-      const fn1: Mock = vi.fn();
-      const fn2: Mock = vi.fn();
-      const fn3: Mock = vi.fn();
-      const fn4: Mock = vi.fn();
+      const fn1 = vi.fn();
+      const fn2 = vi.fn();
+      const fn3 = vi.fn();
+      const fn4 = vi.fn();
 
       await new Promise((resolve: Resolve<void>) => {
-        const plan: DeadPlan<number, MockRuntimeError, MockRuntimeError> = DeadPlan.of(
+        const plan = DeadPlan.of<number, MockRuntimeError, MockRuntimeError>(
           (e: MockRuntimeError) => {
             fn1();
             expect(e).toBe(error);
@@ -545,8 +533,7 @@ describe('DeadPlan', () => {
               fn4();
 
               resolve();
-            },
-            new Set()
+            }
           )
         );
 

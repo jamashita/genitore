@@ -1,14 +1,13 @@
-import type { Mock } from 'vitest';
 import { MapPassPlan } from '../MapPassPlan.js';
 
 describe('MapPassPlan', () => {
   describe('onMap', () => {
     it('invokes callback when onMap() called', () => {
-      const value: number = -35;
+      const value = -35;
 
-      const fn: Mock = vi.fn();
+      const fn = vi.fn();
 
-      const plan: MapPassPlan<number> = MapPassPlan.of((v: number) => {
+      const plan = MapPassPlan.of<number>((v: number) => {
         fn();
         expect(v).toBe(value);
       });

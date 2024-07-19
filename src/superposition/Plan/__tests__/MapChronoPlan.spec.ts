@@ -1,18 +1,17 @@
 import type { MockRuntimeError } from '@jamashita/anden/error';
-import type { Mock } from 'vitest';
 import { MockChrono } from '../../mock/MockChrono.js';
 import { MapChronoPlan } from '../MapChronoPlan.js';
 
 describe('MapChronoPlan', () => {
   describe('onMap', () => {
     it('invokes first callback', () => {
-      const value: number = -35;
+      const value = -35;
 
-      const fn1: Mock = vi.fn();
-      const fn2: Mock = vi.fn();
-      const fn3: Mock = vi.fn();
+      const fn1 = vi.fn();
+      const fn2 = vi.fn();
+      const fn3 = vi.fn();
 
-      const chrono: MockChrono<number, MockRuntimeError> = new MockChrono(
+      const chrono = new MockChrono<number, MockRuntimeError>(
         (v: number) => {
           fn1();
           expect(v).toBe(value);
@@ -22,10 +21,9 @@ describe('MapChronoPlan', () => {
         },
         () => {
           fn3();
-        },
-        new Set()
+        }
       );
-      const plan: MapChronoPlan<number, MockRuntimeError> = MapChronoPlan.of(chrono);
+      const plan = MapChronoPlan.of<number, MockRuntimeError>(chrono);
 
       plan.onMap(value);
 

@@ -1,15 +1,14 @@
 import { MockRuntimeError } from '@jamashita/anden/error';
-import type { Mock } from 'vitest';
 import type { Heisenberg } from '../Heisenberg.js';
 import { Lost } from '../Lost.js';
 
 describe('Lost', () => {
   describe('get', () => {
     it('throws given error', () => {
-      const error1: MockRuntimeError = new MockRuntimeError('');
-      const error2: MockRuntimeError = new MockRuntimeError('');
-      const lost1: Lost<void> = Lost.of(error1);
-      const lost2: Lost<number> = Lost.of(error2);
+      const error1 = new MockRuntimeError('');
+      const error2 = new MockRuntimeError('');
+      const lost1 = Lost.of<void>(error1);
+      const lost2 = Lost.of<number>(error2);
 
       expect(() => {
         lost1.get();
@@ -22,10 +21,10 @@ describe('Lost', () => {
 
   describe('getCause', () => {
     it('returns thrown error', () => {
-      const error1: MockRuntimeError = new MockRuntimeError('');
-      const error2: MockRuntimeError = new MockRuntimeError('');
-      const lost1: Lost<void> = Lost.of(error1);
-      const lost2: Lost<number> = Lost.of(error2);
+      const error1 = new MockRuntimeError('');
+      const error2 = new MockRuntimeError('');
+      const lost1 = Lost.of<void>(error1);
+      const lost2 = Lost.of<number>(error2);
 
       expect(lost1.getCause()).toBe(error1);
       expect(lost2.getCause()).toBe(error2);
@@ -40,9 +39,9 @@ describe('Lost', () => {
 
   describe('ifAbsent', () => {
     it('will not be invoked', () => {
-      const error: MockRuntimeError = new MockRuntimeError('');
+      const error = new MockRuntimeError('');
 
-      const fn: Mock = vi.fn();
+      const fn = vi.fn();
 
       const lost: Heisenberg<number> = Lost.of(error);
 
@@ -56,9 +55,9 @@ describe('Lost', () => {
 
   describe('ifLost', () => {
     it('will be invoked', () => {
-      const error: MockRuntimeError = new MockRuntimeError('');
+      const error = new MockRuntimeError('');
 
-      const fn: Mock = vi.fn();
+      const fn = vi.fn();
 
       const lost: Heisenberg<number> = Lost.of(error);
 
@@ -72,9 +71,9 @@ describe('Lost', () => {
 
   describe('ifPresent', () => {
     it('will not be invoked', () => {
-      const error: MockRuntimeError = new MockRuntimeError('');
+      const error = new MockRuntimeError('');
 
-      const fn: Mock = vi.fn();
+      const fn = vi.fn();
 
       const lost: Heisenberg<number> = Lost.of(error);
 
@@ -88,8 +87,8 @@ describe('Lost', () => {
 
   describe('isAbsent', () => {
     it('always returns false', () => {
-      const error: MockRuntimeError = new MockRuntimeError('');
-      const lost: Lost<void> = Lost.of(error);
+      const error = new MockRuntimeError('');
+      const lost = Lost.of<void>(error);
 
       expect(lost.isAbsent()).toBe(false);
     });
@@ -97,8 +96,8 @@ describe('Lost', () => {
 
   describe('isLost', () => {
     it('always returns true', () => {
-      const error: MockRuntimeError = new MockRuntimeError('');
-      const lost: Lost<void> = Lost.of(error);
+      const error = new MockRuntimeError('');
+      const lost = Lost.of<void>(error);
 
       expect(lost.isLost()).toBe(true);
     });
@@ -106,8 +105,8 @@ describe('Lost', () => {
 
   describe('isPresent', () => {
     it('always returns false', () => {
-      const error: MockRuntimeError = new MockRuntimeError('');
-      const lost: Lost<void> = Lost.of(error);
+      const error = new MockRuntimeError('');
+      const lost = Lost.of<void>(error);
 
       expect(lost.isPresent()).toBe(false);
     });
